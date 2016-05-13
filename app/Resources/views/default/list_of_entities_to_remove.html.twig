@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block page_title %}
+ <title>Remove Entities</title>
+{% endblock %}
+
+{% block content %}
+
+<div class="col-xs-7">
+ <div class="page-header">
+ <h1>Choose a {{ displayName }} to REMOVE</h1>
+ </div>
+ <ul>
+ 
+ {% for entity in entities %}
+ <li>
+  <a href="/remove/{{ entityName }}/{{ entity.slug }}">{{ entity.getDisplayName }}</a>
+ </li>
+ {% endfor %}
+ 
+ </ul>
+
+</div>
+
+{% endblock %}

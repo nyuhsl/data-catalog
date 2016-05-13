@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+{% form_theme form with ['bootstrap_3_layout.html.twig', _self] %}
+
+{% block page_title %}
+ <title>Remove an Entity</title>
+{% endblock %}
+
+{% block form_group_class -%}
+col-sm-5
+{%- endblock %}
+
+{% block form_label_class -%}
+col-sm-2
+{%- endblock %}
+
+{% block content %}
+<div class="col-xs-7">
+  <div class="page-header">
+  <h1>REMOVE a {{ displayName }}</h1>
+  </div>
+
+<div class="alert alert-danger"><strong>WARNING!</strong> This action cannot be undone!</div>
+<div class="spacer25"></div>
+<p>Really remove {{ displayName }} <strong>"{{ thisEntityName }}"</strong>?</p>
+<div class="spacer25"></div>
+{{ form(form, {'attr':{'class':'col-xs-9 remove-form','data-targetentity':entityName}}) }}
+<br/>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block page_stylesheets %}
+{% endblock %}
+
+{% block page_title %}
+ <title>Entity Removed</title>
+{% endblock %}
+
+{% block page_scripts %}
+{% endblock %}
+
+
+{% block content %}
+<div class="col-xs-5" >
+<div class="page-header">
+<h1>Remove Successful</h1>
+</div>
+<p>
+The {{ entityName }} was removed successfully.
+</p>
+<div class="spacer25"></div>
+<p>
+<a href="{{ path('admin_manage') }}">click here</a> to manage other entities.
+</p>
+
+
+</div>
+
+{% endblock %}
+

@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+  <div class="col-sm-6 col-sm-offset-2">
+    <h1>Something went wrong!</h1>
+
+    <div class="spacer50"></div>
+    <p class="lead">
+        We're not sure what the problem is, but if you want to help out, you can <a href="{{ path('contact') }}">let us know what happened</a>.<br/><br/>
+        Otherwise, you can <a href="{{ path('homepage') }}">return to the homepage</a>.
+    </p>
+  </div>
+{% endblock %}

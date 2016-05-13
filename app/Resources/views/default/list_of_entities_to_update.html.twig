@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block page_title %}
+ <title>Update Entities</title>
+{% endblock %}
+
+{% block content %}
+
+<div class="col-xs-7">
+ <div class="page-header">
+ <h1>View/Update {{ displayName }}s</h1>
+<p>or <a href="{{ path('add_new_entity', {'entityName':entityName}) }}">add a new {{ displayName }}</a></p>
+ </div>
+
+ <ul>
+ 
+ {% for entity in entities %}
+ <li>
+  <a href="{{ path('update_entity', {'entityName':entityName,'slug':entity.slug}) }}">{{ entity.getDisplayName }}</a>
+ </li>
+ {% endfor %}
+ 
+ </ul>
+
+<div class="spacer25"></div>
+
+</div>
+
+{% endblock %}

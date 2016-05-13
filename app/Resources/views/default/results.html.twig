@@ -1,0 +1,191 @@
+{% extends 'base.html.twig' %}
+
+{% block page_scripts %}
+{% endblock %}
+
+{% block results_JSONLD_output %}
+<script type="application/ld+json">
+{"@context": "http://schema.org",
+"@type":"ItemList",
+"mainEntityOfPage":"{{ url('homepage') }}",
+"itemListElement":[
+{% for dataset in results.resultItems %}
+{"@type": "Dataset",
+"name": "{{ dataset.dataset_title }}",
+"description": "{{ dataset.description[0] }}",
+"alternateName": [{% for title in dataset.dataset_alt_title %}"{{ title|trim }}"{% if not loop.last %}, {% endif %}{% endfor %}],
+{#"keywords": [{% for kw in dataset.subject_keyword %}"{{ kw|trim }}"{% if not loop.last %}, {% endif %}{% endfor %}],#}
+"url": "{{ url('homepage')|trim }}{{ dataset.slug }}",
+"mainEntityOfPage": "{{ url('homepage')|trim }}{{ dataset.slug }}",
+"position":{{ loop.index }}}{% if not loop.last %},{% endif %}
+{% endfor %}
+]}
+</script>
+{% endblock %}
+
+{% block content %}
+{# {{ dump(currentSearch) }} #}
+<div class="col-sm-10 right-pane col-sm-push-2 clearfix">
+<div class="row">
+<div class="col-sm-8" id="facet-breadcrumbs">
+ {% if currentSearch.keyword %}
+   {% if ':' in currentSearch.keyword %}
+    {# {% set keyword = currentSearch.keyword|split(':')[1] %} #}
+   <button class="keyword-breadcrumb btn btn-default btn-xs">
+     "{{ currentSearch.keyword }}"
+   </button>
+   {% else %}
+   <button class="keyword-breadcrumb btn btn-default btn-xs">
+     Keyword: "{{ currentSearch.keyword }}"
+   </button>
+   {% endif %}  
+  {% endif %} 
+ {% for facet in currentSearch.facets %}
+   {% set facetSplit = facet|split(':') %}
+    
+   <button data-machine-name="{{ facet }}" class="facetBreadcrumb btn btn-default btn-xs">
+    {{ results.facetMappings[facetSplit[0]] }}:{{ facetSplit[1] }} 
+   </button>
+ {% endfor %}
+</div>
+<div class="col-sm-4" id="sort-and-results">
+ <div id="pager-wrapper">
+  {% set maxPages = (results.numResults/currentSearch.resultsPP)|round(0,'ceil') %}
+  {% if currentSearch.page == 0 %}
+    {% set pageCounter = 1 %}
+  {% else %}
+    {% set pageCounter = currentSearch.page %}
+  {% endif %}
+  {% if currentSearch.page > 1 %}
+    <span class="pager-previous"><a href="#">< Prev</a></span>
+  {% endif %}
+  <span class="pager-text">Page <input size="2" min="1" max="{{ maxPages }}" id="pagenum-input" name="skip-to-page" value="{{ pageCounter }}" /> of {{ maxPages }}</span>
+  {% if (currentSearch.page == 0 and currentSearch.resultsPP <= results.numResults) or  
+      ((currentSearch.page * currentSearch.resultsPP) <= results.numResults) %}
+    <span class="pager-next"><a href="#">Next ></a></span>
+  {% endif %}
+ </div>
+ {% if (results.numResults) %}
+   <div id="numresults-wrapper">
+   Results Found: <span id="number-of-results">{{ results.numResults }}</span>
+   </div>
+{% endif %}
+ <div id="dropdowns-wrapper">
+   <div id="sort-dropdown-wrapper">
+    <span class="dropdown-label">Sort by:</span>
+    <select class="option-dropdown" name="results_sort" id="sort-dropdown" >
+      {% set sort_opts = ['name', 'relevance', 'date added'] %}
+      {% for opt in sort_opts %}
+       {% if (opt == currentSearch.sort) %} 
+         <option selected>{{ opt }}</option>
+       {% else %} 
+         <option>{{ opt }}</option>
+       {% endif %}
+      {% endfor %}
+    </select>
+  </div>
+  <div id="results-dropdown-wrapper">
+   <span class="dropdown-label">Per page:</span>
+   <select name="results_pp" class="option-dropdown" id="results_pp-dropdown">
+     {% set results_opts = ['10','25','50'] %}
+     {% for opt in results_opts %}
+       {% if (opt == currentSearch.resultsPP) %}
+         <option selected>{{ opt }}</option>
+       {% else %}
+         <option>{{ opt }}</option>
+       {% endif %}
+      {% endfor %}
+   </select>
+  </div>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-11" id="results-container">
+  <ul id="results-list" class="list-unstyled">
+   {% for item in results.resultItems %}
+    <li class="dataset-summary"> 
+    <h4 class="dataset-title"><a class="dataset-title-link" href="dataset/{{ item.slug }}">{{ item.dataset_title }}</a></h4>
+            <dl class="dl-horizontal">
+              {% if item.dataset_alt_title[0] %}
+              <dt>Alternate Title(s)</dt>
+              <dd> {{ item.dataset_alt_title|join(', ') }} </dd>
+                {% endif %}
+             <dt>Description</dt><dd><p>{{ item.description[0] }}</p></dd>
+             <dt>Subject</dt><dd>{% for subject in item.subject_domain %} 
+               <div class="multiple-item-list">{{ subject }}</div>
+               {% endfor %}</dd>
+             <dt>Geographic Coverage</dt><dd>{% for area in item.subject_geographic_area %}
+               <div class="multiple-item-list">{{ area }}</div>
+               {% endfor %}</dd>
+             {% if item.dataset_start_date is not empty %}
+             <dt>Timeframe</dt>
+             <dd>{{ item.dataset_start_date }} - {{ item.dataset_end_date }}</dd>
+             {% endif %}
+             {% if item.access_restrictions[0] %}
+             <dt>Access Rights</dt><dd>{% for restrict in item.access_restrictions %} <div class="multiple-item-list">{{ restrict }}</div>{% endfor %} </dd>
+             {% endif %}
+             {% if item.local_experts[0] %}
+             <dt>Local Expert</dt><dd>{% for index,expert in item.local_experts %}
+               <div class="multiple-item-list">
+                 {% if item.local_expert_biosketch[index] is defined %}
+                   <a href="{{ item.local_expert_biosketch[index] }}">{{ expert }}</a>
+                 {% else %}
+                   {{ expert }}
+                 {% endif %}
+                 </div>
+                 {% endfor %}
+
+             </dd>
+             {% endif %}
+            </dl>
+</li>
+{% endfor %}
+<div id="pagerContainer">
+{% if currentSearch.page > 1 %}
+  <button id="prevPage-button" type="button" class="prevPage btn btn-info btn-sm">
+    Previous Page
+  </button>
+{% endif %}
+{% if (currentSearch.page == 0 and currentSearch.resultsPP <= results.numResults) or  
+      ((currentSearch.page * currentSearch.resultsPP) <= results.numResults) %}
+  <button id="nextPage-button" type="button" class="nextPage btn btn-info btn-sm">
+    Next Page
+  </button>
+{% endif %}
+</div>    
+</div>
+</div>
+</div>
+<div class="col-sm-2 col-sm-pull-10" id="facets-pane">
+<h4 class="facet-pane-header">Filter by</h4>
+  {% for category,facets in results.facets %}
+    {% set facetSection = [] %}
+    {% for facet in facets %} 
+     {% set fullFacet = results.facetMappings[category] ~ ':"' ~ facet.facetItem ~ '"' %}
+     {% if fullFacet not in currentSearch.facets %}
+       {% set facetSection = facetSection|merge([facet]) %}
+     {% endif %}
+    {% endfor %}
+    {% if facetSection|length > 0 %}
+     <div class="facet-section">
+      <h5 class="facet-header">{{ category }}</h5>
+        <ul class="facets-list list-unstyled">
+      {% for facet in facetSection %}
+        {% if facet.facetItem != '' and facet.facetCount is defined and facet.facetCount > 0 %}
+          <li class="facet-item">
+            <span class="facet-name">
+              <a href="#" data-solrfacetcategory="{{ results.facetMappings[category] }}" data-solrfacetvalue="{{ facet.facetItem }}">{{ facet.facetItem }}</a>
+             </span>
+            <span class="facet-numresults">
+              {{ facet.facetCount }}
+            </span>
+          </li>
+          {% endif %}
+      {% endfor %}
+        </ul>
+       </div>
+     {% endif %}
+   {% endfor %}
+</div>
+{% endblock %}

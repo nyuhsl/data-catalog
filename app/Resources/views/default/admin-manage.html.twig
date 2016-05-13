@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block page_title %}
+ <title>Data Catalog - Manage Related Entities</title>
+{% endblock %}
+
+{% block content %}
+<div class="col-xs-7">
+ <div class="page-header">
+  <h1>Manage Related Entities</h1>
+  </div>
+  <p>
+  Here you can view and manage items that are not datasets, but are related to them. <br/>
+<strong>NOTE:</strong> When you edit an item here, the change will be reflected in all dataset records that reference it.
+  </p>
+
+  <div class="spacer25"></div>
+ <div class="list-group col-xs-5">
+  <a class="list-group-item" href="{{ path('update_entity', {'entityName':'Person'}) }}">Local Experts/Authors</a>
+  <a class="list-group-item" href="{{ path('update_entity', {'entityName':'Publisher'}) }}">Publishers</a>
+  <a class="list-group-item" href="{{ path('update_entity', {'entityName':'Publication'}) }}" >Cited Publications</a>
+  <a class="list-group-item" href="{{ path('update_entity', {'entityName':'Award'}) }}">Awards</a>
+  <a class="list-group-item" href="{{ path('update_entity', {'entityName':'DataType'}) }}">Data Types</a>
+  <a class="list-group-item" href="{{ path('update_entity', {'entityName':'MeasurementStandard'}) }}">Measurement Standards</a>
+  <a class="list-group-item" href="{{ path('update_entity', {'entityName':'DatasetFormat'}) }}">Dataset Formats</a>
+  <a class="list-group-item" href="{{ path('update_entity', {'entityName':'AccessRestriction'}) }}">Access Restrictions</a>
+  <a class="list-group-item" href="{{ path('update_entity', {'entityName':'SubjectDomain'}) }}">Subject Domains</a>
+  <a class="list-group-item" href="{{ path('update_entity', {'entityName':'SubjectPopulationAge'}) }}">Population Age Groups</a>
+  <a class="list-group-item" href="{{ path('update_entity', {'entityName':'SubjectGeographicArea'}) }}">Geographic Areas</a>
+  <a class="list-group-item" href="{{ path('update_entity', {'entityName':'SubjectGeographicAreaDetail'}) }}">Geographic Area Details</a>
+  <a class="list-group-item" href="{{ path('update_entity', {'entityName':'SubjectKeyword'}) }}">Keywords</a>
+  <a class="list-group-item" href="{{ path('update_entity', {'entityName':'SubjectOfStudy'}) }}">Subject of Study</a>
+  <a class="list-group-item" href="{{ path('update_entity', {'entityName':'RelatedEquipment'}) }}">Related Equipment</a>
+  <a class="list-group-item" href="{{ path('update_entity', {'entityName':'RelatedSoftware'}) }}">Related Software</a>
+</div> 
+
+ </div>
+
+{% endblock %}

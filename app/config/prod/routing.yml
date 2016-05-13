@@ -1,0 +1,5 @@
+_main:
+    resource: '@AppBundle/Resources/config/routing.yml'
+#app:
+#    resource: @AppBundle/Controller/
+#    type:     annotation

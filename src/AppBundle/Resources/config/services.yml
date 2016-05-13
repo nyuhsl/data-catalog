@@ -1,0 +1,8 @@
+services:
+    SolrSearchr:
+        class:  AppBundle\Service\SolrSearchr
+        arguments:  
+          - "%solrsearchr_server%"
+          - "%solrsearchr_format%"
+          - "%solrsearchr_facets%"
+          - "%solrsearchr_fields_to_display%"

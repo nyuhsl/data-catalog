@@ -1,0 +1,22 @@
+# Learn more about services, parameters and containers at
+# http://symfony.com/doc/current/book/service_container.html
+parameters:
+#    parameter_name: value
+
+services:
+  app.ldap:
+    class: Symfony\Component\Ldap\LdapClient
+    arguments: ["%ldap.host%", "%ldap.port%"]
+  db_user_provider:
+    class: AppBundle\Entity\Security\UserRepository
+    factory_service: doctrine
+    factory_method: getRepository
+    arguments: ["AppBundle:Security\\User"]
+  AppBundle.type.access_restriction_selector:
+    class: AppBundle\Form\Type\AccessRestrictionSelectorType
+    arguments: ["@doctrine.orm.entity_manager"]
+    tags:
+      - { name: form.type, alias: access_restriction_selector }
+#    service_name:
+#        class: AppBundle\Directory\ClassName
+#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]

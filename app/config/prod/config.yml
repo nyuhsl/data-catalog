@@ -1,0 +1,44 @@
+imports:
+    - { resource: "../common/config.yml" }
+    - { resource: 'parameters.yml' }
+ #   - { resource: 'security.yml' }
+
+framework:
+    validation:
+        cache: apc
+    router:
+        resource: "%kernel.root_dir%/config/prod/routing.yml"
+        strict_requirements: true
+    profiler: { only_exceptions: false }
+
+doctrine:
+    dbal:
+        driver:   "%database_driver%"
+        host:     "%database_host%"
+        port:     "%database_port%"
+        dbname:   "%database_name%"
+        user:     "%database_user%"
+        password: "%database_password%"
+        charset:  UTF8
+    orm:
+        metadata_cache_driver: apc
+        result_cache_driver: apc
+        auto_mapping: true
+        query_cache_driver: apc
+
+monolog:
+    handlers:
+        main:
+            type:         fingers_crossed
+            action_level: error
+            handler:      nested
+        nested:
+            type:  stream
+            path:  "%kernel.logs_dir%/%kernel.environment%.log"
+            level: debug
+        console:
+            type:  console
+swiftmailer:
+    transport: sendmail
+    host: localhost
+    port: 25
