@@ -175,8 +175,8 @@ class DatasetAsAdminType extends AbstractType {
       $builder->add('dataset_size', 'text', array(
         'required' => false,
         'label'    => 'Dataset Size'));
-    $builder->add('measurement_standards', 'entity', array(
-      'class'   => 'AppBundle:MeasurementStandard',
+    $builder->add('data_collection_standards', 'entity', array(
+      'class'   => 'AppBundle:DataCollectionStandard',
       'property'=> 'measurement_standard_name',
       'required' => false,
       'attr'=>array('style'=>'width:100%', 'placeholder'=>''),

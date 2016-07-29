@@ -6,7 +6,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
- * Form builder for Measurement Standard entry
+ * Form builder for Data Collection Standard entry
  *
  *   This file is part of the Data Catalog project.
  *   Copyright (C) 2016 NYU Health Sciences Library
@@ -24,7 +24,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-class MeasurementStandardType extends AbstractType {
+class DataCollectionStandardType extends AbstractType {
 
   /**
    * Build the form
@@ -45,12 +45,12 @@ class MeasurementStandardType extends AbstractType {
    */
   public function setDefaultOptions(OptionsResolverInterface $resolver) {
     $resolver->setDefaults(array(
-      'data_class' => 'AppBundle\Entity\MeasurementStandard'
+      'data_class' => 'AppBundle\Entity\DataCollectionStandard'
     ));
   }
 
   public function getName() {
-    return 'measurementStandard';
+    return 'dataCollectionStandard';
   }
 
 }

@@ -204,13 +204,13 @@ class Dataset implements JsonSerializable {
 
 
   /**
-   * @ORM\ManyToMany(targetEntity="MeasurementStandard", cascade={"persist"}, inversedBy="datasets")
+   * @ORM\ManyToMany(targetEntity="DataCollectionStandard", cascade={"persist"}, inversedBy="datasets")
    * @ORM\JoinTable(name="datasets_standards",
    *                joinColumns={@ORM\JoinColumn(name="dataset_uid",referencedColumnName="dataset_uid")},
    *                inverseJoinColumns={@ORM\JoinColumn(name="standard_id",referencedColumnName="standard_id")}
    *                )
    */
-  protected $measurement_standards;
+  protected $data_collection_standards;
 
 
   /**
@@ -309,7 +309,7 @@ class Dataset implements JsonSerializable {
 
 
   /**
-   * @ORM\ManyToMany(targetEntity="Publisher", cascade={"persist"})
+   * @ORM\ManyToMany(targetEntity="Publisher", cascade={"all"})
    * @ORM\JoinTable(name="datasets_publishers",
    *                joinColumns={@ORM\JoinColumn(name="dataset_uid",referencedColumnName="dataset_uid")},
    *                inverseJoinColumns={@ORM\JoinColumn(name="publisher_id",referencedColumnName="publisher_id")}
@@ -428,7 +428,7 @@ class Dataset implements JsonSerializable {
         $this->dataset_formats = new \Doctrine\Common\Collections\ArrayCollection();
         $this->awards = new \Doctrine\Common\Collections\ArrayCollection();
         $this->access_restrictions = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->measurement_standards = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->data_collection_standards = new \Doctrine\Common\Collections\ArrayCollection();
         $this->subject_genders = new \Doctrine\Common\Collections\ArrayCollection();
         $this->subject_population_ages = new \Doctrine\Common\Collections\ArrayCollection();
         $this->data_types = new \Doctrine\Common\Collections\ArrayCollection();
@@ -1052,36 +1052,36 @@ class Dataset implements JsonSerializable {
     }
 
     /**
-     * Add measurement_standards
+     * Add data_collection_standards
      *
-     * @param \AppBundle\Entity\MeasurementStandard $measurementStandards
+     * @param \AppBundle\Entity\DataCollectionStandard $dataCollectionStandards
      * @return Dataset
      */
-    public function addMeasurementStandard(\AppBundle\Entity\MeasurementStandard $measurementStandards)
+    public function addDataCollectionStandard(\AppBundle\Entity\DataCollectionStandard $dataCollectionStandard)
     {
-        $this->measurement_standards[] = $measurementStandards;
+        $this->data_collection_standards[] = $dataCollectionStandard;
 
         return $this;
     }
 
     /**
-     * Remove measurement_standards
+     * Remove data_collection_standards
      *
-     * @param \AppBundle\Entity\MeasurementStandard $measurementStandards
+     * @param \AppBundle\Entity\DataCollectionStandard $dataCollectionStandards
      */
-    public function removeMeasurementStandard(\AppBundle\Entity\MeasurementStandard $measurementStandards)
+    public function removeDataCollectionStandard(\AppBundle\Entity\DataCollectionStandard $dataCollectionStandard)
     {
-        $this->measurement_standards->removeElement($measurementStandards);
+        $this->data_collection_standards->removeElement($dataCollectionStandard);
     }
 
     /**
-     * Get measurement_standards
+     * Get data_collection_standards
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getMeasurementStandards()
+    public function getDataCollectionStandards()
     {
-        return $this->measurement_standards;
+        return $this->data_collection_standards;
     }
 
     /**
@@ -1616,7 +1616,7 @@ class Dataset implements JsonSerializable {
         foreach ($this->dataset_formats as $format) { $formats[]=$format->getDisplayName(); }
         foreach ($this->awards as $award) { $awards[]=$award->getDisplayName(); }
         foreach ($this->access_restrictions as $restriction) { $restrictions[]=$restriction->getDisplayName(); }
-        foreach ($this->measurement_standards as $std) { $stds[]=$std->getDisplayName(); }
+        foreach ($this->data_collection_standards as $std) { $stds[]=$std->getDisplayName(); }
         foreach ($this->subject_genders as $gender) { $genders[]=$gender->getDisplayName(); }
         foreach ($this->subject_population_ages as $age) { $ages[]=$age->getDisplayName(); }
         foreach ($this->subject_geographic_areas as $area) { $areas[]=$area->getDisplayName(); }

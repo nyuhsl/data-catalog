@@ -89,8 +89,8 @@ class DatasetAsUserType extends AbstractType {
       'by_reference'=>false,
       'label'     => 'Dataset File Format',
     ));
-    $builder->add('measurement_standards', 'entity', array(
-      'class'   => 'AppBundle:MeasurementStandard',
+    $builder->add('data_collection_standards', 'entity', array(
+      'class'   => 'AppBundle:DataCollectionStandard',
       'property'=> 'measurement_standard_name',
       'required' => false,
       'attr'=>array('style'=>'width:100%', 'placeholder'=>''),

@@ -55,7 +55,6 @@ class Publisher {
   /**
    * @ORM\ManyToMany(targetEntity="PublisherCategory", cascade={"all"})
    * @ORM\JoinTable(name="publishers_publisher_categories",
-   *                schema="publishers_publisher_categories",
    *                joinColumns={@ORM\JoinColumn(name="publisher_id",
    *                            referencedColumnName="publisher_id")},
    *                inverseJoinColumns={@ORM\JoinColumn(name="publisher_category_id",
