@@ -47,7 +47,43 @@ class PublisherCategory {
   protected $slug;
 
 
+  /**
+   * @ORM\ManyToMany(targetEntity="Publisher", mappedBy="publisher_categories")
+   */
+  protected $publishers;
 
+    /**
+     * Add publisher
+     *
+     * @param \AppBundle\Entity\Publisher $publisher
+     * @return PublisherCategory
+     */
+    public function addPublisher(\AppBundle\Entity\Publisher $publisher)
+    {
+        $this->publishers[] = $publisher;
+
+        return $this;
+    }
+
+    /**
+     * Remove publisher
+     *
+     * @param \AppBundle\Entity\Publisher $publisher
+     */
+    public function removePublisher(\AppBundle\Entity\Publisher $publisher)
+    {
+        $this->publishers->removeElement($publisher);
+    }
+
+    /**
+     * Get publishers
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPublishers()
+    {
+        return $this->publishers;
+    }
 
   /**
    * get name for display

@@ -309,7 +309,7 @@ class Dataset implements JsonSerializable {
 
 
   /**
-   * @ORM\ManyToMany(targetEntity="Publisher", cascade={"all"})
+   * @ORM\ManyToMany(targetEntity="Publisher", cascade={"persist"})
    * @ORM\JoinTable(name="datasets_publishers",
    *                joinColumns={@ORM\JoinColumn(name="dataset_uid",referencedColumnName="dataset_uid")},
    *                inverseJoinColumns={@ORM\JoinColumn(name="publisher_id",referencedColumnName="publisher_id")}

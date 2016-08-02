@@ -53,15 +53,57 @@ class Publisher {
   protected $publisher_url;
 
   /**
-   * @ORM\ManyToMany(targetEntity="PublisherCategory", cascade={"all"})
+   * @ORM\ManyToMany(targetEntity="Dataset", mappedBy="publishers")
+   */
+  protected $datasets;
+
+
+  /**
+   * @ORM\ManyToMany(targetEntity="PublisherCategory", cascade={"persist"})
    * @ORM\JoinTable(name="publishers_publisher_categories",
    *                joinColumns={@ORM\JoinColumn(name="publisher_id",
-   *                            referencedColumnName="publisher_id")},
+   *                            referencedColumnName="publisher_id"
+   *                            )},
    *                inverseJoinColumns={@ORM\JoinColumn(name="publisher_category_id",
-   *                            referencedColumnName="publisher_category_id")}
+   *                            referencedColumnName="publisher_category_id"
+   *                            )}
    *               )
    */
   protected $publisher_categories;
+
+
+    /**
+     * Add datasets
+     *
+     * @param \AppBundle\Entity\Dataset $datasets
+     * @return DataType
+     */
+    public function addDataset(\AppBundle\Entity\Dataset $datasets)
+    {
+        $this->datasets[] = $datasets;
+
+        return $this;
+    }
+
+    /**
+     * Remove datasets
+     *
+     * @param \AppBundle\Entity\Dataset $datasets
+     */
+    public function removeDataset(\AppBundle\Entity\Dataset $datasets)
+    {
+        $this->datasets->removeElement($datasets);
+    }
+
+    /**
+     * Get datasets
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getDatasets()
+    {
+        return $this->datasets;
+    }
 
 
   /**
@@ -169,6 +211,7 @@ class Publisher {
      */
     public function __construct()
     {
+        $this->datasets = new \Doctrine\Common\Collections\ArrayCollection();
         $this->publisher_categories = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
