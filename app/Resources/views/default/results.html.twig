@@ -111,7 +111,7 @@
               <dt>Alternate Title(s)</dt>
               <dd> {{ item.dataset_alt_title|join(', ') }} </dd>
                 {% endif %}
-             <dt>Description</dt><dd><p>{{ item.description[0] }}</p></dd>
+             <dt>Description</dt><dd><p>{{ item.description[0]|raw }}</p></dd>
              <dt>Subject</dt><dd>{% for subject in item.subject_domain %} 
                <div class="multiple-item-list">{{ subject }}</div>
                {% endfor %}</dd>
