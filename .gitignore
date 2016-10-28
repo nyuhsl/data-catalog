@@ -55,3 +55,4 @@ bin/*
 app/config/**/parameters.yml
 app/config/common/security.yml
 app/Resources/views/institution/*
+web/css/institution/*
