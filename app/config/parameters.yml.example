@@ -29,6 +29,7 @@ parameters:
     institution_url: "http://www.example.edu"
     contact_email_to: 
     contact_email_from: 
+    internal_dataset_text: "Internal Dataset"
 
   #
   # Technical stuff

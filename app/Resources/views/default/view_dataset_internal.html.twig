@@ -116,7 +116,7 @@ $(function () {
    </a>
   </div>
   {% endif %}
-     <h1 class="dataset-detail-maintitle">{{ dataset.title }} <small class="internal-dataset">Internal Dataset</small> {% if dataset.published == false %}<small>[unpublished]</small>{%endif%}</h1>
+     <h1 class="dataset-detail-maintitle">{{ dataset.title }} <small class="internal-dataset">{{ internal_dataset_text }}</small> {% if dataset.published == false %}<small>[unpublished]</small>{%endif%}</h1>
       <span class="dataset-detail-alttitle">
       {% if dataset.datasetAlternateTitles.count > 0 %}
        <h5>Alternate Titles(s): 
