@@ -15,7 +15,7 @@
  <ul>
  
  {% for entity in entities %}
- <li>
+ <li class="entities-list-item">
   <a href="{{ path('update_entity', {'entityName':entityName,'slug':entity.slug}) }}">{{ entity.getDisplayName }}</a>
  </li>
  {% endfor %}
