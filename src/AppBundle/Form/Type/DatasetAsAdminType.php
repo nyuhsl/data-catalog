@@ -225,15 +225,24 @@ class DatasetAsAdminType extends AbstractType {
         'allow_add' => true
       ));
     //content information
-    $builder->add('authors', 'entity', array(
-      'class' => 'AppBundle:Person',
-      'property'=>'full_name',
+    $builder->add('authorships', 'collection', array(
+      'type' => new PersonAssociationType(),
+      'prototype' => true,
       'required'=>false,
-      'attr'=>array('style'=>'width:100%'),
-      'multiple'=>true,
       'by_reference'=>false,
       'label'=>'Authors',
+      'allow_delete'=>true,
+      'allow_add'=>true
     ));
+    /*$builder->add('authors', 'collection', array(
+      'type' => new PersonAssociationType(),
+      'prototype'=>true,
+      'required'=>false,
+      'attr'=>array('style'=>'width:100%'),
+      'by_reference'=>false,
+      'allow_add'=>true,
+      'label'=>'Authors',
+    ));*/
     $builder->add('corresponding_authors', 'entity', array(
       'class' => 'AppBundle:Person',
       'property'=>'full_name',

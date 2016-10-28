@@ -88,8 +88,20 @@ col-sm-4
   </fieldset>
   <fieldset>
     <legend>Author Information</legend>
-      {{ form_row(form.authors) }}
-      {{ form_row(form.corresponding_authors) }}
+    {# AUTHORS #}
+      <div class="form-group multiple">
+        <label class="col-sm-4 control-label" for="{{ form.authorships.vars.name }}">
+          {{ form.authorships.vars.label }}
+        </label>
+        <div class="col-sm-8">
+          <a class="btn-add label label-success" data-target="add-{{ form.authorships.vars.name}}">Add item</a>
+        </div>
+        <div class="add-{{ form.authorships.vars.name}}" data-prototype="{{ _self.widget_prototype(form.authorships, 'Remove item')|escape }}">
+        {% for widget in form.authorships %}
+          {{ _self.widget_prototype(widget, 'Remove item') }}
+        {% endfor %}
+        </div>
+      </div>
       {% if userIsAdmin %}
         {{ form_row(form.publishers) }}
       {% endif %}

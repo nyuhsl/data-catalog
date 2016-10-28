@@ -321,17 +321,6 @@ class Dataset implements JsonSerializable {
 
   /**
    * @ORM\ManyToMany(targetEntity="Person", cascade={"persist"})
-   * @ORM\JoinTable(name="datasets_authors",
-   *                joinColumns={@ORM\JoinColumn(name="dataset_uid",referencedColumnName="dataset_uid")},
-   *                inverseJoinColumns={@ORM\JoinColumn(name="person_id",referencedColumnName="person_id")}
-   *                )
-   * @ORM\OrderBy({"full_name"="ASC"})
-   */
-  protected $authors;
-
-
-  /**
-   * @ORM\ManyToMany(targetEntity="Person", cascade={"persist"})
    * @ORM\JoinTable(name="datasets_corresponding_authors",
    *                joinColumns={@ORM\JoinColumn(name="dataset_uid",referencedColumnName="dataset_uid")},
    *                inverseJoinColumns={@ORM\JoinColumn(name="person_id",referencedColumnName="person_id")}
@@ -350,7 +339,6 @@ class Dataset implements JsonSerializable {
    * @ORM\OrderBy({"full_name"="ASC"})
    */
   protected $local_experts;
-
 
 
   /**
@@ -375,7 +363,6 @@ class Dataset implements JsonSerializable {
   protected $related_equipment;
 
 
-
   /**
    * @ORM\ManyToMany(targetEntity="SubjectOfStudy", cascade={"persist"}, inversedBy="datasets")
    * @ORM\JoinTable(name="datasets_subject_of_study",
@@ -394,6 +381,13 @@ class Dataset implements JsonSerializable {
   // BEGIN OneToMany RELATIONSHIPS
   //
   //
+
+
+  /**
+   * @ORM\OneToMany(targetEntity="PersonAssociation", mappedBy="dataset", orphanRemoval=TRUE)
+   * @ORM\OrderBy({"display_order" = "ASC"})
+   */
+  protected $authorships;
 
   /**
    * @ORM\OneToMany(targetEntity="DataLocation", mappedBy="datasets_dataset_uid", cascade={"all"})
@@ -445,6 +439,7 @@ class Dataset implements JsonSerializable {
         $this->related_software = new \Doctrine\Common\Collections\ArrayCollection();
         $this->related_equipment = new \Doctrine\Common\Collections\ArrayCollection();
         $this->subject_of_study = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->authorships = new \Doctrine\Common\Collections\ArrayCollection();
 
         $this->published = false;
     }
@@ -1628,7 +1623,7 @@ class Dataset implements JsonSerializable {
         foreach ($this->data_types as $data_type) { $data_type_array[]=$data_type->getDisplayName(); }
         foreach ($this->dataset_alternate_titles as $alt) { $akas[]=$alt->getDisplayName(); }
         foreach ($this->study_types as $study_type) { $types_of_study[]=$study_type->getDisplayName(); }
-        foreach ($this->authors as $author) { $authors[]=$author->getDisplayName(); }
+        foreach ($this->authorships as $authorship) { $authors[]=$authorship->getPerson()->getDisplayName(); }
         foreach ($this->corresponding_authors as $corresponding_author) { $corresponding_authors[]=$corresponding_author->getDisplayName(); }
         foreach ($this->local_experts as $expert) { $experts[]=$expert->getDisplayName(); }
         foreach ($this->subject_of_study as $subject) { $subject_of_study[]=$subject->getDisplayName(); }
@@ -1667,36 +1662,65 @@ class Dataset implements JsonSerializable {
 
 
     /**
-     * Add authors
+     * Add author
      *
-     * @param \AppBundle\Entity\Person $authors
+     * @param \AppBundle\Entity\PersonAssociation $authorship
      * @return Dataset
      */
-    public function addAuthor(\AppBundle\Entity\Person $authors)
+    public function addAuthorship(\AppBundle\Entity\PersonAssociation $authorship)
     {
-        $this->authors[] = $authors;
+      if (!$this->authorships->contains($authorship)) {
+        $this->authorships->add($authorship);
+      }
 
-        return $this;
+      return $this;
     }
 
     /**
-     * Remove authors
+     * Remove authorship
      *
-     * @param \AppBundle\Entity\Person $authors
+     * @param \AppBundle\Entity\PersonAssociation $authorship
      */
-    public function removeAuthor(\AppBundle\Entity\Person $authors)
+    public function removeAuthorship(\AppBundle\Entity\PersonAssociation $authorship)
     {
-        $this->authors->removeElement($authors);
+      if ($this->authorships->contains($authorship)) {
+        $this->authorships->removeElement($authorship);
+      }
+      return $this;
+    }
+
+    /**
+     * Remove ALL authorships
+     *
+     */
+    public function removeAllAuthorships() 
+    {
+      $this->getAuthorships()->clear();
+    }
+    /**
+     * 
+     * Get authorships
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getAuthorships()
+    {
+        return $this->authorships;
     }
 
     /**
      * Get authors
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \AppBundle\Entity\Person
      */
     public function getAuthors()
     {
-        return $this->authors;
+      return array_map(
+        function($authorship) {
+          return $authorship->getPerson();
+        },
+        $this->authorships->toArray()
+      );
     }
 
 

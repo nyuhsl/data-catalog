@@ -112,10 +112,14 @@ class AddController extends Controller {
       $addedEntityName = $dataset->getTitle();
       $slug = Slugger::slugify($addedEntityName);
       $dataset->setSlug($slug);
-
-
+      
       $em->persist($dataset);
+      foreach ($dataset->getAuthorships() as $authorship) {
+        $authorship->setDataset($dataset);
+        $em->persist($authorship);
+      }
       $em->flush();
+     
       return $this->render('default/add_success.html.twig', array(
         'adminPage'=>true,
         'entityName'=>'Dataset',

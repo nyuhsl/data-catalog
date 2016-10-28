@@ -3,6 +3,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Doctrine\Common\Collections\ArrayCollection;
 
 
 
@@ -78,6 +79,10 @@ class Person {
   protected $bio_url;
 
 
+  /**
+   * @ORM\OneToMany(targetEntity="PersonAssociation", mappedBy="person")
+   */
+  protected $dataset_associations;
 
 
   /**
@@ -94,6 +99,7 @@ class Person {
      */
     public function __construct()
     {
+      $this->datasetAssociations = new ArrayCollection();
     }
 
     /**
@@ -266,5 +272,37 @@ class Person {
     public function getOrcidId()
     {
         return $this->orcid_id;
+    }
+
+    public function getDatasetAssociations()
+    {
+      return $this->datasetAssociations->toArray();
+    }
+
+    public function addDatasetAssociation(PersonAssociation $assoc) 
+    {
+      if (!$this->datasetAssociations->contains($assoc)) {
+        $this->datasetAssociations->add($assoc);
+      }
+      return $this;
+    }
+
+    public function removeDatasetAssociation(PersonAssociation $assoc)
+    {
+      if ($this->datasetAssociations->contains($assoc)) {
+        $this->datasetAssociations->removeElement($assoc);
+      }
+
+      return $this;
+    }
+
+    public function getAssociatedDatasets()
+    {
+      return array_map(
+        function ($association) {
+          return $association->getDataset();
+        },
+        $this->datasetAssociations->toArray()
+      );
     }
 }
