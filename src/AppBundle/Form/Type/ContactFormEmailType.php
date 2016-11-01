@@ -26,6 +26,8 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class ContactFormEmailType extends AbstractType {
 
+  private $affiliationOptions;
+
   /**
    * Build the form
    *
@@ -44,11 +46,8 @@ class ContactFormEmailType extends AbstractType {
     $builder->add('affiliation', 'choice', array(
       'label'=>'Institutional Affiliation',
       'label_attr'=>array('class'=>'no-asterisk'),
-      'choices' => array(
-        'Set these options' => 'Set these options',
-        'in the file' => 'in the file',
-        'src/AppBundle/Form/Type/ContactFormEmailType' => 'src/AppBundle/Form/Type/ContactFormEmailType',
-        )));
+      'choices' => $this->affiliationOptions
+    ));
        
     $builder->add('reason', 'choice', array(
       'expanded'=>true,
@@ -73,6 +72,21 @@ class ContactFormEmailType extends AbstractType {
     $builder->add('save','submit',array('label'=>'Send'));
   }
 
+
+  /**
+   * Build institutional affiliation options list
+   * 
+   * @param $affiliationOptions
+   */
+  public function __construct($affiliationOptions) {
+    $this->affiliationOptions = [];
+
+    foreach ($affiliationOptions as $option) {
+      $this->affiliationOptions[$option] = $option;
+    }
+  }
+
+
   /**
    * Set defaults
    *
@@ -83,6 +97,7 @@ class ContactFormEmailType extends AbstractType {
       'data_class' => 'AppBundle\Entity\ContactFormEmail'
     ));
   }
+
 
   public function getName() {
     return 'contactFormEmail';

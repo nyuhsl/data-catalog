@@ -27,8 +27,16 @@ parameters:
     institution_name: "Generic Academic Institution"
     institution_address: "123 Fake Street, Springfield USA"
     institution_url: "http://www.example.edu"
+    
+    # Options for the contact form
     contact_email_to: 
     contact_email_from: 
+    institutional_affiliation_options:
+      - "Generic School of Medicine"
+      - "Generic School of Engineering"
+      - "Generic School of Etc."
+
+    # Badge to display for internal datasets
     internal_dataset_text: "Internal Dataset"
 
   #
@@ -46,6 +54,9 @@ parameters:
     mailer_password: null
     locale: en
     secret: 
+    # If you're using LDAP authentication
+    ldap.host:
+    ldap.port: 
 
   #
   # Solr stuff. You mostly want to set the server URL.
