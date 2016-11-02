@@ -11,6 +11,19 @@ framework:
         strict_requirements: true
     profiler: { only_exceptions: false }
 
+# Twig template configuration
+twig:
+  globals:
+    site_name: '%site_name%'
+    site_description: '%site_description%'
+    site_base_url: '%site_base_url%'
+    site_provider_name: '%site_provider_name%'
+    site_provider_url: '%site_provider_url%'
+    institution_name: '%institution_name%'
+    institution_address: '%institution_address%'
+    institution_url: '%institution_url%'
+    internal_dataset_text: '%internal_dataset_text%'
+
 doctrine:
     dbal:
         driver:   "%database_driver%"

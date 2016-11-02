@@ -33,7 +33,9 @@ class PublicationType extends AbstractType {
    * @param array $options
    */
   public function buildForm(FormBuilderInterface $builder, array $options) {
-    $builder->add('citation');
+    $builder->add('citation', 'textarea', array(
+      'attr' => array('rows'=>'7')
+    ));
     $builder->add('url', 'text', array(
      'label'=>'URL'));
     $builder->add('doi', 'text',array(

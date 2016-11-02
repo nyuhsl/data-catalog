@@ -106,12 +106,13 @@ class GeneralController extends Controller
   public function contactAction(Request $request) {
     $contactFormEmail = new \AppBundle\Entity\ContactFormEmail();
 
-    // Get email addresses from parameters.yml
+    // Get email addresses and institution list from parameters.yml
     $emailTo = $this->container->getParameter('contact_email_to');
     $emailFrom = $this->container->getParameter('contact_email_from');
+    $affiliationOptions = $this->container->getParameter('institutional_affiliation_options');
 
     $em = $this->getDoctrine()->getManager();
-    $form = $this->createForm(new \AppBundle\Form\Type\ContactFormEmailType(), $contactFormEmail);
+    $form = $this->createForm(new \AppBundle\Form\Type\ContactFormEmailType($affiliationOptions), $contactFormEmail);
     $form->handleRequest($request);
     if ($form->isValid()) {
       $email = $form->getData();

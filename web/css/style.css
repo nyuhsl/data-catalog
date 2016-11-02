@@ -143,6 +143,9 @@ http://ryanfait.com/
 .entity-remove-link:hover {
   color:red;
 }
+.entities-list-item {
+  margin:.7em 0em;
+}
 
 #facets-pane {
   padding:.5em;

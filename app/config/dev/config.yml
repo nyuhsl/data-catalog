@@ -24,6 +24,7 @@ twig:
     institution_name: '%institution_name%'
     institution_address: '%institution_address%'
     institution_url: '%institution_url%'
+    internal_dataset_text: '%internal_dataset_text%'
 
 # Doctrine Configuration
 doctrine:

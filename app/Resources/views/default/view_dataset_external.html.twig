@@ -150,38 +150,32 @@ $(function () {
     <p>
       <span class="dataset-detail-id">UID: {{ dataset.id }}</span>
       </p>
-
-         {% if dataset.authors is not empty or dataset.correspondingAuthors is not empty %}
+         {% if dataset.getAuthorships is not empty %}
           <p class="dataset-authors-section">
           <span class="dataset-detail-authors">Author(s):
-           {% if dataset.correspondingAuthors is not empty %}
-             {% for author in dataset.correspondingAuthors %}
-              {% if author.bioUrl %}
-                {% set popoverContent = "<p><a href='#{ author.bioUrl }' target='_blank'>View profile</a></p><p><a href='/search?keyword=authors:#{ author.fullName } or corresponding_authors:#{ author.fullName }' target='_blank'>View other datasets</a></p>" %}
+            {% set correspondingAuthorExists = false %}
+            {% for author in dataset.getAuthorships %}
+              {% if author.getPerson.getBioUrl %}
+                {% set popoverContent = "<p><a href='#{ author.getPerson.getBioUrl }' target='_blank'>View profile</a></p><p><a href='/search?keyword=authors:#{ author.getPerson.getFullName } or corresponding_authors:#{ author.getPerson.getFullName }' target='_blank'>View other datasets</a></p>" %}
 
-              {% else %}
-                {% set popoverContent = "<p><a href='/search?keyword=authors:#{ author.fullName } or corresponding_authors:#{ author.fullName }' target='_blank'>View other datasets</a></p>" %}
+               {% else %}
+                {% set popoverContent = "<p><a href='/search?keyword=authors:#{ author.getPerson.getFullName } or corresponding_authors:#{ author.getPerson.getFullName }' target='_blank'>View other datasets</a></p>" %}
 
-              {% endif %}
-               <a tabindex="0" class="corresponding-author author-name" role="button" data-toggle="popover" title="{{ author.fullName }}" data-content="{{ popoverContent }}">{{ author.fullName }}*</a>{% if not loop.last or dataset.authors is not empty %}, {% endif %}
-             {% endfor %}
-            {% endif %}
-           {% if dataset.authors is not empty %}
-           {% for author in dataset.authors %}
-            {% if author.bioUrl %}
-                {% set popoverContent = "<p><a href='#{ author.bioUrl }' target='_blank'>View profile</a></p><p><a href='/search?keyword=authors:#{ author.fullName } or corresponding_authors:#{ author.fullName }' target='_blank'>View other datasets</a></p>" %}
-            {% else %}
-                {% set popoverContent = "<p><a href='/search?keyword=authors:#{ author.fullName } or corresponding_authors:#{ author.fullName }' target='_blank'>View other datasets</a></p>" %}
-            {% endif %}
-               <a tabindex="0" class="author-name" role="button" data-toggle="popover" title="{{ author.fullName }}" data-content="{{ popoverContent }}">{{ author.fullName }}</a>{% if not loop.last %}, {% endif %}
+             {% endif %}
+             {% if author.isCorrespondingAuthor %}
+                <a tabindex="0" class="corresponding-author author-name" role="button" data-toggle="popover" title="{{ author.getPerson.getFullName }}" data-content="{{ popoverContent }}">{{ author.getPerson.getFullName }}*</a>{% if not loop.last %}, {% endif %}
+                {% set correspondingAuthorExists = true %}
+             {% else %}
+                <a tabindex="0" class="author-name" role="button" data-toggle="popover" title="{{ author.getPerson.getFullName }}" data-content="{{ popoverContent }}">{{ author.getPerson.getFullName }}</a>{% if not loop.last %}, {% endif %}
+             {% endif %}
            {% endfor %}
-          {% endif %}
           </span>
          </p>
-           {% if dataset.correspondingAuthors is not empty %}
+           {% if correspondingAuthorExists %}
              <span class="corresponding-author-note">* Corresponding Author</span>
            {% endif %}
          {% endif %}
+
     </p>
   </div>
 </div>
@@ -310,6 +304,21 @@ $(function () {
       <dt>Access Instructions</dt>
          <dd>{{ dataset.accessInstructions|raw }}</dd>
       
+      {% if (dataset.publications.count > 0) %}
+       <dt>Associated Publications</dt>
+       <dd>
+      {% for pub in dataset.publications %}
+        <div class="assoc-publication multiple-item-list">
+         {% if pub.url is not null %}
+           <a href="{{ pub.url }}" target="_blank">{{ pub.citation|raw }}</a>
+         {% else %}
+           {{ pub.citation }}
+         {% endif %}
+        </div>
+      {% endfor %}
+      </dd>
+      {% endif %}
+
       {% if (dataset.dataTypes.count > 0) %}
        <dt>Data Type</dt>
        <dd>

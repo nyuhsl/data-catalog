@@ -29,7 +29,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Table(name="measurement_standards")
  * @UniqueEntity("measurement_standard_name")
  */
-class MeasurementStandard {
+class DataCollectionStandard {
   /**
    * @ORM\Column(type="integer",name="standard_id")
    * @ORM\Id
@@ -53,7 +53,7 @@ class MeasurementStandard {
   protected $measurement_standard_authority;
 
   /**
-   * @ORM\ManyToMany(targetEntity="Dataset", mappedBy="measurement_standards")
+   * @ORM\ManyToMany(targetEntity="Dataset", mappedBy="data_collection_standards")
    **/
   protected $datasets;
 
@@ -84,7 +84,7 @@ class MeasurementStandard {
      * Set measurement_standard_name
      *
      * @param string $measurementStandardName
-     * @return MeasurementStandard
+     * @return DataCollectionStandard
      */
     public function setMeasurementStandardName($measurementStandardName)
     {
@@ -107,7 +107,7 @@ class MeasurementStandard {
      * Set measurement_standard_authority
      *
      * @param string $measurementStandardAuthority
-     * @return MeasurementStandard
+     * @return DataCollectionStandard
      */
     public function setMeasurementStandardAuthority($measurementStandardAuthority)
     {
@@ -130,7 +130,7 @@ class MeasurementStandard {
      * Set slug
      *
      * @param string $slug
-     * @return MeasurementStandard
+     * @return DataCollectionStandard
      */
     public function setSlug($slug)
     {
@@ -153,7 +153,7 @@ class MeasurementStandard {
      * Add datasets
      *
      * @param \AppBundle\Entity\Dataset $datasets
-     * @return MeasurementStandard
+     * @return DataCollectionStandard
      */
     public function addDataset(\AppBundle\Entity\Dataset $datasets)
     {

@@ -134,7 +134,6 @@ class SolrSearchr {
            . '&wt=' . $this->solrFormat;
 
     return $URL;
-
   }
 
 

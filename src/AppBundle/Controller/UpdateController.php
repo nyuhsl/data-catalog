@@ -62,7 +62,11 @@ class UpdateController extends Controller {
     $userIsAdmin = $this->get('security.context')->isGranted('ROLE_ADMIN');
 
     if ($slug == null) {
-      $allEntities = $em->getRepository($updateEntity)->findAll();
+      if ($entityName == 'Award') {
+        $allEntities = $em->getRepository('AppBundle:Award')->findAllOrdered();
+      } else {
+        $allEntities = $em->getRepository($updateEntity)->findAll();
+      }
       return $this->render('default/list_of_entities_to_update.html.twig', array(
         'entities'    => $allEntities,
         'entityName'  => $entityName,
@@ -97,6 +101,20 @@ class UpdateController extends Controller {
       $thisEntity->setSlug($newSlug);
       if (method_exists($thisEntity, 'setDateUpdated')) {
         $thisEntity->setDateUpdated(new \DateTime("now"));
+      }
+      if ($entityName == 'Dataset') {
+        $newAuthorships = $thisEntity->getAuthorships();
+        $oldDataset = $em->getRepository($updateEntity)->findOneBy(array('dataset_uid'=>$datasetUid));
+        $oldAuthorships=$oldDataset->getAuthorships();
+        foreach ($oldAuthorships as $oldAuthor) {
+          if (!$newAuthorships->contains($oldAuthor)) {
+            $oldAuthorships->removeElement($oldAuthor);
+          }
+        }
+        foreach ($thisEntity->getAuthorships() as $authorship) {
+          $authorship->setDataset($thisEntity);
+          $em->persist($authorship);
+        }
       }
       $em->flush();
       return $this->render('default/update_success.html.twig', array(

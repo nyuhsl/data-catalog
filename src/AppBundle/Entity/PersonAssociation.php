@@ -31,7 +31,7 @@ class PersonAssociation {
    * @ORM\Id
    * @ORM\GeneratedValue(strategy="AUTO")
    */
-  protected $id;
+  protected $person_association_id;
 
   /**
    * @ORM\Column(type="string",length=128)
@@ -39,16 +39,26 @@ class PersonAssociation {
   protected $role;
 
   /**
+   * @ORM\Column(type="boolean",length=128)
+   */
+  protected $is_corresponding_author = false;
+
+  /**
+   * @ORM\Column(type="integer", nullable=true)
+   */
+  protected $display_order;
+
+  /**
    * @ORM\ManyToOne(targetEntity="Person", inversedBy="dataset_associations")
-   * @ORM\JoinColumn(name="person_id",referencedColumnName="person_id")
+   * @ORM\JoinColumn(name="person_id",referencedColumnName="person_id", nullable=FALSE)
    */
   protected $person;
   
   /**
-   * @ORM\ManyToOne(targetEntity="Dataset", inversedBy="person_associations")
-   * @ORM\JoinColumn(name="dataset_uid",referencedColumnName="dataset_uid")
+   * @ORM\ManyToOne(targetEntity="Dataset", inversedBy="authorships")
+   * @ORM\JoinColumn(name="datasets_dataset_uid",referencedColumnName="dataset_uid", nullable=FALSE)
    */
-  protected $dataset_uid;
+  protected $dataset;
 
 
     /**
@@ -56,9 +66,9 @@ class PersonAssociation {
      *
      * @return integer 
      */
-    public function getId()
+    public function getPersonAssociationId()
     {
-        return $this->id;
+        return $this->person_association_id;
     }
 
     /**
@@ -86,6 +96,54 @@ class PersonAssociation {
 
 
     /**
+     * Set is corresponding author
+     *
+     * @param string $corresponding
+     * @return PersonAssociation
+     */
+    public function setIsCorrespondingAuthor($corresponding)
+    {
+        $this->is_corresponding_author = $corresponding;
+
+        return $this;
+    }
+
+    /**
+     * Get is corresponding author
+     *
+     * @return string 
+     */
+    public function getIsCorrespondingAuthor()
+    {
+        return $this->is_corresponding_author;
+    }
+
+
+    /**
+     * Set display order
+     *
+     * @param int $displayOrder
+     * @return PersonAssociation
+     */
+    public function setDisplayOrder($displayOrder)
+    {
+        $this->display_order = $displayOrder;
+
+        return $this;
+    }
+
+    /**
+     * Get display_order
+     *
+     * @return int
+     */
+    public function getDisplayOrder()
+    {
+        return $this->display_order;
+    }
+
+
+    /**
      * Set person
      *
      * @param \AppBundle\Entity\Person $person
@@ -109,25 +167,25 @@ class PersonAssociation {
     }
 
     /**
-     * Set dataset_uid
+     * Set dataset
      *
-     * @param \AppBundle\Entity\Dataset $datasetUid
+     * @param \AppBundle\Entity\Dataset $dataset
      * @return PersonAssociation
      */
-    public function setDatasetUid(\AppBundle\Entity\Dataset $datasetUid = null)
+    public function setDataset(\AppBundle\Entity\Dataset $dataset)
     {
-        $this->dataset_uid = $datasetUid;
+        $this->dataset = $dataset;
 
         return $this;
     }
 
     /**
-     * Get dataset_uid
+     * Get dataset
      *
      * @return \AppBundle\Entity\Dataset 
      */
-    public function getDatasetUid()
+    public function getDataset()
     {
-        return $this->dataset_uid;
+        return $this->dataset;
     }
 }
