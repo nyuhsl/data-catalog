@@ -16,7 +16,13 @@
 <!--
 
  ***************
-      NOTE:
+ ***************
+ ***************
+ ***************
+      DATA CATALOG-SPECIFIC NOTE:
+ ***************
+ ***************
+ ***************
  ***************
  The fields in this file must match the fields in your Data Catalog's JSON API output.
  When you add a new metadata element (Symfony "entity") to your Data Catalog, 
