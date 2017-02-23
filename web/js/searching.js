@@ -1,8 +1,7 @@
 /**
- *   This file is part of the Data Catalog project, except for the
- *   exceptions noted in the comments. Licensing info for deparam()
- *   is appended to this site's LICENSE file.
  *
+ *   This file is part of the Data Catalog project, except for the 
+ *   exceptions noted in the comments.
  *   Copyright (C) 2016 NYU Health Sciences Library
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -18,7 +17,6 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 
 
 /**
@@ -65,6 +63,19 @@ jQuery(function($) {
     }
   });
 
+
+  /**
+   * Handle institution-only filter
+   */
+  $('#internal-only-filter-container').on('click', function(e) {
+      var content = "origin_fq:Internal";
+      if ($('#internal-only-filter').attr('checked')) {
+          alterSearch('remove', 'facet', content);
+      } else {
+          alterSearch('add', 'facet', content);
+      }
+
+  });
 
   /**
    * Call alterSearch() when a facet is removed
@@ -148,6 +159,7 @@ jQuery(function($) {
     return false;
   });
 
+  
 
   /**
    * Pager buttons
@@ -298,10 +310,11 @@ jQuery(function($) {
 
 
 /**
- * This function is originally from the jQuery BBQ library, extracted by AceMetrix at
+ * Originally from the jQuery BBQ library, extracted by AceMetrix at
  * https://github.com/AceMetrix/jquery-deparam
  *
- * Licensing info for this function is appended to this site's LICENSE file.
+ * License info for this function is appended to this application's LICENSE file
+ * 
  */
 (function ($) {
   $.deparam = function (params, coerce) {

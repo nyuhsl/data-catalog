@@ -1,4 +1,5 @@
-/**
+/*
+ *
  *   This file is part of the Data Catalog project.
  *   Copyright (C) 2016 NYU Health Sciences Library
  *
@@ -14,16 +15,16 @@
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
  */
-
 
 jQuery(function($) {
  $(document).ready(function () {
-  $('#collapsed-areas').on('shown.bs.collapse', function() {
-      $('a.collapsed-toggle').text('See less...');
+  $('#collapsed-areas, #collapsed-authors').on('shown.bs.collapse', function() {
+      $(this).siblings('a.collapsed-toggle').text('See less...');
   });
-  $('#collapsed-areas').on('hidden.bs.collapse', function() {
-      $('a.collapsed-toggle').text('See more...');
+  $('#collapsed-areas, #collapsed-authors').on('hidden.bs.collapse', function() {
+      $(this).siblings('a.collapsed-toggle').text('See more...');
   });
  });
 
