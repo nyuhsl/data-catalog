@@ -5,7 +5,7 @@ use AppBundle\Entity\Security\User;
 use AppBundle\Entity\Security\Role;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NoResultException;
-use Symfony\Component\Security\Core\User\UserProviderInterface;
+use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
@@ -29,8 +29,9 @@ use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
  */
-class UserRepository extends EntityRepository implements UserProviderInterface
+class UserRepository extends EntityRepository implements UserLoaderInterface
 {
     /**
      * Load user from database
@@ -52,7 +53,7 @@ class UserRepository extends EntityRepository implements UserProviderInterface
         $userData = $q->getSingleResult();
       } catch (NoResultException $e) {
         $message = sprintf(
-          'Unable to find user "%s"', $username
+          'Unable to find database user "%s"', $username
         );
         throw new UsernameNotFoundException($message, 0, $e);
       }

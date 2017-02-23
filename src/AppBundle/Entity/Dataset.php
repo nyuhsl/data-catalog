@@ -27,6 +27,7 @@ use JsonSerializable;
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
+ *
  * @ORM\Entity(repositoryClass="AppBundle\Entity\DatasetRepository")
  * @ORM\Table(name="datasets")
  * @UniqueEntity("title")
@@ -151,12 +152,6 @@ class Dataset implements JsonSerializable {
    * @ORM\Column(type="date", nullable=true)
    */
   protected $date_archived;
-
-
-  /**
-   * @ORM\Column(type="string", length=512, nullable=true)
-   */
-  protected $accession_number;
 
 
   /**
@@ -901,28 +896,6 @@ class Dataset implements JsonSerializable {
         return $this->date_archived;
     }
 
-    /**
-     * Set accession_number
-     *
-     * @param string $accessionNumber
-     * @return Dataset
-     */
-    public function setAccessionNumber($accessionNumber)
-    {
-        $this->accession_number = $accessionNumber;
-
-        return $this;
-    }
-
-    /**
-     * Get accession_number
-     *
-     * @return string 
-     */
-    public function getAccessionNumber()
-    {
-        return $this->accession_number;
-    }
 
     /**
      * Set data_location_description
@@ -1557,7 +1530,7 @@ class Dataset implements JsonSerializable {
     {
       if ($this->related_datasets->contains($relatedDataset)) {
         $this->related_datasets->removeElement($relatedDataset);
-        $relatedDatset->setParentDatasetUid(null);
+        $relatedDataset->setParentDatasetUid(null);
       }
     }
 
@@ -1596,11 +1569,8 @@ class Dataset implements JsonSerializable {
 
 
     /**
-     * Produce custom serialized dataset for JSON output using PHP's
-     * JsonSerializable interface. Not the most elegant solution, but
-     * faster and more customizable than Symfony's Serializer component,
-     * and doesn't cause recursion like jms/serializer-bundle did.
-     *
+     * Get serialized dataset for JSON output
+     * 
      * @return array
      */
      public function jsonSerialize() {
@@ -1629,17 +1599,18 @@ class Dataset implements JsonSerializable {
         foreach ($this->subject_of_study as $subject) { $subject_of_study[]=$subject->getDisplayName(); }
         foreach ($this->related_software as $sw) { $software[]=$sw->getDisplayName(); }
         foreach ($this->related_equipment as $equip) { $equipment[]=$equip->getDisplayName(); }
-	      return array(
-  	      'id'             	=> $this->dataset_uid,
-	        'dataset_title'    	=> $this->title,
+	return array(
+  	  'id'             	=> $this->dataset_uid,
+	  'dataset_title'    	=> $this->title,
           'dataset_alt_title'   =>$akas,
+          'origin' => $this->origin,
           'description'        	=> $this->description,
-      	  'dataset_end_date' 	=> $this->subject_end_date,
-	        'dataset_start_date' 	=> $this->subject_start_date,
-      	  'local_experts'	=> $experts,
+	  'dataset_end_date' 	=> $this->subject_end_date,
+	  'dataset_start_date' 	=> $this->subject_start_date,
+	  'local_experts'	=> $experts,
           'authors'       	=> $authors,
           'corresponding_authors' => $corresponding_authors,
-          'date_added'		=> $this->date_added,
+	  'date_added'		=> $this->date_added,
           'dataset_formats'	=>$formats,
           'data_types'       	=>$data_type_array,
           'study_types'		=>$types_of_study,
@@ -1657,9 +1628,7 @@ class Dataset implements JsonSerializable {
           'related_equipment'	=>$equipment,
         );
 
-      }
-
-
+}        
 
     /**
      * Add author

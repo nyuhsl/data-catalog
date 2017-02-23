@@ -23,6 +23,7 @@ use Doctrine\ORM\Mapping as ORM;
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
+ *
  * @ORM\Entity
  * @ORM\Table(name="data_locations")
  */
@@ -48,6 +49,13 @@ class DataLocation {
    * @ORM\Column(type="string",length=1028)
    */
   protected $data_access_url;
+
+
+  /**
+   * @ORM\Column(type="string", length=512, nullable=true)
+   */
+  protected $accession_number;
+
 
   /**
    * @ORM\ManyToOne(targetEntity="Dataset",inversedBy="data_locations")
@@ -97,6 +105,29 @@ class DataLocation {
     public function getDataAccessUrl()
     {
         return $this->data_access_url;
+    }
+
+    /**
+     * Set accession_number
+     *
+     * @param string $accessionNumber
+     * @return Dataset
+     */
+    public function setAccessionNumber($accessionNumber)
+    {
+        $this->accession_number = $accessionNumber;
+
+        return $this;
+    }
+
+    /**
+     * Get accession_number
+     *
+     * @return string 
+     */
+    public function getAccessionNumber()
+    {
+        return $this->accession_number;
     }
 
     /**

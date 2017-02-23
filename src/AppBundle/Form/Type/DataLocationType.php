@@ -7,7 +7,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * Form builder for Data Location
- * 
+ *
  *   This file is part of the Data Catalog project.
  *   Copyright (C) 2016 NYU Health Sciences Library
  *
@@ -23,6 +23,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
  */
 class DataLocationType extends AbstractType {
 
@@ -47,6 +48,11 @@ class DataLocationType extends AbstractType {
       'label'=>false,
       'required'=>false,
       'attr'=>array('placeholder'=>'Location URL'))
+      );
+    $builder->add('accession_number', 'text', array(
+      'required' => false,
+      'label'    => false,
+      'attr'=>array('placeholder'=>'Accession Number'))
       );
   }
 

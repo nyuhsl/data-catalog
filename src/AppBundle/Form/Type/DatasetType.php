@@ -26,6 +26,7 @@ use Symfony\Component\Form\Extension\Core\ChoiceList\ChoiceList;
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
  */
 class DatasetType extends AbstractType {
 
@@ -142,9 +143,6 @@ class DatasetType extends AbstractType {
       'allow_delete' => true,
       'allow_add' => true
     ));
-    $builder->add('accession_number', 'text', array(
-      'required' => false,
-      'label'    => 'Repository Accession Number'));
 
     //technical details
     $builder->add('dataset_formats', 'entity', array(

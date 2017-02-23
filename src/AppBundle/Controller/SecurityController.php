@@ -25,6 +25,7 @@ use Symfony\Component\HttpFoundation\Request;
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
  */
 class SecurityController extends Controller {
 

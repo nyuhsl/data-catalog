@@ -26,6 +26,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
+ *
  * @ORM\Entity
  * @ORM\Table(name="data_types")
  * @UniqueEntity("data_type")
@@ -47,11 +48,6 @@ class DataType {
    * @ORM\Column(type="string",length=256)
    */
   protected $slug;
-
-  /**
-   * @ORM\Column(type="string",length=256, nullable=true)
-   */
-  protected $authority;
 
 
   /**
@@ -106,28 +102,6 @@ class DataType {
         return $this->data_type;
     }
 
-    /**
-     * Set authority
-     *
-     * @param string $authority
-     * @return DataType
-     */
-    public function setAuthority($authority)
-    {
-        $this->authority = $authority;
-
-        return $this;
-    }
-
-    /**
-     * Get authority
-     *
-     * @return string 
-     */
-    public function getAuthority()
-    {
-        return $this->authority;
-    }
 
     /**
      * Set slug

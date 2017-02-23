@@ -23,10 +23,9 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
  */
 class ContactFormEmailType extends AbstractType {
-
-  private $affiliationOptions;
 
   /**
    * Build the form
@@ -46,8 +45,16 @@ class ContactFormEmailType extends AbstractType {
     $builder->add('affiliation', 'choice', array(
       'label'=>'Institutional Affiliation',
       'label_attr'=>array('class'=>'no-asterisk'),
-      'choices' => $this->affiliationOptions
-    ));
+      'choices' => array(
+	'NYU School of Medicine' => 'NYU School of Medicine',
+	'NYU College of Dentistry' => 'NYU College of Dentistry',
+	'NYU College of Nursing' => 'NYU College of Nursing',
+	'NYU Polytechnic School of Engineering' => 'NYU Polytechnic School of Engineering',
+	'NYU Wagner' => 'NYU Wagner',
+	'NYU Steinhardt' => 'NYU Steinhardt',
+	'NYU GSAS' => 'NYU GSAS',
+	'Other' => 'Other',
+        )));
        
     $builder->add('reason', 'choice', array(
       'expanded'=>true,
@@ -72,21 +79,6 @@ class ContactFormEmailType extends AbstractType {
     $builder->add('save','submit',array('label'=>'Send'));
   }
 
-
-  /**
-   * Build institutional affiliation options list
-   * 
-   * @param $affiliationOptions
-   */
-  public function __construct($affiliationOptions) {
-    $this->affiliationOptions = [];
-
-    foreach ($affiliationOptions as $option) {
-      $this->affiliationOptions[$option] = $option;
-    }
-  }
-
-
   /**
    * Set defaults
    *
@@ -97,7 +89,6 @@ class ContactFormEmailType extends AbstractType {
       'data_class' => 'AppBundle\Entity\ContactFormEmail'
     ));
   }
-
 
   public function getName() {
     return 'contactFormEmail';
