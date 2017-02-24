@@ -30,7 +30,7 @@ security:
       db_provider:
         id: db_user_provider
       users:
-        entity: { class: AppBundle:Security\User, property: username }
+        entity: { class: AppBundle:Security\User }
 
     firewalls:
         dev:

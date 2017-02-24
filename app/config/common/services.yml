@@ -7,11 +7,9 @@ services:
   app.ldap:
     class: Symfony\Component\Ldap\LdapClient
     arguments: ["%ldap.host%", "%ldap.port%"]
-  db_user_provider:
-    class: AppBundle\Entity\Security\UserRepository
-    factory_service: doctrine
-    factory_method: getRepository
-    arguments: ["AppBundle:Security\\User"]
+  app.user_checker:
+    class: AppBundle\Security\UserChecker
+    arguments: ["@doctrine.orm.entity_manager", "@monolog.logger"]
   AppBundle.type.access_restriction_selector:
     class: AppBundle\Form\Type\AccessRestrictionSelectorType
     arguments: ["@doctrine.orm.entity_manager"]
