@@ -17,7 +17,7 @@ This repository is essentially a Symfony2 distribution (i.e. it is not simply a 
 1. Install [Composer](https://getcomposer.org/download/), [Solr](https://wiki.apache.org/solr/SolrInstall), and set up a suitable database software such as MySQL. Create an empty database schema for this application.
 2. Clone this repository into a directory your web server can serve.
 ```
-git clone https://github.com/nyuhsl/datacatalog.git
+git clone https://github.com/nyuhsl/data-catalog.git
 ```
 3. Run `composer install` to install any dependencies
 4. Read `app/config/parameters.yml.example`. Fill in the information about your MySQL server, and the URL where your Solr installation lives. You'll need a version of this in `app/config/dev` and `app/config/prod`. Remember to choose a "secret" according to the documentation [here](http://symfony.com/doc/current/reference/configuration/framework.html#secret). There is also a README file in `app/config` with more information.
