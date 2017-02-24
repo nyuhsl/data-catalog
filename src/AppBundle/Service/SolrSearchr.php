@@ -96,7 +96,7 @@ class SolrSearchr {
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
     if (!$resp = curl_exec($ch)) {
-      trigger_error('URL of Solr server not specified');
+      trigger_error(curl_error($ch));
     }
     
     curl_close($ch);
