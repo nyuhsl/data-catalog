@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-
 <!--
  This is the Solr schema file. This file should be named "schema.xml" and
  should be in the conf directory under the solr home
@@ -12,9 +11,7 @@
 -->
 
 
-
 <!--
-
  ***************
  ***************
  ***************
@@ -27,20 +24,17 @@
  The fields in this file must match the fields in your Data Catalog's JSON API output.
  When you add a new metadata element (Symfony "entity") to your Data Catalog, 
  if you want it to be searchable, you must:
-
  1) add it to the Data Catalog's JSON output
  2) add a new <field> entry in this document to accept this metadata element
  3) add a new <copyField> directive to copy your new field into the "text" field.
-
  The "text" field is a catch-all field, into which other fields are copied.
  It is the ONLY field that is searched on by default. 
  It is defined after all our custom fields, just before the <dynamicField>'s (near line 475).
  If you want your new field to be searchable by default, you MUST copy it into the "text" field.
-
 -->
 
 
-<schema name="data_catalog" version="1.3">
+<schema name="NYUHSL_data_catalog" version="1.3">
     <!-- attribute "name" is the name of this schema and is only used for display purposes.
          Applications should change this to reflect the nature of the search collection.
          version="1.2" is Solr's version number for the schema syntax and semantics.  It should
@@ -368,11 +362,6 @@
     <xi:fallback></xi:fallback>
   </xi:include>
 
-
-
-
-  <!-- BEGIN DATA CATALOG FIELDS -->
-
   <fields>
     <!-- Valid attributes for fields:
       name: mandatory - the name for the field
@@ -403,13 +392,19 @@
     <!-- alternate title -->
     <field name="dataset_alt_title" type="text" indexed="true" stored="true" multiValued="true" />
 
+    <!-- origin (internal/external" -->
+    <field name="origin" type="text" indexed="true" stored="true" />
+    <!-- for the facets, we need to retain an unmodified (un-stemmed) version of this field -->
+    <field name="origin_fq" type="string" indexed="true" stored="true" />
+    <copyField source="origin" dest="origin_fq"/>
+
     <!-- author -->
     <field name="authors" type="text" indexed="true" stored="true" multiValued="true" />
     
     <!-- corresponding author -->
     <field name="corresponding_authors" type="text" indexed="true" stored="true" multiValued="true" />
 
-    <!-- description -->
+    <!-- description - this field needs all the analysis -->
     <field name="description" type="text" indexed="true" stored="true" multiValued="true" />
 
     <!-- publisher name -->
@@ -438,6 +433,7 @@
 
     <!-- subject: domain -->
     <field name="subject_domain" type="text" indexed="true" stored="true" multiValued="true" />
+
     <!-- for the facets, we need to retain an unmodified (un-stemmed) version of this field -->
     <field name="subject_domain_fq" type="string" indexed="true" stored="true" multiValued="true" />
     <copyField source="subject_domain" dest="subject_domain_fq"/>
@@ -457,9 +453,30 @@
     <field name="access_restrictions_fq" type="string" indexed="true" stored="true" multiValued="true" />
     <copyField source="access_restrictions" dest="access_restrictions_fq"/>
 
+    <!-- data types -->
+    <field name="data_types" type="text" indexed="true" stored="true" multiValued="true" />
+
+    <!-- study types -->
+    <field name="study_types" type="text" indexed="true" stored="true" multiValued="true" />
+    
+    <!-- collection standards -->
+    <field name="collection_standards" type="text" indexed="true" stored="true" multiValued="true" />
+
+    <!-- subject of study -->
+    <field name="subject_of_study" type="text" indexed="true" stored="true" multiValued="true" />
+
+    <!-- related software -->
+    <field name="related_software" type="text" indexed="true" stored="true" multiValued="true" />
+
+    <!-- related equipment -->
+    <field name="related_equipment" type="text" indexed="true" stored="true" multiValued="true" />
+
+    <!-- awards/grants -->
+    <field name="awards" type="text" indexed="true" stored="true" multiValued="true" />
 
     <!-- date added -->
     <field name="date_added" type="tdate" indexed="true" stored="true" multiValued="false"/>
+
 
     <!-- This field is used to build the spellchecker index -->
     <field name="spell" type="textSpell" indexed="true" stored="true" multiValued="true"/>
@@ -472,8 +489,8 @@
     <copyField source="tm_*" dest="spell"/>
 
 
-
-   <!-- All searches are run against this catch-all field. -->
+   <!-- catchall field for searches -->
+   <!-- All searches are actually run against this "text" field -->
    <field name="text" type="text" indexed="true" stored="false" multiValued="true"/>
    <!-- If you add a new field, and you want it to be searchable,
         YOU MUST ADD A NEW <copyField> DIRECTIVE FOR YOUR NEW FIELD -->
@@ -496,6 +513,13 @@
    <copyField source="local_experts" dest="text"/>
    <copyField source="access_restrictions" dest="text"/>
    <copyField source="date_added" dest="text"/>
+   <copyField source="data_types" dest="text"/>
+   <copyField source="study_types" dest="text"/>
+   <copyField source="collection_standards" dest="text"/>
+   <copyField source="awards" dest="text"/>
+   <copyField source="related_equipment" dest="text"/>
+   <copyField source="related_software" dest="text"/>
+   <copyField source="subject_of_study" dest="text"/>
 
 
 
