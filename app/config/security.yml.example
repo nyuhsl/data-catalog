@@ -27,8 +27,6 @@ security:
          memory:
            users:
              admin: { password: adminpass, roles: [ 'ROLE_ADMIN' ] }
-      db_provider:
-        id: db_user_provider
       users:
         entity: { class: AppBundle:Security\User }
 
