@@ -25,7 +25,7 @@ parameters:
     site_provider_name: "Generic Library or Department that Made the Data Catalog"
     site_provider_url: "http://library.example.edu"
     institution_name: "Generic Academic Institution"
-    institution_name_short: "Academic Inst"
+    institution_name_short: "Our Institution"
     institution_address: "123 Fake Street, Springfield USA"
     institution_url: "http://www.example.edu"
     
