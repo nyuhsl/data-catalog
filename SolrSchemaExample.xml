@@ -34,7 +34,7 @@
 -->
 
 
-<schema name="NYUHSL_data_catalog" version="1.3">
+<schema name="data_catalog" version="1.3">
     <!-- attribute "name" is the name of this schema and is only used for display purposes.
          Applications should change this to reflect the nature of the search collection.
          version="1.2" is Solr's version number for the schema syntax and semantics.  It should
@@ -362,7 +362,16 @@
     <xi:fallback></xi:fallback>
   </xi:include>
 
+
+
+
+
+
+  <!-- BEGIN DATA CATALOG FIELDS -->
+
+
   <fields>
+    <field name="_version_" type="long" indexed="true" stored ="true"/>
     <!-- Valid attributes for fields:
       name: mandatory - the name for the field
       type: mandatory - the name ofa previously defined type from the <types> section
