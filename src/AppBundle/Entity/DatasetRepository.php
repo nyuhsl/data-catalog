@@ -50,6 +50,10 @@ class DatasetRepository extends EntityRepository
         )
         ->getSingleScalarResult();
 
+      // Account for brand new databases with no IDs yet
+      if (!is_numeric($newId)) {
+        $newId = 1;
+      }
       return $newId;
 
     }
