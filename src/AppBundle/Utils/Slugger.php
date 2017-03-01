@@ -31,6 +31,8 @@ class Slugger {
     // remove unwanted characters
     $text = preg_replace('~[^-\w]+~', '', $text);
 
+    $text = substr($text, 0, 100);
+
     if (empty($text))
     {
       return 'n-a';
