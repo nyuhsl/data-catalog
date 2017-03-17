@@ -29,6 +29,7 @@ use AppBundle\Utils\Slugger;
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
  */
 class AddController extends Controller {
 
@@ -161,6 +162,8 @@ class AddController extends Controller {
       $successTemplate = "modal_" . $successTemplate;
     }
 
+    $userIsAdmin = $this->get('security.context')->isGranted('ROLE_ADMIN');
+    
     //make user-friendly name for display
     $entityTypeDisplayName = trim(preg_replace('/(?<!\ )[A-Z]/', ' $0', $entityName));
     
@@ -195,11 +198,13 @@ class AddController extends Controller {
         'displayName'    => $entityTypeDisplayName,
         'adminPage'=>true,
         'newSlug'=>$slug,
+        'userIsAdmin'=>$userIsAdmin,
         'entityName'=>$entityName,
         'addedEntityName'=> $addedEntityName));
     }
     return $this->render('default/'.$addTemplate, array(
       'form' => $form->createView(),
+      'userIsAdmin'=>$userIsAdmin,
       'displayName' => $entityTypeDisplayName,
       'adminPage'=>true,
       'entityName' => $entityName));

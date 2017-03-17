@@ -21,6 +21,7 @@ use AppBundle\Utils\Slugger;
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
  */
 class SearchResults {
 
@@ -38,10 +39,12 @@ class SearchResults {
    */
   public $facetMappings = array(
     'Subject Domain' => 'subject_domain_fq',
+    'Origin' => 'origin_fq',
     'Timeframe' => 'dataset_years',
     'Geographic Coverage' => 'subject_geographic_area_fq',
     'Access Restrictions' => 'access_restrictions_fq',
     'subject_domain_fq' => 'Subject Domain',
+    'origin_fq' => 'Origin',
     'dataset_years' => 'Dataset Timeframes',
     'subject_geographic_area_fq' => 'Geographic Coverage',
     'access_restrictions_fq' => 'Access Restrictions',

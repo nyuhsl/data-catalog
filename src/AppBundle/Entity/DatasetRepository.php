@@ -4,8 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 
-/** 
- * Simple Doctrine repository for Dataset entity
+/*
  *
  *   This file is part of the Data Catalog project.
  *   Copyright (C) 2016 NYU Health Sciences Library
@@ -23,6 +22,7 @@ use Doctrine\ORM\EntityRepository;
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 class DatasetRepository extends EntityRepository
 {
     public function countAllUnpublished()
@@ -50,6 +50,10 @@ class DatasetRepository extends EntityRepository
         )
         ->getSingleScalarResult();
 
+      // Account for brand new databases with no IDs yet
+      if (!is_numeric($newId)) {
+        $newId = 1;
+      }
       return $newId;
 
     }

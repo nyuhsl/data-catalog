@@ -1,4 +1,5 @@
-/**
+/*
+ *
  *   This file is part of the Data Catalog project.
  *   Copyright (C) 2016 NYU Health Sciences Library
  *
@@ -15,7 +16,6 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 
 /**
  * Functions and behaviors for working with our data entry forms

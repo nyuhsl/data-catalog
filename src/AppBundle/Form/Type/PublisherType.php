@@ -23,6 +23,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
  */
 class PublisherType extends AbstractType {
 
@@ -35,13 +36,6 @@ class PublisherType extends AbstractType {
   public function buildForm(FormBuilderInterface $builder, array $options) {
     $builder->add('publisher_name');
     $builder->add('publisher_url');
-    $builder->add('publisher_categories','entity',array(
-      'class'   => 'AppBundle:PublisherCategory',
-      'property'=> 'publisherCategory',
-      'multiple'=> true,
-      'expanded'=> true,
-      'label'   => 'Publisher Type'
-    ));
     $builder->add('save','submit',array('label'=>'Submit'));
   }
 

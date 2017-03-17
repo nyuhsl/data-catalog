@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 
 /**
+ *
  *   This file is part of the Data Catalog project.
  *   Copyright (C) 2016 NYU Health Sciences Library
  *

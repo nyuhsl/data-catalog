@@ -17,15 +17,19 @@ This repository is essentially a Symfony2 distribution (i.e. it is not simply a 
 1. Install [Composer](https://getcomposer.org/download/), [Solr](https://wiki.apache.org/solr/SolrInstall), and set up a suitable database software such as MySQL. Create an empty database schema for this application.
 2. Clone this repository into a directory your web server can serve.
 ```
-git clone https://github.com/nyuhsl/datacatalog.git
+git clone https://github.com/nyuhsl/data-catalog.git
 ```
 3. Run `composer install` to install any dependencies
-4. Read `app/config/parameters.yml.example`. Fill in the information about your MySQL server, and the URL where your Solr installation lives. You'll need a version of this in `app/config/dev` and `app/config/prod`. Remember to choose a "secret" according to the documentation [here](http://symfony.com/doc/current/reference/configuration/framework.html#secret). There is also a README file in `app/config` with more information.
-5. [Configure your web server](http://symfony.com/doc/current/cookbook/configuration/web_server_configuration.html) to work with Symfony. NOTE: You will want to require HTTPS connections on the login and administrative pages (at least), so remember to set up an SSL certificate for your server when you move the site to production. There is code in app/config/common/security.yml that will tell Symfony to require HTTPS connections.
-6. In the root of your Symfony installation, run `php app/console doctrine:schema:update --force`. If you have configured your database correctly, this will set up your database to match the data model used in this application. If you haven't configured it correctly, this will let you know.
-7. Copy the example Solr schema ("SolrSchemaSample.xml") from the root site directory to your Solr installation's configuration directory. Copy the default "schema.xml" that came with Solr into "schema.xml.default", and rename this one "schema.xml". Perform any customizations you require, or leave as is.
-8. At this point, the site should function, but you won't see any search results because there is nothing in the database, and thus nothing to be indexed by Solr. Click on the "Admin" tab, click "Add a New Dataset" in the sidebar menu, and get going!
-9. Once you've added some test data, you'll want to index it in Solr. Navigate to your site's base directory and edit the file "SolrIndexer.py" to specify the URL of your Solr server where indicated. Then, run the script.
+4. Read `app/config/parameters.yml.example`. Fill in the information about your MySQL server, and the URL where your Solr installation lives. You'll need a version of this in `app/config/dev` and `app/config/prod`. Remember to choose a "secret" according to the documentation [here](http://symfony.com/doc/current/reference/configuration/framework.html#secret). Then read through `app/config/security.yml.example` and copy it to `app/config/common/security.yml`. Please also read the README file in `app/config` which contains more information.
+5. [Configure your web server](http://symfony.com/doc/current/cookbook/configuration/web_server_configuration.html) to work with Symfony. NOTE: You will eventually have to require HTTPS connections on the login and administrative pages (at least), so remember to set up an SSL certificate for your server when you move the site to production. There is some sample code in app/config/common/security.yml that will tell Symfony to require HTTPS connections.
+6. [Configure the file
+   system](http://symfony.com/doc/current/setup/file_permissions.html). This
+means at the very least that `app/config/cache` and `app/config/logs` is
+writeable by Apache and by your account.
+7. In the root of your Symfony installation, run `php app/console doctrine:schema:update --force`. If you have configured your database correctly, this will set up your database to match the data model used in this application. If you haven't configured it correctly, this will let you know.
+8. Copy the example Solr schema ("SolrSchemaSample.xml") from the root site directory to your Solr installation's configuration directory. Copy the default "schema.xml" that came with Solr into "schema.xml.default", and rename this one "schema.xml". Perform any customizations you require, or leave as is.
+9. At this point, the site should function, but you won't see any search results because there is nothing in the database, and thus nothing to be indexed by Solr. Click on the "Admin" tab, click "Add a New Dataset" in the sidebar menu, and get going!
+10. Once you've added some test data, you'll want to index it in Solr. Navigate to your site's base directory and edit the file "SolrIndexer.py" to specify the URL of your Solr server where indicated. Then, run the script.
 
 ###Follow-up Tasks
 1. You'll most likely want to regularly re-index Solr to account for datasets you add or edit using the Admin section. There is a script in the root directory called "SolrUpdater.py" which can update a Solr index. You'll probably want to call this script or something similar with a cron job every Sunday or every night or whatever seems appropriate, depending on much updating you do. I recommend weekly, since you can also run this script on-demand from the command line if you want.

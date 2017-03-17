@@ -147,28 +147,69 @@ $(function () {
         {% endfor %}
         </h5>
       {% endif %}
-    <p>
-      <span class="dataset-detail-id">UID: {{ dataset.id }}</span>
+      <p>
+          <span class="dataset-detail-id">UID: {{ dataset.id }}</span>
       </p>
          {% if dataset.getAuthorships is not empty %}
-          <p class="dataset-authors-section">
+          <div class="dataset-authors-section">
           <span class="dataset-detail-authors">Author(s):
             {% set correspondingAuthorExists = false %}
-            {% for author in dataset.getAuthorships %}
-              {% if author.getPerson.getBioUrl %}
-                {% set popoverContent = "<p><a href='#{ author.getPerson.getBioUrl }' target='_blank'>View profile</a></p><p><a href='/search?keyword=authors:#{ author.getPerson.getFullName } or corresponding_authors:#{ author.getPerson.getFullName }' target='_blank'>View other datasets</a></p>" %}
+            {% if dataset.getAuthorships.count > 5 %}
+                {% for author in dataset.getAuthorships|slice(0,5) %}
+                    {% if author.getPerson.getBioUrl %}
+                      {% set popoverContent = '<p><a href="' ~ author.getPerson.getBioUrl ~ '" target="_blank">View profile</a></p><p><a href="/search?keyword=authors:%22' ~ author.getPerson.getFullName ~ '%22 or corresponding_authors:%22' ~ author.getPerson.getFullName ~ '%22" target="_blank">View other datasets</a></p>' %}
 
-               {% else %}
-                {% set popoverContent = "<p><a href='/search?keyword=authors:#{ author.getPerson.getFullName } or corresponding_authors:#{ author.getPerson.getFullName }' target='_blank'>View other datasets</a></p>" %}
+                     {% else %}
+                    {% set popoverContent = '<p><a href="/search?keyword=authors:%22' ~ author.getPerson.getFullName ~ '%22 or corresponding_authors:%22' ~ author.getPerson.getFullName ~ '%22" target="_blank">View other datasets</a></p>' %}
 
-             {% endif %}
-             {% if author.isCorrespondingAuthor %}
-                <a tabindex="0" class="corresponding-author author-name" role="button" data-toggle="popover" title="{{ author.getPerson.getFullName }}" data-content="{{ popoverContent }}">{{ author.getPerson.getFullName }}*</a>{% if not loop.last %}, {% endif %}
-                {% set correspondingAuthorExists = true %}
-             {% else %}
-                <a tabindex="0" class="author-name" role="button" data-toggle="popover" title="{{ author.getPerson.getFullName }}" data-content="{{ popoverContent }}">{{ author.getPerson.getFullName }}</a>{% if not loop.last %}, {% endif %}
-             {% endif %}
-           {% endfor %}
+                   {% endif %}
+                   {% if author.isCorrespondingAuthor %}
+                      <a tabindex="0" class="corresponding-author author-name" role="button" data-toggle="popover" title="{{ author.getPerson.getFullName }}" data-content="{{ popoverContent }}">{{ author.getPerson.getFullName }}*</a>{% if not loop.last %},{% endif %}{% if loop.last %}...{% endif %}
+                      {% set correspondingAuthorExists = true %}
+                   {% else %}
+                      <a tabindex="0" class="author-name" role="button" data-toggle="popover" title="{{ author.getPerson.getFullName }}" data-content="{{ popoverContent }}">{{ author.getPerson.getFullName }}</a>{% if not loop.last %}, {% endif %}{% if loop.last %}...{%endif %}
+                   {% endif %}
+               {% endfor %}
+                <a class="collapsed-toggle authors-collapse" data-toggle="collapse" href="#collapsed-authors" aria-expanded="false" aria-controls="collapsed-authors">
+                   See more...
+                </a>
+               <div class="collapse" id="collapsed-authors">
+               {% for author in dataset.getAuthorships|slice(5,dataset.getAuthorships.count) %}
+                    {% if author.getPerson.getBioUrl %}
+                      {% set popoverContent = '<p><a href="' ~ author.getPerson.getBioUrl ~ '" target="_blank">View profile</a></p><p><a href="/search?keyword=authors:%22' ~ author.getPerson.getFullName ~ '%22 or corresponding_authors:%22' ~ author.getPerson.getFullName ~ '%22" target="_blank">View other datasets</a></p>' %}
+
+                     {% else %}
+                    {% set popoverContent = '<p><a href="/search?keyword=authors:%22' ~ author.getPerson.getFullName ~ '%22 or corresponding_authors:%22' ~ author.getPerson.getFullName ~ '%22" target="_blank">View other datasets</a></p>' %}
+
+                   {% endif %}
+                   {% if author.isCorrespondingAuthor %}
+                      <a tabindex="0" class="corresponding-author author-name" role="button" data-toggle="popover" title="{{ author.getPerson.getFullName }}" data-content="{{ popoverContent }}">{{ author.getPerson.getFullName }}*</a>{% if not loop.last %}, {% endif %}
+                      {% set correspondingAuthorExists = true %}
+                   {% else %}
+                      <a tabindex="0" class="author-name" role="button" data-toggle="popover" title="{{ author.getPerson.getFullName }}" data-content="{{ popoverContent }}">{{ author.getPerson.getFullName }}</a>{% if not loop.last %}, {% endif %}
+                   {% endif %}
+                {% endfor %}
+                </div>
+              </div>
+                    
+
+            {% else %}
+                {% for author in dataset.getAuthorships %}
+                  {% if author.getPerson.getBioUrl %}
+                    {% set popoverContent = '<p><a href="' ~ author.getPerson.getBioUrl ~ '" target="_blank">View profile</a></p><p><a href="/search?keyword=authors:%22' ~ author.getPerson.getFullName ~ '%22 or corresponding_authors:%22' ~ author.getPerson.getFullName ~ '%22" target="_blank">View other datasets</a></p>' %}
+
+                   {% else %}
+                    {% set popoverContent = '<p><a href="/search?keyword=authors:%22' ~ author.getPerson.getFullName ~ '%22 or corresponding_authors:%22' ~ author.getPerson.getFullName ~ '%22" target="_blank">View other datasets</a></p>' %}
+
+                 {% endif %}
+                 {% if author.isCorrespondingAuthor %}
+                    <a tabindex="0" class="corresponding-author author-name" role="button" data-toggle="popover" title="{{ author.getPerson.getFullName }}" data-content="{{ popoverContent }}">{{ author.getPerson.getFullName }}*</a>{% if not loop.last %}, {% endif %}
+                    {% set correspondingAuthorExists = true %}
+                 {% else %}
+                    <a tabindex="0" class="author-name" role="button" data-toggle="popover" title="{{ author.getPerson.getFullName }}" data-content="{{ popoverContent }}">{{ author.getPerson.getFullName }}</a>{% if not loop.last %}, {% endif %}
+                 {% endif %}
+               {% endfor %}
+           {% endif %}
           </span>
          </p>
            {% if correspondingAuthorExists %}
@@ -183,7 +224,7 @@ $(function () {
    <div class="col-sm-7 col-sm-pull-0" id="dataset-detail-description">
    <dl>
      <dt>Description</dt>
-       <dd>{{ dataset.description }}</dd>
+       <dd>{{ dataset.description|raw }}</dd>
      {% if dataset.publishers is not empty %}
      <dt>Publisher</dt>
        <dd class="publishers-list">
@@ -287,7 +328,11 @@ $(function () {
           <dd>
            {% for location in dataset.dataLocations %}
               <div class="multiple-item-list">
-               <a class="btn btn-primary" target="_blank" href="{{ location.getDataAccessUrl }}" onclick="trackOutboundLink('{{ location.getDataAccessUrl }}', '{{ dataset.title }} (via {{ location.getDataLocation }})');">Access via {{ location.getDataLocation }}</a><p class="data-location-description"><span class="data-location-title"></span> <span class="data-location-content">{{ location.getLocationContent }}</span></p>
+               <a class="btn btn-primary" target="_blank" href="{{ location.getDataAccessUrl }}" onclick="trackOutboundLink('{{ location.getDataAccessUrl }}', '{{ dataset.title }} (via {{ location.getDataLocation }})');">Access via {{ location.getDataLocation }}</a><p class="data-location-description"><span class="data-location-title"></span> <span class="data-location-content">{{ location.getLocationContent }}</span>
+               {% if location.getAccessionNumber %}
+                 <br/><span class="data-location-accession-number">Accession #: {{ location.getAccessionNumber  }}</span>
+               {% endif %}
+               </p>
               </div>
            {% endfor %} 
           </dd>

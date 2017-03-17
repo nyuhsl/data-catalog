@@ -2,8 +2,8 @@
 
 namespace AppBundle\Controller;
 
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,6 +28,7 @@ use AppBundle\Entity\Dataset;
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
  */
 class JSONController extends Controller
 {
@@ -55,7 +56,7 @@ class JSONController extends Controller
       $datasets = $em->getRepository('AppBundle:Dataset')
          ->findOneBy(array('slug'=>$slug,'published'=>1));
     }
-
+    
     if ($_format == "json") {
       $jsonContent = json_encode($datasets);
       $response = new Response();
@@ -63,30 +64,10 @@ class JSONController extends Controller
       $response->headers->set('Content-Type', 'application/json');
 
     }
-
     return $response;
-
-
+    
+     
   }
-
-
-  /**
-   * Accept JSON submissions
-   *
-   * @TODO
-   *
-   * @Route(
-   *   "/api/add/dataset", name="json_input"
-   * )
-   */
-  public function JSONInputAction() {
-
-    throw new NotFoundHttpException();
-
-  }
-
-
-
 
 
 

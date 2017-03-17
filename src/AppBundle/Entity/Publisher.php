@@ -25,6 +25,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
+ *
  * @ORM\Entity
  * @ORM\Table(name="publishers")
  * @UniqueEntity("publisher_name")
@@ -58,18 +59,6 @@ class Publisher {
   protected $datasets;
 
 
-  /**
-   * @ORM\ManyToMany(targetEntity="PublisherCategory", cascade={"persist"})
-   * @ORM\JoinTable(name="publishers_publisher_categories",
-   *                joinColumns={@ORM\JoinColumn(name="publisher_id",
-   *                            referencedColumnName="publisher_id"
-   *                            )},
-   *                inverseJoinColumns={@ORM\JoinColumn(name="publisher_category_id",
-   *                            referencedColumnName="publisher_category_id"
-   *                            )}
-   *               )
-   */
-  protected $publisher_categories;
 
 
     /**
@@ -172,38 +161,6 @@ class Publisher {
         return $this->publisher_url;
     }
 
-    /**
-     * Add publisher_categories
-     *
-     * @param \AppBundle\Entity\PublisherCategory $publisherCategories
-     * @return Publisher
-     */
-    public function addPublisherCategory(\AppBundle\Entity\PublisherCategory $publisherCategories)
-    {
-        $this->publisher_categories[] = $publisherCategories;
-
-        return $this;
-    }
-
-    /**
-     * Remove publisher_categories
-     *
-     * @param \AppBundle\Entity\PublisherCategory $publisherCategories
-     */
-    public function removePublisherCategory(\AppBundle\Entity\PublisherCategory $publisherCategories)
-    {
-        $this->publisher_categories->removeElement($publisherCategories);
-    }
-
-    /**
-     * Get publisher_categories
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getPublisherCategories()
-    {
-        return $this->publisher_categories;
-    }
     
     
     /**
@@ -212,7 +169,6 @@ class Publisher {
     public function __construct()
     {
         $this->datasets = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->publisher_categories = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**

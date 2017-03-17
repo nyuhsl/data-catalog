@@ -23,6 +23,7 @@ use AppBundle\Entity\SearchState;
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
  */
 class SolrSearchr {
 
@@ -95,7 +96,7 @@ class SolrSearchr {
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
     if (!$resp = curl_exec($ch)) {
-      trigger_error('URL of Solr server not specified');
+      trigger_error(curl_error($ch));
     }
     
     curl_close($ch);
@@ -151,8 +152,12 @@ class SolrSearchr {
       // if not, is this query trying to limit to one specific field? (i.e. access_instructions:"query") if so, let it through
       if (strpos($keyword_query_string, ":") === false) {
         // else, if it's just a normal query, search the catch-all "text" field and the title field
+        // strip apostrophes from all normal queries so as not to confuse Solr
+        $keyword_query_string = str_replace("'", "", $keyword_query_string);
         $cleaned_query = urlencode($keyword_query_string);
         $keyword_query_string = "text:\"" . $cleaned_query . "\" OR dataset_title:\"" . $cleaned_query . "\"";
+      } elseif (strpos($keyword_query_string, "authors:") === true) {
+        // but, keep apostrophes if we're searching for proper names, these queries are double-quoted so we need an exact match
       }
     }
 
