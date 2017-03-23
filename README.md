@@ -7,7 +7,7 @@ The Data Catalog runs on **Symfony2**, a popular PHP application framework. Inst
 
 The search functionality is powered by **Solr**, which will need to be running and accessible by the server hosting the website. A sample Solr schema is included with this package. The Solr index can be updated regularly by setting up a cron job which calls an update script. A sample update script is also included with this package.
 
-The metadata and some information about users is stored in a database. We used **MySQL** and there's a good chance you will too. 
+The metadata and some information about users is stored in a database. We used **MySQL** and there's a good chance you will too.
 
 **IMPORTANT NOTE:** This package comes with a very basic form of authentication that should only be used in a local development environment. There are methods in place to use your institution's LDAP server, or you can use Symfony's built-in user management. Please read app/config/common/security.yml for more info.
 
@@ -19,8 +19,8 @@ This repository is essentially a Symfony2 distribution (i.e. it is not simply a 
 ```
 git clone https://github.com/nyuhsl/data-catalog.git
 ```
-3. Run `composer install` to install any dependencies
-4. Read `app/config/parameters.yml.example`. Fill in the information about your MySQL server, and the URL where your Solr installation lives. You'll need a version of this in `app/config/dev` and `app/config/prod`. Remember to choose a "secret" according to the documentation [here](http://symfony.com/doc/current/reference/configuration/framework.html#secret). Then read through `app/config/security.yml.example` and copy it to `app/config/common/security.yml`. Please also read the README file in `app/config` which contains more information.
+3. Read `app/config/parameters.yml.example`. Fill in the information about your MySQL server, and the URL where your Solr installation lives. You'll need a version of this in `app/config/dev` and `app/config/prod`. Remember to choose a "secret" according to the documentation [here](http://symfony.com/doc/current/reference/configuration/framework.html#secret). Then read through `app/config/security.yml.example` and copy it to `app/config/common/security.yml`. Please also read the README file in `app/config` which contains more information.
+4. Run `composer install` to install any dependencies
 5. [Configure your web server](http://symfony.com/doc/current/cookbook/configuration/web_server_configuration.html) to work with Symfony. NOTE: You will eventually have to require HTTPS connections on the login and administrative pages (at least), so remember to set up an SSL certificate for your server when you move the site to production. There is some sample code in app/config/common/security.yml that will tell Symfony to require HTTPS connections.
 6. [Configure the file
    system](http://symfony.com/doc/current/setup/file_permissions.html). This
