@@ -7,14 +7,14 @@ The Data Catalog runs on **Symfony2**, a popular PHP application framework. Inst
 
 The search functionality is powered by **Solr**, which will need to be running and accessible by the server hosting the website. A sample Solr schema is included with this package. The Solr index can be updated regularly by setting up a cron job which calls an update script. A sample update script is also included with this package.
 
-The metadata and some information about users is stored in a database. We used **MySQL** and there's a good chance you will too. 
+The metadata and some information about users is stored in a database. We used **MySQL** and there's a good chance you will too.
 
 **IMPORTANT NOTE:** This package comes with a very basic form of authentication that should only be used in a local development environment. There are methods in place to use your institution's LDAP server, or you can use Symfony's built-in user management. Please read app/config/common/security.yml for more info.
 
 ##Installation
 This repository is essentially a Symfony2 distribution (i.e. it is not simply a Symfony "bundle"). As such, you should be able to install this site fairly easily, after configuring it for your environment.
 
-1. Install [Composer](https://getcomposer.org/download/), [Solr](https://wiki.apache.org/solr/SolrInstall), and set up a suitable database software such as MySQL. Create an empty database schema for this application.
+1. Install [Composer](https://getcomposer.org/download/), [Solr version 4](http://archive.apache.org/dist/lucene/solr/4.10.4/), and set up a suitable database software such as MySQL. Create an empty database schema for this application.
 2. Clone this repository into a directory your web server can serve.
 ```
 git clone https://github.com/nyuhsl/data-catalog.git
