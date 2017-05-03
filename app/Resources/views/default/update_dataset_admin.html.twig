@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 {% form_theme form with ['bootstrap_3_horizontal_layout.html.twig',
                           _self] %}
+{% from 'default/_widget_prototype_macro.html.twig' import widget_prototype %}
 
 {% block page_title %}
 <title>Update a Dataset</title>
@@ -24,26 +25,6 @@ col-sm-8
 col-sm-4
 {%- endblock form_label_class %}
 
-
-
-{% macro widget_prototype(widget,remove_text) %}
-
-  {% if widget.vars.prototype is defined %}
-    {% set form = widget.vars.prototype %}
-    {% set name = widget.vars.prototype.vars.label %}
-  {% else %}
-    {% set form = widget %}
-    {% set name = widget.vars.label %}
-  {% endif %}
-
-  <div data-content="add-{{ name }}">
-    <div class="add-{{name}}">
-    {{ form_widget(form) }}
-    {# <a class="btn-remove" data-related="add-{{ name }}">{{ remove_text }}</a>#}
-    </div>
-  </div>
-
-{% endmacro %}
 
 
 
@@ -74,9 +55,9 @@ col-sm-4
         <div class="col-sm-8">
           <a class="btn-add label label-success" data-target="add-{{ form.dataset_alternate_titles.vars.name}}">Add item</a>
         </div>
-        <div class="add-{{ form.dataset_alternate_titles.vars.name}}" data-prototype="{{ _self.widget_prototype(form.dataset_alternate_titles, 'Remove item')|escape }}">
+        <div class="add-{{ form.dataset_alternate_titles.vars.name}}" data-prototype="{{ widget_prototype(form.dataset_alternate_titles, 'Remove item')|escape }}">
         {% for widget in form.dataset_alternate_titles %}
-          {{ _self.widget_prototype(widget, 'Remove item') }}
+          {{ widget_prototype(widget, 'Remove item') }}
         {% endfor %}
         </div>
       </div>
@@ -100,9 +81,9 @@ col-sm-4
         <div class="col-sm-8">
           <a class="btn-add label label-success" data-target="add-{{ form.authorships.vars.name}}">Add item</a>
         </div>
-        <div class="add-{{ form.authorships.vars.name}}" data-prototype="{{ _self.widget_prototype(form.authorships, 'Remove item')|escape }}">
+        <div class="add-{{ form.authorships.vars.name}}" data-prototype="{{ widget_prototype(form.authorships, 'Remove item')|escape }}">
         {% for widget in form.authorships %}
-          {{ _self.widget_prototype(widget, 'Remove item') }}
+          {{ widget_prototype(widget, 'Remove item') }}
         {% endfor %}
         </div>
       </div>
@@ -118,9 +99,9 @@ col-sm-4
         <div class="col-sm-8">
           <a class="btn-add label label-success" data-target="add-{{ form.data_locations.vars.name}}">Add item</a>
         </div>
-        <div class="add-{{ form.data_locations.vars.name}}" data-prototype="{{ _self.widget_prototype(form.data_locations, 'Remove item')|escape }}">
+        <div class="add-{{ form.data_locations.vars.name}}" data-prototype="{{ widget_prototype(form.data_locations, 'Remove item')|escape }}">
         {% for widget in form.data_locations %}
-          {{ _self.widget_prototype(widget, 'Remove item') }}
+          {{ widget_prototype(widget, 'Remove item') }}
         {% endfor %}
         </div>
       </div>
@@ -135,9 +116,9 @@ col-sm-4
         <div class="col-sm-8">
           <a class="btn-add label label-success" data-target="add-{{ form.other_resources.vars.name}}">Add item</a>
         </div>
-        <div class="add-{{ form.other_resources.vars.name}}" data-prototype="{{ _self.widget_prototype(form.other_resources, 'Remove item')|escape }}">
+        <div class="add-{{ form.other_resources.vars.name}}" data-prototype="{{ widget_prototype(form.other_resources, 'Remove item')|escape }}">
         {% for widget in form.other_resources %}
-          {{ _self.widget_prototype(widget, 'Remove item') }}
+          {{ widget_prototype(widget, 'Remove item') }}
         {% endfor %}
         </div>
       </div>
@@ -179,9 +160,9 @@ col-sm-4
         <div class="col-sm-8">
           <a class="btn-add label label-success" data-target="add-{{ form.related_datasets.vars.name}}">Add item</a>
         </div>
-        <div class="add-{{ form.related_datasets.vars.name}}" data-prototype="{{ _self.widget_prototype(form.related_datasets, 'Remove item')|escape }}">
+        <div class="add-{{ form.related_datasets.vars.name}}" data-prototype="{{ widget_prototype(form.related_datasets, 'Remove item')|escape }}">
         {% for widget in form.related_datasets %}
-          {{ _self.widget_prototype(widget, 'Remove item') }}
+          {{ widget_prototype(widget, 'Remove item') }}
         {% endfor %}
         </div>
       </div>
@@ -203,30 +184,6 @@ col-sm-4
   {{ form_widget(form.save) }}
     </form> 
 
-
-{#  {% for child in form.children %}
-    {% if child.vars.prototype is defined %}
-    <div class="form-group multiple">
-      <label class="col-sm-4 control-label" for="{{child.vars.name}}">
-        {{child.vars.label}}
-      </label>
-      <div class="col-sm-8">
-        <a class="btn-add label label-success" data-target="add-{{child.vars.name}}">Add item</a>
-        </div>
-      <div class="add-{{child.vars.name}}" data-prototype="{{ _self.widget_prototype(child, 'Remove item')|escape }}">
-      {% for widget in child %}
-        {{ _self.widget_prototype(widget, 'Remove item') }}
-      {% endfor %}
-
-      </div>
-    </div>
-  {% else %}
-    {{ form_row(child) }}
-  {% endif %}
-
-{% endfor %}
-  {{ form_widget(form._token) }}
-#}
 
 </form>
 

@@ -125,11 +125,13 @@ class UpdateController extends Controller {
         'addedEntityName' => $addedEntityName,
         'newSlug'    => $newSlug,));
 
-    }
+    } else {
  
-    if ($entityName == 'Dataset') {
-      if ($userIsAdmin) {
-        return $this->render('default/update_dataset_admin.html.twig', array(
+      if ($entityName == 'Dataset') {
+  
+        $formToRender = $userIsAdmin ? 'default/update_dataset_admin.html.twig' : 'default/update_dataset_user.html.twig';
+
+        return $this->render($formToRender, array(
           'form'    => $form->createView(),
           'displayName'=>$entityTypeDisplayName,
           'adminPage'=>true,
@@ -137,21 +139,16 @@ class UpdateController extends Controller {
           'slug'       =>$slug,
           'entityName' =>$entityName));
       } else {
-        return $this->render('default/update_dataset_user.html.twig', array(
+
+        return $this->render('default/update.html.twig', array(
           'form'    => $form->createView(),
-          'displayName'=>$entityTypeDisplayName,
           'adminPage'=>true,
-          'userIsAdmin'=>$userIsAdmin,
-          'slug'       =>$slug,
+          'displayName'=>$entityTypeDisplayName,
+          'slug'      => $slug,
           'entityName' =>$entityName));
       }
-    } else {
-      return $this->render('default/update.html.twig', array(
-        'form'    => $form->createView(),
-        'adminPage'=>true,
-        'displayName'=>$entityTypeDisplayName,
-        'slug'      => $slug,
-        'entityName' =>$entityName));
     }
-   }
+  }
+
+
 }

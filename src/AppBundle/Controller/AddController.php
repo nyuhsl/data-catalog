@@ -129,12 +129,16 @@ class AddController extends Controller {
         'userIsAdmin'=>$userIsAdmin,
         'newSlug'=>$slug,
       ));
+    } else {
+
+      $formToRender = $userIsAdmin ? 'default/add_dataset_admin.html.twig' : 'default/add_dataset_user.html.twig';
+
+      return $this->render($formToRender, array(
+        'form' => $form->createView(),
+        'userIsAdmin'=>$userIsAdmin,
+        'entityName'=>'Dataset',
+        'adminPage'=>true,));
     }
-    return $this->render('default/add_dataset.html.twig', array(
-      'form' => $form->createView(),
-      'userIsAdmin'=>$userIsAdmin,
-      'entityName'=>'Dataset',
-      'adminPage'=>true,));
 
   }
   
