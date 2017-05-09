@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 {% form_theme form with ['bootstrap_3_horizontal_layout.html.twig', _self] %}
-{% import "_widget_prototype_macro.html.twig" as widget_prototype %}
+{% from 'default/_widget_prototype_macro.html.twig' import widget_prototype %}
 
 {% block page_title %}
 <title>Add a Dataset</title>
@@ -46,7 +46,20 @@ col-sm-4
   </fieldset>
   <fieldset>
     <legend>Author Information</legend>
-      {{ form_row(form.authors) }}
+    {# AUTHORS #}
+    <div class="form-group multiple">
+      <label class="col-sm-4 control-label" for="{{ form.authorships.vars.name }}">
+        {{ form.authorships.vars.label }}
+      </label>
+      <div class="col-sm-8">
+        <a class="btn-add label label-success" data-target="add-{{ form.authorships.vars.name}}">Add item</a>
+      </div>
+      <div class="add-{{ form.authorships.vars.name}}" data-prototype="{{ widget_prototype(form.authorships, 'Remove item')|escape }}">
+      {% for widget in form.authorships %}
+        {{ widget_prototype(widget, 'Remove item') }}
+      {% endfor %}
+      </div>
+    </div>
   </fieldset>
   <fieldset>
     <legend>Access</legend>
