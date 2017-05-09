@@ -241,15 +241,6 @@ class DatasetAsAdminType extends AbstractType {
       'allow_add'=>true,
       'label'=>'Authors',
     ));*/
-    $builder->add('corresponding_authors', 'entity', array(
-      'class' => 'AppBundle:Person',
-      'property'=>'full_name',
-      'required'=>false,
-      'attr'=>array('style'=>'width:100%'),
-      'multiple'=>true,
-      'by_reference'=>false,
-      'label'=>'Corresponding Authors',
-    ));
     $builder->add('local_experts', 'entity', array(
       'class' => 'AppBundle:Person',
       'property'=>'full_name',
