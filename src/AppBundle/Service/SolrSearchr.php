@@ -32,6 +32,7 @@ class SolrSearchr {
   protected $solrFormat;
   protected $solrFacets;
   protected $solrDisplayFields;
+  protected $solrSearchField;
 
   // Request-level defaults are set here
   protected $solrSort = "dataset_title_str+asc";
@@ -58,12 +59,14 @@ class SolrSearchr {
   public function __construct($solrServer,
                               $solrFormat,
                               $solrFacets,
-                              $solrDisplayFields) {
+                              $solrDisplayFields,
+                              $solrSearchField) {
 
     $this->solrBaseURL  = $solrServer;
     $this->solrFormat   = $solrFormat;
     $this->solrFacets   = $solrFacets;
     $this->solrDisplayFields   = $solrDisplayFields;
+    $this->solrSearchField   = $solrSearchField;
   }
 
 
@@ -155,7 +158,7 @@ class SolrSearchr {
         // strip apostrophes from all normal queries so as not to confuse Solr
         $keyword_query_string = str_replace("'", "", $keyword_query_string);
         $cleaned_query = urlencode($keyword_query_string);
-        $keyword_query_string = "text:\"" . $cleaned_query . "\" OR dataset_title:\"" . $cleaned_query . "\"";
+        $keyword_query_string = $this->solrSearchField . ":\"" . $cleaned_query . "\" OR dataset_title:\"" . $cleaned_query . "\"";
       } elseif (strpos($keyword_query_string, "authors:") === true) {
         // but, keep apostrophes if we're searching for proper names, these queries are double-quoted so we need an exact match
       }

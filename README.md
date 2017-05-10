@@ -14,7 +14,7 @@ The metadata and some information about users is stored in a database. We used *
 ## Installation
 This repository is essentially a Symfony2 distribution (i.e. it is not simply a Symfony "bundle"). As such, you should be able to install this site fairly easily, after configuring it for your environment.
 
-1. Install [Composer](https://getcomposer.org/download/), [Solr version 4](http://archive.apache.org/dist/lucene/solr/4.10.4/), and set up a suitable database software such as MySQL. Create an empty database schema for this application.
+1. Install [Composer](https://getcomposer.org/download/), [Solr version 6](https://www.apache.org/dyn/closer.lua/lucene/solr/6.5.1), or [version 4](http://archive.apache.org/dist/lucene/solr/4.10.4/) for older environments, and set up a suitable database software such as MySQL. Create an empty database schema for this application.
 2. Clone this repository into a directory your web server can serve.
 ```
 git clone https://github.com/nyuhsl/data-catalog.git
@@ -27,7 +27,7 @@ git clone https://github.com/nyuhsl/data-catalog.git
 means at the very least that `app/config/cache` and `app/config/logs` is
 writeable by Apache and by your account.
 7. In the root of your Symfony installation, run `php app/console doctrine:schema:update --force`. If you have configured your database correctly, this will set up your database to match the data model used in this application. If you haven't configured it correctly, this will let you know.
-8. Make a backup of `schema.xml` file in your Solr installation's configuration directory, then replace it with the example Solr schema (`SolrSchemaSample.xml`) from the root site directory, renaming it `schema.xml`. Perform any customizations you require, or leave as is.
+8. If using Solr v6+, you will need to switch from the "managed-schema" to use our custom schema, which is defined in `SolrV6SchemaExample.xml`. This involves some minor changes to `solrconfig.xml` as described [here](https://cwiki.apache.org/confluence/display/solr/Schema+Factory+Definition+in+SolrConfig#SchemaFactoryDefinitioninSolrConfig-Classicschema.xml) and [here](http://stackoverflow.com/a/31721587). Then place `SolrV6SchemaExample.xml` in the Solr config directory, named `schema.xml`. Perform any customizations you require, or leave as is.
 9. At this point, the site should function, but you won't see any search results because there is nothing in the database, and thus nothing to be indexed by Solr. Click on the "Admin" tab, click "Add a New Dataset" in the sidebar menu, and get going!
 10. Once you've added some test data, you'll want to index it in Solr. Navigate to your site's base directory and edit the file `SolrIndexer.py` to specify the URL of your Solr server where indicated. Then, run the script.
 
