@@ -13,7 +13,7 @@
 {"@type": "Dataset",
 "name": "{{ dataset.dataset_title }}",
 "description": "{{ dataset.description[0] }}",
-"alternateName": [{% for title in dataset.dataset_alt_title %}"{{ title|trim }}"{% if not loop.last %}, {% endif %}{% endfor %}],
+{% if dataset.dataset_alt_title is defined %}"alternateName": [{% for title in dataset.dataset_alt_title %}"{{ title|trim }}"{% if not loop.last %}, {% endif %}{% endfor %}],{% endif %}
 {#"keywords": [{% for kw in dataset.subject_keyword %}"{{ kw|trim }}"{% if not loop.last %}, {% endif %}{% endfor %}],#}
 "url": "{{ url('homepage')|trim }}{{ dataset.slug }}",
 "mainEntityOfPage": "{{ url('homepage')|trim }}{{ dataset.slug }}",
@@ -113,12 +113,12 @@
     </h4>
             <dl class="dl-horizontal">
 
-              {% if item.dataset_alt_title[0] %}
+              {% if item.dataset_alt_title is defined %}
                <dt>Alternate Title(s)</dt>
                <dd> {{ item.dataset_alt_title|join(', ') }} </dd>
               {% endif %}
 
-             {% if item.authors[0] %}
+             {% if item.authors is defined %}
              <dt>Authors</dt><dd>{% for author in item.authors|slice(0,4) %}
                <div class="multiple-item-list">
                    {{ author }}
@@ -135,28 +135,28 @@
 
              <dt>Description</dt><dd><p>{{ item.description[0]|raw }}</p></dd>
 
-             {% if item.subject_domain[0] %}
+             {% if item.subject_domain is defined %}
                <dt>Subject</dt><dd>{% for subject in item.subject_domain %} 
                  <div class="multiple-item-list">{{ subject }}</div>
                {% endfor %}</dd>
              {% endif %}
 
-             {% if item.subject_geographic_area[0] %}
+             {% if item.subject_geographic_area is defined %}
                <dt>Geographic Coverage</dt><dd>{% for area in item.subject_geographic_area %}
                  <div class="multiple-item-list">{{ area }}</div>
                {% endfor %}</dd>
              {% endif %}
 
-             {% if item.dataset_start_date is not empty %}
+             {% if item.dataset_start_date is defined %}
              <dt>Timeframe</dt>
              <dd>{{ item.dataset_start_date }} - {{ item.dataset_end_date }}</dd>
              {% endif %}
 
-             {% if item.access_restrictions[0] %}
+             {% if item.access_restrictions is defined %}
              <dt>Access Rights</dt><dd>{% for restrict in item.access_restrictions %} <div class="multiple-item-list">{{ restrict }}</div>{% endfor %} </dd>
              {% endif %}
 
-             {% if item.local_experts[0] %}
+             {% if item.local_experts is defined %}
              <dt>Local Expert</dt><dd>{% for index,expert in item.local_experts %}
                <div class="multiple-item-list">
                  {% if item.local_expert_biosketch[index] is defined %}
