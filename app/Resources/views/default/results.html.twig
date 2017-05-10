@@ -149,7 +149,7 @@
 
              {% if item.dataset_start_date is defined %}
              <dt>Timeframe</dt>
-             <dd>{{ item.dataset_start_date }} - {{ item.dataset_end_date }}</dd>
+             <dd>{{ item.dataset_start_date }}{% if item.dataset_end_date is defined %} - {{ item.dataset_end_date }}{% endif %}</dd>
              {% endif %}
 
              {% if item.access_restrictions is defined %}
