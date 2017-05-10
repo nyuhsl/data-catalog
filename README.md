@@ -14,7 +14,7 @@ The metadata and some information about users is stored in a database. We used *
 ## Installation
 This repository is essentially a Symfony2 distribution (i.e. it is not simply a Symfony "bundle"). As such, you should be able to install this site fairly easily, after configuring it for your environment.
 
-1. Install [Composer](https://getcomposer.org/download/), [Solr version 4](http://archive.apache.org/dist/lucene/solr/4.10.4/), and set up a suitable database software such as MySQL. Create an empty database schema for this application.
+1. Install [Composer](https://getcomposer.org/download/), [Solr version 6](https://www.apache.org/dyn/closer.lua/lucene/solr/6.5.1), or [version 4](http://archive.apache.org/dist/lucene/solr/4.10.4/) for older environments, and set up a suitable database software such as MySQL. Create an empty database schema for this application.
 2. Clone this repository into a directory your web server can serve.
 ```
 git clone https://github.com/nyuhsl/data-catalog.git
