@@ -27,6 +27,7 @@ security:
          memory:
            users:
              admin: { password: adminpass, roles: [ 'ROLE_ADMIN' ] }
+             user: { password: userpass, roles: [ 'ROLE_USER' ] }
       users:
         entity: { class: AppBundle:Security\User }
 
