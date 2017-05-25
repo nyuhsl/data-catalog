@@ -92,7 +92,6 @@ class SolrSearchr {
   public function fetchFromSolr() {
 
     $requestURL = $this->constructSolrURL();
-    var_dump($requestURL);
 
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $requestURL);
