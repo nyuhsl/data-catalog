@@ -32,7 +32,7 @@ class SolrSearchr {
   protected $solrFormat;
   protected $solrFacets;
   protected $solrDisplayFields;
-  protected $solrSearchField;
+  protected $solrSearchFields;
 
   // Request-level defaults are set here
   protected $solrSort = "dataset_title_str+asc";
@@ -60,13 +60,13 @@ class SolrSearchr {
                               $solrFormat,
                               $solrFacets,
                               $solrDisplayFields,
-                              $solrSearchField) {
+                              $solrSearchFields) {
 
     $this->solrBaseURL  = $solrServer;
     $this->solrFormat   = $solrFormat;
     $this->solrFacets   = $solrFacets;
     $this->solrDisplayFields   = $solrDisplayFields;
-    $this->solrSearchField   = $solrSearchField;
+    $this->solrSearchFields   = $solrSearchFields;
   }
 
 
@@ -92,6 +92,7 @@ class SolrSearchr {
   public function fetchFromSolr() {
 
     $requestURL = $this->constructSolrURL();
+    var_dump($requestURL);
 
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $requestURL);
@@ -154,11 +155,17 @@ class SolrSearchr {
     if ($keyword_query_string != "*") {
       // if not, is this query trying to limit to one specific field? (i.e. access_instructions:"query") if so, let it through
       if (strpos($keyword_query_string, ":") === false) {
-        // else, if it's just a normal query, search the catch-all "text" field and the title field
         // strip apostrophes from all normal queries so as not to confuse Solr
         $keyword_query_string = str_replace("'", "", $keyword_query_string);
         $cleaned_query = urlencode($keyword_query_string);
-        $keyword_query_string = $this->solrSearchField . ":\"" . $cleaned_query . "\" OR dataset_title:\"" . $cleaned_query . "\"";
+        // construct keyword query based on fields specified in parameters.yml
+        $queryComponents = "";
+        foreach ($this->solrSearchFields as $fieldToSearch) {
+            $queryPart = $fieldToSearch . ":\"" . $cleaned_query . "\" OR ";
+            $queryComponents .= $queryPart;
+        }
+        // and make extra-sure we're searching the title field
+        $keyword_query_string = $queryComponents . "dataset_title:\"" . $cleaned_query . "\"";
       } elseif (strpos($keyword_query_string, "authors:") === true) {
         // but, keep apostrophes if we're searching for proper names, these queries are double-quoted so we need an exact match
       }
