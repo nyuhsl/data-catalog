@@ -100,14 +100,14 @@ class DatasetAsUserType extends AbstractType {
       'label'     => 'Data Collection Standards (e.g. CDISC, DICOM, MINI, CDE)',
     ));
     //content information
-    $builder->add('authors', 'entity', array(
-      'class' => 'AppBundle:Person',
-      'property'=>'full_name',
+    $builder->add('authorships', 'collection', array(
+      'type' => new PersonAssociationType(),
+      'prototype' => true,
       'required'=>false,
-      'attr'=>array('style'=>'width:100%'),
-      'multiple'=>true,
       'by_reference'=>false,
       'label'=>'Authors',
+      'allow_delete'=>true,
+      'allow_add'=>true
     ));
     $builder->add('subject_start_date', 'choice', array(
       'choices'  => $this->yearsIncludingPresent,

@@ -6,3 +6,4 @@ services:
           - "%solrsearchr_format%"
           - "%solrsearchr_facets%"
           - "%solrsearchr_fields_to_display%"
+          - "%solrsearchr_fields_to_search%"

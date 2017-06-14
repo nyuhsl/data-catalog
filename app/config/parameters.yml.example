@@ -70,8 +70,8 @@ parameters:
         - subject_domain_fq
         - subject_geographic_area_fq
         - access_restrictions_fq
-    solrsearchr_fields_to_search:
-        - text
+    solrsearchr_fields_to_search: 
+        - _text_
     solrsearchr_fields_to_display:
         - id
         - origin

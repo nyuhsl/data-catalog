@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
-{% form_theme form with ['bootstrap_3_horizontal_layout.html.twig',
-                          _self] %}
+{% form_theme form with ['bootstrap_3_horizontal_layout.html.twig', _self] %}
+{% from 'default/_widget_prototype_macro.html.twig' import widget_prototype %}
 
 {% block page_title %}
 <title>Add a Dataset</title>
@@ -26,26 +26,6 @@ col-sm-4
 
 
 
-{% macro widget_prototype(widget,remove_text) %}
-
-  {% if widget.vars.prototype is defined %}
-    {% set form = widget.vars.prototype %}
-    {% set name = widget.vars.prototype.vars.label %}
-  {% else %}
-    {% set form = widget %}
-    {% set name = widget.vars.label %}
-  {% endif %}
-
-  <div data-content="add-{{ name }}">
-    <div class="add-{{name}}">
-    {{ form_widget(form) }}
-    {# <a class="btn-remove" data-related="add-{{ name }}">{{ remove_text }}</a>#}
-    </div>
-  </div>
-
-{% endmacro %}
-
-
 
 {% block content %}
 <div class="col-xs-7" >
@@ -66,7 +46,20 @@ col-sm-4
   </fieldset>
   <fieldset>
     <legend>Author Information</legend>
-      {{ form_row(form.authors) }}
+    {# AUTHORS #}
+    <div class="form-group multiple">
+      <label class="col-sm-4 control-label" for="{{ form.authorships.vars.name }}">
+        {{ form.authorships.vars.label }}
+      </label>
+      <div class="col-sm-8">
+        <a class="btn-add label label-success" data-target="add-{{ form.authorships.vars.name}}">Add item</a>
+      </div>
+      <div class="add-{{ form.authorships.vars.name}}" data-prototype="{{ widget_prototype(form.authorships, 'Remove item')|escape }}">
+      {% for widget in form.authorships %}
+        {{ widget_prototype(widget, 'Remove item') }}
+      {% endfor %}
+      </div>
+    </div>
   </fieldset>
   <fieldset>
     <legend>Access</legend>
@@ -96,9 +89,9 @@ col-sm-4
       <div class="col-sm-8">
         <a class="btn-add label label-success" data-target="add-{{child.vars.name}}">Add item</a>
         </div>
-      <div class="add-{{child.vars.name}}" data-prototype="{{ _self.widget_prototype(child, 'Remove item')|escape }}">
+      <div class="add-{{child.vars.name}}" data-prototype="{{ widget_prototype(child, 'Remove item')|escape }}">
       {% for widget in child %}
-        {{ _self.widget_prototype(widget, 'Remove item') }}
+        {{ widget_prototype(widget, 'Remove item') }}
       {% endfor %}
 
       </div>
