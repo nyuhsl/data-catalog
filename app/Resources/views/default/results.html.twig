@@ -24,7 +24,6 @@
 {% endblock %}
 
 {% block content %}
-{# {{ dump(currentSearch) }} #}
 <div class="col-sm-10 right-pane col-sm-push-2 clearfix">
 <div class="row">
 <div class="col-sm-8" id="facet-breadcrumbs">
@@ -113,12 +112,12 @@
     </h4>
             <dl class="dl-horizontal">
 
-              {% if item.dataset_alt_title is defined %}
+              {% if item.dataset_alt_title is defined and item.dataset_alt_title[0] %}
                <dt>Alternate Title(s)</dt>
                <dd> {{ item.dataset_alt_title|join(', ') }} </dd>
               {% endif %}
 
-             {% if item.authors is defined %}
+             {% if item.authors is defined and item.authors[0] %}
              <dt>Authors</dt><dd>{% for author in item.authors|slice(0,4) %}
                <div class="multiple-item-list">
                    {{ author }}
@@ -135,28 +134,28 @@
 
              <dt>Description</dt><dd><p>{{ item.description[0]|raw }}</p></dd>
 
-             {% if item.subject_domain is defined %}
+             {% if item.subject_domain is defined and item.subject_domain[0] %}
                <dt>Subject</dt><dd>{% for subject in item.subject_domain %} 
                  <div class="multiple-item-list">{{ subject }}</div>
                {% endfor %}</dd>
              {% endif %}
 
-             {% if item.subject_geographic_area is defined %}
+             {% if item.subject_geographic_area is defined and item.subject_geographic_area[0] %}
                <dt>Geographic Coverage</dt><dd>{% for area in item.subject_geographic_area %}
                  <div class="multiple-item-list">{{ area }}</div>
                {% endfor %}</dd>
              {% endif %}
 
-             {% if item.dataset_start_date is defined %}
+             {% if item.dataset_start_date is defined and item.dataset_start_date|length %}
              <dt>Timeframe</dt>
              <dd>{{ item.dataset_start_date }}{% if item.dataset_end_date is defined %} - {{ item.dataset_end_date }}{% endif %}</dd>
              {% endif %}
 
-             {% if item.access_restrictions is defined %}
+             {% if item.access_restrictions is defined and item.access_restrictions[0] %}
              <dt>Access Rights</dt><dd>{% for restrict in item.access_restrictions %} <div class="multiple-item-list">{{ restrict }}</div>{% endfor %} </dd>
              {% endif %}
 
-             {% if item.local_experts is defined %}
+             {% if item.local_experts is defined and item.local_experts[0] %}
              <dt>Local Expert</dt><dd>{% for index,expert in item.local_experts %}
                <div class="multiple-item-list">
                  {% if item.local_expert_biosketch[index] is defined %}
