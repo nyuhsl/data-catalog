@@ -34,7 +34,9 @@ writeable by Apache and by your account.
 ### Follow-up Tasks
 1. You'll most likely want to regularly re-index Solr to account for datasets you add or edit using the Admin section. There is a script in the root directory called `SolrUpdater.py` which can update a Solr index. You'll probably want to call this script or something similar with a cron job every Sunday or every night or whatever seems appropriate, depending on much updating you do. I recommend weekly, since you can also run this script on-demand from the command line if you want.
 2. You'll most likely want to brand the site with your institution's logo or color scheme. Some placeholders have been left in `app/Resources/views/base.html.twig` that should get you started.
-3. You'll most likely want to have some datasets to search. Get to it!!
+3. In production, the site is configured to use the APC cache, which requires the installation of the APCu PHP module.
+4. There are currently two metadata fields ("Study Type" and "Subject Gender") which check in the database for the options they should display. When you first load the data entry form, these fields will appear blank until some options are added in their database tables. Please feel free to contact NYUHSL for examples of how to do this.
+5. You'll most likely want to have some datasets to search. Get to it!!
 
 ### Licensing
 All files in this repository that are NOT components of the main Symfony distribution are Copyright 2016 NYU Health Sciences Library. This application is distributed under the GNU General Public License v3.0. For more information see the `LICENSE` file included in this repository.
