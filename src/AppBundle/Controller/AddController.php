@@ -198,13 +198,22 @@ class AddController extends Controller {
       
       $em->persist($entity);
       $em->flush();
-      return $this->render('default/'.$successTemplate, array(
+      
+      //
+      // Added, 6/28/2017, Joel Marchewka
+      //
+      // Retrieves the ID of the entity once it is persisted and adds it to render bundle for the twig
+		
+	  $addedId=$entity->getId();
+		
+	  return $this->render('default/'.$successTemplate, array(
         'displayName'    => $entityTypeDisplayName,
         'adminPage'=>true,
         'newSlug'=>$slug,
         'userIsAdmin'=>$userIsAdmin,
         'entityName'=>$entityName,
-        'addedEntityName'=> $addedEntityName));
+        'addedEntityName'=> $addedEntityName,
+	  	'addedId'=> $addedId));
     }
     return $this->render('default/'.$addTemplate, array(
       'form' => $form->createView(),
