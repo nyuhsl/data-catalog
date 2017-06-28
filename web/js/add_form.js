@@ -91,10 +91,17 @@ jQuery(function($) {
       if (!$(selectBoxId).length){selectBoxId = selectBoxId.slice(0,-1);}
       // Symfony uses the actual database IDs as the values in <select> option lists. To trick Symfony
       // into accepting our brand-new item, we need to calculate its database ID and use it as the option value
-      var optionsList = $(selectBoxId + ' option').map(function(){return $(this).attr("value");}).get();
-      var maxValue = Math.max.apply(Math, optionsList);
-      var nextOption = maxValue + 10; // if your database IDs increment by 10
+      //var optionsList = $(selectBoxId + ' option').map(function(){return $(this).attr("value");}).get();
+      //var maxValue = Math.max.apply(Math, optionsList);
+      //var nextOption = maxValue + 10; // if your database IDs increment by 10
       // finally add the new item to the options list
+      
+      //
+      // Added, 6/28/2017, Joel Marchewka
+      //
+      // Fetching ID from data-id attribute of element
+      var nextOption =  $('#addEntityFormModalContent #entity-display-name').attr('data-id');
+      console.log("nextOption:"+nextOption);      
       $(selectBoxId).append('<option value="'+nextOption+'">'+addedEntityName+'</option>');
 
       var currentVals = $(selectBoxId).val();
