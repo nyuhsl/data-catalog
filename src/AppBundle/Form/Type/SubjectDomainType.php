@@ -35,7 +35,9 @@ class SubjectDomainType extends AbstractType {
    */
   public function buildForm(FormBuilderInterface $builder, array $options) {
     $builder->add('subject_domain');
-    $builder->add('mesh_code');
+    $builder->add('mesh_code', 'text', array(
+      'label' => 'MeSH URI',
+    ));
     $builder->add('save','submit',array('label'=>'Submit'));
   }
 
