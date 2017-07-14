@@ -28,7 +28,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *
  * @ORM\Entity
  * @ORM\Table(name="related_software")
- * @UniqueEntity("related_software")
+ * @UniqueEntity("software_name")
  */
 class RelatedSoftware {
   /**
@@ -39,9 +39,19 @@ class RelatedSoftware {
   protected $id;
 
   /**
-   * @ORM\Column(type="string",length=255, unique=true)
+   * @ORM\Column(type="string",length=128, unique=true)
    */
-  protected $related_software;
+  protected $software_name;
+
+  /**
+   * @ORM\Column(type="string",length=512, unique=false, nullable=true)
+   */
+  protected $software_description;
+
+  /**
+   * @ORM\Column(type="string",length=512, unique=false, nullable=true)
+   */
+  protected $software_url;
 
   /**
    * @ORM\Column(type="string",length=256)
@@ -60,7 +70,7 @@ class RelatedSoftware {
    * @return string
    */
   public function getDisplayName() {
-    return $this->related_software;
+    return $this->software_name;
   }
 
 
@@ -75,26 +85,72 @@ class RelatedSoftware {
     }
 
     /**
-     * Set related_software
+     * Set software_name
      *
-     * @param string $related_software
+     * @param string $software_name
      * @return RelatedSoftware
      */
-    public function setRelatedSoftware($related_software)
+    public function setSoftwareName($software_name)
     {
-        $this->related_software = $related_software;
+        $this->software_name = $software_name;
 
         return $this;
     }
 
     /**
-     * Get related_software
+     * Get software_name
      *
      * @return string 
      */
-    public function getRelatedSoftware()
+    public function getSoftwareName()
     {
-        return $this->related_software;
+        return $this->software_name;
+    }
+
+    /**
+     * Set software_description
+     *
+     * @param string $software_description
+     * @return RelatedSoftware
+     */
+    public function setSoftwareDescription($software_description)
+    {
+        $this->software_description = $software_description;
+
+        return $this;
+    }
+
+    /**
+     * Get software_description
+     *
+     * @return string 
+     */
+    public function getSoftwareDescription()
+    {
+        return $this->software_description;
+    }
+
+    /**
+     * Set software_url
+     *
+     * @param string $software_url
+     * @return RelatedSoftware
+     */
+    public function setSoftwareUrl($software_url)
+    {
+        $this->software_url = $software_url;
+
+        return $this;
+    }
+
+    /**
+     * Get software_url
+     *
+     * @return string 
+     */
+    public function getSoftwareUrl()
+    {
+        return $this->software_url;
     }
 
     /**
