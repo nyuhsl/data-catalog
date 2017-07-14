@@ -34,7 +34,12 @@ class SubjectOfStudyType extends AbstractType {
    * @param array $options
    */
   public function buildForm(FormBuilderInterface $builder, array $options) {
-    $builder->add('subject_of_study');
+    $builder->add('subject_of_study', 'text', array('label'=>'Subject of Study'));
+    $builder->add('species', 'text', array(
+      'label'=>'Species (Strain)',
+      'required'=>false,
+    
+    ));
     $builder->add('save','submit',array('label'=>'Submit'));
   }
 

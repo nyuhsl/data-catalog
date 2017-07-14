@@ -44,6 +44,11 @@ class SubjectOfStudy {
   protected $subject_of_study;
 
   /**
+   * @ORM\Column(type="string",length=255, nullable=true)
+   */
+  protected $species;
+
+  /**
    * @ORM\Column(type="string",length=256)
    */
   protected $slug;
@@ -95,6 +100,29 @@ class SubjectOfStudy {
     public function getSubjectOfStudy()
     {
         return $this->subject_of_study;
+    }
+
+    /**
+     * Set species
+     *
+     * @param string $species
+     * @return SubjectOfStudy
+     */
+    public function setSpecies($species)
+    {
+        $this->species = $species;
+
+        return $this;
+    }
+
+    /**
+     * Get species
+     *
+     * @return string 
+     */
+    public function getSpecies()
+    {
+        return $this->species;
     }
 
     /**
