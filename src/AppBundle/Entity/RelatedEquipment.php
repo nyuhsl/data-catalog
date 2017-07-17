@@ -44,6 +44,16 @@ class RelatedEquipment {
   protected $related_equipment;
 
   /**
+   * @ORM\Column(type="string",length=1028, unique=false, nullable=true)
+   */
+  protected $equipment_description;
+
+  /**
+   * @ORM\Column(type="string",length=1028, unique=false, nullable=true)
+   */
+  protected $equipment_url;
+
+  /**
    * @ORM\Column(type="string",length=256)
    */
   protected $slug;
@@ -95,6 +105,52 @@ class RelatedEquipment {
     public function getRelatedEquipment()
     {
         return $this->related_equipment;
+    }
+
+    /**
+     * Set equipment_description
+     *
+     * @param string $equipment_description
+     * @return RelatedEquipment
+     */
+    public function setEquipmentDescription($equipment_description)
+    {
+        $this->equipment_description = $equipment_description;
+
+        return $this;
+    }
+
+    /**
+     * Get equipment_description
+     *
+     * @return string 
+     */
+    public function getEquipmentDescription()
+    {
+        return $this->equipment_description;
+    }
+
+    /**
+     * Set equipment_url
+     *
+     * @param string $equipment_url
+     * @return RelatedEquipment
+     */
+    public function setEquipmentUrl($equipment_url)
+    {
+        $this->equipment_url = $equipment_url;
+
+        return $this;
+    }
+
+    /**
+     * Get equipment_url
+     *
+     * @return string 
+     */
+    public function getEquipmentUrl()
+    {
+        return $this->equipment_url;
     }
 
     /**

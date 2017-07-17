@@ -35,6 +35,11 @@ class RelatedEquipmentType extends AbstractType {
    */
   public function buildForm(FormBuilderInterface $builder, array $options) {
     $builder->add('related_equipment');
+    $builder->add('equipment_description');
+    $builder->add('equipment_url', 'text', array(
+      'label' => 'Equipment URL',
+      'required' => false
+    ));
     $builder->add('save','submit',array('label'=>'Submit'));
   }
 
