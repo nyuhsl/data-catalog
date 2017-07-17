@@ -34,7 +34,17 @@ class RelatedSoftwareType extends AbstractType {
    * @param array $options
    */
   public function buildForm(FormBuilderInterface $builder, array $options) {
-    $builder->add('related_software');
+    $builder->add('software_name', 'text', array(
+      'label'=>'Software Name',
+    ));
+    $builder->add('software_description', 'text', array(
+      'label'=>'Software Description',
+      'required'=>false,
+    ));
+    $builder->add('software_url', 'text', array(
+      'label'=>'Software URL',
+      'required'=>false,
+    ));
     $builder->add('save','submit',array('label'=>'Submit'));
   }
 

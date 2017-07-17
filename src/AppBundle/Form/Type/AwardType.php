@@ -27,7 +27,7 @@ class AwardType extends AbstractType {
 
   public function buildForm(FormBuilderInterface $builder, array $options) {
     $builder->add('award','text',array(
-      'label'=>'Grant Number',
+      'label'=>'Grant Number or Name',
     ));
     $builder->add('award_funder','text',array(
       'label'=>'Funding Agency',

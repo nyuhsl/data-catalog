@@ -148,9 +148,9 @@ class DatasetAsAdminType extends AbstractType {
     ));
     $builder->add('related_software', 'entity', array(
       'class'   => 'AppBundle:RelatedSoftware',
-      'property'=> 'related_software',
+      'property'=> 'software_name',
       'query_builder'=> function(EntityRepository $er) {
-          return $er->createQueryBuilder('u')->orderBy('u.related_software','ASC');
+          return $er->createQueryBuilder('u')->orderBy('u.software_name','ASC');
       },
       'required' => false,
       'attr'    => array('style'=>'width:100%'),
