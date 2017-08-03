@@ -375,18 +375,36 @@ $(function () {
 
       {% if (dataset.relatedEquipment.count > 0) %}
        <dt>Equipment Used</dt>
-       <dd>
+       <dd id="equipment-used">
       {% for equip in dataset.relatedEquipment %}
-        <div class="multiple-item-list">{{ equip.getDisplayName }}</div>
+        <div class="multiple-item-list">
+          {% if equip.equipmentUrl %}
+            <a href="{{ equip.equipmentUrl }}" target="_blank">{{ equip.getDisplayName }}</a>
+          {% else %}
+            {{ equip.getDisplayName }}
+          {% endif %}
+          {% if equip.equipmentDescription %}
+            <p class="related-dataset-note">{{ equip.equipmentDescription }}</p>
+          {% endif %}
+        </div>
       {% endfor %}
       </dd>
       {% endif %}
 
       {% if (dataset.relatedSoftware is not empty) %}
        <dt>Software Used</dt>
-       <dd>
+       <dd id="software-used">
       {% for sw in dataset.relatedSoftware %}
-        <div class="multiple-item-list">{{ sw.getDisplayName }}</div>
+        <div class="multiple-item-list">
+          {% if sw.softwareUrl %}
+            <a href="{{sw.softwareUrl}}" target="_blank">{{ sw.getDisplayName }}</a>
+          {% else %}
+            {{ sw.getDisplayName }}
+          {% endif %}
+          {% if sw.softwareDescription %}
+            <p class="related-dataset-note">{{ sw.softwareDescription }}</p>
+          {% endif %}
+        </div>
       {% endfor %}
       </dd>
       {% endif %}
