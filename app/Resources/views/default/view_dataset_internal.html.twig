@@ -249,13 +249,18 @@ $(function () {
       </dd>
       </dl>
 
+
     {% if dataset.subjectOfStudy is not empty %}
      <dt>Subject of Study</dt>
-      <dd>{% for subject in dataset.subjectOfStudy %}
+      <dd id="subject-of-study">{% for subject in dataset.subjectOfStudy %}
          <div class="multiple-item-list"><a href="/search?keyword=subject_of_study:{{ subject.getDisplayName }}">{{ subject.getDisplayName }}</a></div>
+         {% if subject.species is not empty %}
+           <p class="related-dataset-note">{{ subject.species }}</p>
+         {% endif %}
        {% endfor %}
       </dd>
      {% endif %}
+
      
     {% if dataset.subjectDomains is not empty %}
      <dt>Subject Domain</dt>

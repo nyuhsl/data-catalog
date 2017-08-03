@@ -290,8 +290,11 @@ $(function () {
 
     {% if dataset.subjectOfStudy is not empty %}
      <dt>Subject of Study</dt>
-      <dd>{% for subject in dataset.subjectOfStudy %}
+      <dd id="subject-of-study">{% for subject in dataset.subjectOfStudy %}
          <div class="multiple-item-list"><a href="/search?keyword=subject_of_study:{{ subject.getDisplayName }}">{{ subject.getDisplayName }}</a></div>
+         {% if subject.species is not empty %}
+           <p class="related-dataset-note">{{ subject.species }}</p>
+         {% endif %}
        {% endfor %}
       </dd>
      {% endif %}
@@ -378,12 +381,12 @@ $(function () {
        <dd id="equipment-used">
       {% for equip in dataset.relatedEquipment %}
         <div class="multiple-item-list">
-          {% if equip.equipmentUrl %}
+          {% if equip.equipmentUrl is not empty %}
             <a href="{{ equip.equipmentUrl }}" target="_blank">{{ equip.getDisplayName }}</a>
           {% else %}
             {{ equip.getDisplayName }}
           {% endif %}
-          {% if equip.equipmentDescription %}
+          {% if equip.equipmentDescription is not empty %}
             <p class="related-dataset-note">{{ equip.equipmentDescription }}</p>
           {% endif %}
         </div>
@@ -396,12 +399,12 @@ $(function () {
        <dd id="software-used">
       {% for sw in dataset.relatedSoftware %}
         <div class="multiple-item-list">
-          {% if sw.softwareUrl %}
+          {% if sw.softwareUrl is not empty %}
             <a href="{{sw.softwareUrl}}" target="_blank">{{ sw.getDisplayName }}</a>
           {% else %}
             {{ sw.getDisplayName }}
           {% endif %}
-          {% if sw.softwareDescription %}
+          {% if sw.softwareDescription is not empty %}
             <p class="related-dataset-note">{{ sw.softwareDescription }}</p>
           {% endif %}
         </div>
