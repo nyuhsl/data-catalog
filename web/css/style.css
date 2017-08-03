@@ -473,10 +473,20 @@ form.remove-form button {
 }
 
 #other-resources,
+#equipment-used,
+#software-used,
 #related-datasets {
  font-size:.9em;
 }
 
+#subject-of-study .related-dataset-note {
+  font-size:0.9em;
+}
+
+#equipment-used .multiple-item-list,
+#software-used .multiple-item-list {
+  margin-bottom:10px;
+}
 .internal-dataset {
   color:orange;
   font-weight:bold;
