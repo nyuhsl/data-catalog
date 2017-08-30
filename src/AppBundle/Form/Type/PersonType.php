@@ -41,6 +41,7 @@ class PersonType extends AbstractType {
       'label'    => 'ORCID ID',
     ));
     $builder->add('bio_url');
+    $builder->add('email');
     $builder->add('save', 'submit');
   }
 

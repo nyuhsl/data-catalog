@@ -81,6 +81,12 @@ class Person {
 
 
   /**
+   * @ORM\Column(type="string",length=256, nullable=true)
+   */
+  protected $email;
+
+  
+  /**
    * @ORM\OneToMany(targetEntity="PersonAssociation", mappedBy="person")
    */
   protected $dataset_associations;
@@ -226,6 +232,30 @@ class Person {
     public function getBioUrl()
     {
         return $this->bio_url;
+    }
+
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     * @return Person
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string 
+     */
+    public function getEmail()
+    {
+        return $this->email;
     }
 
 
