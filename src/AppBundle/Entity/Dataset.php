@@ -408,6 +408,12 @@ class Dataset implements JsonSerializable {
   protected $related_datasets;
 
 
+  /** 
+   * @ORM\OneToMany(targetEntity="DatasetEdit", mappedBy="parent_dataset_uid", cascade={"all"})
+   **/
+  protected $dataset_edits;
+
+
     /**
      * Constructor
      */

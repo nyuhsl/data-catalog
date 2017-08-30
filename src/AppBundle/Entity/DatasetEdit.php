@@ -1,0 +1,137 @@
+<?php
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+
+/**
+ * Entity to track edits made to datasets
+ *
+ *
+ *   This file is part of the Data Catalog project.
+ *   Copyright (C) 2016 NYU Health Sciences Library
+ *
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\DatasetEditRepository")
+ * @ORM\Table(name="dataset_edits")
+ */
+class DatasetEdit {
+  /**
+   * @ORM\Column(type="integer",name="edit_id")
+   * @ORM\Id
+   * @ORM\GeneratedValue(strategy="AUTO")
+   */
+  protected $id;
+
+
+  /**
+   * @ORM\Column(type="string",length=128)
+   */
+  protected $user;
+
+
+  /**
+   * @ORM\Column(type="datetime")
+   */
+  protected $timestamp;
+
+
+  /**
+   * @ORM\ManyToOne(targetEntity="Dataset", inversedBy="dataset_edits")
+   * @ORM\JoinColumn(name="parent_dataset_uid", referencedColumnName="dataset_uid")
+   **/
+  protected $parent_dataset_uid;
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set user
+     *
+     * @param string $user
+     * @return DatasetEdit
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return string 
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Set timestamp
+     *
+     * @param string $timestamp
+     * @return DatasetEdit
+     */
+    public function setTimestamp($timestamp)
+    {
+        $this->timestamp = $timestamp;
+
+        return $this;
+    }
+
+    /**
+     * Get timestamp
+     *
+     * @return string 
+     */
+    public function getTimestamp()
+    {
+        return $this->timestamp;
+    }
+
+    /**
+     * Set parent_dataset_uid
+     *
+     * @param \AppBundle\Entity\Dataset $parentDatasetUid
+     * @return DatasetEdit
+     */
+    public function setParentDatasetUid(\AppBundle\Entity\Dataset $parentDatasetUid = null)
+    {
+        $this->parent_dataset_uid = $parentDatasetUid;
+
+        return $this;
+    }
+
+    /**
+     * Get parent_dataset_uid
+     *
+     * @return \AppBundle\Entity\Dataset 
+     */
+    public function getParentDatasetUid()
+    {
+        return $this->parent_dataset_uid;
+    }
+
+}
