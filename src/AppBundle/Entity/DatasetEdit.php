@@ -28,6 +28,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="dataset_edits")
  */
 class DatasetEdit {
+
   /**
    * @ORM\Column(type="integer",name="edit_id")
    * @ORM\Id
@@ -46,6 +47,12 @@ class DatasetEdit {
    * @ORM\Column(type="datetime")
    */
   protected $timestamp;
+
+
+  /**
+   * @ORM\Column(type="string", length=64)
+   */
+  protected $edit_type;
 
 
   /**
@@ -112,6 +119,30 @@ class DatasetEdit {
     }
 
     /**
+     * Set edit type
+     *
+     * @param string $editType
+     * @return DatasetEdit
+     */
+    public function setEditType($editType)
+    {
+        $this->edit_type = $editType;
+
+        return $this;
+    }
+
+    /**
+     * Get edit type
+     *
+     * @return string 
+     */
+    public function getEditType()
+    {
+        return $this->edit_type;
+    }
+    
+
+    /**
      * Set parent_dataset_uid
      *
      * @param \AppBundle\Entity\Dataset $parentDatasetUid
@@ -123,7 +154,12 @@ class DatasetEdit {
 
         return $this;
     }
-
+    
+/*    public function setParentDatasetUid($parentDatasetUid)
+    {
+        $this->parent_dataset_uid = $parentDatasetUid;
+    }
+ */
     /**
      * Get parent_dataset_uid
      *
