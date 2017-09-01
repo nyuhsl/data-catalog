@@ -15,6 +15,11 @@ services:
     arguments: ["@doctrine.orm.entity_manager"]
     tags:
       - { name: form.type, alias: access_restriction_selector }
+  app.listener:
+    class: AppBundle\EventListener\DatasetEditListener
+    arguments: ["@security.token_storage"]
+    tags:
+      - { name: doctrine.event_listener, event: onFlush }
 #    service_name:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]

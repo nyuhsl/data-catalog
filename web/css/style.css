@@ -416,6 +416,15 @@ form.remove-form button {
   font-weight:bold;
 }
 
+#dataset-edits-panel {
+  margin-top:7em;
+  font-size:.9em;
+}
+.dataset-created-by {
+    margin-bottom:.5em;
+    display:inline-block;
+}
+
 /**************
  *
  * DATASET DETAIL VIEW

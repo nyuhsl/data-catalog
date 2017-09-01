@@ -408,6 +408,12 @@ class Dataset implements JsonSerializable {
   protected $related_datasets;
 
 
+  /** 
+   * @ORM\OneToMany(targetEntity="DatasetEdit", mappedBy="parent_dataset_uid", cascade={"all"})
+   **/
+  protected $dataset_edits;
+
+
     /**
      * Constructor
      */
@@ -431,6 +437,7 @@ class Dataset implements JsonSerializable {
         $this->other_resources = new \Doctrine\Common\Collections\ArrayCollection();
         $this->dataset_alternate_titles = new \Doctrine\Common\Collections\ArrayCollection();
         $this->related_datasets = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->dataset_edits = new \Doctrine\Common\Collections\ArrayCollection();
         $this->related_software = new \Doctrine\Common\Collections\ArrayCollection();
         $this->related_equipment = new \Doctrine\Common\Collections\ArrayCollection();
         $this->subject_of_study = new \Doctrine\Common\Collections\ArrayCollection();
@@ -1795,6 +1802,40 @@ class Dataset implements JsonSerializable {
     }
 
     /**
+     * Add dataset_edits
+     *
+     * @param \AppBundle\Entity\DatasetEdit $datasetEdits
+     * @return Dataset
+     */
+    public function addDatasetEdits(\AppBundle\Entity\DatasetEdit $datasetEdits)
+    {
+        $this->dataset_edits[] = $datasetEdits;
+
+        return $this;
+    }
+
+    /**
+     * Remove dataset_edit
+     *
+     * @param \AppBundle\Entity\DatasetEdit $datasetEdits
+     */
+    public function removeDatasetEdits(\AppBundle\Entity\DatasetEdit $datasetEdits)
+    {
+        $this->dataset_edits->removeElement($datasetEdits);
+    }
+
+    /**
+     * Get dataset_edits
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getDatasetEdits()
+    {
+        return $this->dataset_edits;
+    }
+
+
+    /**
      * Add related_equipment
      *
      * @param \AppBundle\Entity\RelatedEquipment $relatedEquipment
@@ -1859,4 +1900,6 @@ class Dataset implements JsonSerializable {
     {
         return $this->subject_of_study;
     }
+
+
 }
