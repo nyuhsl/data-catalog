@@ -154,12 +154,8 @@ class DatasetEdit {
 
         return $this;
     }
-    
-/*    public function setParentDatasetUid($parentDatasetUid)
-    {
-        $this->parent_dataset_uid = $parentDatasetUid;
-    }
- */
+
+
     /**
      * Get parent_dataset_uid
      *

@@ -183,6 +183,20 @@ col-sm-4
   {{ form_widget(form._token) }}
   {{ form_widget(form.save) }}
     </form> 
+    {% if form.vars.data.datasetEdits is not empty %}
+        <div id="dataset-edits-panel">
+            {% for edit in form.vars.data.datasetEdits %}
+                {% if edit.editType == 'created' %}
+                    <span class="dataset-created-by">
+                        <strong>Created by <em>{{ edit.user }}</em> at {{ edit.timestamp|date('Y-m-d H:i:s') }}</strong>
+                    </span>
+                {% elseif edit.editType == 'updated' %}
+                    Updated by <em>{{ edit.user }}</em> at {{ edit.timestamp|date('Y-m-d H:i:s') }}
+                {% endif %}
+                <br/>
+            {% endfor %}
+        </div>
+    {% endif %}
 
 
 </form>
