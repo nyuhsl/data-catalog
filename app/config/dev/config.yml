@@ -26,6 +26,7 @@ twig:
     institution_address: '%institution_address%'
     institution_url: '%institution_url%'
     internal_dataset_text: '%internal_dataset_text%'
+    local_expert_display: '%local_expert_display%'
 
 # Doctrine Configuration
 doctrine:
