@@ -94,7 +94,7 @@
         </dd>
      
         {% if dataset.localExperts|length > 0 %}
-         <dt>Local Expert</dt><dd>
+         <dt>{{ local_expert_display }}</dt><dd>
          {% for expert in dataset.localExperts %}
             <div class="multiple-item-list">
               <a href="{{ expert.bioUrl }}" target="_blank">{{ expert.fullName }}</a>

@@ -156,7 +156,7 @@
              {% endif %}
 
              {% if item.local_experts is defined and item.local_experts[0] %}
-             <dt>Local Expert</dt><dd>{% for index,expert in item.local_experts %}
+             <dt>{{ local_expert_display }}</dt><dd>{% for index,expert in item.local_experts %}
                <div class="multiple-item-list">
                  {% if item.local_expert_biosketch[index] is defined %}
                    <a href="{{ item.local_expert_biosketch[index] }}">{{ expert }}</a>
