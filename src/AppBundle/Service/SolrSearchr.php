@@ -156,15 +156,14 @@ class SolrSearchr {
       if (strpos($keyword_query_string, ":") === false) {
         // strip apostrophes from all normal queries so as not to confuse Solr
         $keyword_query_string = str_replace("'", "", $keyword_query_string);
-        $cleaned_query = urlencode($keyword_query_string);
         // construct keyword query based on fields specified in parameters.yml
         $queryComponents = "";
         foreach ($this->solrSearchFields as $fieldToSearch) {
-            $queryPart = $fieldToSearch . ":\"" . $cleaned_query . "\" OR ";
+            $queryPart = $fieldToSearch . ":\"" . $keyword_query_string . "\" OR ";
             $queryComponents .= $queryPart;
         }
         // and make extra-sure we're searching the title field
-        $keyword_query_string = $queryComponents . "dataset_title:\"" . $cleaned_query . "\"";
+        $keyword_query_string = $queryComponents . "dataset_title:\"" . $keyword_query_string . "\"";
       } elseif (strpos($keyword_query_string, "authors:") === true) {
         // but, keep apostrophes if we're searching for proper names, these queries are double-quoted so we need an exact match
       }
