@@ -117,6 +117,13 @@
            {% endfor %}</dd>
        {% endif %}
      
+     {% if (dataset.subjectGenders is not empty ) %}
+        <dt>Subject Gender</dt>
+          <dd>{% for gender in dataset.subjectGenders %}
+           <div class="multiple-item-list">{{ gender.getDisplayName }}</div>
+           {% endfor %}</dd>
+       {% endif %}
+
      {% if (dataset.subjectKeywords.count > 0) %}
         <dt>Keywords</dt>
          <dd>{% for keyword in dataset.subjectKeywords %}
