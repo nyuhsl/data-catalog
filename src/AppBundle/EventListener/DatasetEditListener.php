@@ -64,16 +64,31 @@ class DatasetEditListener
 
     public function recordEdit($dataset, $em, $uow, $entityAlreadyExists = false)
     {
+        $changeset = $uow->getEntityChangeset($dataset);
         $currentUser = $this->getUser();
         $edit = new DatasetEdit();
         $edit->setTimestamp(new \DateTime('now'));
         $edit->setParentDatasetUid($dataset);
         $edit->setUser($currentUser->getUsername());
-        if ($entityAlreadyExists) {
+
+        // check if we are archiving or unarchiving this dataset
+        if (array_key_exists('archived', $changeset)) {
+            $changes = $changeset['archived'];
+            $previousValue = array_key_exists(0, $changes) ? $changes[0] : null;
+            $newValue = array_key_exists(1, $changes) ? $changes[1] : null;
+            if ($previousValue != true && $newValue == true) {
+                $edit->setEditType("archived");
+            } elseif ($previousValue == true && $newValue != true) {
+                $edit->setEditType("unarchived");
+            }
+        // check if this is an update to existing dataset
+        } elseif ($entityAlreadyExists) {
             $edit->setEditType("updated");
+        // must be a brand new one
         } else {
             $edit->setEditType("created");
         }
+
         $em->persist($edit);
         $dataset->addDatasetEdits($edit);
         $md = $em->getClassMetadata('AppBundle:DatasetEdit');

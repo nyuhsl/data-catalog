@@ -56,6 +56,12 @@ class DatasetEdit {
 
 
   /**
+   * @ORM\Column(type="string", length=500, nullable=true)
+   */
+  protected $edit_notes;
+
+
+  /**
    * @ORM\ManyToOne(targetEntity="Dataset", inversedBy="dataset_edits")
    * @ORM\JoinColumn(name="parent_dataset_uid", referencedColumnName="dataset_uid")
    **/
@@ -140,7 +146,32 @@ class DatasetEdit {
     {
         return $this->edit_type;
     }
-    
+
+
+    /**
+     * Set edit notes
+     *
+     * @param string $editNotes
+     * @return DatasetEdit
+     */
+    public function setEditNotes($editNotes)
+    {
+        $this->edit_notes = $editNotes;
+
+        return $this;
+    }
+
+
+    /**
+     * Get edit notes
+     *
+     * @return string 
+     */
+    public function getEditNotes()
+    {
+        return $this->edit_notes;
+    }
+
 
     /**
      * Set parent_dataset_uid

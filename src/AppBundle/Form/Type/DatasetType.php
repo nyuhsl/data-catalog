@@ -346,6 +346,15 @@ class DatasetType extends AbstractType {
       $builder->add('subscriber', 'text', array(
         'required' => false,
         'label'    => 'Subscriber'));
+      $builder->add('archived', 'choice', array(
+        'required' => false,
+        'expanded' => true,
+        'label'    => 'Archive this Dataset?',
+        'choice_list'=> new ChoiceList(array(true,false), array('Yes','No')),
+      ));
+      $builder->add('archival_notes', 'textarea', array(
+        'required' => false,
+        'label'    => 'Archival Notes'));
     }
 
     $builder->add('save','submit',array(

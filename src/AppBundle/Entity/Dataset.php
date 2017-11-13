@@ -153,6 +153,18 @@ class Dataset implements JsonSerializable {
    */
   protected $date_archived;
 
+  
+  /**
+   * @ORM\Column(type="boolean", options={"default"=false}, nullable=true)
+   */
+  protected $archived;
+
+
+  /**
+   * @ORM\Column(type="string", length=500, nullable=true)
+   */
+  protected $archival_notes;
+
 
   /**
    * @ORM\Column(type="string", length=3000, nullable=true)
@@ -902,6 +914,55 @@ class Dataset implements JsonSerializable {
     {
         return $this->date_archived;
     }
+
+
+    /**
+     * Set archived
+     *
+     * @param  boolean
+     * @return Dataset
+     */
+    public function setArchived($archived)
+    {
+        $this->archived = $archived;
+
+        return $this;
+    }
+
+    /**
+     * Get archived
+     *
+     * @return boolean
+     */
+    public function getArchived()
+    {
+        return $this->archived;
+    }
+
+
+    /**
+     * Set archival_notes
+     *
+     * @param string $archivalNotes
+     * @return Dataset
+     */
+    public function setArchivalNotes($archivalNotes)
+    {
+        $this->archival_notes = $archivalNotes;
+
+        return $this;
+    }
+
+    /**
+     * Get archival_notes
+     *
+     * @return string
+     */
+    public function getArchivalNotes()
+    {
+        return $this->archival_notes;
+    }
+
 
 
     /**
