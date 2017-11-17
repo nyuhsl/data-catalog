@@ -36,7 +36,12 @@ col-sm-4
   View entry for this dataset
  </a>
 </div>
-<h1>Update dataset</h1>
+<h1>
+  Update dataset
+  {% if form.children.archived.vars.data == true %} 
+    <small>[ARCHIVED]</small>
+  {% endif %}
+</h1>
 </div>
   {{ form_start(form) }}
   {% if form.vars.valid == false %}

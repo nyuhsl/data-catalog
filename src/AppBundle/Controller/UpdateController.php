@@ -65,6 +65,10 @@ class UpdateController extends Controller {
     if ($slug == null) {
       if ($entityName == 'Award') {
         $allEntities = $em->getRepository('AppBundle:Award')->findAllOrdered();
+      } elseif ($entityName == 'ArchivedDatasets') {
+          $allEntities = $em->getRepository('AppBundle:Dataset')->findAllArchived();
+          $entityName = 'Dataset';
+          $entityTypeDisplayName = 'Archived Dataset';
       } else {
         $allEntities = $em->getRepository($updateEntity)->findAll();
       }
@@ -149,6 +153,7 @@ class UpdateController extends Controller {
       }
     }
   }
+
 
 
 }

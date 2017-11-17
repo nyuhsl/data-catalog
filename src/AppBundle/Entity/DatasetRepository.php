@@ -43,6 +43,15 @@ class DatasetRepository extends EntityRepository
     }
 
 
+    public function findAllArchived() {
+      return $this->getEntityManager()
+        ->createQuery(
+          'SELECT d FROM AppBundle:Dataset d WHERE d.archived=true'
+        )
+        ->getResult();
+    }
+
+
     public function getNewDatasetId() {
       $newId = $this->getEntityManager()
         ->createQuery(
