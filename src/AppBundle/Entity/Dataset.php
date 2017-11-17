@@ -172,6 +172,15 @@ class Dataset implements JsonSerializable {
   protected $data_location_description;
 
 
+  /**
+   * Dummy field to capture edit notes. The full history of edit notes is stored in the
+   * DatasetEdit entity, but since we want to also capture archival_notes in that entity, we're
+   * using the onFlush handler, which only works if the field is managed by Doctrine. So the easiest
+   * way to do that is to make an additional field here which can be captured in the onFlush handler.
+   *
+   * @ORM\Column(type="string", length=500, nullable=true)
+   */
+  protected $last_edit_notes;
 
   //
   //
@@ -987,6 +996,30 @@ class Dataset implements JsonSerializable {
     {
         return $this->data_location_description;
     }
+
+    /**
+     * Set last_edit_notes
+     *
+     * @param string $lastEditNotes
+     * @return Dataset
+     */
+    public function setLastEditNotes($lastEditNotes)
+    {
+        $this->last_edit_notes = $lastEditNotes;
+
+        return $this;
+    }
+
+    /**
+     * Get last_edit_notes
+     *
+     * @return string 
+     */
+    public function getLastEditNotes()
+    {
+        return $this->last_edit_notes;
+    }
+
 
     /**
      * Add dataset_formats

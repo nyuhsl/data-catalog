@@ -8,8 +8,7 @@ use AppBundle\Entity\DatasetEdit;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
 /**
- * Listen for Doctrine onFlush events and record the user who created or 
- * edited a dataset
+ * Listen for Doctrine onFlush events and record info about a dataset edit
  *
  *
  *   This file is part of the Data Catalog project.
@@ -76,24 +75,32 @@ class DatasetEditListener
             $changes = $changeset['archived'];
             $previousValue = array_key_exists(0, $changes) ? $changes[0] : null;
             $newValue = array_key_exists(1, $changes) ? $changes[1] : null;
-            if ($previousValue != true && $newValue == true) {
+            if ($previousValue == false && $newValue != false) {
+                // this means we are archiving it
                 $edit->setEditType("archived");
             } elseif ($previousValue == true && $newValue != true) {
+                // this means we are unarchiving it
                 $edit->setEditType("unarchived");
             }
-        // check if this is an update to existing dataset
+        // if not archiving, check if this is an update to existing dataset
         } elseif ($entityAlreadyExists) {
             $edit->setEditType("updated");
-        // must be a brand new one
+        // if not, must be a brand new one
         } else {
             $edit->setEditType("created");
+        }
+
+        // record any notes on this edit
+        if (array_key_exists('archival_notes', $changeset)) {
+            $edit->setEditNotes($changeset['archival_notes'][1]);
+        } elseif (array_key_exists('last_edit_notes', $changeset)) {
+            $edit->setEditNotes($changeset['last_edit_notes'][1]);
         }
 
         $em->persist($edit);
         $dataset->addDatasetEdits($edit);
         $md = $em->getClassMetadata('AppBundle:DatasetEdit');
         $uow->computeChangeSet($md, $edit);
-
 
         return $dataset;
     }

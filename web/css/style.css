@@ -424,6 +424,11 @@ form.remove-form button {
     margin-bottom:.5em;
     display:inline-block;
 }
+.dataset-edit-notes {
+    border-left:1px solid lightgray;
+    margin-left:2em;
+    padding-left:11px;
+}
 
 /**************
  *

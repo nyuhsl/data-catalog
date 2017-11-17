@@ -353,22 +353,37 @@ class DatasetAsAdminType extends AbstractType {
       'label'     => 'Subject Keywords',
     ));
 
-      $builder->add('erd_url', 'text', array(
-        'required' => false,
-        'label'    => 'ERD URL'));
-      $builder->add('library_catalog_url', 'text', array(
-        'required' => false,
-        'label'    => 'Library Catalog URL'));
-      $builder->add('licensing_details', 'textarea', array(
-        'required' => false,
-        'label'    => 'Licensing Details'));
-      $builder->add('license_expiration_date', 'date', array(
-        'required' => false,
-        'label'    => 'License Expiration Date'));
-      $builder->add('subscriber', 'text', array(
-        'required' => false,
-        'label'    => 'Subscriber'));
+    $builder->add('erd_url', 'text', array(
+      'required' => false,
+      'label'    => 'ERD URL'));
+    $builder->add('library_catalog_url', 'text', array(
+      'required' => false,
+      'label'    => 'Library Catalog URL'));
+    $builder->add('licensing_details', 'textarea', array(
+      'required' => false,
+      'label'    => 'Licensing Details'));
+    $builder->add('license_expiration_date', 'date', array(
+      'required' => false,
+      'label'    => 'License Expiration Date'));
+    $builder->add('subscriber', 'text', array(
+      'required' => false,
+      'label'    => 'Subscriber'));
 
+    $builder->add('archived', 'choice', array(
+      'required' => false,
+      'expanded' => true,
+      'placeholder'=>false,
+      'label'    => 'Archive this Dataset?',
+      'choice_list'=> new ChoiceList(array(true,false), array('Yes','No')),
+    ));
+    $builder->add('archival_notes', 'textarea', array(
+      'required' => false,
+      'label'    => 'Archival Notes'));
+    $builder->add('last_edit_notes', 'textarea', array(
+      'required' => false,
+      'data'     => '',
+      'label'    => 'Notes about this edit',
+    ));
     $builder->add('save','submit',array(
       "label"=>"Submit",
       'attr'=>array('class'=>'spacer')));
