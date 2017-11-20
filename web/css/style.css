@@ -49,6 +49,9 @@ http://ryanfait.com/
 .page-header {
   margin-top:1em;
 }
+.page-header.entities-list {
+    overflow:hidden;
+}
 .pagetitle {
   color:white;
   vertical-align:bottom;
@@ -147,6 +150,12 @@ http://ryanfait.com/
   margin:.7em 0em;
 }
 
+.add-new-entity-link {
+    float:left;
+}
+.view-archived-datasets-link {
+    float:right;
+}
 #facets-pane {
   padding:.5em;
   border-right:1px solid lightgray;
@@ -423,6 +432,11 @@ form.remove-form button {
 .dataset-created-by {
     margin-bottom:.5em;
     display:inline-block;
+}
+.dataset-edit-notes {
+    border-left:1px solid lightgray;
+    margin-left:2em;
+    padding-left:11px;
 }
 
 /**************

@@ -138,7 +138,10 @@ $(function () {
    </a>
   </div>
   {% endif %}
-     <h1 class="dataset-detail-maintitle">{{ dataset.title }} {% if dataset.published == false %}<small>[unpublished]</small>{%endif%}</h1>
+     <h1 class="dataset-detail-maintitle">{{ dataset.title }} 
+       {% if dataset.published == false %}<small>[unpublished]</small>{%endif%}
+       {% if dataset.archived == true %}<small>[archived]</small>{%endif%}
+     </h1>
       <span class="dataset-detail-alttitle">
       {% if dataset.datasetAlternateTitles.count > 0 %}
        <h5>Alternate Titles(s): 

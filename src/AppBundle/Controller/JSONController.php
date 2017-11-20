@@ -51,10 +51,10 @@ class JSONController extends Controller
 
     if ($slug == "all") {
       $datasets = $em->getRepository('AppBundle:Dataset')
-         ->findBy(array('published'=>1));
+         ->findBy(array('published'=>1, 'archived'=>0));
     } else {
       $datasets = $em->getRepository('AppBundle:Dataset')
-         ->findOneBy(array('slug'=>$slug,'published'=>1));
+         ->findOneBy(array('slug'=>$slug,'published'=>1, 'archived'=>0));
     }
     
     if ($_format == "json") {
