@@ -63,11 +63,16 @@ parameters:
     ldap.port: 
 
   #
-  # Solr stuff. You mostly want to set the server URL.
+  # Solr stuff. You mostly want to set the server URL and 
+  # choose your facets.
   # The other settings are a bit more involved to change.
   #
     solrsearchr_server: 
     solrsearchr_format: json
+    #
+    # Comment out any 'solrsearchr_facets' below that
+    # you don't want to appear on the results page.
+    #
     solrsearchr_facets:
         - origin_fq
         - subject_domain_fq
