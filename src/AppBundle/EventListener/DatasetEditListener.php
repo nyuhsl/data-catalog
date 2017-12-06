@@ -81,14 +81,15 @@ class DatasetEditListener
             } elseif ($previousValue == true && $newValue != true) {
                 // this means we are unarchiving it
                 $edit->setEditType("unarchived");
+            } elseif (!$entityAlreadyExists) {
+                // if we're setting the 'archived' value on initial dataset entry
+                $edit->setEditType("created");
             }
-        // if not archiving, check if this is an update to existing dataset
+        // if 'archived' isn't being set in this call, we're almost certainly updating an existing entry
         } elseif ($entityAlreadyExists) {
             $edit->setEditType("updated");
         // if not, must be a brand new one
-        } else {
-            $edit->setEditType("created");
-        }
+        } 
 
         // record any notes on this edit
         if (array_key_exists('archival_notes', $changeset)) {
