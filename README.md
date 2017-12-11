@@ -23,7 +23,7 @@ git clone https://github.com/nyuhsl/data-catalog.git
 4. Run `composer install` to install any dependencies
 5. [Configure your web server](http://symfony.com/doc/current/cookbook/configuration/web_server_configuration.html) to work with Symfony. NOTE: You will eventually have to require HTTPS connections on the login and administrative pages (at least), so remember to set up an SSL certificate for your server when you move the site to production. There is some sample code in app/config/common/security.yml that will tell Symfony to require HTTPS connections.
 6. [Configure the file
-   system](http://symfony.com/doc/current/setup/file_permissions.html). This
+   system](https://symfony.com/doc/2.8/setup/file_permissions.html). This
 means at the very least that `app/config/cache` and `app/config/logs` is
 writeable by Apache and by your account.
 7. In the root of your Symfony installation, run `php app/console doctrine:schema:update --force`. If you have configured your database correctly, this will set up your database to match the data model used in this application. If you haven't configured it correctly, this will let you know.
