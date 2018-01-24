@@ -182,7 +182,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
      */
     public function getId()
     {
-        return $this->id;
+        return $this->user_id;
     }
 
     /**
