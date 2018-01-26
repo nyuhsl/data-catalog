@@ -64,13 +64,15 @@
     <body>
       <div class="page-wrapper">
       <header id="page-header">
-        <span class="logo-container">
-        {# tell us where your site's logo lives in 'institution/logo.html.twig' #}
-        {% include ['institution/logo.html.twig','logo.html.twig'] ignore missing %}
-        </span>
-        <span class="pagetitle">
-          <h2><a class="pagetitlelink" href="/">{{ site_name }}</a></h2>
-        </span>
+      	<div>
+					<span class="logo-container">
+					{# tell us where your site's logo lives in 'institution/logo.html.twig' #}
+					{% include ['institution/logo.html.twig','logo.html.twig'] ignore missing %}
+					</span>
+					<span class="pagetitle">
+						<h2><a class="pagetitlelink" href="/">{{ site_name }}</a></h2>
+					</span>
+        </div>
         <nav class="nav-links">
           {% if is_granted('ROLE_USER') %}
            <h4 id="logged-in-badge">
@@ -95,14 +97,18 @@
       </header> 
       <div id="search-header">
         <div class="row">
-          <p class="search-box-description">Search here to find large public and licensed datasets</p>
-          <form id="keyword-search-form" class="input-group">
-              <input type="text" class="form-control" id="keyword-search-input">
-              <span class="input-group-btn">
-                <button id="keyword-search-submit" class="btn btn-default" type="submit">Go!</button>
-              </span>
-          </form>
-
+        	<div class="col-md-6">
+						<p class="search-box-description">Search here to find datasets</p>
+						<form id="keyword-search-form" class="input-group">
+								<input type="text" class="form-control" id="keyword-search-input">
+								<span class="input-group-btn">
+									<button id="keyword-search-submit" class="btn btn-default" type="submit">Go!</button>
+								</span>
+						</form>
+					</div>
+					<div class="col-md-6">
+						Submit
+					</div>
         </div><!-- /.row -->
       </div> 
       <div class="content-container">

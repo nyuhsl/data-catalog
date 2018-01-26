@@ -4,6 +4,7 @@ namespace AppBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use EWZ\Bundle\RecaptchaBundle\Form\Type\EWZRecaptchaType;
 
 /**
  * Form builder for Contact Us form
@@ -35,25 +36,25 @@ class ContactFormEmailType extends AbstractType {
    * @param array $options
    */
   public function buildForm(FormBuilderInterface $builder, array $options) {
-    $builder->add('employee_id', 'text', array(
-      'label'=> 'Employee ID',
-      'label_attr'=>array('class'=>'no-asterisk'),
-    ));
     $builder->add('full_name', 'text', array(
+      'required' => false,
       'label_attr'=>array('class'=>'no-asterisk')));
     $builder->add('email_address', 'email', array(
-      'label_attr'=>array('class'=>'no-asterisk')));
-    $builder->add('affiliation', 'choice', array(
-      'label'=>'Institutional Affiliation',
-      'label_attr'=>array('class'=>'no-asterisk'),
-      'choices' => $this->affiliationOptions
-    ));
+      'label_attr'=>array('class'=>'asterisk')));
+    $builder->add('school_center', 'text', array(
+      'required' => false,
+      'label'=> 'School/Center',
+	  'label_attr'=>array('class'=>'no-asterisk')));
+    $builder->add('department', 'text', array(
+      'required' => false,
+      'label'=> 'Department',
+	  'label_attr'=>array('class'=>'no-asterisk')));
        
     $builder->add('reason', 'choice', array(
       'expanded'=>true,
+      'required' => false,
       'label_attr'=>array('class'=>'no-asterisk'),
       'choices' =>array(
-        'Volunteer as a local expert' => 'Volunteer as a local expert',
         'Suggest a new dataset' => 'Suggest a new dataset',
         'Request uploading of dataset' => 'Request uploading of your dataset(s)',
         'General inquiry'    => 'General inquiry or comments',
@@ -61,6 +62,7 @@ class ContactFormEmailType extends AbstractType {
       'multiple'=>false)
     );
     $builder->add('message_body', 'textarea', array(
+      'required' => false,
       'attr' => array('rows'=>'5'),
       'label_attr'=>array('class'=>'no-asterisk'),
       'label'=>'Please provide some details about your question/comment',
@@ -69,6 +71,10 @@ class ContactFormEmailType extends AbstractType {
       'required'=>false,
       'attr'=>array('class'=>'checker'),
       'label_attr'=>array('class'=>'no-asterisk checker')));
+    
+
+    $builder->add('recaptcha', EWZRecaptchaType::class);
+
     $builder->add('save','submit',array('label'=>'Send'));
   }
 
@@ -104,4 +110,3 @@ class ContactFormEmailType extends AbstractType {
   }
 
 }
-

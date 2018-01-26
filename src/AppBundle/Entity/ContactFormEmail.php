@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
+use EWZ\Bundle\RecaptchaBundle\Validator\Constraints as Recaptcha;
 
 /**
  * Entity to describe emails submitted via the contact form
@@ -36,13 +37,25 @@ class ContactFormEmail {
    */
   protected $id;
 
-  /**
-   * @ORM\Column(type="string",length=18)
+  /** 
+   * @Recaptcha\IsTrue
    */
-  protected $employee_id;
-  
+  public $recaptcha;
+
+
+
   /**
-   * @ORM\Column(type="string",length=128)
+   * @ORM\Column(type="string",length=128,nullable=true)
+   */
+  protected $school_center;
+
+  /**
+   * @ORM\Column(type="string",length=128,nullable=true)
+   */
+  protected $department;
+
+  /**
+   * @ORM\Column(type="string",length=128,nullable=true)
    */
   protected $full_name;
 
@@ -96,28 +109,6 @@ class ContactFormEmail {
         return $this->id;
     }
 
-    /**
-     * Set employee_id
-     *
-     * @param string $employeeId
-     * @return ContactFormEmail
-     */
-    public function setEmployeeId($employeeId)
-    {
-        $this->employee_id = $employeeId;
-
-        return $this;
-    }
-
-    /**
-     * Get employee_id
-     *
-     * @return string 
-     */
-    public function getEmployeeId()
-    {
-        return $this->employee_id;
-    }
 
     /**
      * Set full_name
@@ -189,6 +180,53 @@ class ContactFormEmail {
     }
 
     /**
+     * Set school_center
+     *
+     * @param string school_center
+     * @return ContactFormEmail
+     */
+    public function setSchoolCenter($school_center)
+    {
+        $this->school_center = $school_center;
+
+        return $this;
+    }
+
+    /**
+     * Get school_center
+     *
+     * @return string 
+     */
+    public function getSchoolCenter()
+    {
+        return $this->school_center;
+    }
+
+   /**
+     * Set department
+     *
+     * @param string department
+     * @return ContactFormEmail
+     */
+    public function setDepartment($department)
+    {
+        $this->department = $department;
+
+        return $this;
+    }
+
+    /**
+     * Get department
+     *
+     * @return string 
+     */
+    public function getDepartment()
+    {
+        return $this->department;
+    }
+	
+	
+  /**
      * Set reason
      *
      * @param string $reason
@@ -210,7 +248,11 @@ class ContactFormEmail {
     {
         return $this->reason;
     }
-
+	
+	
+	
+	
+	
     /**
      * Set message_body
      *
@@ -256,4 +298,5 @@ class ContactFormEmail {
     {
         return $this->checker;
     }
+
 }

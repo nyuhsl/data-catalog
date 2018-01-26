@@ -5,8 +5,8 @@
 # to each configured DirectoryIndex file (e.g. index.php, index.html, index.pl).
 
 ######### CHANGE FOR DIFFERENT ENV ##############
-#DirectoryIndex app.php
-DirectoryIndex app_dev.php
+DirectoryIndex app.php
+#DirectoryIndex app_dev.php
 ################################################
 
 
@@ -41,8 +41,8 @@ DirectoryIndex app_dev.php
     RewriteCond %{ENV:REDIRECT_STATUS} ^$
 
 ######### CHANGE FOR DIFFERENT ENV  #############
-    RewriteRule ^app_dev\.php(/(.*)|$) %{CONTEXT_PREFIX}/$2 [R=301,L]
-#    RewriteRule ^app\.php(/(.*)|$) %{ENV:BASE}/$2 [R=301,L]
+#    RewriteRule ^app_dev\.php(/(.*)|$) %{CONTEXT_PREFIX}/$2 [R=301,L]
+    RewriteRule ^app\.php(/(.*)|$) %{ENV:BASE}/$2 [R=301,L]
 ################################################
 
     # If the requested filename exists, simply serve it.
@@ -53,8 +53,8 @@ DirectoryIndex app_dev.php
     # Rewrite all other queries to the front controller.
 
 ######### CHANGE FOR DIFFERENT ENV  #############
-    RewriteRule .? %{ENV:BASE}app_dev.php [L]
-#   RewriteRule .? %{ENV:BASE}/app.php [L]
+#    RewriteRule .? %{ENV:BASE}app_dev.php [L]
+     RewriteRule .? %{ENV:BASE}/app.php [L]
 ##################################################
 
 </IfModule>
@@ -66,8 +66,8 @@ DirectoryIndex app_dev.php
         # and the generated links can still be used.
 
 ######### CHANGE FOR DIFFERENT ENV ###############
-        RedirectMatch 302 ^/$ /app_dev.php/
-#        RedirectMatch 302 ^/$ /app.php/
+#        RedirectMatch 302 ^/$ /app_dev.php/
+        RedirectMatch 302 ^/$ /app.php/
 ####################################################
         
         # RedirectTemp cannot be used instead
