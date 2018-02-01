@@ -43,7 +43,7 @@ class Dataset implements JsonSerializable {
   /**
    * @ORM\Column(type="string",length=16, options={"default"="Internal"})
    */
-  protected $origin = "Internal";
+  protected $origin;
 
   /**
    * @Assert\NotBlank()
@@ -464,7 +464,10 @@ class Dataset implements JsonSerializable {
         $this->subject_of_study = new \Doctrine\Common\Collections\ArrayCollection();
         $this->authorships = new \Doctrine\Common\Collections\ArrayCollection();
 
+        // set field defaults
         $this->published = false;
+        $this->archived  = false;
+        $this->origin    = "Internal";
     }
 
   /**
