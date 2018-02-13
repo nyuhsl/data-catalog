@@ -73,6 +73,18 @@ class SubjectGeographicAreaDetail {
     return $this->geographic_area_detail_name;
   }
 
+  /** 
+   * Serialize all properties
+   *
+   * @return array
+   */
+  public function getAllProperties() {
+      return array(
+          'geographic_area_detail_name'=>$this->geographic_area_detail_name,
+          'geographic_area_detail_authority'=>$this->geographic_area_detail_authority
+      );
+  }
+
 
     /**
      * Get id

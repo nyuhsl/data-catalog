@@ -67,7 +67,7 @@ class JSONController extends Controller
     }
     
     if ($_format == "json") {
-      $jsonContent = json_encode($datasets);
+      $jsonContent = json_encode($datasets, JSON_PRETTY_PRINT);
       $response = new Response();
       $response->setContent($jsonContent);
       $response->headers->set('Content-Type', 'application/json');

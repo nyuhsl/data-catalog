@@ -101,6 +101,17 @@ class Person {
     return $this->full_name;
   }
 
+  public function getAllProperties() {
+      return array(
+          'full_name'=>$this->full_name,
+          'last_name'=>$this->last_name,
+          'first_name'=>$this->first_name,
+          'orcid_id'=>$this->orcid_id,
+          'bio_url'=>$this->bio_url,
+          'email'=>$this->email
+      );
+  }
+
     /**
      * Constructor
      */

@@ -76,6 +76,14 @@ class OtherResource {
     return $this->resource_name;
   }
 
+  public function getAllProperties() {
+      return array(
+          'resource_name'=>$this->resource_name,
+          'resource_description'=>$this->resource_description,
+          'resource_url'=>$this->resource_url
+      );
+  }
+
     /**
      * Set datasets_dataset_uid
      *

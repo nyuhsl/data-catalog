@@ -67,6 +67,19 @@ class DatasetRelationship {
         return $this->id;
     }
 
+  /**
+   * Serialize all properties
+   *
+   * @return array
+   */
+  public function getAllProperties() {
+      return array(
+          'related_dataset_uid'=>$this->related_dataset_uid,
+          'relationship_attributes'=>$this->relationship_attributes,
+          'relationship_notes'=>$this->relationship_notes,
+          'parent_dataset_uid'=>$this->parent_dataset_uid
+      );
+  }
     /**
      * Set relationship_attributes
      *

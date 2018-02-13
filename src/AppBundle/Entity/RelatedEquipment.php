@@ -73,6 +73,18 @@ class RelatedEquipment {
     return $this->related_equipment;
   }
 
+  /**
+   * Serialize all properties
+   *
+   * @return array
+   */
+  public function getAllProperties() {
+      return array(
+          'related_equipment'=>$this->related_equipment,
+          'equipment_description'=>$this->equipment_description,
+          'equipment_url'=>$this->equipment_url,
+      );
+  }
 
     /**
      * Get id

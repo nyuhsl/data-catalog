@@ -241,4 +241,25 @@ class Award {
     {
         return $this->datasets;
     }
+
+
+    /** 
+     * Serialize all properties
+     *
+     * @return array
+     */
+    public function getAllProperties()
+    {
+        $award_name = $this->award;
+        $funder = $this->award_funder;
+        $url = $this->award_url;
+        $funder_type = $this->funder_type;
+
+        return array(
+            'award' => $award_name,
+            'award_funder' => $funder,
+            'award_url' => $url,
+            'funder_type'=> $funder_type
+        );
+    }
 }

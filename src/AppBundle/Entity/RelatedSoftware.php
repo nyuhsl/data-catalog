@@ -74,6 +74,19 @@ class RelatedSoftware {
   }
 
 
+  /**
+   * Serialize all properties
+   *
+   * @return array
+   */
+  public function getAllProperties() {
+      return array(
+          'software_name'=>$this->software_name,
+          'software_description'=>$this->software_description,
+          'software_url'=>$this->software_url
+      );
+  }
+
     /**
      * Get id
      *

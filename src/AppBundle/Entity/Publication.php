@@ -77,6 +77,18 @@ class Publication {
     return $this->citation;
   }
 
+  /**
+   * Serialize all properties
+   *
+   * @return array
+   */
+  public function getAllProperties() {
+      return array(
+          'citation'=>$this->citation,
+          'url'=>$this->url,
+          'doi'=>$this->doi
+      );
+  }
 
     /**
      * Get id

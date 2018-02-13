@@ -71,6 +71,17 @@ class SubjectDomain {
     return $this->subject_domain;
   }
 
+  /**
+   * Serialize all properties
+   *
+   * @return array
+   */
+  public function getAllProperties() {
+      return array(
+          'subject_domain'=>$this->subject_domain,
+          'mesh_code'=>$this->mesh_code
+      );
+  }
 
     /**
      * Get id
