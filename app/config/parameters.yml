@@ -12,8 +12,3 @@ parameters:
     mailer_password: null
     locale: en
     secret: ThisTokenIsNotSoSecretChangeIt
-
-    # Tag to display for local experts (if you want to specify the institution)
-    local_expert_display: "Local Expert"
-
-

@@ -62,92 +62,98 @@
 
     </head>
     <body>
-      <div class="page-wrapper">
-      <header id="page-header">
-      	<div>
-					<span class="logo-container">
-					{# tell us where your site's logo lives in 'institution/logo.html.twig' #}
-					{% include ['institution/logo.html.twig','logo.html.twig'] ignore missing %}
-					</span>
-					<span class="pagetitle">
-						<h2><a class="pagetitlelink" href="/">{{ site_name }}</a></h2>
-					</span>
-        </div>
-        <nav class="nav-links">
-          {% if is_granted('ROLE_USER') %}
-           <h4 id="logged-in-badge">
-             <a href="{{ path('admin_panel') }}"><span class="greeting label label-warning">Welcome!</span></a>
-           </h4>
-          {% endif %}
-          <ul class="nav nav-tabs">
-            <li class="home-nav-link {% if app.request.get('_route') == 'default_search_results'%}active{% endif %} "><a href="/">Home</a></li>
-            <li class="about-nav-link {% if app.request.get('_route') == 'about' %}active{% endif %}"><a href="{{ path('about') }}">About the Catalog</a></li>
-            <li class="contact-page-link {% if app.request.get('_route') == 'contact' %}active{% endif %}"><a href="{{ path('contact') }}">Contact Us</a></li>
-            {% if is_granted('ROLE_USER') %}
-              <li class="privileged-nav-link admin-page-link {% if is_granted('ROLE_USER') and adminPage is defined and adminPage==true %}active{% endif %}"><a href="{{ path('admin_panel') }}">Admin</a></li>
-            {% endif %}
-            {% if is_granted('ROLE_USER') %}
-              <li class="privileged-nav-link"><a href="{{ path('logout') }}">Logout</a></li>
-            {% else %}
-              <li class="login-link hidden-xs"><a href="{{ path('login_route') }}">Login</a></li>
-            {% endif %}
-
-          </ul>
-        </nav>
-      </header> 
-      <div id="search-header">
-        <div class="row">
-        	<div class="col-md-6">
-						<p class="search-box-description">Search here to find datasets</p>
-						<form id="keyword-search-form" class="input-group">
-								<input type="text" class="form-control" id="keyword-search-input">
-								<span class="input-group-btn">
-									<button id="keyword-search-submit" class="btn btn-default" type="submit">Go!</button>
-								</span>
-						</form>
+				
+				<div class="container-fluid">
+					<div class="row upitt-header">
+						<div class="col-sm-12">
+							<a href="//pitt.edu"><img src="{{ asset('/img/institution/pitt-logo-gold.png') }}" class="pitt-logo" alt="University of Pittsburgh"></a>
+						</div>
 					</div>
-					<div class="col-md-6">
-						Submit
+					<div class="row pitt-dc-header">
+						<div class="col-sm-6">
+							<h1 class="pdc-pagetitle"><a class="pagetitlelink" href="/">{{ site_name }}</a></h1>
+						</div>
+						<div class="col-sm-6 nav-col">
+							<ul class="nav nav-tabs">
+								<li class="home-nav-link {% if app.request.get('_route') == 'default_search_results'%}active{% endif %} "><a href="/">Home</a></li>
+								<li class="about-nav-link {% if app.request.get('_route') == 'help' %}active{% endif %}"><a href="{{ path('help') }}">Help</a></li>
+								<li class="about-nav-link"><a href="/data">Browse</a></li>
+								<li class="about-nav-link {% if app.request.get('_route') == 'about' %}active{% endif %}"><a href="{{ path('about') }}">About</a></li>
+								<li class="contact-page-link {% if app.request.get('_route') == 'contact' %}active{% endif %}"><a href="{{ path('contact') }}">Contact</a></li>
+								{% if is_granted('ROLE_USER') %}
+									<li class="privileged-nav-link admin-page-link {% if is_granted('ROLE_USER') and adminPage is defined and adminPage==true %}active{% endif %}"><a href="{{ path('admin_panel') }}">Admin</a></li>
+								{% endif %}
+
+							</ul>
+
+						</div>
 					</div>
-        </div><!-- /.row -->
-      </div> 
-      <div class="content-container">
+					<div class="row dc-search-header">
+						<div class="col-sm-6 flexcol vertmidcol col-desc-fr dc-search">
 
-      {# ADMIN NAV SIDEBAR #}
-      {% if is_granted('ROLE_USER') and adminPage is defined and adminPage==true %}
-        <div class="admin-nav-sidebar col-xs-3">
-        <ul class="nav nav-stacked nav-pills">
-        {% if is_granted('ROLE_ADMIN') %}
-        <li class="{% if app.request.get('_route') == 'approval_queue' %}active{% endif %}" role="presentation">
-          <a href="{{ path('approval_queue') }}">View Unpublished Datasets
-          {{ render(controller('AppBundle:Queue:queueLength')) }}
-        </a>
-         </li>
-        {% endif %}
-        <li class="{% if app.request.get('_route') == 'add_dataset' or app.request.get('_route') =='ingest_dataset' %}active{% endif %}" role="presentation">
-          <a href="{{ path('add_dataset', {'entityName':'Dataset'}) }}">Add a New Dataset</a>
-         </li>
-        {% if is_granted('ROLE_ADMIN') %}
-        <li class="{% if 'update/Dataset' in app.request.requestUri  %}active{% endif %}" role="presentation">
-          <a href="{{ path('update_entity', {'entityName':'Dataset'}) }}">Edit an Existing Dataset</a>
-         </li>
-         <div class="spacer25"></div>
-        <li class="{% if app.request.get('_route') == 'admin_manage' or ('update' in app.request.requestUri and 'update/Dataset' not in app.request.requestUri and 'update/User' not in app.request.requestUri) %}active{% endif %}" role="presentation">
-          <a href="{{ path('admin_manage') }}">Manage Related Entities</a>
-         </li>
-        <li class="{% if app.request.get('_route') == 'admin_users' or 'update/User' in app.request.requestUri %}active{% endif %}" role="presentation">
-          <a href="{{ path('admin_users') }}">Manage Website Users</a>
-         </li>
-         <div class="spacer25"></div>
-         <li class="{% if 'remove/Dataset' in app.request.requestUri %}active{% endif %}" role="presentation">
-          <a href="{{ path('remove_entity', {'entityName':'Dataset'}) }}">Remove a Dataset</a>
-         </li>
-        {% endif %}
-        </ul>
-        </div>
-      {% endif %}
+							<label for="keyword-search-input"><a href="/data" style="color: white;" >Find datasets from University of Pittsburgh Researchers</a></label>
 
-      {% block content %}{% endblock %}
+						</div>
+						<div class="col-sm-6 flexcol vertmidcol dc-search">
+
+							<form id="keyword-search-form" class="input-group">
+									<input type="text" class="form-control" id="keyword-search-input">
+									<span class="input-group-btn">
+										<button id="keyword-search-submit" class="btn btn-default" type="submit">Go!</button>
+									</span>
+							</form>
+
+						</div>
+						<div class="col-sm-6 flexcol vertmidcol col-desc-fr dc-add">
+
+							<p class="descadd-dc">Add a description of your dataset to the Pitt Data Catalog</p>
+						
+						</div>
+						<div class="col-sm-6 flexcol vertmidcol dc-add">
+
+								<a href="#" class="link-as-button add-link">Submit your dataset</a> 
+
+						</div>
+
+					</div>
+					<div class="row">
+					 {# ADMIN NAV SIDEBAR #}
+						{% if is_granted('ROLE_USER') and adminPage is defined and adminPage==true %}
+							<div class="admin-nav-sidebar col-xs-3">
+							<ul class="nav nav-stacked nav-pills">
+							{% if is_granted('ROLE_ADMIN') %}
+							<li class="{% if app.request.get('_route') == 'approval_queue' %}active{% endif %}" role="presentation">
+								<a href="{{ path('approval_queue') }}">View Unpublished Datasets
+								{{ render(controller('AppBundle:Queue:queueLength')) }}
+							</a>
+							 </li>
+							{% endif %}
+							<li class="{% if app.request.get('_route') == 'add_dataset' or app.request.get('_route') =='ingest_dataset' %}active{% endif %}" role="presentation">
+								<a href="{{ path('add_dataset', {'entityName':'Dataset'}) }}">Add a New Dataset</a>
+							 </li>
+							{% if is_granted('ROLE_ADMIN') %}
+							<li class="{% if 'update/Dataset' in app.request.requestUri  %}active{% endif %}" role="presentation">
+								<a href="{{ path('update_entity', {'entityName':'Dataset'}) }}">Edit an Existing Dataset</a>
+							 </li>
+							 <div class="spacer25"></div>
+							<li class="{% if app.request.get('_route') == 'admin_manage' or ('update' in app.request.requestUri and 'update/Dataset' not in app.request.requestUri and 'update/User' not in app.request.requestUri) %}active{% endif %}" role="presentation">
+								<a href="{{ path('admin_manage') }}">Manage Related Entities</a>
+							 </li>
+							<li class="{% if app.request.get('_route') == 'admin_users' or 'update/User' in app.request.requestUri %}active{% endif %}" role="presentation">
+								<a href="{{ path('admin_users') }}">Manage Website Users</a>
+							 </li>
+							 <div class="spacer25"></div>
+							 <li class="{% if 'remove/Dataset' in app.request.requestUri %}active{% endif %}" role="presentation">
+								<a href="{{ path('remove_entity', {'entityName':'Dataset'}) }}">Remove a Dataset</a>
+							 </li>
+							{% endif %}
+							</ul>
+							</div>
+						{% endif %}
+
+
+			      {% block content %}{% endblock %}
+			    </div>
       {% block javascripts %}
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
@@ -163,8 +169,18 @@
     </div>
       <footer id="footer">
 
-        {# Use the file 'institution/footer.html.twig' for your institution-specific footer content #}
-        {% include ['institution/footer.html.twig','footer.html.twig'] ignore missing %}
+				<div class="footer-wrapper">
+
+					{# Use the file 'institution/footer.html.twig' for your institution-specific footer content #}
+					{% include ['institution/footer.html.twig','footer.html.twig'] ignore missing %}
+
+					{% if is_granted('ROLE_USER') %}
+							<a href="{{ path('logout') }}">Admin Logout</a>
+					{% else %}
+						<a href="{{ path('login_route') }}">Admin Login</a>
+					{% endif %}
+
+				</div>
 
       </footer>
   </body>

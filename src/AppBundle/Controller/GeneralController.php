@@ -94,6 +94,26 @@ class GeneralController extends Controller
 
 
   /**
+   * Produce the Help page
+   *
+   * @param Request The current HTTP request
+   *
+   * @return Response A Response instance
+   * @Route("/help", name="help")
+   */
+  public function helpAction(Request $request) {
+
+    if ($this->get('templating')->exists('institution/help.html.twig')) {
+      return $this->render('institution/help.html.twig',array()); 
+    }
+    else {
+      return $this->render('default/help.html.twig', array());
+    }
+
+  }
+
+
+  /**
    * Produce the Contact Us page and send emails to the 
    * users specified in parameters.yml
    * NOTE: The setTo() and setFrom() methods are supposed
