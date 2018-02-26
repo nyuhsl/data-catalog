@@ -48,13 +48,22 @@ class JSONController extends Controller
   public function JSONAction($slug, $_format) {
 
     $em = $this->getDoctrine()->getManager();
+    $qb = $em->createQueryBuilder();
 
     if ($slug == "all") {
-      $datasets = $em->getRepository('AppBundle:Dataset')
-         ->findBy(array('published'=>1, 'archived'=>0));
+      $datasets = $qb->select('d')
+                     ->from('AppBundle:Dataset', 'd')
+                     ->where('d.archived = 0 OR d.archived IS NULL')
+                     ->andWhere('d.published = 1')
+                     ->getQuery()->getResult();
     } else {
-      $datasets = $em->getRepository('AppBundle:Dataset')
-         ->findOneBy(array('slug'=>$slug,'published'=>1, 'archived'=>0));
+      $datasets = $qb->select('d')
+                     ->from('AppBundle:Dataset', 'd')
+                     ->where('d.slug = :slug')
+                     ->andWhere('d.published = 1')
+                     ->andWhere('d.archived = 0 OR d.archived IS NULL')
+                     ->setParameter('slug', $slug)
+                     ->getQuery()->getResult();
     }
     
     if ($_format == "json") {

@@ -84,7 +84,6 @@ assetic:
     use_controller: true
 
 swiftmailer:
-    delivery_address: lambi01@nyumc.org
     transport: sendmail
     host: localhost
     port: 25
