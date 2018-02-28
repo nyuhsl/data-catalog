@@ -25,6 +25,7 @@ twig:
     institution_url: '%institution_url%'
     internal_dataset_text: '%internal_dataset_text%'
     local_expert_display: '%local_expert_display%'
+    institution_author_display: '%institution_author_display%'
 
 doctrine:
     dbal:

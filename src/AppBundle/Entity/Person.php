@@ -91,6 +91,11 @@ class Person {
    */
   protected $dataset_associations;
 
+  /**
+   * @ORM\Column(type="boolean",length=128)
+   */
+  protected $is_institution_author = false;
+
 
   /**
    * Get name for display
@@ -258,6 +263,27 @@ class Person {
         return $this->email;
     }
 
+   /**
+     * Set is institution author
+     *
+     * @param string $institution
+     * @return Person
+     */
+    public function setIsInstitutionAuthor($institution)
+    {
+        $this->is_institution_author = $institution;
+        return $this;
+    }
+
+    /**
+     * Get is institution author
+     *
+     * @return string 
+     */
+    public function getIsInstitutionAuthor()
+    {
+        return $this->is_institution_author;
+    }
 
     /**
      * Set slug
