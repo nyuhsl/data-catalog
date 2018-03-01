@@ -159,7 +159,7 @@ class AddController extends Controller {
     $modal = $request->get('modal', false);
     $addTemplate = 'add.html.twig';
     $successTemplate = 'add_success.html.twig';
-    $action = '/add/'.$entityName;
+    $action = ''.$entityName;
     if ($modal) {
       $action . '?modal=true';
       $addTemplate = "modal_" . $addTemplate;
