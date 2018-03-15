@@ -82,7 +82,7 @@
 								<li class="home-nav-link {% if app.request.get('_route') == 'default_search_results'%}active{% endif %} "><a href="/">Home</a></li>
 								<!-- Removed temporarily
 								<li class="about-nav-link {% if app.request.get('_route') == 'help' %}active{% endif %}"><a href="{{ path('help') }}">Help</a></li>-->
-								<li class="about-nav-link"><a href="/data">Browse</a></li>
+								<li class="about-nav-link"><a href="/data?page=1">Browse</a></li>
 								<li class="about-nav-link {% if app.request.get('_route') == 'about' %}active{% endif %}"><a href="{{ path('about') }}">About</a></li>
 								<li class="contact-page-link {% if app.request.get('_route') == 'contact' %}active{% endif %}"><a href="{{ path('contact') }}">Contact</a></li>
 								{% if is_granted('ROLE_USER') %}

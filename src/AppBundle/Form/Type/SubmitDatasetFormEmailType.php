@@ -47,7 +47,7 @@ class SubmitDatasetFormEmailType extends AbstractType {
     $builder->add('phone_number', 'text', array(
       'required' => false,
       'label' => 'Phone number (if phone call preferred)',
-      'label_attr'=>array('class'=>'asterisk')));
+      'label_attr'=>array('class'=>'no-asterisk')));
 
     $builder->add('school_center', 'text', array(
       'required' => false,
@@ -61,7 +61,7 @@ class SubmitDatasetFormEmailType extends AbstractType {
 
     $builder->add('dataset_url', 'text', array(
       'required' => false,
-      'label'=> 'If your dataset(s) are already publicly available, please provide the URL',
+      'label'=> 'If your dataset(s) is already publicly available, please provide the URL',
 	  'label_attr'=>array('class'=>'no-asterisk')));
 
     $builder->add('details', 'textarea', array(

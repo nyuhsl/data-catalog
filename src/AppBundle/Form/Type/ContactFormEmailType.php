@@ -52,12 +52,11 @@ class ContactFormEmailType extends AbstractType {
        
     $builder->add('reason', 'choice', array(
       'expanded'=>true,
-      'required' => false,
+      'required' => true,
       'label_attr'=>array('class'=>'no-asterisk'),
       'choices' =>array(
-        'Suggest a new dataset' => 'Suggest a new dataset',
-        'Request uploading of dataset' => 'Request uploading of your dataset(s)',
-        'General inquiry'    => 'General inquiry or comments',
+        'General inquiry'    => 'General question or comments',
+        'Technical problem' => 'Technical problem',
       ),
       'multiple'=>false)
     );
