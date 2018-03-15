@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+{% form_theme form with ['bootstrap_3_horizontal_layout.html.twig',
+_self] %}
+
+{% block page_title %}
+ <title>Submit Dataset</title>
+{% endblock %}
+
+{% block form_group_class -%}
+col-sm-7
+{%- endblock form_group_class %}
+
+{% block form_label_class -%}
+col-sm-5
+{%- endblock form_label_class %}
+
+
+{% block page_stylesheets %}
+{% endblock %}
+
+
+{% block page_scripts %}
+{% endblock %}
+
+
+{% block content %}
+<div class="col-sm-6 col-sm-offset-2" >
+<div class="page-header">
+<h1>Include your Dataset</h1>
+</div>
+<p>To start a discussion about your datasets with the Data Services team at the University of Pittsburgh Health Sciences Library System, please submit the contact form below. We welcome inquiries from all researchers affiliated with the Pitt Schools of the Health Sciences.</p>
+
+{{ form(form) }}
+
+</div>
+
+{% endblock %}
+

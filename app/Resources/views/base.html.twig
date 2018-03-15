@@ -80,7 +80,8 @@
 						<div class="col-sm-6 nav-col">
 							<ul class="nav nav-tabs">
 								<li class="home-nav-link {% if app.request.get('_route') == 'default_search_results'%}active{% endif %} "><a href="/">Home</a></li>
-								<li class="about-nav-link {% if app.request.get('_route') == 'help' %}active{% endif %}"><a href="{{ path('help') }}">Help</a></li>
+								<!-- Removed temporarily
+								<li class="about-nav-link {% if app.request.get('_route') == 'help' %}active{% endif %}"><a href="{{ path('help') }}">Help</a></li>-->
 								<li class="about-nav-link"><a href="/data">Browse</a></li>
 								<li class="about-nav-link {% if app.request.get('_route') == 'about' %}active{% endif %}"><a href="{{ path('about') }}">About</a></li>
 								<li class="contact-page-link {% if app.request.get('_route') == 'contact' %}active{% endif %}"><a href="{{ path('contact') }}">Contact</a></li>
@@ -108,15 +109,15 @@
 							</form>
 
 						</div>
-						<div class="col-sm-6 flexcol vertmidcol col-desc-fr dc-add">
-
-							<p class="descadd-dc">Add a description of your dataset to the Pitt Data Catalog</p>
-						
-						</div>
 						<div class="col-sm-6 flexcol vertmidcol dc-add">
 
-								<a href="#" class="link-as-button add-link">Include your dataset</a> 
+								<a href="/data/submit-dataset" class="link-as-button add-link">Include your dataset</a> 
 
+						</div>
+						<div class="col-sm-6 flexcol vertmidcol col-desc-fr dc-add">
+
+							
+						
 						</div>
 
 					</div>

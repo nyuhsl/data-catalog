@@ -1,0 +1,28 @@
+<html>
+<body>
+<p>Hello, a new Submit Dataset Form submission been received about the Data Catalog.<p>
+<p>
+<b>Name:</b> {{ msg.getFullName }}
+</p>
+<p>
+<b>School/Center:</b> {{ msg.getSchoolCenter }}
+</p>
+<p>
+<b>Department:</b> {{ msg.getDepartment }}
+</p>
+<p>
+<b>Email:</b> {{ msg.getEmailAddress }}
+</p>
+<p>
+<b>Phone Number:</b> {{ msg.getPhoneNumber }}
+</p>
+<b>Dataset URL (if available):</b> {{ msg.getDatasetUrl }}
+</p>
+<p><b>Details</b></p>
+<p>{{ msg.getDetails }}</p>
+<p><b>Comments</b></p>
+<p>{{ msg.getComments }}</p>
+
+</body>
+</html>
+

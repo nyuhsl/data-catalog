@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+{% form_theme form with ['bootstrap_3_horizontal_layout.html.twig',
+_self] %}
+
+{% block page_title %}
+ <title>Form Submitted</title>
+{% endblock %}
+
+
+{% block form_group_class -%}
+col-sm-7
+{%- endblock form_group_class %}
+
+{% block form_label_class -%}
+col-sm-5
+{%- endblock form_label_class %}
+
+
+{% block page_stylesheets %}
+{% endblock %}
+
+
+{% block page_scripts %}
+{% endblock %}
+
+
+{% block content %}
+<div class="col-sm-6 col-sm-offset-2" >
+<div class="page-header">
+<h1>Include your Dataset</h1>
+</div>
+<div class="alert alert-success col-xs-12" role="alert">
+  <p>Thank you! We will respond to you by email soon, or by phone if you provided a phone number. If you are interested in other services from the HSLS Data Services team, including customized trainings and consultations on data management and data sharing, visit our <a href="https://hsls.pitt.edu/data-services">library webpage</a>.</p>
+</div>
+{{ form(form) }}
+
+</div>
+
+{% endblock %}
+

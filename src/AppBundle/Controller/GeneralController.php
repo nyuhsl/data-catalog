@@ -171,6 +171,65 @@ class GeneralController extends Controller
 
 
   /**
+   * Produce the Submit Dataset contact page and send emails to the 
+   * users specified in parameters.yml
+   * NOTE: The setTo() and setFrom() methods are supposed
+   * to accept arrays for multiple recipients, but this appears
+   * not to work.
+   *
+   * @param Request The current HTTP request
+   *
+   * @return Response A Response instance
+   *
+   * @Route("/submit-dataset", name="submitdataset")
+   */
+
+  public function submitdatasetAction(Request $request) {
+    $submitDatasetFormEmail = new \AppBundle\Entity\SubmitDatasetFormEmail();
+
+    // Get email addresses and institution list from parameters.yml
+    $emailTo = $this->container->getParameter('contact_email_to');
+    $emailFrom = $this->container->getParameter('contact_email_from');
+    $affiliationOptions = $this->container->getParameter('institutional_affiliation_options');
+
+    $em = $this->getDoctrine()->getManager();
+    $form = $this->createForm(new \AppBundle\Form\Type\SubmitDatasetFormEmailType($affiliationOptions), $submitDatasetFormEmail);
+    $form->handleRequest($request);
+    if ($form->isValid()) {
+      $email = $form->getData();
+
+      // save their submission to the database first
+      $em->persist($email);
+      $em->flush();
+
+      $mailer = $this->get('mailer');
+      $message = $mailer->createMessage()
+        ->setSubject('New Submit Dataset Entry | Data Catalog')
+        ->setFrom($emailFrom)
+        ->setTo($emailTo)
+        ->setBody(
+          $this->renderView(
+            'default/submit_dataset_email.html.twig',
+            array('msg' => $email)
+          ),
+          'text/html'
+        );
+      $mailer->send($message);
+
+      return $this->render('default/submit_dataset_email_send_success.html.twig', array(
+        'form' => $form->createView(),
+      ));
+    }
+
+    return $this->render('default/submit_dataset.html.twig', array(
+      'form' => $form->createView(),
+    ));
+
+  }
+
+
+
+  /**
    * Produce the detailed pages for individual datasets
    *
    * @param string $slug The slug of the dataset to be viewed
