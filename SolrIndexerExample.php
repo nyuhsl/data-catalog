@@ -1,10 +1,12 @@
 <?php
 
-$output_url = '<BASE URL OF YOUR DATA CATALOG INSTALLATION>/api/dataset/all.json';
-$submit_url = '<BASE URL OF YOUR SOLR INSTALLATION>/solr/data_catalog/update/json?commit=true&overwrite=true';
+$db_output_url = '<BASE URL OF YOUR DATA CATALOG INSTALLATION>/api/dataset/all.json';
+$solr_submit_url = '<BASE URL OF YOUR SOLR INSTALLATION>/solr/data_catalog/update/json?commit=true&overwrite=true';
+$solr_submit_url = '<BASE URL OF YOUR SOLR INSTALLATION>/solr/data_catalog/update/json?commit=true&overwrite=true';
+$solr_remove_url = '<BASE URL OF YOUR SOLR INSTALLATION>/solr/data_catalog/update/?commit=true';
 
-if (! $fh = fopen($output_url, 'r')) {
-    exit("Could not open '{$output_url}'\n");
+if (! $fh = fopen($db_output_url, 'r')) {
+    exit("Could not open '{$db_output_url}'\n");
 }
 
 $json = stream_get_contents($fh);
@@ -50,5 +52,5 @@ foreach (json_decode($json) as $row) {
                 ]
             ]);
 
-    file_get_contents($submit_url, null, $context);
+    file_get_contents($solr_submit_url, null, $context);
 }

@@ -37,8 +37,8 @@ class ContactFormEmailType extends AbstractType {
    */
   public function buildForm(FormBuilderInterface $builder, array $options) {
     $builder->add('full_name', 'text', array(
-      'required' => false,
-      'label_attr'=>array('class'=>'no-asterisk')));
+      'required' => true,
+      'label_attr'=>array('class'=>'asterisk')));
     $builder->add('email_address', 'email', array(
       'label_attr'=>array('class'=>'asterisk')));
     $builder->add('school_center', 'text', array(
