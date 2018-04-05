@@ -9,10 +9,57 @@ if (! $fh = fopen($db_output_url, 'r')) {
     exit("Could not open '{$db_output_url}'\n");
 }
 
-$json = stream_get_contents($fh);
+$db_json = stream_get_contents($fh);
+$db_json_parsed = json_decode($db_json);
+
 fclose($fh);
 
-foreach (json_decode($json) as $row) {
+#
+# Find items to remove
+
+if (! $fh = fopen($solr_output_url, 'r')) {
+    exit("Could not open '{$solr_output_url}'\n");
+}
+
+$solr_json = stream_get_contents($fh);
+
+fclose($fh);
+
+foreach (json_decode($solr_json)->response->docs as $row) {
+    
+    $found=0;
+    foreach($db_json_parsed as $db_row) {
+        
+        if ($row->id == $db_row->id) {
+            $found=1;
+            break;
+        }
+        
+    }
+    if ($found!=1) {
+        
+        $to_solr = "{'delete': {'id': ".$row->id."}}";
+				$context = stream_context_create([
+								'http' => [
+												'method' => 'POST',
+												'header' => 'Content-Type: application/json' . "\r\n"
+														. 'Content-Length: ' . strlen($to_solr) . "\r\n",
+												'content' => $to_solr,
+										]
+								]);
+
+				file_get_contents($solr_remove_url, null, $context);
+        print "delete ".$row->id."\n";
+        
+    }
+
+}
+
+
+#
+# Find new/added items
+
+foreach ($db_json_parsed as $row) {
     if ($row->dataset_end_date && $row->dataset_start_date) {
         $end_date = $row->dataset_end_date;
         if ('Present' == $row->dataset_end_date) {
