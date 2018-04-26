@@ -3,15 +3,38 @@ import json
 import csv
 from datetime import date
 
+db_output_url = '<BASE URL OF YOUR DATA CATALOG INSTALLATION>/api/dataset/all.json'
+solr_output_url = '<BASE URL OF YOUR SOLR INSTALLATION>/solr/data_catalog/select/?q=*:*&wt=json'
+solr_submit_url = '<BASE URL OF YOUR SOLR INSTALLATION>/solr/data_catalog/update/json?commit=true&overwrite=true'
+solr_remove_url = '<BASE URL OF YOUR SOLR INSTALLATION>/solr/data_catalog/update/?commit=true'
 
-output_url = '<BASE URL OF YOUR DATA CATALOG INSTALLATION>/api/dataset/all.json'
-submit_url = '<BASE URL OF YOUR SOLR INSTALLATION>/solr/data_catalog/update/json?commit=true&overwrite=true'
+db_response = urllib2.urlopen(db_output_url)
+db_json_output = db_response.read()
+db_parsed_json=json.loads(db_json_output)
 
+solr_response = urllib2.urlopen(solr_output_url)
+solr_json_output = solr_response.read()
 
-response = urllib2.urlopen(output_url)
-json_output = response.read()
+#
+# Find items to remove
 
-for row in json.loads(json_output):
+for row in json.loads(solr_json_output)['response']['docs']:
+  if not [x for x in db_parsed_json if x['id'] == int(row['id'])]:
+    
+    to_solr="{'delete': {'id': "+row['id']+"}}"
+    print "delete "+row['id']
+    request = urllib2.Request(solr_remove_url, to_solr.encode("utf-8"), {'Content-Type': 'application/json'})
+    try:
+      urllib2.urlopen(request)
+    except urllib2.HTTPError as e:
+      print e.code
+      print e.read()
+
+#
+# Find new/added items
+
+for row in db_parsed_json:
+
   if (row['dataset_end_date'] and row['dataset_start_date']):
     end = row['dataset_end_date']
     if (end == 'Present'):
@@ -34,8 +57,7 @@ for row in json.loads(json_output):
   to_solr = json.dumps(row)
   to_solr = "[" + to_solr + "]"
   print to_solr
-  #print row["id"]
-  request = urllib2.Request(submit_url, to_solr.encode("utf-8"), {'Content-Type': 'application/json'})
+  request = urllib2.Request(solr_submit_url, to_solr.encode("utf-8"), {'Content-Type': 'application/json'})
 
 
   try:
@@ -43,4 +65,3 @@ for row in json.loads(json_output):
   except urllib2.HTTPError as e:
     print e.code
     print e.read()
-
