@@ -137,6 +137,10 @@ class SolrSearchr {
            . $fieldsQuery
            . '&wt=' . $this->solrFormat;
 
+    if ($this->solrFormat == 'json') {
+      $URL .= "&json.nl=arrarr";
+    }
+
     return $URL;
   }
 
