@@ -66,7 +66,7 @@ class SearchResults {
       throw new \RuntimeException('Solr server is reachable, but returns unexpected response. Check the full URL that is being requested');
     }
     $this->dateFacets   = (array) $this->solrResponse->facet_counts->facet_ranges->dataset_years->counts;
-    array_unshift($this->dateFacets, 'before',$this->solrResponse->facet_counts->facet_ranges->dataset_years->before);
+    array_unshift($this->dateFacets, array('before',$this->solrResponse->facet_counts->facet_ranges->dataset_years->before));
     $this->facets['dataset_years'] = $this->dateFacets;
     $this->numResults   = $this->solrResponse->response->numFound;
     $this->resultItems  = (array) $this->solrResponse->response->docs;
@@ -80,8 +80,8 @@ class SearchResults {
 
 
   /**
-   * We need to get the facets info out of Solr's odd array structure
-   * so templates can make use of it easier
+   * Making user-friendly facet names and returning them in 
+   * Twig-friendly arrays
    *
    * @param array $rawFacets Facets data from Solr
    *
@@ -91,23 +91,27 @@ class SearchResults {
     $translatedFacets = array();
     $rawFacets = (array) $rawFacets;
     foreach ($rawFacets as $key=>$value) {
-      for ($i=0,$size=count($value);$i<$size;$i+=2) {
-        $newFacetName = array_search($key, $this->facetMappings);
-        $facetItemName = $rawFacets[$key][$i];
-        $facetItemCount= $rawFacets[$key][$i+1];
+      $newFacetName = array_search($key, $this->facetMappings);
+      foreach ($value as $facetItem) {
         $translatedFacets[$newFacetName][] = array(
-          'facetItem' => $facetItemName,
-          'facetCount'=> $facetItemCount
+          'facetItem' => $facetItem[0],
+          'facetCount'=> $facetItem[1]
         );
       }
     }
-    // display names for date facets
-    $translatedFacets['Timeframe'][0]['facetItem'] = 'Prior to 1975';
-    $translatedFacets['Timeframe'][1]['facetItem'] = '1975 - 1984';
-    $translatedFacets['Timeframe'][2]['facetItem'] = '1985 - 1994';
-    $translatedFacets['Timeframe'][3]['facetItem'] = '1995 - 2004';
-    $translatedFacets['Timeframe'][4]['facetItem'] = '2005 - Present';
+    $timeframes = $translatedFacets['Timeframe'];
     
+    // create display names for date facets
+    $begin = substr($timeframes[1]['facetItem'], 0, 4);
+    $second = substr($timeframes[2]['facetItem'], 0, 4);
+    $third = substr($timeframes[3]['facetItem'], 0, 4);
+    $fourth = substr($timeframes[4]['facetItem'], 0, 4);
+    $translatedFacets['Timeframe'][0]['facetItem'] = 'Prior to ' . $begin;
+    $translatedFacets['Timeframe'][1]['facetItem'] = $begin . ' - ' . $second;
+    $translatedFacets['Timeframe'][2]['facetItem'] = $second . ' - ' . $third;
+    $translatedFacets['Timeframe'][3]['facetItem'] = $third . ' - ' . $fourth;
+    $translatedFacets['Timeframe'][4]['facetItem'] = $fourth . ' - Present';
+     
     return $translatedFacets;
   }
 
