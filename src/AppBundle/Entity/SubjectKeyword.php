@@ -44,10 +44,16 @@ class SubjectKeyword {
   protected $keyword;
 
   /**
+   * @ORM\Column(type="string",length=256, nullable=true)
+   */
+
+  protected $mesh_code;
+
+  /**
    * @ORM\Column(type="string",length=256)
    */
-  protected $slug;
 
+  protected $slug;
 
   /**
    * @ORM\ManyToMany(targetEntity="Dataset", mappedBy="subject_keywords")
@@ -62,7 +68,6 @@ class SubjectKeyword {
   public function getDisplayName() {
     return $this->keyword;
   }
-
 
     /**
      * Get id
@@ -96,6 +101,30 @@ class SubjectKeyword {
     {
         return $this->keyword;
     }
+
+    /**
+     * Set mesh_code
+     *
+     * @param string $meshCode
+     * @return SubjectKeyword
+     */
+    public function setMeshCode($meshCode)
+    {
+        $this->mesh_code = $meshCode;
+
+        return $this;
+    }
+
+    /**
+     * Get mesh_code
+     *
+     * @return string 
+     */
+    public function getMeshCode()
+    {
+        return $this->mesh_code;
+    }
+
 
     /**
      * Set slug

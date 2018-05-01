@@ -66,8 +66,8 @@ DirectoryIndex app_dev.php
         # and the generated links can still be used.
 
 ######### CHANGE FOR DIFFERENT ENV ###############
-        RedirectMatch 302 ^/$ /app_dev.php/
-#        RedirectMatch 302 ^/$ /app.php/
+#        RedirectMatch 302 ^/$ /app_dev.php/
+        RedirectMatch 302 ^/$ /app.php/
 ####################################################
         
         # RedirectTemp cannot be used instead
