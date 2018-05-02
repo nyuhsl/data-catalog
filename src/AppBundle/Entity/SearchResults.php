@@ -101,15 +101,14 @@ class SearchResults {
     }
     $timeframes = $translatedFacets['Timeframe'];
     
-    // create display names for date facets
-    $begin = substr($timeframes[1]['facetItem'], 0, 4);
+    $begin  = substr($timeframes[1]['facetItem'], 0, 4);
     $second = substr($timeframes[2]['facetItem'], 0, 4);
-    $third = substr($timeframes[3]['facetItem'], 0, 4);
+    $third  = substr($timeframes[3]['facetItem'], 0, 4);
     $fourth = substr($timeframes[4]['facetItem'], 0, 4);
     $translatedFacets['Timeframe'][0]['facetItem'] = 'Prior to ' . $begin;
-    $translatedFacets['Timeframe'][1]['facetItem'] = $begin . ' - ' . $second;
-    $translatedFacets['Timeframe'][2]['facetItem'] = $second . ' - ' . $third;
-    $translatedFacets['Timeframe'][3]['facetItem'] = $third . ' - ' . $fourth;
+    $translatedFacets['Timeframe'][1]['facetItem'] = $begin . ' - ' . ($second-1);
+    $translatedFacets['Timeframe'][2]['facetItem'] = $second . ' - ' . ($third-1);
+    $translatedFacets['Timeframe'][3]['facetItem'] = $third . ' - ' . ($fourth-1);
     $translatedFacets['Timeframe'][4]['facetItem'] = $fourth . ' - Present';
      
     return $translatedFacets;
