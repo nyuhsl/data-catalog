@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Dataset;
@@ -95,6 +96,7 @@ class AddController extends Controller {
     $dataset = new Dataset();
     $em = $this->getDoctrine()->getManager();
     $userIsAdmin = $this->get('security.context')->isGranted('ROLE_ADMIN');
+
     $datasetUid = $em->getRepository('AppBundle:Dataset')
                      ->getNewDatasetId();
     $dataset->setDatasetUid($datasetUid);
@@ -142,7 +144,61 @@ class AddController extends Controller {
 
   }
   
+
+  /** 
+   * Ingest dataset via API
+   *
+   * @param Request The current HTTP request
+   *
+   * @return Response A Response instance
+   *
+   * @Route("/api/dataset")
+   * @Method("POST")
+   */
+  public function apiIngestDataset(Request $request) {
+    $submittedData = json_decode($request->getContent(), true);
+    $dataset = new Dataset();
+    $em = $this->getDoctrine()->getManager();
+    //$userCanSubmit = $this->get('security.context')->isGranted('ROLE_API_SUBMITTER');
+    $userCanSubmit = true;
+
+    $datasetUid = $em->getRepository('AppBundle:Dataset')
+                       ->getNewDatasetId();
+    $dataset->setDatasetUid($datasetUid);
+
+    if ($userCanSubmit) {
+      $form = $this->createForm(new DatasetAsAdminType($userCanSubmit, $datasetUid), $dataset, array('csrf_protection'=>false));
+      $form->submit($submittedData);
+      if ($form->isValid()) {
+        $dataset = $form->getData();
+        $addedEntityName = $dataset->getTitle();
+        $slug = Slugger::slugify($addedEntityName);
+        $dataset->setSlug($slug);
+
+        $em->persist($dataset);
+        foreach ($dataset->getAuthorships() as $authorship) {
+          $authorship->setDataset($dataset);
+          $em->persist($authorship);
+        }
+        $em->flush();
+
+        return new Response('Dataset Successfully Added', 201);
+      } else {
+          $errors = array();
+          foreach ($form as $fieldName => $formField) {
+                  // each field has an array of errors
+              $errors[$fieldName] = $formField->getErrors();
+             
+          }
+          var_dump($errors);
+          return new Response('invalid form?', 500);
+      }
+    } else {
+        return new Response('Unauthorized', 401);
+    }
+  }
   
+
   /**
    * Create a form to add an instance of the entity specified in the URL.
    * Also validates and ingests the object.

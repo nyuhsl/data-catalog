@@ -20,6 +20,8 @@ services:
     arguments: ["@security.token_storage"]
     tags:
       - { name: doctrine.event_listener, event: onFlush }
+  app.api_token_authenticator:
+    class: AppBundle\Security\ApiTokenAuthenticator
 #    service_name:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
