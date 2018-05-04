@@ -269,6 +269,15 @@ class DatasetType extends AbstractType {
       'by_reference'=>false,
       'label'     => 'Subject Genders',
     ));
+    $builder->add('subject_sexes', 'entity', array(
+      'class'      => 'AppBundle:SubjectSex',
+      'property'   => 'subject_sex',
+      'multiple'   => true,
+      'expanded'   => true,
+      'required' => false,
+      'by_reference'=>false,
+      'label'     => 'Subject Sexes',
+    ));
     $builder->add('subject_population_ages', 'entity', array(
       'class'   => 'AppBundle:SubjectPopulationAge',
       'property'=> 'age_group',
