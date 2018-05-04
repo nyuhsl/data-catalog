@@ -35,6 +35,10 @@ class SubjectKeywordType extends AbstractType {
    */
   public function buildForm(FormBuilderInterface $builder, array $options) {
     $builder->add('keyword');
+    $builder->add('mesh_code', 'text', array(
+      'label' => 'URI',
+      'required' => false,
+    ));
     $builder->add('save','submit',array('label'=>'Submit'));
   }
 

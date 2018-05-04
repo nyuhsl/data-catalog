@@ -137,6 +137,10 @@ class SolrSearchr {
            . $fieldsQuery
            . '&wt=' . $this->solrFormat;
 
+    if ($this->solrFormat == 'json') {
+      $URL .= "&json.nl=arrarr";
+    }
+
     return $URL;
   }
 
@@ -192,7 +196,7 @@ class SolrSearchr {
    * @return string The Facets portion of the URL
    */
   protected function makeFacetQuery() {
-    $facet_query_string = "&facet=true&facet.mincount=1";
+    $facet_query_string = "&facet=true&facet.mincount=0";
 
     // Tell Solr which fields we're making facets out of (stored in parameters.yml)
     for($i=0, $size=count($this->solrFacets); $i<$size; ++$i) {
@@ -243,6 +247,7 @@ class SolrSearchr {
     $date_range = $parts[0] . ":" . "[" . $start . " TO " . $end . "]";
 
     return $date_range;
+    
   }
 
 
@@ -255,9 +260,8 @@ class SolrSearchr {
     $date_range_query  = "&facet.range=dataset_years&f.dataset_years.facet.range.start=NOW/YEAR-40YEAR";
     $date_range_query .= "&f.dataset_years.facet.range.end=NOW/YEAR&f.dataset_years.facet.range.gap=%2b10YEAR";
     $date_range_query .= "&f.dataset_years.facet.range.hardend=true&f.dataset_years.facet.range.other=before";
-    
+
     return $date_range_query;
-  
   }
 
 

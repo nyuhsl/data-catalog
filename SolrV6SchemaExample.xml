@@ -429,6 +429,7 @@
   <copyField source="access_restrictions" dest="access_restrictions_fq"/>
 
   <field name="authors" type="strings"/>
+  <field name="corresponding_authors" type="strings"/>
   <field name="awards" type="strings"/>
   <field name="collection_standards" type="strings"/>
   <field name="data_types" type="strings"/>
