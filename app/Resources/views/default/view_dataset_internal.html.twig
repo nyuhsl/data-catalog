@@ -52,7 +52,7 @@ $(function () {
       "@type": "Person",
       "name":"{{ auth.fullName }}",
       "url":"{{ auth.bioUrl }}"}{% if not loop.last %}, {% endif %}{% endfor %}],
-  "citation": [{% for pub in dataset.publications %}"{{ pub.citation|trim }}"{% if not loop.last %}, {% endif %}{% endfor %}],
+  "citation": [{% for pub in dataset.publications %}"{{ pub.citation|trim }}"{% if not loop.last %}; {% endif %}{% endfor %}],
   "encoding": [{% for format in dataset.datasetFormats %}
 {
       "@type": "MediaObject",
@@ -153,10 +153,10 @@ $(function () {
 
                    {% endif %}
                    {% if author.isCorrespondingAuthor %}
-                      <a tabindex="0" class="corresponding-author author-name{% if author.getPerson.isInstitutionAuthor %} institution-author{% endif %}" role="button" data-toggle="popover" title="{{ author.getPerson.getFullName }}" data-content="{{ popoverContent }}">{{ author.getPerson.getFullName }}*</a>{% if not loop.last %},{% endif %}{% if loop.last %}...{% endif %}
+                      <a tabindex="0" class="corresponding-author author-name{% if author.getPerson.isInstitutionAuthor %} institution-author{% endif %}" role="button" data-toggle="popover" title="{{ author.getPerson.getFullName }}" data-content="{{ popoverContent }}">{{ author.getPerson.getFullName }}*</a>{% if not loop.last %};{% endif %}{% if loop.last %}...{% endif %}
                       {% set correspondingAuthorExists = true %}
                    {% else %}
-                      <a tabindex="0" class="author-name{% if author.getPerson.isInstitutionAuthor %} institution-author{% endif %}" role="button" data-toggle="popover" title="{{ author.getPerson.getFullName }}" data-content="{{ popoverContent }}">{{ author.getPerson.getFullName }}</a>{% if not loop.last %}, {% endif %}{% if loop.last %}...{%endif %}
+                      <a tabindex="0" class="author-name{% if author.getPerson.isInstitutionAuthor %} institution-author{% endif %}" role="button" data-toggle="popover" title="{{ author.getPerson.getFullName }}" data-content="{{ popoverContent }}">{{ author.getPerson.getFullName }}</a>{% if not loop.last %}; {% endif %}{% if loop.last %}...{%endif %}
                    {% endif %}
                {% endfor %}
                 <a class="collapsed-toggle authors-collapse" data-toggle="collapse" href="#collapsed-authors" aria-expanded="false" aria-controls="collapsed-authors">
@@ -172,10 +172,10 @@ $(function () {
 
                    {% endif %}
                    {% if author.isCorrespondingAuthor %}
-                      <a tabindex="0" class="corresponding-author author-name{% if author.getPerson.isInstitutionAuthor %} institution-author{% endif %}" role="button" data-toggle="popover" title="{{ author.getPerson.getFullName }}" data-content="{{ popoverContent }}">{{ author.getPerson.getFullName }}*</a>{% if not loop.last %}, {% endif %}
+                      <a tabindex="0" class="corresponding-author author-name{% if author.getPerson.isInstitutionAuthor %} institution-author{% endif %}" role="button" data-toggle="popover" title="{{ author.getPerson.getFullName }}" data-content="{{ popoverContent }}">{{ author.getPerson.getFullName }}*</a>{% if not loop.last %}; {% endif %}
                       {% set correspondingAuthorExists = true %}
                    {% else %}
-                      <a tabindex="0" class="author-name{% if author.getPerson.isInstitutionAuthor %} institution-author{% endif %}" role="button" data-toggle="popover" title="{{ author.getPerson.getFullName }}" data-content="{{ popoverContent }}">{{ author.getPerson.getFullName }}</a>{% if not loop.last %}, {% endif %}
+                      <a tabindex="0" class="author-name{% if author.getPerson.isInstitutionAuthor %} institution-author{% endif %}" role="button" data-toggle="popover" title="{{ author.getPerson.getFullName }}" data-content="{{ popoverContent }}">{{ author.getPerson.getFullName }}</a>{% if not loop.last %}; {% endif %}
                    {% endif %}
                 {% endfor %}
                 </div>
@@ -196,10 +196,10 @@ $(function () {
 
                  {% endif %}
                  {% if author.isCorrespondingAuthor %}
-                    <a tabindex="0" class="corresponding-author author-name{% if author.getPerson.isInstitutionAuthor %} institution-author{% endif %}" role="button" data-toggle="popover" title="{{ author.getPerson.getFullName }}" data-content="{{ popoverContent }}">{{ author.getPerson.getFullName }}*</a>{% if not loop.last %}, {% endif %}
+                    <a tabindex="0" class="corresponding-author author-name{% if author.getPerson.isInstitutionAuthor %} institution-author{% endif %}" role="button" data-toggle="popover" title="{{ author.getPerson.getFullName }}" data-content="{{ popoverContent }}">{{ author.getPerson.getFullName }}*</a>{% if not loop.last %}; {% endif %}
                     {% set correspondingAuthorExists = true %}
                  {% else %}
-                    <a tabindex="0" class="author-name{% if author.getPerson.isInstitutionAuthor %} institution-author{% endif %}" role="button" data-toggle="popover" title="{{ author.getPerson.getFullName }}" data-content="{{ popoverContent }}">{{ author.getPerson.getFullName }}</a>{% if not loop.last %}, {% endif %}
+                    <a tabindex="0" class="author-name{% if author.getPerson.isInstitutionAuthor %} institution-author{% endif %}" role="button" data-toggle="popover" title="{{ author.getPerson.getFullName }}" data-content="{{ popoverContent }}">{{ author.getPerson.getFullName }}</a>{% if not loop.last %}; {% endif %}
                  {% endif %}
                {% endfor %}
            {% endif %}

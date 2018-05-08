@@ -32,9 +32,9 @@
           <span class="dataset-detail-authors">Author(s):
            {% for author in dataset.authors %}
             {% if author.bioUrl %}
-              <a href="{{ author.bioUrl }}" target="_blank">{{ author.fullName }}</a>{% if not loop.last %}, {% endif %}
+              <a href="{{ author.bioUrl }}" target="_blank">{{ author.fullName }}</a>{% if not loop.last %}; {% endif %}
             {% else %}
-             {{ author.fullName }}{% if not loop.last %}, {% endif %}
+             {{ author.fullName }}{% if not loop.last %}; {% endif %}
              {% endif %}
            {% endfor %}
           </span>
