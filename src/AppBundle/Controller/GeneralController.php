@@ -131,7 +131,7 @@ class GeneralController extends Controller
 
     // Get email addresses and institution list from parameters.yml
     $emailTo = $this->container->getParameter('contact_email_to');
-    $emailFrom = $this->container->getParameter('contact_email_from');
+    //$emailFrom = $this->container->getParameter('contact_email_from');
     $affiliationOptions = $this->container->getParameter('institutional_affiliation_options');
 
     $em = $this->getDoctrine()->getManager();
@@ -139,6 +139,7 @@ class GeneralController extends Controller
     $form->handleRequest($request);
     if ($form->isValid()) {
       $email = $form->getData();
+	    $emailFrom = [ $form['email_address']->getData() => $form['full_name']->getData() ];
 
       // save their submission to the database first
       $em->persist($email);
@@ -189,7 +190,7 @@ class GeneralController extends Controller
 
     // Get email addresses and institution list from parameters.yml
     $emailTo = $this->container->getParameter('contact_email_to');
-    $emailFrom = $this->container->getParameter('contact_email_from');
+    //$emailFrom = $this->container->getParameter('contact_email_from');
     $affiliationOptions = $this->container->getParameter('institutional_affiliation_options');
 
     $em = $this->getDoctrine()->getManager();
@@ -197,6 +198,7 @@ class GeneralController extends Controller
     $form->handleRequest($request);
     if ($form->isValid()) {
       $email = $form->getData();
+	    $emailFrom = [ $form['email_address']->getData() => $form['full_name']->getData() ];
 
       // save their submission to the database first
       $em->persist($email);
