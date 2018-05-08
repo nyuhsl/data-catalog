@@ -134,7 +134,7 @@
 
 
              {% if item.subject_keywords is defined and item.subject_keywords[0] %}
-             <dt>Keywords</dt><dd><ul class="vertical-list">{% for keyword in item.subject_keywords %}
+             <dt>Keywords</dt><dd><ul class="vertical-list li-semis">{% for keyword in item.subject_keywords %}
                <li>{{ keyword }}</li>
                  {% endfor %}
 						 </ul>
