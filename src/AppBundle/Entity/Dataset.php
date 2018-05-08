@@ -240,6 +240,16 @@ class Dataset implements JsonSerializable {
 
 
   /**
+   * @ORM\ManyToMany(targetEntity="SubjectSex", cascade={"persist"}, inversedBy="datasets")
+   * @ORM\JoinTable(name="datasets_sexes",
+   *                joinColumns={@ORM\JoinColumn(name="dataset_uid",referencedColumnName="dataset_uid")},
+   *                inverseJoinColumns={@ORM\JoinColumn(name="sex_id",referencedColumnName="sex_id")}
+   *                )
+   */
+  protected $subject_sexes;
+
+
+  /**
    * @ORM\ManyToMany(targetEntity="SubjectPopulationAge", cascade={"persist"}, inversedBy="datasets")
    * @ORM\JoinTable(name="datasets_ages",
    *                joinColumns={@ORM\JoinColumn(name="dataset_uid",referencedColumnName="dataset_uid")},
@@ -446,6 +456,7 @@ class Dataset implements JsonSerializable {
         $this->access_restrictions = new \Doctrine\Common\Collections\ArrayCollection();
         $this->data_collection_standards = new \Doctrine\Common\Collections\ArrayCollection();
         $this->subject_genders = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->subject_sexes = new \Doctrine\Common\Collections\ArrayCollection();
         $this->subject_population_ages = new \Doctrine\Common\Collections\ArrayCollection();
         $this->data_types = new \Doctrine\Common\Collections\ArrayCollection();
         $this->subject_geographic_areas = new \Doctrine\Common\Collections\ArrayCollection();
@@ -1190,6 +1201,40 @@ class Dataset implements JsonSerializable {
     }
 
     /**
+     * Add subject_sexes
+     *
+     * @param \AppBundle\Entity\SubjectGender $subjectSexes
+     * @return Dataset
+     */
+    public function addSubjectSex(\AppBundle\Entity\SubjectSex $subjectSexes)
+    {
+        $this->subject_sexes[] = $subjectSexes;
+
+        return $this;
+    }
+
+    /**
+     * Remove subject_sexes
+     *
+     * @param \AppBundle\Entity\SubjectGender $subjectSexes
+     */
+    public function removeSubjectSex(\AppBundle\Entity\SubjectSex $subjectSexes)
+    {
+        $this->subject_sexes->removeElement($subjectSexes);
+    }
+
+    /**
+     * Get subject_sexes
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSubjectSexes()
+    {
+        return $this->subject_sexes;
+    }
+
+
+    /**
      * Add subject_population_ages
      *
      * @param \AppBundle\Entity\SubjectPopulationAge $subjectPopulationAges
@@ -1679,7 +1724,7 @@ class Dataset implements JsonSerializable {
      */
      public function jsonSerialize() {
         
-        $formats = $awards = $restrictions = $stds = $genders = $ages = $equipment = $software = $subject_of_study = [];
+        $formats = $awards = $restrictions = $stds = $genders = $sexes = $ages = $equipment = $software = $subject_of_study = [];
         $areas = $area_details = $domains = $publications = $keywords = $publishers = [];
         $authors = $data_type_array = $types_of_study = $corresponding_authors = $experts = $data_locations = $akas = $related_datasets = [];
         foreach ($this->dataset_formats as $format) { $formats[]=$format->getDisplayName(); }
@@ -1687,6 +1732,7 @@ class Dataset implements JsonSerializable {
         foreach ($this->access_restrictions as $restriction) { $restrictions[]=$restriction->getDisplayName(); }
         foreach ($this->data_collection_standards as $std) { $stds[]=$std->getDisplayName(); }
         foreach ($this->subject_genders as $gender) { $genders[]=$gender->getDisplayName(); }
+        foreach ($this->subject_sexes as $sex) { $sexes[]=$sex->getDisplayName(); }
         foreach ($this->subject_population_ages as $age) { $ages[]=$age->getDisplayName(); }
         foreach ($this->subject_geographic_areas as $area) { $areas[]=$area->getDisplayName(); }
         foreach ($this->subject_geographic_area_details as $detail) { $area_details[]=$detail->getDisplayName(); }
