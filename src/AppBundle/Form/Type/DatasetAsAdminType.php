@@ -72,8 +72,10 @@ class DatasetAsAdminType extends AbstractType {
       'attr'=>array('rows'=>'7','placeholder'=>'Please provide a brief description of the dataset'),
       'label'    => 'Description'));
       $builder->add('published', 'choice', array(
-        'required' => true,
+        'required' => false,
         'expanded' => true,
+        'empty_data' => false,
+        'placeholder'=>false,
         'label'    => 'Published to Data Catalog?',
         'choice_list'=> new ChoiceList(array(true,false), array('Yes','Not yet')),
       ));

@@ -163,7 +163,7 @@ class AddController extends Controller {
     $userCanSubmit = true;
 
     $datasetUid = $em->getRepository('AppBundle:Dataset')
-                       ->getNewDatasetId();
+                     ->getNewDatasetId();
     $dataset->setDatasetUid($datasetUid);
 
     if ($userCanSubmit) {
@@ -171,6 +171,8 @@ class AddController extends Controller {
       $form->submit($submittedData);
       if ($form->isValid()) {
         $dataset = $form->getData();
+        // enforce that all datasets ingested this way will start out unpublished
+        $dataset->setPublished(false);;
         $addedEntityName = $dataset->getTitle();
         $slug = Slugger::slugify($addedEntityName);
         $dataset->setSlug($slug);
@@ -184,14 +186,11 @@ class AddController extends Controller {
 
         return new Response('Dataset Successfully Added', 201);
       } else {
-          $errors = array();
-          foreach ($form as $fieldName => $formField) {
-                  // each field has an array of errors
-              $errors[$fieldName] = $formField->getErrors();
-             
-          }
-          var_dump($errors);
-          return new Response('invalid form?', 500);
+          $errors = $form->getErrorsAsString();
+          $response = new Response(json_encode($errors), 422);
+          $response->headers->set('Content-Type', 'application/json');
+
+          return $response;
       }
     } else {
         return new Response('Unauthorized', 401);
