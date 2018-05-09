@@ -18,6 +18,7 @@ security:
     # http://symfony.com/doc/current/book/security.html#hierarchical-roles
     role_hierarchy:
         ROLE_ADMIN:       ROLE_USER
+        ROLE_API_SUBMITTER: [ROLE_USER, ROLE_ADMIN]
         ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
     # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
@@ -30,6 +31,8 @@ security:
              user: { password: userpass, roles: [ 'ROLE_USER' ] }
       users:
         entity: { class: AppBundle:Security\User }
+      api_provider:
+          entity: { class: AppBundle:Security\User, property: apiKey }
 
     firewalls:
         dev:
@@ -41,6 +44,13 @@ security:
         #    anonymous: ~
         #    http_basic: ~
 
+        api:
+            pattern: ^/api
+            methods: [POST]
+            guard:
+              provider: api_provider
+              authenticators:
+                - app.api_token_authenticator
         secured_area:
             pattern: ^/
             anonymous: ~
@@ -82,3 +92,4 @@ security:
         - { path: ^/users, roles: ROLE_ADMIN }
         - { path: ^/manage, roles: ROLE_ADMIN }
         - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api, roles: ROLE_API_SUBMITTER, methods: [POST], requires_channel: https }
