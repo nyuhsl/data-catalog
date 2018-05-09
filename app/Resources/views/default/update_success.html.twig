@@ -21,10 +21,12 @@ The {{ displayName }} "{{ addedEntityName }}" was updated successfully.
 </p>
 <div class="spacer25"></div>
 <p>
-To view the item, <a href="{{ path('view_dataset', {'slug':newSlug}) }}">click here</a>.
+{% if entityName == 'Dataset' %}
+  To view the item, <a href="{{ path('view_dataset', {'slug':newSlug}) }}">click here</a>.
+{% endif %}
 </p>
 <p>
-To make further edits, <a href="{{ path('update_entity', {'slug':newSlug,'entityName':entityName}) }}">click here</a>.
+To view or make further edits, <a href="{{ path('update_entity', {'slug':newSlug,'entityName':entityName}) }}">click here</a>.
 </p>
 
 

@@ -212,7 +212,7 @@ class AddController extends Controller {
   public function addNewEntity($entityName, Request $request) {
     //check if form will appear in a modal
     $modal = $request->get('modal', false);
-    $addTemplate = 'add.html.twig';
+    $addTemplate = ($entityName == 'User') ? 'add_user.html.twig' : 'add.html.twig';
     $successTemplate = 'add_success.html.twig';
     $action = '/add/'.$entityName;
     if ($modal) {
@@ -250,6 +250,15 @@ class AddController extends Controller {
       $addedEntityName = $entity->getDisplayName();
       $slug = Slugger::slugify($addedEntityName);
       $entity->setSlug($slug);
+      // also generate the API key for new API users here
+      if ($entityName == 'User') {
+        foreach ($entity->getRoles() as $role) {
+          if ($role->getRole() == 'ROLE_API_SUBMITTER') {
+            $apiKey = sha1(random_bytes(32));
+            $entity->setApiKey($apiKey);
+          }
+        }
+      }
       
       $em->persist($entity);
       $em->flush();

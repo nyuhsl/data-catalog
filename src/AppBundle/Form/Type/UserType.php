@@ -28,6 +28,14 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class UserType extends AbstractType {
 
+  private $apiKey;
+
+  public function __construct() {
+    $this->apiKey = $this->generateSecureRandomAPIKey();
+  }
+
+
+
   /**
    * Build form
    *
@@ -46,6 +54,10 @@ class UserType extends AbstractType {
       'label'   => 'Website role',
       'expanded'=>true,
     ));
+    $builder->add('apiKey', null, array(
+      'required' => false,
+      'read_only'=>true
+    ));
 
     $builder->add('save', 'submit');
   }
@@ -59,6 +71,12 @@ class UserType extends AbstractType {
     $resolver->setDefaults(array(
       'data_class' => 'AppBundle\Entity\Security\User'
     ));
+  }
+
+  private function generateSecureRandomAPIKey() {
+    $apiKey = sha1(random_bytes(32));
+
+    return $apiKey;
   }
 
   public function getName() {

@@ -121,6 +121,17 @@ class UpdateController extends Controller {
           $em->persist($authorship);
         }
       }
+      if ($entityName == 'User') {
+        // generate a new API key if blank and user has API permissions
+        if (!$thisEntity->getApiKey()) {
+          foreach ($thisEntity->getRoles() as $role) {
+            if ($role->getRole() == 'ROLE_API_SUBMITTER') {
+              $apiKey = sha1(random_bytes(32));
+              $thisEntity->setApiKey($apiKey);
+            }
+          }
+        }
+      }
       $em->flush();
       return $this->render('default/update_success.html.twig', array(
         'adminPage'=>true,
@@ -132,9 +143,7 @@ class UpdateController extends Controller {
     } else {
  
       if ($entityName == 'Dataset') {
-  
         $formToRender = $userIsAdmin ? 'default/update_dataset_admin.html.twig' : 'default/update_dataset_user.html.twig';
-
         return $this->render($formToRender, array(
           'form'    => $form->createView(),
           'displayName'=>$entityTypeDisplayName,
@@ -142,14 +151,21 @@ class UpdateController extends Controller {
           'userIsAdmin'=>$userIsAdmin,
           'slug'       =>$slug,
           'entityName' =>$entityName));
+      } elseif ($entityName == 'User') {
+        return $this->render('default/update_user.html.twig', array(
+          'form'    => $form->createView(),
+          'adminPage'=>true,
+          'displayName'=>$entityTypeDisplayName,
+          'slug'      => $slug,
+          'entityName' =>$entityName));
       } else {
-
         return $this->render('default/update.html.twig', array(
           'form'    => $form->createView(),
           'adminPage'=>true,
           'displayName'=>$entityTypeDisplayName,
           'slug'      => $slug,
           'entityName' =>$entityName));
+        
       }
     }
   }
