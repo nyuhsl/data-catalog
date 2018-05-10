@@ -3,21 +3,33 @@
 require __DIR__.'/vendor/autoload.php';
 
 $client = new \GuzzleHttp\Client([
-    'base_url' => 'https://devdatacatalog.med.nyu.edu',
-    'defaults' => [
-        'exceptions' => false
-    ]
+    'base_uri' => 'https://devdatacatalog.med.nyu.edu/',
+    'verify'=>false,
+    'http_errors'=>false,
 ]);
 
 $data = array(
-    'title' => "API TEST",
+    'title' => "API TESTtt",
     'origin' => "Internal",
     'description' => 'a test dataset through the API',
     'published' => false,
-
+    'subject_keywords' => array(
+      '1',
+      '2'
+    )
 );
-$response = $client->post('/api/dataset', [
-    'body' => json_encode($data)
+
+$response = $client->request('POST', 'api/dataset', [
+  'headers' => [
+    'X-AUTH-TOKEN' => 1234,
+  ],
+  'body' => json_encode($data),
+  'debug' => true
 ]);
-echo $response;
+
+$code = $response->getStatusCode();
+$reason = $response->getReasonPhrase();
+$body = $response->getBody();
+
+echo "\n\n" . $code . ' ' . $reason . "\n\n" . "$body";
 echo "\n\n";

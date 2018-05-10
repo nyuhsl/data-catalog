@@ -1,7 +1,11 @@
 {
-    "title": "API TEST",
+    "title": "API TEST related entities",
     "origin": "Internal",
     "description": "a test dataset through the API",
     "access_instructions": "test",
-    "published": "0"
+    "published": "0",
+    "subject_keywords": {
+      "A New Subject Keyword",
+      "Another New Subject Keyword"
+    }
 }
