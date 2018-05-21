@@ -1,7 +1,7 @@
 <?php
 
 $db_output_url = '<BASE URL OF YOUR DATA CATALOG INSTALLATION>/api/dataset/all.json';
-$solr_submit_url = '<BASE URL OF YOUR SOLR INSTALLATION>/solr/data_catalog/update/json?commit=true&overwrite=true';
+$solr_output_url = '<BASE URL OF YOUR SOLR INSTALLATION>/solr/data_catalog/select/?q=*:*&wt=json';
 $solr_submit_url = '<BASE URL OF YOUR SOLR INSTALLATION>/solr/data_catalog/update/json?commit=true&overwrite=true';
 $solr_remove_url = '<BASE URL OF YOUR SOLR INSTALLATION>/solr/data_catalog/update/?commit=true';
 
