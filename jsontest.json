@@ -1,11 +1,11 @@
 {
-    "title": "API TEST related entities",
+    "title": "API TEST data locations",
     "origin": "Internal",
     "description": "a test dataset through the API",
     "access_instructions": "test",
     "published": "0",
-    "subject_keywords": {
-      "A New Subject Keyword",
-      "Another New Subject Keyword"
-    }
+    "data_locations": [
+      {"data_location":"testlocation1", "data_access_url":"http://www.example.com"},
+      {"data_location":"testlocation2", "data_access_url":"http://www.example.com/2"},
+    ]
 }

@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Dataset;
 use AppBundle\Form\Type\DatasetAsAdminType;
 use AppBundle\Form\Type\DatasetAsUserType;
+use AppBundle\Form\Type\DatasetViaApiType;
 use AppBundle\Utils\Slugger;
 
 /*
@@ -167,12 +168,13 @@ class AddController extends Controller {
     $dataset->setDatasetUid($datasetUid);
 
     if ($userCanSubmit) {
-      $form = $this->createForm(new DatasetAsAdminType($userCanSubmit, $datasetUid), $dataset, array('csrf_protection'=>false));
+      $form = $this->createForm(new DatasetViaApiType($userCanSubmit, $datasetUid), $dataset, array('csrf_protection'=>false));
+      //$form = $this->createForm(DatasetViaApiType::class, $dataset, array('csrf_protection'=>false));
       $form->submit($submittedData);
       if ($form->isValid()) {
         $dataset = $form->getData();
         // enforce that all datasets ingested this way will start out unpublished
-        $dataset->setPublished(false);;
+        $dataset->setPublished(false);
         $addedEntityName = $dataset->getTitle();
         $slug = Slugger::slugify($addedEntityName);
         $dataset->setSlug($slug);
