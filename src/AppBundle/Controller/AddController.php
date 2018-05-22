@@ -10,7 +10,6 @@ use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Dataset;
 use AppBundle\Form\Type\DatasetAsAdminType;
 use AppBundle\Form\Type\DatasetAsUserType;
-use AppBundle\Form\Type\DatasetViaApiType;
 use AppBundle\Utils\Slugger;
 
 /*
@@ -144,61 +143,7 @@ class AddController extends Controller {
     }
 
   }
-  
 
-  /** 
-   * Ingest dataset via API
-   *
-   * @param Request The current HTTP request
-   *
-   * @return Response A Response instance
-   *
-   * @Route("/api/dataset")
-   * @Method("POST")
-   */
-  public function apiIngestDataset(Request $request) {
-    $submittedData = json_decode($request->getContent(), true);
-    $dataset = new Dataset();
-    $em = $this->getDoctrine()->getManager();
-    //$userCanSubmit = $this->get('security.context')->isGranted('ROLE_API_SUBMITTER');
-    $userCanSubmit = true;
-
-    $datasetUid = $em->getRepository('AppBundle:Dataset')
-                     ->getNewDatasetId();
-    $dataset->setDatasetUid($datasetUid);
-
-    if ($userCanSubmit) {
-      $form = $this->createForm(new DatasetViaApiType($userCanSubmit, $datasetUid), $dataset, array('csrf_protection'=>false));
-      //$form = $this->createForm(DatasetViaApiType::class, $dataset, array('csrf_protection'=>false));
-      $form->submit($submittedData);
-      if ($form->isValid()) {
-        $dataset = $form->getData();
-        // enforce that all datasets ingested this way will start out unpublished
-        $dataset->setPublished(false);
-        $addedEntityName = $dataset->getTitle();
-        $slug = Slugger::slugify($addedEntityName);
-        $dataset->setSlug($slug);
-
-        $em->persist($dataset);
-        foreach ($dataset->getAuthorships() as $authorship) {
-          $authorship->setDataset($dataset);
-          $em->persist($authorship);
-        }
-        $em->flush();
-
-        return new Response('Dataset Successfully Added', 201);
-      } else {
-          $errors = $form->getErrorsAsString();
-          $response = new Response(json_encode($errors), 422);
-          $response->headers->set('Content-Type', 'application/json');
-
-          return $response;
-      }
-    } else {
-        return new Response('Unauthorized', 401);
-    }
-  }
-  
 
   /**
    * Create a form to add an instance of the entity specified in the URL.
@@ -269,17 +214,17 @@ class AddController extends Controller {
       // Added, 6/28/2017, Joel Marchewka
       //
       // Retrieves the ID of the entity once it is persisted and adds it to render bundle for the twig
-		
-	  $addedId=$entity->getId();
-		
-	  return $this->render('default/'.$successTemplate, array(
+      $addedId=$entity->getId();
+      
+      return $this->render('default/'.$successTemplate, array(
         'displayName'    => $entityTypeDisplayName,
         'adminPage'=>true,
         'newSlug'=>$slug,
         'userIsAdmin'=>$userIsAdmin,
         'entityName'=>$entityName,
         'addedEntityName'=> $addedEntityName,
-	  	'addedId'=> $addedId));
+        'addedId'=> $addedId
+      ));
     }
     return $this->render('default/'.$addTemplate, array(
       'form' => $form->createView(),

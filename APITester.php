@@ -12,7 +12,7 @@ $client = new \GuzzleHttp\Client([
 //$data = file_get_contents('./JSON_sample.json');
 
 $data = array(
-    "title"=> "API TEST all fields3",
+    "title"=> "API TEST all fields4",
     "origin"=> "Internal",
     "description"=> "a test dataset through the API",
     "access_instructions"=> "test",
