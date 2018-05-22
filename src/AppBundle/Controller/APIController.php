@@ -98,7 +98,6 @@ class APIController extends Controller
     $dataset = new Dataset();
     $em = $this->getDoctrine()->getManager();
     $userCanSubmit = $this->get('security.context')->isGranted('ROLE_API_SUBMITTER');
-    $userCanSubmit = true;
 
     $datasetUid = $em->getRepository('AppBundle:Dataset')
                      ->getNewDatasetId();

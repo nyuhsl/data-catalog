@@ -123,7 +123,7 @@ $data = array(
 
 $response = $client->request('POST', 'api/dataset', [
   'headers' => [
-    'X-AUTH-TOKEN' => 1234,
+    'X-AUTH-TOKEN' => "1234", // YOUR API KEY GOES HERE
   ],
   'body' => json_encode($data),
   'debug' => true
