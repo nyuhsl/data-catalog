@@ -92,71 +92,62 @@ class DatasetViaApiType extends AbstractType {
    */
   public function buildForm(FormBuilderInterface $builder, array $options) {
     //identifying information
-      $builder->add('dataset_uid', 'text', array(
-        'disabled' => true,
-        'data'     => $this->datasetUid,
-        'label'    => 'Dataset ID',
-      ));
+    $builder->add('dataset_uid', 'text', array(
+      'disabled' => true,
+      'data'     => $this->datasetUid,
+      'label'    => 'Dataset ID',
+    ));
     $builder->add('title', 'text', array(
       'required' => true,
-      'label'    => 'Dataset Title'));
-      $builder->add('dataset_alternate_titles', 'collection', array(
-        'type'      => new DatasetAlternateTitleType(),
-        'required' => false,
-        'label'     => 'Alternate Titles',
-        'by_reference'=>false,
-        'prototype' => true,
-        'allow_delete' => true,
-        'allow_add' => true
-      ));
-      $builder->add('origin','choice',array(
-        'required'=> true,
-        'label'   => 'Origin',
-        'choices' => array('Internal'=>'Internal',
-                           'External'=>'External'),
-        'expanded'=>true,
-      ));
+      'label'    => 'Dataset Title'
+    ));
+    $builder->add('dataset_alternate_titles', 'collection', array(
+      'type'      => new DatasetAlternateTitleType(),
+      'required' => false,
+      'label'     => 'Alternate Titles',
+      'by_reference'=>false,
+      'prototype' => true,
+      'allow_delete' => true,
+      'allow_add' => true
+    ));
+    $builder->add('origin','choice',array(
+      'required'=> true,
+      'label'   => 'Origin',
+      'choices' => array('Internal'=>'Internal',
+                         'External'=>'External'),
+      'expanded'=>true,
+    ));
     $builder->add('description', 'textarea', array(
       'required' => true,
       'attr'=>array('rows'=>'7','placeholder'=>'Please provide a brief description of the dataset'),
-      'label'    => 'Description'));
-      $builder->add('published', 'choice', array(
-        'required' => false,
-        'expanded' => true,
-        'empty_data' => false,
-        'placeholder'=>false,
-        'label'    => 'Published to Data Catalog?',
-        'choice_list'=> new ChoiceList(array(true,false), array('Yes','Not yet')),
-      ));
-
-
-
-      $builder->add('publishers', 'entity', array(
-        'class'   => 'AppBundle:Publisher',
-        'property'=> 'publisher_name',
-        'required' => false,
-        'choice_value' => 'displayName',
-        'query_builder'=> function(EntityRepository $er) {
-            return $er->createQueryBuilder('u')->orderBy('u.publisher_name','ASC');
-        },
-        'attr'=>array('style'=>'width:100%'),
-        'multiple' => true,
-        'by_reference'=>false,
-        'label'     => 'Publishers',
-      ));
-      $builder->add('access_restrictions', 'entity', array(
-        'class'    => 'AppBundle:AccessRestriction',
-        'property' => 'restriction',
-        'choice_value' => 'displayName',
-        'attr'=>array('style'=>'width:100%'),
-        'query_builder'=> function(EntityRepository $er) {
-            return $er->createQueryBuilder('u')->orderBy('u.restriction','ASC');
-        },
-        'required' => false,
-        'by_reference'=>false,
-        'multiple' => true,
-        'label'     => 'Access Restrictions',
-      ));
+      'label'    => 'Description'
+    ));
+    $builder->add('publishers', 'entity', array(
+      'class'   => 'AppBundle:Publisher',
+      'property'=> 'publisher_name',
+      'required' => false,
+      'choice_value' => 'displayName',
+      'query_builder'=> function(EntityRepository $er) {
+          return $er->createQueryBuilder('u')->orderBy('u.publisher_name','ASC');
+      },
+      'attr'=>array('style'=>'width:100%'),
+      'multiple' => true,
+      'by_reference'=>false,
+      'label'     => 'Publishers',
+    ));
+    $builder->add('access_restrictions', 'entity', array(
+      'class'    => 'AppBundle:AccessRestriction',
+      'property' => 'restriction',
+      'choice_value' => 'displayName',
+      'attr'=>array('style'=>'width:100%'),
+      'query_builder'=> function(EntityRepository $er) {
+          return $er->createQueryBuilder('u')->orderBy('u.restriction','ASC');
+      },
+      'required' => false,
+      'by_reference'=>false,
+      'multiple' => true,
+      'label'     => 'Access Restrictions',
+    ));
     $builder->add('access_instructions', 'textarea', array(
       'attr'=>array('rows'=>'7', 'placeholder'=>'Provide any information on restrictions or conditions for gaining access to data'),
       'label'    => 'Access Instructions'));
@@ -170,13 +161,14 @@ class DatasetViaApiType extends AbstractType {
       'allow_delete' => true,
       'allow_add' => true
     ));
-        $builder->add('pubmed_search', 'text', array(
-          'required' => false,
-          'label'    => 'PubMed Search URL'));
-      $builder->add('date_archived', 'date', array(
-        'years'  => $this->years,
-        'required' => false,
-        'label'    => 'Date Archived'));
+    $builder->add('pubmed_search', 'text', array(
+      'required' => false,
+      'label'    => 'PubMed Search URL'
+    ));
+    $builder->add('date_archived', 'date', array(
+      'years'  => $this->years,
+      'required' => false,
+      'label'    => 'Date Archived'));
     $builder->add('other_resources', 'collection', array(
       'type'      => new OtherResourceType(),
       'required' => false,
@@ -226,9 +218,9 @@ class DatasetViaApiType extends AbstractType {
       'by_reference'=>false,
       'label'     => 'Dataset File Format',
     ));
-      $builder->add('dataset_size', 'text', array(
-        'required' => false,
-        'label'    => 'Dataset Size'));
+    $builder->add('dataset_size', 'text', array(
+      'required' => false,
+      'label'    => 'Dataset Size'));
     $builder->add('data_collection_standards', 'entity', array(
       'class'   => 'AppBundle:DataCollectionStandard',
       'property'=> 'measurement_standard_name',
@@ -239,20 +231,20 @@ class DatasetViaApiType extends AbstractType {
       'by_reference'=>false,
       'label'     => 'Data Collection Standards (e.g. CDISC, DICOM, MINI, CDE)',
     ));
-      $builder->add('data_types', 'entity', array(
-        'class'   => 'AppBundle:DataType',
-        'property' => 'data_type',
-      'choice_value' => 'displayName',
-        'required' => false,
-        'query_builder'=> function(EntityRepository $er) {
-            return $er->createQueryBuilder('u')->orderBy('u.data_type','ASC');
-        },
-        'attr'=>array('style'=>'width:100%'),
-        'multiple' => true,
-        'by_reference'=>false,
-        'label'     => 'Data Types',
-      ));
-    //people and relations
+    $builder->add('data_types', 'entity', array(
+      'class'   => 'AppBundle:DataType',
+      'property' => 'data_type',
+    'choice_value' => 'displayName',
+      'required' => false,
+      'query_builder'=> function(EntityRepository $er) {
+          return $er->createQueryBuilder('u')->orderBy('u.data_type','ASC');
+      },
+      'attr'=>array('style'=>'width:100%'),
+      'multiple' => true,
+      'by_reference'=>false,
+      'label'     => 'Data Types',
+    ));
+  //people and relations
     $builder->add('publications', 'entity', array(
       'class' => 'AppBundle:Publication',
       'property'=>'citation',
@@ -273,15 +265,15 @@ class DatasetViaApiType extends AbstractType {
       'by_reference'=>false,
       'label'     => 'Grants',
     ));
-      $builder->add('related_datasets', 'collection', array(
-        'type'      => new DatasetRelationshipType(),
-        'required' => false,
-        'by_reference'=>false,
-        'prototype' => true,
-        'label'     => 'Related Datasets',
-        'allow_delete' => true,
-        'allow_add' => true
-      ));
+    $builder->add('related_datasets', 'collection', array(
+      'type'      => new DatasetRelationshipType(),
+      'required' => false,
+      'by_reference'=>false,
+      'prototype' => true,
+      'label'     => 'Related Datasets',
+      'allow_delete' => true,
+      'allow_add' => true
+    ));
     //content information
     $builder->add('authorships', 'collection', array(
       'type' => new PersonAssociationType(),
@@ -292,15 +284,6 @@ class DatasetViaApiType extends AbstractType {
       'allow_delete'=>true,
       'allow_add'=>true
     ));
-    /*$builder->add('authors', 'collection', array(
-      'type' => new PersonAssociationType(),
-      'prototype'=>true,
-      'required'=>false,
-      'attr'=>array('style'=>'width:100%'),
-      'by_reference'=>false,
-      'allow_add'=>true,
-      'label'=>'Authors',
-    ));*/
     $builder->add('local_experts', 'entity', array(
       'class' => 'AppBundle:Person',
       'property'=>'full_name',
@@ -408,7 +391,6 @@ class DatasetViaApiType extends AbstractType {
       'by_reference'=>false,
       'label'     => 'Subject of Study',
     ));
-    
     $builder->add('subject_keywords', 'entity', array(
       'class'   => 'AppBundle:SubjectKeyword',
       'choice_label'=> 'keyword',
@@ -422,50 +404,31 @@ class DatasetViaApiType extends AbstractType {
       'by_reference'=>false,
       'label'     => 'Subject Keywords',
     ));
-     
-    /*$builder->add('subject_keywords', 'choice', array(
-      'multiple'=>true,
-      'attr'=>array('style'=>'width:100%'),
-      'by_reference'=>false,
-      'label'=>'Subject Keywords',
-      'required'=>false,
-    ));*/
-
     $builder->add('erd_url', 'text', array(
       'required' => false,
-      'label'    => 'ERD URL'));
+      'label'    => 'ERD URL'
+    ));
     $builder->add('library_catalog_url', 'text', array(
       'required' => false,
-      'label'    => 'Library Catalog URL'));
+      'label'    => 'Library Catalog URL'
+    ));
     $builder->add('licensing_details', 'textarea', array(
       'required' => false,
-      'label'    => 'Licensing Details'));
+      'label'    => 'Licensing Details'
+    ));
     $builder->add('license_expiration_date', 'date', array(
       'required' => false,
-      'label'    => 'License Expiration Date'));
+      'label'    => 'License Expiration Date'
+    ));
     $builder->add('subscriber', 'text', array(
       'required' => false,
-      'label'    => 'Subscriber'));
+      'label'    => 'Subscriber'
+    ));
 
-    $builder->add('archived', 'choice', array(
-      'required' => false,
-      'expanded' => true,
-      'placeholder'=>false,
-      'label'    => 'Archive this Dataset?',
-      'choice_list'=> new ChoiceList(array(true,false), array('Yes','No')),
-    ));
-    $builder->add('archival_notes', 'textarea', array(
-      'required' => false,
-      'label'    => 'Archival Notes'));
-    $builder->add('last_edit_notes', 'textarea', array(
-      'required' => false,
-      'data'     => '',
-      'label'    => 'Notes about this edit',
-    ));
     $builder->add('save','submit',array(
       "label"=>"Submit",
-      'attr'=>array('class'=>'spacer')));
-     
+      'attr'=>array('class'=>'spacer')
+    ));
 
   }
 

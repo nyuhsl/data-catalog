@@ -8,22 +8,36 @@ $client = new \GuzzleHttp\Client([
     'http_errors'=>false,
 ]);
 
-//$data = file_get_contents('./jsontest.json');
+// in case you want to use the JSON file
+//$data = file_get_contents('./JSON_sample.json');
 
 $data = array(
-    "title"=> "API TEST all fields2",
+    "title"=> "API TEST all fields3",
     "origin"=> "Internal",
     "description"=> "a test dataset through the API",
     "access_instructions"=> "test",
-    "published"=> "0",
+    "pubmed_search"=> "http://www.example.com",
+    "dataset_size"=> "100MB",
+    "subject_start_date"=> "1985",
+    "subject_end_date"=> "Present",
+    "erd_url"=> "http://www.example.com",
+    "library_catalog_url"=> "http://www.example.com",
+    "licensing_details"=> "testing licensing details",
+    "license_expiration_date"=> array(
+        "year"=>2014,
+        "month"=>5,
+        "day"=>25
+    ),
+    "subscriber"=> "0",
 
     // the following fields represent related entities that can be added ad hoc.
     // think of these as sub-forms, where you have to specify the field names just like 
-    // we do for the main dataset entity.
+    // we do for the main dataset.
     //
-    // the values included below represent ALL required fields. i.e. if you want to add
-    // any "other_resources" you MUST include the "resource_name" and "resource_url" fields
-    // as shown here
+    // the examples below show required fields. e.g. if you want to add a "data_location"
+    // you must include the "data_access_url", if you want to include an "authorship" you 
+    // must include "displayOrder", "isCorrespondingAuthor", and "role" (which should always
+    // be "Author" in this case)
     "data_locations"=> array(
       array("data_location"=>"testlocation1", "data_access_url"=>"http://www.example.com"),
       array("data_location"=>"testlocation2", "data_access_url"=>"http://www.example.com/2")
@@ -55,6 +69,9 @@ $data = array(
     ),
     "publishers" => array(
       "Vizient",
+    ),
+    "publications" => array(
+      "Meyers K, Rodriguez K, Moeller RW, Gratch I, Markowitz M, Halkitis PN (2014) High Interest in a Long-Acting Injectable Formulation of Pre-Exposure Prophylaxis for HIV in Young Men Who Have Sex with Men in NYC: A P18 Cohort Substudy. PLoS ONE 9(12): e114700.",
     ),
     "access_restrictions" => array(
       "NYU only",
@@ -102,6 +119,7 @@ $data = array(
       "Human",
     ),
   );
+
 
 $response = $client->request('POST', 'api/dataset', [
   'headers' => [
