@@ -1,5 +1,5 @@
 {
-  "title": "API TEST all fields3",
+  "title": "API TEST all fields",
   "origin": "Internal",
   "description": "a test dataset through the API",
   "access_instructions": "test",
@@ -54,13 +54,13 @@
   ],
   "authorships": [
     {
-      "person": "Dohoon Lee",
+      "person": "Fake Person",
       "displayOrder": "1",
       "isCorrespondingAuthor": false,
       "role": "Author"
     },
     {
-      "person": "Ron Mincy",
+      "person": "Another Fake Person",
       "displayOrder": "2",
       "isCorrespondingAuthor": true,
       "role": "Author"
@@ -98,7 +98,7 @@
     "67129"
   ],
   "local_experts": [
-    "Dohoon Lee"
+    "Fake Person"
   ],
   "subject_domains": [
     "Cancer"

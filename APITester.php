@@ -3,16 +3,33 @@
 require __DIR__.'/vendor/autoload.php';
 
 $client = new \GuzzleHttp\Client([
-    'base_uri' => 'https://devdatacatalog.med.nyu.edu/',
+    'base_uri' => 'https://example.com/', // YOUR BASE URI
     'verify'=>false,
     'http_errors'=>false,
 ]);
 
-// in case you want to use the JSON file
+
+/*******
+ *
+ * if you want to test with the JSON file instead of the below array,
+ * uncomment the following line:
+ *
+ *******/
 //$data = file_get_contents('./JSON_sample.json');
 
+
+/*******
+ *
+ * NOTE: This data is used as an example only, to demonstrate the format
+ *       that the API is expecting for each field. If you wish to ingest 
+ *       this sample data, read the comments below as many fields will require
+ *       the related entity to already exist in the database (e.g. if you want
+ *       to apply Subject Keywords to this dataset, the keywords must already 
+ *       exist in the database)
+ *
+ *******/
 $data = array(
-    "title"=> "API TEST all fields4",
+    "title"=> "API TEST all fields",
     "origin"=> "Internal",
     "description"=> "a test dataset through the API",
     "access_instructions"=> "test",
@@ -57,8 +74,8 @@ $data = array(
 
     //
     "authorships"=> array(
-      array("person"=>"Dohoon Lee", "displayOrder"=>"1", "isCorrespondingAuthor"=>false, 'role'=>'Author'),
-      array("person"=>"Ron Mincy", "displayOrder"=>"2", "isCorrespondingAuthor"=>true, 'role'=>'Author'),
+      array("person"=>"Fake Person", "displayOrder"=>"1", "isCorrespondingAuthor"=>false, 'role'=>'Author'),
+      array("person"=>"Another Fake Person", "displayOrder"=>"2", "isCorrespondingAuthor"=>true, 'role'=>'Author'),
     ),
 
     // the following fields use a controlled vocabulary, so their values must exist in the database
@@ -74,7 +91,7 @@ $data = array(
       "Meyers K, Rodriguez K, Moeller RW, Gratch I, Markowitz M, Halkitis PN (2014) High Interest in a Long-Acting Injectable Formulation of Pre-Exposure Prophylaxis for HIV in Young Men Who Have Sex with Men in NYC: A P18 Cohort Substudy. PLoS ONE 9(12): e114700.",
     ),
     "access_restrictions" => array(
-      "NYU only",
+      "Internal only",
     ),
     "related_equipment" => array(
       "Microscope",
@@ -95,7 +112,7 @@ $data = array(
       "67129",
     ),
     "local_experts" => array(
-      "Dohoon Lee",
+      "Fake Person",
     ),
     "subject_domains" => array(
       "Cancer",
@@ -123,7 +140,7 @@ $data = array(
 
 $response = $client->request('POST', 'api/dataset', [
   'headers' => [
-    'X-AUTH-TOKEN' => "1234", // YOUR API KEY GOES HERE
+    'X-AUTH-TOKEN' => "FAKE TOKEN", // YOUR API KEY GOES HERE
   ],
   'body' => json_encode($data),
   'debug' => true
