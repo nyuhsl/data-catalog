@@ -63,6 +63,26 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
     }
 
 
+    public function loadUserByApiKey($apiKey)
+    {
+      // make a call to database to see if user exists, roles
+      $q = $this->createQueryBuilder('u')
+                ->where('u.apiKey = :apiKey')
+                ->setParameter('apiKey',$apiKey)
+                ->getQuery();
+      try {
+        $userData = $q->getSingleResult();
+      } catch (NoResultException $e) {
+        $message = sprintf(
+          'Unable to find user with API key: "%s"', $username
+        );
+        throw new UsernameNotFoundException($message, 0, $e);
+      }
+
+      return $userData;
+        
+    }
+
     /**
      * Reload user data
      *

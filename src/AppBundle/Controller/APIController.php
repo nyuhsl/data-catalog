@@ -5,9 +5,12 @@ namespace AppBundle\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use AppBundle\Form\Type\DatasetViaApiType;
 use AppBundle\Entity\Dataset;
+use AppBundle\Utils\Slugger;
 
 
 /**
@@ -30,7 +33,7 @@ use AppBundle\Entity\Dataset;
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-class JSONController extends Controller
+class APIController extends Controller
 {
   /**
    * Produce the JSON output
@@ -44,8 +47,9 @@ class JSONController extends Controller
    *   "/api/dataset/{slug}.{_format}", name="json_output_all",
    *   defaults={"slug": "all", "_format":"json"},
    * ) 
+   * @Method("GET")
    */ 
-  public function JSONAction($slug, $_format) {
+  public function APIDatasetGetAction($slug, $_format) {
 
     $em = $this->getDoctrine()->getManager();
     $qb = $em->createQueryBuilder();
@@ -73,9 +77,61 @@ class JSONController extends Controller
       $response->headers->set('Content-Type', 'application/json');
 
     }
+
     return $response;
-    
-     
+
+  }
+
+
+  /** 
+   * Ingest dataset via API
+   *
+   * @param Request The current HTTP request
+   *
+   * @return Response A Response instance
+   *
+   * @Route("/api/dataset")
+   * @Method("POST")
+   */
+  public function APIDatasetPostAction(Request $request) {
+    $submittedData = json_decode($request->getContent(), true);
+    $dataset = new Dataset();
+    $em = $this->getDoctrine()->getManager();
+    $userCanSubmit = $this->get('security.context')->isGranted('ROLE_API_SUBMITTER');
+
+    $datasetUid = $em->getRepository('AppBundle:Dataset')
+                     ->getNewDatasetId();
+    $dataset->setDatasetUid($datasetUid);
+
+    if ($userCanSubmit) {
+      $form = $this->createForm(new DatasetViaApiType($userCanSubmit, $datasetUid), $dataset, array('csrf_protection'=>false));
+      $form->submit($submittedData);
+      if ($form->isValid()) {
+        $dataset = $form->getData();
+        // enforce that all datasets ingested via the API will start out unpublished
+        $dataset->setPublished(false);
+        $addedEntityName = $dataset->getTitle();
+        $slug = Slugger::slugify($addedEntityName);
+        $dataset->setSlug($slug);
+
+        $em->persist($dataset);
+        foreach ($dataset->getAuthorships() as $authorship) {
+          $authorship->setDataset($dataset);
+          $em->persist($authorship);
+        }
+        $em->flush();
+
+        return new Response('Dataset Successfully Added', 201);
+      } else {
+          $errors = $form->getErrorsAsString();
+          $response = new Response(json_encode($errors), 422);
+          $response->headers->set('Content-Type', 'application/json');
+
+          return $response;
+      }
+    } else {
+        return new Response('Unauthorized', 401);
+    }
   }
 
 

@@ -10,6 +10,9 @@ services:
   app.user_checker:
     class: AppBundle\Security\UserChecker
     arguments: ["@doctrine.orm.entity_manager", "@monolog.logger"]
+  app.api_provider:
+    class: AppBundle\Security\ApiUserProvider
+    arguments: ["@doctrine.orm.entity_manager", "@monolog.logger"]
   AppBundle.type.access_restriction_selector:
     class: AppBundle\Form\Type\AccessRestrictionSelectorType
     arguments: ["@doctrine.orm.entity_manager"]
@@ -20,6 +23,8 @@ services:
     arguments: ["@security.token_storage"]
     tags:
       - { name: doctrine.event_listener, event: onFlush }
+  app.api_token_authenticator:
+    class: AppBundle\Security\ApiTokenAuthenticator
 #    service_name:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]

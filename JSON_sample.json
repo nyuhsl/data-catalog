@@ -1,0 +1,124 @@
+{
+  "title": "API TEST all fields",
+  "origin": "Internal",
+  "description": "a test dataset through the API",
+  "access_instructions": "test",
+  "pubmed_search": "http:\/\/www.example.com",
+  "dataset_size": "100MB",
+  "subject_start_date": "1985",
+  "subject_end_date": "Present",
+  "erd_url": "http:\/\/www.example.com",
+  "library_catalog_url": "http:\/\/www.example.com",
+  "licensing_details": "testing licensing details",
+  "license_expiration_date": {
+    "year": 2014,
+    "month": 5,
+    "day": 25
+  },
+  "subscriber": "0",
+  "data_locations": [
+    {
+      "data_location": "testlocation1",
+      "data_access_url": "http:\/\/www.example.com"
+    },
+    {
+      "data_location": "testlocation2",
+      "data_access_url": "http:\/\/www.example.com\/2"
+    }
+  ],
+  "dataset_alternate_titles": [
+    {
+      "alt_title": "testing this thing"
+    },
+    {
+      "alt_title": "testing it again"
+    }
+  ],
+  "other_resources": [
+    {
+      "resource_name": "resource1",
+      "resource_url": "http:\/\/www.example.com"
+    },
+    {
+      "resource_name": "resource2",
+      "resource_url": "http:\/\/www.example.com\/2"
+    }
+  ],
+  "related_datasets": [
+    {
+      "related_dataset_uid": "10193"
+    },
+    {
+      "related_dataset_uid": "10192"
+    }
+  ],
+  "authorships": [
+    {
+      "person": "Fake Person",
+      "displayOrder": "1",
+      "isCorrespondingAuthor": false,
+      "role": "Author"
+    },
+    {
+      "person": "Another Fake Person",
+      "displayOrder": "2",
+      "isCorrespondingAuthor": true,
+      "role": "Author"
+    }
+  ],
+  "subject_keywords": [
+    "Adolescents",
+    "Adult"
+  ],
+  "publishers": [
+    "Vizient"
+  ],
+  "publications": [
+    "Meyers K, Rodriguez K, Moeller RW, Gratch I, Markowitz M, Halkitis PN (2014) High Interest in a Long-Acting Injectable Formulation of Pre-Exposure Prophylaxis for HIV in Young Men Who Have Sex with Men in NYC: A P18 Cohort Substudy. PLoS ONE 9(12): e114700."
+  ],
+  "access_restrictions": [
+    "NYU only"
+  ],
+  "related_equipment": [
+    "Microscope"
+  ],
+  "related_software": [
+    "Microsoft Excel"
+  ],
+  "dataset_formats": [
+    "SAS"
+  ],
+  "data_types": [
+    "Surveys"
+  ],
+  "data_collection_standards": [
+    "American College of Radiology\/ National Electrical Manufacturers Association 2.0 (ACR\/NEMA 2.0)"
+  ],
+  "awards": [
+    "67129"
+  ],
+  "local_experts": [
+    "Fake Person"
+  ],
+  "subject_domains": [
+    "Cancer"
+  ],
+  "subject_genders": [
+    "Male"
+  ],
+  "subject_population_ages": [
+    "Newborn (under 1 month)"
+  ],
+  "subject_geographic_areas": [
+    "National"
+  ],
+  "subject_geographic_area_details": [
+    "California"
+  ],
+  "study_types": [
+    "Observational"
+  ],
+  "subject_of_study": [
+    "Human"
+  ]
+}

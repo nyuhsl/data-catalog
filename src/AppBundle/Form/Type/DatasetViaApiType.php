@@ -32,7 +32,7 @@ use Doctrine\ORM\EntityManager;
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-class DatasetAsAdminType extends AbstractType {
+class DatasetViaApiType extends AbstractType {
 
   protected $years;
   protected $yearsIncludingPresent;
@@ -44,8 +44,8 @@ class DatasetAsAdminType extends AbstractType {
     $yearList = range(date('Y'),1790);
     array_unshift($yearList, "Present");
     $this->yearsIncludingPresent = array_combine($yearList, $yearList);
-    $this->userIsAdmin = $userIsAdmin;
     $this->datasetUid = $datasetUid;
+    $this->userIsAdmin = $userIsAdmin;
   }
   
   /**
@@ -122,18 +122,11 @@ class DatasetAsAdminType extends AbstractType {
       'attr'=>array('rows'=>'7','placeholder'=>'Please provide a brief description of the dataset'),
       'label'    => 'Description'
     ));
-    $builder->add('published', 'choice', array(
-      'required' => false,
-      'expanded' => true,
-      'empty_data' => false,
-      'placeholder'=>false,
-      'label'    => 'Published to Data Catalog?',
-      'choice_list'=> new ChoiceList(array(true,false), array('Yes','Not yet')),
-    ));
     $builder->add('publishers', 'entity', array(
       'class'   => 'AppBundle:Publisher',
       'property'=> 'publisher_name',
       'required' => false,
+      'choice_value' => 'displayName',
       'query_builder'=> function(EntityRepository $er) {
           return $er->createQueryBuilder('u')->orderBy('u.publisher_name','ASC');
       },
@@ -145,6 +138,7 @@ class DatasetAsAdminType extends AbstractType {
     $builder->add('access_restrictions', 'entity', array(
       'class'    => 'AppBundle:AccessRestriction',
       'property' => 'restriction',
+      'choice_value' => 'displayName',
       'attr'=>array('style'=>'width:100%'),
       'query_builder'=> function(EntityRepository $er) {
           return $er->createQueryBuilder('u')->orderBy('u.restriction','ASC');
@@ -174,8 +168,7 @@ class DatasetAsAdminType extends AbstractType {
     $builder->add('date_archived', 'date', array(
       'years'  => $this->years,
       'required' => false,
-      'label'    => 'Date Archived'
-    ));
+      'label'    => 'Date Archived'));
     $builder->add('other_resources', 'collection', array(
       'type'      => new OtherResourceType(),
       'required' => false,
@@ -189,6 +182,7 @@ class DatasetAsAdminType extends AbstractType {
     $builder->add('related_equipment', 'entity', array(
       'class'   => 'AppBundle:RelatedEquipment',
       'property'=> 'related_equipment',
+      'choice_value' => 'displayName',
       'query_builder'=> function(EntityRepository $er) {
           return $er->createQueryBuilder('u')->orderBy('u.related_equipment','ASC');
       },
@@ -200,7 +194,8 @@ class DatasetAsAdminType extends AbstractType {
     ));
     $builder->add('related_software', 'entity', array(
       'class'   => 'AppBundle:RelatedSoftware',
-      'property'=> 'software_name',
+      'property'=> 'software_name',  
+      'choice_value' => 'displayName',
       'query_builder'=> function(EntityRepository $er) {
           return $er->createQueryBuilder('u')->orderBy('u.software_name','ASC');
       },
@@ -213,6 +208,7 @@ class DatasetAsAdminType extends AbstractType {
     $builder->add('dataset_formats', 'entity', array(
       'class'   => 'AppBundle:DatasetFormat',
       'property'=> 'format',
+      'choice_value' => 'displayName',
       'query_builder'=> function(EntityRepository $er) {
           return $er->createQueryBuilder('u')->orderBy('u.format','ASC');
       },
@@ -224,11 +220,11 @@ class DatasetAsAdminType extends AbstractType {
     ));
     $builder->add('dataset_size', 'text', array(
       'required' => false,
-      'label'    => 'Dataset Size'
-    ));
+      'label'    => 'Dataset Size'));
     $builder->add('data_collection_standards', 'entity', array(
       'class'   => 'AppBundle:DataCollectionStandard',
       'property'=> 'measurement_standard_name',
+      'choice_value' => 'displayName',
       'required' => false,
       'attr'=>array('style'=>'width:100%', 'placeholder'=>''),
       'multiple' => true,
@@ -238,6 +234,7 @@ class DatasetAsAdminType extends AbstractType {
     $builder->add('data_types', 'entity', array(
       'class'   => 'AppBundle:DataType',
       'property' => 'data_type',
+    'choice_value' => 'displayName',
       'required' => false,
       'query_builder'=> function(EntityRepository $er) {
           return $er->createQueryBuilder('u')->orderBy('u.data_type','ASC');
@@ -247,10 +244,11 @@ class DatasetAsAdminType extends AbstractType {
       'by_reference'=>false,
       'label'     => 'Data Types',
     ));
-    //people and relations
+  //people and relations
     $builder->add('publications', 'entity', array(
       'class' => 'AppBundle:Publication',
       'property'=>'citation',
+      'choice_value' => 'displayName',
       'required' => false,
       'attr'=>array('style'=>'width:100%'),
       'multiple' => true,
@@ -260,6 +258,7 @@ class DatasetAsAdminType extends AbstractType {
     $builder->add('awards', 'entity', array(
       'class'   => 'AppBundle:Award',
       'property'=> 'award',
+      'choice_value'=>'displayName',
       'required' => false,
       'attr'    => array('id'=>'dataset_awards','style'=>'width:100%'),
       'multiple' => true,
@@ -288,6 +287,7 @@ class DatasetAsAdminType extends AbstractType {
     $builder->add('local_experts', 'entity', array(
       'class' => 'AppBundle:Person',
       'property'=>'full_name',
+      'choice_value' => 'displayName',
       'required'=>false,
       'attr'=>array('style'=>'width:100%'),
       'multiple'=>true,
@@ -298,6 +298,7 @@ class DatasetAsAdminType extends AbstractType {
       'class' => 'AppBundle:SubjectDomain',
       'property'=>'subject_domain',
       'required' => false,
+      'choice_value' => 'displayName',
       'query_builder'=> function(EntityRepository $er) {
           return $er->createQueryBuilder('u')->orderBy('u.subject_domain','ASC');
       },
@@ -309,35 +310,26 @@ class DatasetAsAdminType extends AbstractType {
     $builder->add('subject_start_date', 'choice', array(
       'choices'  => $this->yearsIncludingPresent,
       'required' => false,
-      'label'    => 'Year Data Collection Started'
-    ));
+      'label'    => 'Year Data Collection Started'));
     $builder->add('subject_end_date', 'choice', array(
       'choices'  => $this->yearsIncludingPresent,
       'required' => false,
-      'label'    => 'Year Data Collection Ended'
-    ));
+      'label'    => 'Year Data Collection Ended'));
     $builder->add('subject_genders', 'entity', array(
       'class'      => 'AppBundle:SubjectGender',
       'property'   => 'subject_gender',
+      'choice_value' => 'displayName',
       'multiple'   => true,
       'expanded'   => true,
       'required' => false,
       'by_reference'=>false,
       'label'     => 'Subject Genders',
     ));
-    $builder->add('subject_sexes', 'entity', array(
-      'class'      => 'AppBundle:SubjectSex',
-      'property'   => 'subject_sex',
-      'multiple'   => true,
-      'expanded'   => true,
-      'required' => false,
-      'by_reference'=>false,
-      'label'     => 'Subject Sexes',
-    ));
     $builder->add('subject_population_ages', 'entity', array(
       'class'   => 'AppBundle:SubjectPopulationAge',
       'property'=> 'age_group',
       'required' => false,
+      'choice_value' => 'displayName',
       'query_builder'=> function(EntityRepository $er) {
           return $er->createQueryBuilder('u')->orderBy('u.age_group','ASC');
       },
@@ -349,6 +341,7 @@ class DatasetAsAdminType extends AbstractType {
     $builder->add('subject_geographic_areas', 'entity', array(
       'class'   => 'AppBundle:SubjectGeographicArea',
       'attr'=>array('style'=>'width:100%'),
+      'choice_value' => 'displayName',
       'property'=> 'geographic_area_name',
       'query_builder'=> function(EntityRepository $er) {
           return $er->createQueryBuilder('u')->orderBy('u.geographic_area_name','ASC');
@@ -361,6 +354,7 @@ class DatasetAsAdminType extends AbstractType {
     $builder->add('subject_geographic_area_details', 'entity', array(
       'class'   => 'AppBundle:SubjectGeographicAreaDetail',
       'attr'=>array('style'=>'width:100%'),
+      'choice_value' => 'displayName',
       'query_builder'=> function(EntityRepository $er) {
           return $er->createQueryBuilder('u')->orderBy('u.geographic_area_detail_name','ASC');
       },
@@ -373,6 +367,7 @@ class DatasetAsAdminType extends AbstractType {
     $builder->add('study_types', 'entity', array(
       'class'    => 'AppBundle:StudyType',
       'property' => 'study_type',
+      'choice_value' => 'displayName',
       'required' => false,
       'query_builder'=> function(EntityRepository $er) {
           return $er->createQueryBuilder('u')->orderBy('u.study_type','ASC');
@@ -386,6 +381,7 @@ class DatasetAsAdminType extends AbstractType {
     $builder->add('subject_of_study', 'entity', array(
       'class'    => 'AppBundle:SubjectOfStudy',
       'property' => 'subject_of_study',
+      'choice_value' => 'displayName',
       'required' => false,
       'query_builder'=> function(EntityRepository $er) {
           return $er->createQueryBuilder('u')->orderBy('u.subject_of_study','ASC');
@@ -395,10 +391,10 @@ class DatasetAsAdminType extends AbstractType {
       'by_reference'=>false,
       'label'     => 'Subject of Study',
     ));
-    
     $builder->add('subject_keywords', 'entity', array(
       'class'   => 'AppBundle:SubjectKeyword',
       'choice_label'=> 'keyword',
+      'choice_value' => 'displayName',
       'required' => false,
       'query_builder'=> function(EntityRepository $er) {
           return $er->createQueryBuilder('u')->orderBy('u.keyword','ASC');
@@ -408,7 +404,6 @@ class DatasetAsAdminType extends AbstractType {
       'by_reference'=>false,
       'label'     => 'Subject Keywords',
     ));
-     
     $builder->add('erd_url', 'text', array(
       'required' => false,
       'label'    => 'ERD URL'
@@ -429,22 +424,7 @@ class DatasetAsAdminType extends AbstractType {
       'required' => false,
       'label'    => 'Subscriber'
     ));
-    $builder->add('archived', 'choice', array(
-      'required' => false,
-      'expanded' => true,
-      'placeholder'=>false,
-      'label'    => 'Archive this Dataset?',
-      'choice_list'=> new ChoiceList(array(true,false), array('Yes','No')),
-    ));
-    $builder->add('archival_notes', 'textarea', array(
-      'required' => false,
-      'label'    => 'Archival Notes'
-    ));
-    $builder->add('last_edit_notes', 'textarea', array(
-      'required' => false,
-      'data'     => '',
-      'label'    => 'Notes about this edit',
-    ));
+
     $builder->add('save','submit',array(
       "label"=>"Submit",
       'attr'=>array('class'=>'spacer')

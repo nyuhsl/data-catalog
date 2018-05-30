@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Dataset;
@@ -95,6 +96,7 @@ class AddController extends Controller {
     $dataset = new Dataset();
     $em = $this->getDoctrine()->getManager();
     $userIsAdmin = $this->get('security.context')->isGranted('ROLE_ADMIN');
+
     $datasetUid = $em->getRepository('AppBundle:Dataset')
                      ->getNewDatasetId();
     $dataset->setDatasetUid($datasetUid);
@@ -141,8 +143,8 @@ class AddController extends Controller {
     }
 
   }
-  
-  
+
+
   /**
    * Create a form to add an instance of the entity specified in the URL.
    * Also validates and ingests the object.
@@ -157,7 +159,7 @@ class AddController extends Controller {
   public function addNewEntity($entityName, Request $request) {
     //check if form will appear in a modal
     $modal = $request->get('modal', false);
-    $addTemplate = 'add.html.twig';
+    $addTemplate = ($entityName == 'User') ? 'add_user.html.twig' : 'add.html.twig';
     $successTemplate = 'add_success.html.twig';
     $action = '/add/'.$entityName;
     if ($modal) {
@@ -195,6 +197,15 @@ class AddController extends Controller {
       $addedEntityName = $entity->getDisplayName();
       $slug = Slugger::slugify($addedEntityName);
       $entity->setSlug($slug);
+      // also generate the API key for new API users here
+      if ($entityName == 'User') {
+        foreach ($entity->getRoles() as $role) {
+          if ($role->getRole() == 'ROLE_API_SUBMITTER') {
+            $apiKey = sha1(random_bytes(32));
+            $entity->setApiKey($apiKey);
+          }
+        }
+      }
       
       $em->persist($entity);
       $em->flush();
@@ -203,17 +214,17 @@ class AddController extends Controller {
       // Added, 6/28/2017, Joel Marchewka
       //
       // Retrieves the ID of the entity once it is persisted and adds it to render bundle for the twig
-		
-	  $addedId=$entity->getId();
-		
-	  return $this->render('default/'.$successTemplate, array(
+      $addedId=$entity->getId();
+      
+      return $this->render('default/'.$successTemplate, array(
         'displayName'    => $entityTypeDisplayName,
         'adminPage'=>true,
         'newSlug'=>$slug,
         'userIsAdmin'=>$userIsAdmin,
         'entityName'=>$entityName,
         'addedEntityName'=> $addedEntityName,
-	  	'addedId'=> $addedId));
+        'addedId'=> $addedId
+      ));
     }
     return $this->render('default/'.$addTemplate, array(
       'form' => $form->createView(),

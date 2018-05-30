@@ -69,6 +69,12 @@ class User implements UserInterface, EquatableInterface, \Serializable
 
 
   /**
+   * @ORM\Column(type="string", length=255, unique=true, nullable=true)
+   */
+  protected $apiKey;
+
+
+  /**
    * @ORM\ManyToMany(targetEntity="Role", inversedBy="users", cascade={"persist", "detach", "merge", "refresh"})
    * @ORM\JoinTable(name="user_role",
    *   joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="user_id")},
@@ -271,6 +277,30 @@ class User implements UserInterface, EquatableInterface, \Serializable
     public function getSlug()
     {
         return $this->slug;
+    }
+
+
+    /**
+     * Set API key
+     *
+     * @param string $apiKey
+     * @return User
+     */
+    public function setApiKey($apiKey)
+    {
+        $this->apiKey = $apiKey;
+
+        return $this;
+    }
+
+    /**
+     * Get API key
+     *
+     * @return string 
+     */
+    public function getApiKey()
+    {
+        return $this->apiKey;
     }
 
 
