@@ -120,6 +120,9 @@ $data = array(
     "subject_genders" => array(
       "Male",
     ),
+    "subject_sexes" => array(
+      "Male",
+    ),
     "subject_population_ages" => array(
       "Newborn (under 1 month)",
     ),
