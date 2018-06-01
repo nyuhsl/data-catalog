@@ -185,4 +185,16 @@ class SubjectGeographicArea {
     {
         return $this->datasets;
     }
+
+    /** 
+     * Serialize all properties
+     *
+     * @return array
+     */
+    public function getAllProperties() {
+        return array(
+            'geographic_area_name'=>$this->geographic_area_name,
+            'geographic_area_authority'=>$this->geographic_area_authority
+        );
+    }
 }

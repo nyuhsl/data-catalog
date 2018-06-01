@@ -40,6 +40,7 @@ class APIController extends Controller
    *
    * @param string $slug The slug of a dataset, or "all"
    * @param string $_format The output format desired
+   * @param Request $request The current HTTP request
    *
    * @return Response A Response instance
    *
@@ -49,7 +50,7 @@ class APIController extends Controller
    * ) 
    * @Method("GET")
    */ 
-  public function APIDatasetGetAction($slug, $_format) {
+  public function APIDatasetGetAction($slug, $_format, Request $request) {
 
     $em = $this->getDoctrine()->getManager();
     $qb = $em->createQueryBuilder();
@@ -69,13 +70,36 @@ class APIController extends Controller
                      ->setParameter('slug', $slug)
                      ->getQuery()->getResult();
     }
+
+    $output_format = $request->get('output_format', 'default');
+
+    switch ($output_format) {
+      case "default":
+        // default will use the entity's jsonSerialize() method
+        $content = $datasets;
+        break;
+      case "solr":
+        // for Solr
+        $content = array();
+        foreach ($datasets as $dataset) {
+          $content[] = $dataset->serializeForSolr();
+        }
+        break;
+      case "complete":
+        $content = array();
+        foreach ($datasets as $dataset) {
+          $content[] = $dataset->serializeComplete();
+        }
+        break;
+      default:
+        // default will use the entity's jsonSerialize() method
+        $content = $datasets;
+    }
     
     if ($_format == "json") {
-      $jsonContent = json_encode($datasets);
       $response = new Response();
-      $response->setContent($jsonContent);
+      $response->setContent(json_encode($content));
       $response->headers->set('Content-Type', 'application/json');
-
     }
 
     return $response;
