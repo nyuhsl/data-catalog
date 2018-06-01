@@ -184,4 +184,16 @@ class SubjectOfStudy {
     {
         return $this->datasets;
     }
+
+    /**
+     * Serialize all properties
+     *
+     * @return array
+     */
+    public function getAllProperties() {
+        return array(
+            'subject_of_study'=>$this->subject_of_study,
+            'species'=>$this->species
+        );
+    }
 }

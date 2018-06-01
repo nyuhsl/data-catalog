@@ -185,4 +185,17 @@ class SubjectKeyword {
     {
         return $this->datasets;
     }
+
+    /**
+     * Serialize all properties
+     *
+     * @return array
+     */
+    public function getAllProperties() {
+      return array(
+        'keyword'=>$this->keyword,
+        'mesh_code'=>$this->mesh_code
+      );
+    }
+
 }

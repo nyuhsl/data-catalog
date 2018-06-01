@@ -1724,14 +1724,14 @@ class Dataset implements JsonSerializable {
      */
     public function jsonSerialize() {
       $formats = $awards = $restrictions = $stds = $genders = $sexes = $ages = [];
-      $equipment = $software = $subject_of_study = [];
+      $equipment = $software = $subject_of_study = $others = [];
       $locs = $rel = $areas = $area_details = $domains = $publications = $keywords = $publishers = [];
       $authors = $data_type_array = $types_of_study = $corresponding_authors = $experts = [];
       $data_locations = $akas = $related_datasets = [];
 
       // these related entities can be added on the fly so we use getAllProperties
       foreach ($this->data_locations as $loc) { $locs[]=$loc->getAllProperties(); }
-      foreach ($this->dataset_alternate_titles as $alt) { $akas[]=$alt->getAllProperties(); }
+      foreach ($this->dataset_alternate_titles as $alt) { $akas[]=$alt->getDisplayName(); }
       foreach ($this->other_resources as $other) { $others[]=$other->getAllProperties(); }
       foreach ($this->related_datasets as $rel) { $rels[]=$rel->getAllProperties(); }
       foreach ($this->authorships as $authorship) { $authors[]=$authorship->getAllProperties(); }
@@ -1772,9 +1772,9 @@ class Dataset implements JsonSerializable {
         'subscriber'                => $this->subscriber,
         'data_locations'            => $data_locations,
         'dataset_alternate_titles'  => $akas,
-        'other_resources'           => $other_resources,
+        'other_resources'           => $others,
         'related_datasets'          => $related_datasets,
-        'authorships'               => $authorships,
+        'authorships'               => $authors,
         'subject_keywords'          => $keywords,
         'publishers'                => $publishers,
         'publications'              => $publications,
@@ -1785,7 +1785,7 @@ class Dataset implements JsonSerializable {
         'data_types'                => $data_type_array,
         'data_collection_standards' => $stds,
         'awards'                    => $awards,
-        'local_experts'             => $local_experts,
+        'local_experts'             => $experts,
         'subject_domains'           => $domains,
         'subject_genders'           => $genders,
         'subject_sexes'             => $sexes,
@@ -1863,42 +1863,41 @@ class Dataset implements JsonSerializable {
 
     /**
      * Serialize a complete representation of a Dataset including complete records of all related 
-     * entities. Similar to the above except we just use getAllProperties() on every entity because
-     * we are not ingesting this data.
+     * entities. Similar to the above except we just use getAllProperties() on every entity that has 
+     * more than one property because we are not ingesting this data.
      *
      * @return array
      */
     public function serializeComplete() {
       $formats = $awards = $restrictions = $stds = $genders = $sexes = $ages = [];
-      $equipment = $software = $subject_of_study = [];
+      $equipment = $software = $subject_of_study = $others = [];
       $locs = $rel = $areas = $area_details = $domains = $publications = $keywords = $publishers = [];
       $authors = $data_type_array = $types_of_study = $corresponding_authors = $experts = [];
       $data_locations = $akas = $related_datasets = [];
 
-      // these related entities can be added on the fly so we use getAllProperties
       foreach ($this->data_locations as $loc) { $locs[]=$loc->getAllProperties(); }
-      foreach ($this->dataset_alternate_titles as $alt) { $akas[]=$alt->getAllProperties(); }
+      foreach ($this->dataset_alternate_titles as $alt) { $akas[]=$alt->getDisplayName(); }
       foreach ($this->other_resources as $other) { $others[]=$other->getAllProperties(); }
       foreach ($this->related_datasets as $rel) { $rels[]=$rel->getAllProperties(); }
       foreach ($this->authorships as $authorship) { $authors[]=$authorship->getAllProperties(); }
       foreach ($this->subject_keywords as $kwd) { $keywords[]=$kwd->getAllProperties(); }
       foreach ($this->publishers as $pubber) { $publishers[]=$pubber->getAllProperties(); }
       foreach ($this->publications as $pub) { $publications[]=$pub->getAllProperties(); }
-      foreach ($this->access_restrictions as $restriction) { $restrictions[]=$restriction->getAllProperties(); }
+      foreach ($this->access_restrictions as $restriction) { $restrictions[]=$restriction->getDisplayName(); }
       foreach ($this->related_equipment as $equip) { $equipment[]=$equip->getAllProperties(); }
       foreach ($this->related_software as $sw) { $software[]=$sw->getAllProperties(); }
-      foreach ($this->dataset_formats as $format) { $formats[]=$format->getAllProperties(); }
-      foreach ($this->data_types as $data_type) { $data_type_array[]=$data_type->getAllProperties(); }
+      foreach ($this->dataset_formats as $format) { $formats[]=$format->getDisplayName(); }
+      foreach ($this->data_types as $data_type) { $data_type_array[]=$data_type->getDisplayName(); }
       foreach ($this->data_collection_standards as $std) { $stds[]=$std->getAllProperties(); }
       foreach ($this->awards as $award) { $awards[]=$award->getAllProperties(); }
       foreach ($this->local_experts as $expert) { $experts[]=$expert->getAllProperties(); }
       foreach ($this->subject_domains as $domain) { $domains[]=$domain->getAllProperties(); }
-      foreach ($this->subject_genders as $gender) { $genders[]=$gender->getAllProperties(); }
-      foreach ($this->subject_sexes as $sex) { $sexes[]=$sex->getAllProperties(); }
-      foreach ($this->subject_population_ages as $age) { $ages[]=$age->getAllProperties(); }
+      foreach ($this->subject_genders as $gender) { $genders[]=$gender->getDisplayName(); }
+      foreach ($this->subject_sexes as $sex) { $sexes[]=$sex->getDisplayName(); }
+      foreach ($this->subject_population_ages as $age) { $ages[]=$age->getDisplayName(); }
       foreach ($this->subject_geographic_areas as $area) { $areas[]=$area->getAllProperties(); }
       foreach ($this->subject_geographic_area_details as $detail) { $area_details[]=$detail->getAllProperties(); }
-      foreach ($this->study_types as $study_type) { $types_of_study[]=$study_type->getAllProperties(); }
+      foreach ($this->study_types as $study_type) { $types_of_study[]=$study_type->getDisplayName(); }
       foreach ($this->subject_of_study as $subject) { $subject_of_study[]=$subject->getAllProperties(); }
 
       return array(
@@ -1916,9 +1915,9 @@ class Dataset implements JsonSerializable {
         'subscriber'                => $this->subscriber,
         'data_locations'            => $data_locations,
         'dataset_alternate_titles'  => $akas,
-        'other_resources'           => $other_resources,
+        'other_resources'           => $others,
         'related_datasets'          => $related_datasets,
-        'authorships'               => $authorships,
+        'authorships'               => $authors,
         'subject_keywords'          => $keywords,
         'publishers'                => $publishers,
         'publications'              => $publications,
@@ -1929,7 +1928,7 @@ class Dataset implements JsonSerializable {
         'data_types'                => $data_type_array,
         'data_collection_standards' => $stds,
         'awards'                    => $awards,
-        'local_experts'             => $local_experts,
+        'local_experts'             => $experts,
         'subject_domains'           => $domains,
         'subject_genders'           => $genders,
         'subject_sexes'             => $sexes,

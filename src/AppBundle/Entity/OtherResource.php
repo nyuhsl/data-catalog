@@ -168,4 +168,17 @@ class OtherResource {
     {
         return $this->resource_url;
     }
+
+    /**
+     * Serialize all properties
+     *
+     * @return array
+     */
+    public function getAllProperties() {
+      return array(
+        'resource_name'=>$this->resource_name,
+        'resource_description'=>$this->resource_description,
+        'resource_url'=>$this->resource_url
+      );
+    }
 }
