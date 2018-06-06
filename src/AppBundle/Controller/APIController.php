@@ -35,6 +35,18 @@ use AppBundle\Utils\Slugger;
  */
 class APIController extends Controller
 {
+
+  /**
+   *  We have several pseudo-entities that all relate back to the Person
+   *  entity. We'll check this array so we know if we encounter one of them.
+   */
+  public $personEntities = array(
+     'Author',
+     'LocalExpert',
+     'CorrespondingAuthor',
+  );
+
+
   /**
    * Produce the JSON output
    *
@@ -158,6 +170,66 @@ class APIController extends Controller
     }
   }
 
+
+  /**
+   * Ingest other entities via API
+   *
+   * @param string $entityName The name of the new entity
+   * @param Request the current HTTP request
+   *
+   * @return Response A Response instance
+   *
+   * @Route("/api/{entityName}")
+   * @Method("POST")
+   */
+  public function APIEntityPostAction($entityName, Request $request) {
+    $submittedData = json_decode($request->getContent(), true);
+
+    if ($entityName == 'User') {
+      return new Response('Users cannot be added via API', 403);
+    } else {
+      $addTemplate = 'add.html.twig';
+    }
+
+    $userCanSubmit = $this->get('security.context')->isGranted('ROLE_API_SUBMITTER');
+    
+    //prefix with namespaces so it can be called dynamically
+    if (in_array($entityName, $this->personEntities)) {
+      $newEntity = 'AppBundle\Entity\\Person';
+    } else {
+      $newEntity = 'AppBundle\Entity\\' . $entityName;
+    }
+    $newEntityFormType = 'AppBundle\Form\Type\\' . $entityName . "Type";
+
+    $em = $this->getDoctrine()->getManager();
+    if ($userCanSubmit) {
+      $form = $this->createForm(new $newEntityFormType(), 
+                                new $newEntity(),
+                                array('csrf_protection'=>false));
+      $form->submit($submittedData);
+      if ($form->isValid()) {
+        $entity = $form->getData();
+
+        // Create a slug using each entity's getDisplayName method
+        $addedEntityName = $entity->getDisplayName();
+        $slug = Slugger::slugify($addedEntityName);
+        $entity->setSlug($slug);
+        
+        $em->persist($entity);
+        $em->flush();
+
+        return new Response($entityName . ': "' . $addedEntityName . '" successfully added.', 201);
+      } else {
+        $errors = $form->getErrorsAsString();
+        $response = new Response(json_encode($errors), 422);
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
+      }
+    } else {
+      return new Response('Unauthorized', 401);
+    } 
+  }
 
 
 }
