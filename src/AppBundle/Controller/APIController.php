@@ -112,9 +112,10 @@ class APIController extends Controller
       $response = new Response();
       $response->setContent(json_encode($content));
       $response->headers->set('Content-Type', 'application/json');
+
+      return $response;
     }
 
-    return $response;
 
   }
 
@@ -231,5 +232,59 @@ class APIController extends Controller
     } 
   }
 
+
+  /**
+   * List related entities 
+   *
+   * @param string $slug The slug of an entity, or "all"
+   * @param string $_format The output format desired
+   * @param Request $request The current HTTP request
+   *
+   * @return Response A Response instance
+   *
+   * @Route(
+   *   "/api/{entityName}/{slug}.{_format}", name="json_output_all",
+   *   defaults={"slug": "all", "_format":"json"},
+   * ) 
+   * @Method("GET")
+   */ 
+  public function APIEntityGetAction($entityName, $slug, $_format, Request $request) {
+    if ($entityName == 'User') {
+      return new Response('Users cannot be fetched via API', 403);
+    }
+
+    $em = $this->getDoctrine()->getManager();
+    $qb = $em->createQueryBuilder();
+    if (in_array($entityName, $this->personEntities)) {
+      $entity = 'AppBundle\Entity\\Person';
+    } else {
+      $entity = 'AppBundle\Entity\\' . $entityName;
+    }
+
+    if ($slug == "all") {
+      $entities = $qb->select('e')
+                     ->from($entity, 'e')
+                     ->getQuery()->getResult();
+    } else {
+      $entities = $qb->select('e')
+                     ->from($entity, 'e')
+                     ->where('e.slug = :slug')
+                     ->setParameter('slug', $slug)
+                     ->getQuery()->getResult();
+    }
+    for ($i = 0; $i < count($entities); $i++) {
+      $entities[$i] = $entities[$i]->getAllProperties();
+    }
+
+    if ($_format == "json") {
+      $response = new Response();
+      $response->setContent(json_encode($entities));
+      $response->headers->set('Content-Type', 'application/json');
+
+      return $response;
+    }
+
+
+  }
 
 }
