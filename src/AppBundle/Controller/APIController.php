@@ -35,6 +35,18 @@ use AppBundle\Utils\Slugger;
  */
 class APIController extends Controller
 {
+
+  /**
+   *  We have several pseudo-entities that all relate back to the Person
+   *  entity. We'll check this array so we know if we encounter one of them.
+   */
+  public $personEntities = array(
+     'Author',
+     'LocalExpert',
+     'CorrespondingAuthor',
+  );
+
+
   /**
    * Produce the JSON output
    *
@@ -100,9 +112,10 @@ class APIController extends Controller
       $response = new Response();
       $response->setContent(json_encode($content));
       $response->headers->set('Content-Type', 'application/json');
+
+      return $response;
     }
 
-    return $response;
 
   }
 
@@ -159,5 +172,119 @@ class APIController extends Controller
   }
 
 
+  /**
+   * Ingest other entities via API
+   *
+   * @param string $entityName The name of the new entity
+   * @param Request the current HTTP request
+   *
+   * @return Response A Response instance
+   *
+   * @Route("/api/{entityName}")
+   * @Method("POST")
+   */
+  public function APIEntityPostAction($entityName, Request $request) {
+    $submittedData = json_decode($request->getContent(), true);
+
+    if ($entityName == 'User') {
+      return new Response('Users cannot be added via API', 403);
+    } else {
+      $addTemplate = 'add.html.twig';
+    }
+
+    $userCanSubmit = $this->get('security.context')->isGranted('ROLE_API_SUBMITTER');
+    
+    //prefix with namespaces so it can be called dynamically
+    if (in_array($entityName, $this->personEntities)) {
+      $newEntity = 'AppBundle\Entity\\Person';
+    } else {
+      $newEntity = 'AppBundle\Entity\\' . $entityName;
+    }
+    $newEntityFormType = 'AppBundle\Form\Type\\' . $entityName . "Type";
+
+    $em = $this->getDoctrine()->getManager();
+    if ($userCanSubmit) {
+      $form = $this->createForm(new $newEntityFormType(), 
+                                new $newEntity(),
+                                array('csrf_protection'=>false));
+      $form->submit($submittedData);
+      if ($form->isValid()) {
+        $entity = $form->getData();
+
+        // Create a slug using each entity's getDisplayName method
+        $addedEntityName = $entity->getDisplayName();
+        $slug = Slugger::slugify($addedEntityName);
+        $entity->setSlug($slug);
+        
+        $em->persist($entity);
+        $em->flush();
+
+        return new Response($entityName . ': "' . $addedEntityName . '" successfully added.', 201);
+      } else {
+        $errors = $form->getErrorsAsString();
+        $response = new Response(json_encode($errors), 422);
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
+      }
+    } else {
+      return new Response('Unauthorized', 401);
+    } 
+  }
+
+
+  /**
+   * List related entities 
+   *
+   * @param string $slug The slug of an entity, or "all"
+   * @param string $_format The output format desired
+   * @param Request $request The current HTTP request
+   *
+   * @return Response A Response instance
+   *
+   * @Route(
+   *   "/api/{entityName}/{slug}.{_format}", name="json_output_all",
+   *   defaults={"slug": "all", "_format":"json"},
+   * ) 
+   * @Method("GET")
+   */ 
+  public function APIEntityGetAction($entityName, $slug, $_format, Request $request) {
+    if ($entityName == 'User') {
+      return new Response('Users cannot be fetched via API', 403);
+    }
+
+    $em = $this->getDoctrine()->getManager();
+    $qb = $em->createQueryBuilder();
+    if (in_array($entityName, $this->personEntities)) {
+      $entity = 'AppBundle\Entity\\Person';
+    } else {
+      $entity = 'AppBundle\Entity\\' . $entityName;
+    }
+
+    if ($slug == "all") {
+      $entities = $qb->select('e')
+                     ->from($entity, 'e')
+                     ->getQuery()->getResult();
+    } else {
+      $entities = $qb->select('e')
+                     ->from($entity, 'e')
+                     ->where('e.slug = :slug')
+                     ->setParameter('slug', $slug)
+                     ->getQuery()->getResult();
+    }
+    for ($i = 0; $i < count($entities); $i++) {
+      $entities[$i] = $entities[$i]->getAllProperties();
+    }
+
+    if ($_format == "json") {
+      $response = new Response();
+      $response->setContent(json_encode($entities));
+      $response->headers->set('Content-Type', 'application/json');
+
+      return $response;
+    }
+
+
+  }
 
 }
