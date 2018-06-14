@@ -65,14 +65,18 @@ Luckily, these other entities can also be ingested via the API. Just like how we
 The API uses Symfony's form system to validate all incoming data, so the field names in your JSON should match the field names specified in each entity's form class. These files are located in `src/AppBundle/Form/Type`. Any fields that are required in the form class (or by database constraints) must be present in your JSON.
 
 For example, if we check `src/AppBundle/Form/Type/SubjectKeywordType.php`, we can see which fields are required and what they should be called. Two fields are defined in this file, named "keyword" and "mesh_code". The MeSH code is set to `'required'=>false`. So, a new Subject Keyword can be added by submitting a POST request to `api/SubjectKeyword` with the body:
-```{
+```
+{
   "keyword": "Test keyword"
-}```
+}
+```
 If we want to add the MeSH code as well, the request body would look like:
-```{
+```
+{
   "keyword": "Test keyword",
   "mesh_code": "the mesh code"
-}```
+}
+```
 
 
 
