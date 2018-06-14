@@ -32,11 +32,59 @@ writeable by Apache and by your account.
 10. Once you've added some test data, you'll want to index it in Solr. Navigate to your site's base directory and edit the file `SolrIndexer.py` to specify the URL of your Solr server where indicated. Then, run the script.
 
 ### Follow-up Tasks
-1. You'll most likely want to regularly re-index Solr to account for datasets you add or edit using the Admin section. In the root directory of this repo, there are PHP and Python examples of a script which can update a Solr index, called `SolrIndexerExample`. You'll probably want to call this script or something similar with a cron job every Sunday or every night or whatever seems appropriate, depending on much updating you do. I recommend weekly, since you can also run this script on-demand from the command line if you want. To _remove_ a dataset from the Solr index (necessary if you delete or unpublish a dataset), you can delete the whole Solr index (see Solr documentation) and then rebuild it with this script. You could also write a script or Symfony service to selectively delete a single record from the Solr index (if you do, please consider contributing it to this repository!).
+1. You'll most likely want to regularly re-index Solr to account for datasets you add, delete, or update using the Admin section. In the root directory of this repo, there are PHP and Python examples of a script which can update a Solr index, called `SolrIndexerExample`. You'll probably want to call this script or something similar with a cron job every Sunday or every night or whatever seems appropriate, depending on much updating you do. I recommend weekly, since you can also run this script on-demand from the command line if you want.
 2. You'll most likely want to brand the site with your institution's logo or color scheme. Some placeholders have been left in `app/Resources/views/base.html.twig` that should get you started.
 3. In production, the site is configured to use the APC cache, which requires the installation of the APCu PHP module.
-4. There are currently three metadata fields ("Study Type", "Subject Gender" and "Subject Sex") which check in the database for the options they should display. When you first load the data entry form, these fields will appear blank until some options are added in their database tables. Please feel free to contact NYUHSL for examples of how to do this.
+4. There are currently three metadata fields ("Study Type", "Subject Gender" and "Subject Sex") which check in the database for the options they should display. When you first load the data entry form, these fields will appear blank until some options are added in their database tables. Please feel free to contact NYUHSL for examples of how to do this. Alternately, if you use the starter database, these fields will be pre-populated.
 5. You'll most likely want to have some datasets to search. Get to it!!
 
-### Licensing
+## Using the API
+The Data Catalog provides an API which can create and retrieve entities in JSON format.
+
+### Listing Entities
+Existing datasets and related entities can easily be retrieved by calling the appropriate endpoints. Each entity has an endpoint which corresponds to its class name. This usually matches the filenames in the `src/AppBundle/Entity` directory, so you can use that as reference. For example, the Dataset entity is defined in `Dataset.php`, and a list of published datasets can be found at `api/Dataset`. Subject Keywords are defined in `SubjectKeyword.php`, and a list of all subject keywords can be found at `api/SubjectKeyword`.
+
+A specific dataset (or other entity) can be retrieved using its "slug" (which you'd need to know beforehand), e.g.: `api/Dataset/ama-physician-masterfile`
+
+In addition, the Dataset endpoint has an optional `output_format` parameter, which allows you to choose from three different output formats depending on your use case:
+- `default` - the default output format can be ingested directly by other data catalogs using this codebase
+- `solr` - this format is suitable for indexing by Solr, and is used by our SolrIndexer scripts
+- `complete` - this format returns a more complete representation of the dataset, with more information about its related entities
+
+### Ingesting Entities
+New entities can also be ingested using the API, but there are some extra steps:
+1. Grant API Privileges - each user wishing to upload via the API must be given privileges using the forms at `/update/User`. Choose your user in the list and then check the "API User" role. When you save your changes, a unique API key will be generated and displayed the next time you view the form. The key is generated using Symfony's [random_bytes() function](https://symfony.com/doc/2.8/components/security/secure_tools.html#generating-a-secure-random-string) which is cryptographically secure.
+2. Set X-AUTH-TOKEN Header - All POST requests to the API must include the API key as the X-AUTH-TOKEN header. Requests with missing API keys, or API keys corresponding to users who do not have "API User" permissions will be rejected. 
+3. Format your JSON - The entities you wish to ingest must be formatted in JSON in a way that Symfony can understand. We have provided a file in the base directory of this project called `JSON_sample.json`. This shows all the Dataset fields that are accepted by the API, and the types of values accepted by those fields. Note that most of the related entities (e.g. Subject Keywords) must already exist in the database before they can be applied to a new dataset via the API. There is more information about this in the `APITester.php` script. In this file you will see a sample PHP array (in a format which can also be accepted by the API), and it contains comments which go into a little more detail about how to set up the data.
+4. Perform the POST Request - The `APITester.php` script is a simple example of how to put together a POST request suitable for our API. Fill in the base URL of your data catalog installation (line 6), set the `$data` variable to contain the data you wish to ingest, and set the X-AUTH-TOKEN header to your API key (line 146). Please again note that most related entities can only be applied to new datasets if their values already exist in the database.
+
+Other entities besides the Dataset can be ingested as well. The API uses Symfony's form system to validate all incoming data, so the field names in your JSON request should match the field names specified in the entity's Form Type class (these are located in `src/AppBundle/Form/Type`). Any fields that are required in this form class (or by database constraints) must be present in your JSON.
+
+For example, if we check `src/AppBundle/Form/Type/SubjectKeywordType.php`, we can see which fields are required and what they should be called. A Subject Keyword can be added by submitting a POST request to `api/SubjectKeyword` with the body:
+`{
+  "keyword": "Test keyword"
+}`
+We see that the MeSH code field is set to `'required'=>false`, but if we want to add it as well, the request body would look like:
+`{
+  "keyword": "Test keyword",
+  "mesh_code": "the mesh code"
+}`
+
+
+
+## Licensing
 All files in this repository that are NOT components of the main Symfony distribution are Copyright 2016 NYU Health Sciences Library. This application is distributed under the GNU General Public License v3.0. For more information see the `LICENSE` file included in this repository.
+
+
+
+
+
+
+
+
+
+
+
+
+
+

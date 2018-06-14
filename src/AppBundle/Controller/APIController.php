@@ -57,7 +57,7 @@ class APIController extends Controller
    * @return Response A Response instance
    *
    * @Route(
-   *   "/api/dataset/{slug}.{_format}", name="json_output_all",
+   *   "/api/Dataset/{slug}.{_format}", name="json_output_datasets",
    *   defaults={"slug": "all", "_format":"json"},
    * ) 
    * @Method("GET")
@@ -127,7 +127,7 @@ class APIController extends Controller
    *
    * @return Response A Response instance
    *
-   * @Route("/api/dataset")
+   * @Route("/api/Dataset")
    * @Method("POST")
    */
   public function APIDatasetPostAction(Request $request) {
@@ -243,7 +243,7 @@ class APIController extends Controller
    * @return Response A Response instance
    *
    * @Route(
-   *   "/api/{entityName}/{slug}.{_format}", name="json_output_all",
+   *   "/api/{entityName}/{slug}.{_format}", name="json_output_related",
    *   defaults={"slug": "all", "_format":"json"},
    * ) 
    * @Method("GET")
