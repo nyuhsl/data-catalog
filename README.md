@@ -42,10 +42,10 @@ writeable by Apache and by your account.
 The Data Catalog provides an API which can create and retrieve entities in JSON format.
 
 ### Listing Entities
-Existing datasets and related entities can be retrieved by calling the appropriate endpoints. Each type of entity has a URL which corresponds to its class name (it's case-sensitive). This usually matches the filenames in the `src/AppBundle/Entity` directory, so you can use that as reference. For example, the Dataset entity is defined in `Dataset.php`, so a list of datasets in your catalog can be found at `/api/Dataset/all.json`. Subject Keywords are defined in `SubjectKeyword.php`, so a list of all your subject keywords can be found at `/api/SubjectKeyword/all.json`. 
+Existing datasets and related entities can be retrieved by calling the appropriate endpoints. Each type of entity has a URL which matches its class name. You can use the filenames in the `src/AppBundle/Entity` directory as a reference since they also match the class names. For example, the Dataset entity is defined in `Dataset.php`, so a list of datasets in your catalog can be found at `/api/Dataset/all.json`. Subject Keywords are defined in `SubjectKeyword.php`, so a list of all your subject keywords can be found at `/api/SubjectKeyword/all.json`. 
 NOTE: The "all.json" is optional here, so `/api/Dataset` or `/api/SubjectKeyword` would work as well.
 
-A *specific* dataset (or other entity) can be retrieved using its "slug" property (which you'd need to know beforehand). So, the URL `/api/Dataset/ama-physician-masterfile` will return the JSON representation of the AMA Physician Masterfile. 
+A *specific* dataset (or other entity) can be retrieved using its "slug" property (which you'd need to know beforehand). So, the URL `/api/Dataset/ama-physician-masterfile` will return the JSON representation of the AMA Physician Masterfile dataset.
 
 In addition, the Dataset endpoint has an optional `output_format` parameter, which allows you to choose from three different output formats depending on your use case (all are returned as JSON):
 - `default` - the default output format can be ingested directly by other data catalogs using this codebase
@@ -55,24 +55,24 @@ So for example, to retrieve the complete represenation of all your datasets, vis
 
 ### Ingesting Entities
 New entities can also be ingested using the API, but there are some extra steps:
-1. __Grant API Privileges__ - Each user wishing to upload via the API must be granted this privilege in the user management area (at `/update/User`). Choose your user in the list and then check the "API User" role. When you save your changes, a unique API key will be generated which will be used to verify the user's identity. The new key will be displayed the next time you view this form. The key is generated using Symfony's [random_bytes() function](https://symfony.com/doc/2.8/components/security/secure_tools.html#generating-a-secure-random-string) which is cryptographically secure. Please do not generate your own keys (except for testing) and PLEASE enforce HTTPS for all POST requests to the API, as this will keep your unique API key encrypted.
+1. __Grant API Privileges__ - Each user wishing to upload via the API must be granted this privilege in the user management area (at `/update/User`). Choose your user in the list and then check the "API User" role. When you save your changes, a unique API key will be generated, which will be used to verify the user's identity. The new key will be displayed the next time you view this form. The key is generated using Symfony's [random_bytes() function](https://symfony.com/doc/2.8/components/security/secure_tools.html#generating-a-secure-random-string) which is cryptographically secure. Please do not generate your own keys (except for testing) and PLEASE enforce HTTPS for all POST requests to the API, as this will keep your unique API key encrypted.
 2. __Set X-AUTH-TOKEN Header__ - All POST requests to the API must include the user's API key as the X-AUTH-TOKEN header. Requests with missing API keys, or API keys corresponding to users who no longer have "API User" permissions will be rejected. 
-3. __Format your JSON__ - The entities you wish to ingest should be formatted in JSON in a way that Symfony can understand. We have provided a file in the base directory of this project called `JSON_sample.json`. This is a sample Dataset entity showing all the fields that are accepted by the API, and the types of values accepted by those fields. Note that many of the related entities fields (e.g. Subject Keywords) must already exist in the database before they can be applied to a new dataset via the API. For example, if you want to apply the keyword "Adolescent Health" to a dataset, you have to add "Adolescent Health" as a keyword first. There is more information about this in the `APITester.php` script. In this file you will see a sample PHP array which, like the sample JSON, shows the format required by the API (in case you're starting with your data in PHP). It also contains comments which go into a little more detail which fields require what.
+3. __Format your JSON__ - The entities you wish to ingest should be formatted in JSON in a way that Symfony can understand. We have provided a file in the base directory of this project called `JSON_sample.json`. This is a sample Dataset entity showing all the fields that are accepted by the API, and the types of values accepted by those fields. Note that many of the related entities fields (e.g. Subject Keywords) must already exist in the database before they can be applied to a new dataset via the API. For example, if you want to apply the keyword "Adolescent Health" to a dataset, you have to add "Adolescent Health" as a keyword before trying to ingest the dataset. There is more information about this in the `APITester.php` script. In this file you will see a sample PHP array which, like the sample JSON, shows the format required by the API (in case you're starting with your data in PHP). It also contains comments which go into a little more detail which fields require what.
 4. __Perform the POST Request__ - The `APITester.php` script is a simple example of how to put together a POST request suitable for our API. Fill in the base URL of your data catalog installation (line 6), set the `$data` variable to contain the data you wish to ingest, and set the X-AUTH-TOKEN header to your API key (line 146). Please again note that most related entities can only be applied to new datasets if their values already exist in the database!
 
 Luckily, these other entities can also be ingested via the API. Just like how we got a list of Subject Keywords by going to `/api/SubjectKeyword`, we can add new keywords by performing a POST request to `/api/SubjectKeyword`. 
 
-The API uses Symfony's form system to validate all incoming data, so the field names in your JSON should match the field names specified in each entity's Form Type class. These are located in `src/AppBundle/Form/Type`. Any fields that are required in the form class (or by database constraints) must be present in your JSON.
+The API uses Symfony's form system to validate all incoming data, so the field names in your JSON should match the field names specified in each entity's form class. These files are located in `src/AppBundle/Form/Type`. Any fields that are required in the form class (or by database constraints) must be present in your JSON.
 
 For example, if we check `src/AppBundle/Form/Type/SubjectKeywordType.php`, we can see which fields are required and what they should be called. Two fields are defined in this file, named "keyword" and "mesh_code". The MeSH code is set to `'required'=>false`. So, a new Subject Keyword can be added by submitting a POST request to `api/SubjectKeyword` with the body:
-`{
+```{
   "keyword": "Test keyword"
-}`
+}```
 If we want to add the MeSH code as well, the request body would look like:
-`{
+```{
   "keyword": "Test keyword",
   "mesh_code": "the mesh code"
-}`
+}```
 
 
 
