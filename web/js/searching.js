@@ -115,12 +115,12 @@ jQuery(function($) {
    * Handle page selection
    */
   var pagerInput = $('#pagenum-input');
-  var maxPages = pagerInput.attr('max');
-  var minPages = pagerInput.attr('min');
+  var maxPages = parseInt(pagerInput.attr('max'));
+  var minPages = parseInt(pagerInput.attr('min'));
   pagerInput.on('keyup', function(e) {
     e.preventDefault && e.preventDefault();
     if (e.which===13) {
-      var newPage = pagerInput.val();
+      var newPage = parseInt(pagerInput.val());
       if (newPage > maxPages) { newPage = maxPages; }
       if (newPage < minPages) { newPage = minPages; }
       alterSearch('jump', 'page', newPage);
