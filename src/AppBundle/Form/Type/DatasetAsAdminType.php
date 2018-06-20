@@ -160,7 +160,7 @@ class DatasetAsAdminType extends AbstractType {
     //accession information
     $builder->add('data_locations', 'collection', array(
       'type'      => new DataLocationType(),
-      'required' => false,
+      'required' => true,
       'by_reference'=>false,
       'label'     => 'Data Location',
       'prototype' => true,
@@ -178,7 +178,7 @@ class DatasetAsAdminType extends AbstractType {
     ));
     $builder->add('other_resources', 'collection', array(
       'type'      => new OtherResourceType(),
-      'required' => false,
+      'required' => true,
       'by_reference'=>false,
       'label'     => 'Other Resources',
       'prototype' => true,
@@ -268,7 +268,7 @@ class DatasetAsAdminType extends AbstractType {
     ));
     $builder->add('related_datasets', 'collection', array(
       'type'      => new DatasetRelationshipType(),
-      'required' => false,
+      'required' => true,
       'by_reference'=>false,
       'prototype' => true,
       'label'     => 'Related Datasets',
@@ -279,7 +279,7 @@ class DatasetAsAdminType extends AbstractType {
     $builder->add('authorships', 'collection', array(
       'type' => new PersonAssociationType(),
       'prototype' => true,
-      'required'=>false,
+      'required'=>true,
       'by_reference'=>false,
       'label'=>'Authors',
       'allow_delete'=>true,

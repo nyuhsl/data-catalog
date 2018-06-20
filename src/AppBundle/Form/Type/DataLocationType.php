@@ -46,7 +46,7 @@ class DataLocationType extends AbstractType {
       );
     $builder->add('data_access_url','text',array(
       'label'=>false,
-      'required'=>false,
+      'required'=>true,
       'attr'=>array('placeholder'=>'Location URL'))
       );
     $builder->add('accession_number', 'text', array(
