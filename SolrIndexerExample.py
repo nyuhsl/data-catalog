@@ -12,7 +12,7 @@ solr_core_url = 'https://www.example.com/solr/data_catalog'
 data_catalog_base_url = 'https://www.example.com'
 
 
-db_output_url = data_catalog_base_url + '/api/dataset/all.json?output_format=solr'
+db_output_url = data_catalog_base_url + '/api/Dataset/all.json?output_format=solr'
 solr_output_url = solr_core_url + '/select/?q=*:*&wt=json'
 solr_submit_url = solr_core_url + '/update/json?commit=true&overwrite=true'
 solr_remove_url = solr_core_url + '/update/?commit=true'
