@@ -37,7 +37,9 @@ class AwardType extends AbstractType {
       'choices'=>array('Federal, NIH'    => 'Federal, NIH',
                        'Federal, non-NIH'=> 'Federal, non-NIH',
                        'Non-federal'     => 'Non-federal',
-                       'International'   => 'International'),
+                       'Non-US'          => 'Non-US',
+                       'Private'         => 'Private'
+                      ),
     ));
     $builder->add('award_url', 'text',array(
       'required'=>false,
