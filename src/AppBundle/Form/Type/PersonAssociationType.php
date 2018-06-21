@@ -44,12 +44,13 @@ class PersonAssociationType extends AbstractType {
     $builder->add('display_order', 'number', array(
       'label' => false,
       'attr'     => array(
-        'placeholder'=>'Author Position #',
+        'placeholder'=>'* Author Position #',
         'style'=>'width:50%',
 
     )));
     $builder->add('is_corresponding_author', 'checkbox', array(
       'label'     => 'Corresponding Author',
+      'required'=>false,
       'attr'      => array(
       )
     ));
