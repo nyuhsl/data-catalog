@@ -63,14 +63,12 @@ class UpdateController extends Controller {
     $userIsAdmin = $this->get('security.context')->isGranted('ROLE_ADMIN');
 
     if ($slug == null) {
-      if ($entityName == 'Award') {
-        $allEntities = $em->getRepository('AppBundle:Award')->findAllOrdered();
-      } elseif ($entityName == 'ArchivedDatasets') {
+      if ($entityName == 'ArchivedDatasets') {
           $allEntities = $em->getRepository('AppBundle:Dataset')->findAllArchived();
           $entityName = 'Dataset';
           $entityTypeDisplayName = 'Archived Dataset';
       } else {
-        $allEntities = $em->getRepository($updateEntity)->findAll();
+        $allEntities = $em->getRepository($updateEntity)->findBy([], ['slug'=>'ASC']);
       }
       return $this->render('default/list_of_entities_to_update.html.twig', array(
         'entities'    => $allEntities,
