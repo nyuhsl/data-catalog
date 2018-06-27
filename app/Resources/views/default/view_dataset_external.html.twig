@@ -133,7 +133,7 @@ $(function () {
   <div class="" id="dataset-detail-titlebox">
   {% if is_granted('ROLE_ADMIN') %}
   <div class="update-dataset-link">
-   <a href="{{ path('update_entity',{'entityName':'Dataset','slug':dataset.slug}) }}">
+   <a href="{{ path('update_dataset',{'uid':dataset.datasetUid}) }}">
      Edit this dataset
    </a>
   </div>

@@ -22,13 +22,14 @@ The {{ displayName }} "{{ addedEntityName }}" was updated successfully.
 <div class="spacer25"></div>
 <p>
 {% if entityName == 'Dataset' %}
-  To view the item, <a href="{{ path('view_dataset', {'slug':newSlug}) }}">click here</a>.
+  To view the item, <a href="{{ path('view_dataset', {'uid':uid}) }}">click here</a>.
+  To add a new dataset, <a href="{{ path('add_dataset') }}">click here</a>.
 {% else %}
   To view or make further edits, <a href="{{ path('update_entity', {'slug':newSlug,'entityName':entityName}) }}">click here</a>.
+  To add a new {{ displayName }}, <a href="{{ path('add_new_entity', {'entityName':entityName}) }}">click here</a>.
 {% endif %}
 </p>
 <p>
-To add a new {{ displayName }}, <a href="{{ path('add_new_entity', {'entityName':entityName}) }}">click here</a>.
 
 </p>
 
