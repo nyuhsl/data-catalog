@@ -60,7 +60,7 @@ class UpdateController extends Controller {
         'displayName' => 'Dataset'
       ));
     }
-    $thisEntity = $em->getRepository('AppBundle\Entity\Dataset')->fineOneBy(array('dataset_uid'=>$uid));
+    $thisEntity = $em->getRepository('AppBundle\Entity\Dataset')->findOneBy(array('dataset_uid'=>$uid));
     if (!$thisEntity) {
       throw $this->createNotFoundException(
         'No dataset with UID ' . $uid . ' was found.'
@@ -77,7 +77,7 @@ class UpdateController extends Controller {
       $newSlug = Slugger::slugify($addedEntityName);
       $thisEntity->setSlug($newSlug);
       $newAuthorships = $thisEntity->getAuthorships();
-      $oldDataset = $em->getRepository('AppBundle\Entity\Dataset')->findOneBy(array('dataset_uid'=>$datasetUid));
+      $oldDataset = $em->getRepository('AppBundle\Entity\Dataset')->findOneBy(array('dataset_uid'=>$uid));
       $oldAuthorships = $oldDataset->getAuthorships();
       foreach ($oldAuthorships as $oldAuthor) {
         if (!$newAuthorships->contains($oldAuthor)) {
@@ -104,7 +104,6 @@ class UpdateController extends Controller {
         'displayName'=> 'Dataset',
         'adminPage'  => true,
         'userIsAdmin'=> $userIsAdmin,
-        'slug'       => $slug,
         'uid'        => $uid,
         'entityName' => 'Dataset'
       ));
@@ -131,19 +130,19 @@ class UpdateController extends Controller {
       $allEntities = $em->getRepository('AppBundle\Entity\Security\User')->findBy([], ['slug'=>'ASC']);
       return $this->render('default/list_of_entities_to_update.html.twig', array(
         'entities'   => $allEntities,
-        'entityname' => 'User',
+        'entityName' => 'User',
         'adminPage'  => true,
         'userIsAdmin'=>$userIsAdmin,
         'displayName'=>'User',
       ));
     }
-    $thisEntity = $em->getRepository('AppBundle\Entity\Security\User')->findOneBySlug($slug);
+    $thisEntity = $em->getRepository('AppBundle\Entity\Security\User')->findOneBySlug($user);
     if (!$thisEntity) {
       throw $this->createNotFoundException(
         'No user \'' . $user . '\' was found'
       );
     }
-    $form = $this->createForm(new AppBundle\Form\Type\UserType, $thisEntity);
+    $form = $this->createForm(new \AppBundle\Form\Type\UserType, $thisEntity);
     $form->handleRequest($request);
     if ($form->isValid()) {
       $addedUser = $thisEntity->getDisplayName();
@@ -170,7 +169,6 @@ class UpdateController extends Controller {
         'displayName'=>'User',
         'adminPage'  =>true,
         'userIsAdmin'=>$userIsAdmin,
-        'slug'       =>$slug,
         'entityName' =>'User'
       ));
     }
