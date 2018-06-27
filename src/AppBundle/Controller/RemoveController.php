@@ -75,7 +75,7 @@ class RemoveController extends Controller {
         'No entity of type ' . $entityName . ' was found matching this slug: ' . $slug
       );
     }
-    if($entityName == 'Dataset') {
+    if ($entityName == 'Dataset') {
       $datasetUid = $thisEntity->getDatasetUid();
       $form = $this->createForm(new DatasetAsAdminType($userIsAdmin, $datasetUid), $thisEntity);
     }
@@ -98,6 +98,6 @@ class RemoveController extends Controller {
       'adminPage'=>true,
       'thisEntityName'=>$thisEntity->getDisplayName(),
       'entityName' =>$entityName));
-   }
+  }
 
 }

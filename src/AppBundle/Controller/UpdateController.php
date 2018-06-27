@@ -36,6 +36,146 @@ class UpdateController extends Controller {
 
 
   /**
+   * Produce the form to update a dataset; validate and ingest
+   *
+   * @param string $uid The UID of the dataset to be updated
+   * @param Request $request The current HTTP request
+   *
+   * @return Response A Response instance
+   *
+   * @throws NotFoundHttpException
+   *
+   * @Route("/update/Dataset/{uid}", defaults={"uid"=null}, name="update_dataset")
+   */
+  public function UpdateDatasetAction($uid, Request $request) {
+    $em = $this->getDoctrine()->getManager();
+    $userIsAdmin = $this->get('security.context')->isGranted('ROLE_ADMIN');
+    if ($uid == null) {
+      $allEntities = $em->getRepository('AppBundle\Entity\Dataset')->findBy([], ['slug'=>'ASC']);
+      return $this->render('default/list_of_entities_to_update.html.twig', array(
+        'entities'    => $allEntities,
+        'entityName'  => 'Dataset',
+        'adminPage'   => true,
+        'userIsAdmin' => $userIsAdmin,
+        'displayName' => 'Dataset'
+      ));
+    }
+    $thisEntity = $em->getRepository('AppBundle\Entity\Dataset')->fineOneBy(array('dataset_uid'=>$uid));
+    if (!$thisEntity) {
+      throw $this->createNotFoundException(
+        'No dataset with UID ' . $uid . ' was found.'
+      );
+    }
+    if ($userIsAdmin) {
+      $form = $this->createForm(new DatasetAsAdminType($userIsAdmin, $datasetUid), $thisEntity);
+    } else {
+      $form = $this->createForm(new DatasetAsUserType($userIsAdmin, $datasetUid), $thisEntity);
+    }
+    $form->handleRequest($request);
+    if ($form->isValid()) {
+      $addedEntityName = $thisEntity->getDisplayName();
+      $newSlug = Slugger::slugify($addedEntityName);
+      $thisEntity->setSlug($newSlug);
+      $newAuthorships = $thisEntity->getAuthorships();
+      $oldDataset = $em->getRepository('AppBundle\Entity\Dataset')->findOneBy(array('dataset_uid'=>$datasetUid));
+      $oldAuthorships = $oldDataset->getAuthorships();
+      foreach ($oldAuthorships as $oldAuthor) {
+        if (!$newAuthorships->contains($oldAuthor)) {
+          $oldAuthorships->removeElement($oldAuthor);
+        }
+      }
+      foreach ($thisEntity->getAuthorships() as $authorship) {
+        $authorship->setDataset($thisEntity);
+        $em->persist($authorship);
+      }
+      $thisEntity->setDateUpdated(new \DateTime("now"));
+      $em->flush();
+      return $this->render('default/update_success.html.twig', array(
+        'adminPage'       => true,
+        'displayName'     => 'Dataset',
+        'entityName'      => 'Dataset',
+        'addedEntityName' => $addedEntityName,
+        'newSlug'         => $newSlug,));
+    } else {
+      $formToRender = $userIsAdmin ? 'default/update_dataset_admin.html.twig' : 'default/update_dataset_user.html.twig';
+      return $this->render($formToRender, array(
+        'form'       => $form->createView(),
+        'displayName'=> 'Dataset',
+        'adminPage'  => true,
+        'userIsAdmin'=> $userIsAdmin,
+        'slug'       => $slug,
+        'entityName' => 'Dataset'
+      ));
+    }
+  }
+
+
+  /**
+   * Produce the form to update a user; validate and ingest
+   *
+   * @param string $user The user to be updated
+   * @param Request $request The current HTTP request
+   *
+   * @return Response A Response instance
+   *
+   * @throws NotFoundHttpException
+   *
+   * @Route("/update/User/{user}", defaults={"user"=null}, name="update_user")
+   */
+  public function UpdateUserAction($user, Request $request) {
+    $em = $this->getDoctrine()->getManager();
+    $userIsAdmin = $this->get('security.context')->isGranted('ROLE_ADMIN');
+    if ($user == null) {
+      $allEntities = $em->getRepository('AppBundle\Entity\Security\User')->findBy([], ['slug'=>'ASC']);
+      return $this->render('default/list_of_entities_to_update.html.twig', array(
+        'entities'   => $allEntities,
+        'entityname' => 'User',
+        'adminPage'  => true,
+        'userIsAdmin'=>$userIsAdmin,
+        'displayName'=>'User',
+      ));
+    }
+    $thisEntity = $em->getRepository('AppBundle\Entity\Security\User')->findOneBySlug($slug);
+    if (!$thisEntity) {
+      throw $this->createNotFoundException(
+        'No user \'' . $user . '\' was found'
+      );
+    }
+    $form = $this->createForm(new AppBundle\Form\Type\UserType, $thisEntity);
+    $form->handleRequest($request);
+    if ($form->isValid()) {
+      $addedUser = $thisEntity->getDisplayName();
+      $newSlug = Slugger::slugify($addedUser);
+      $thisEntity->setSlug($newSlug);
+      if (!$thisEntity->getApiKey()) {
+        foreach ($thisEntity->getRoles() as $role) {
+          if ($role->getRole() == 'ROLE_API_SUBMITTER') {
+            $apiKey = sha1(random_bytes(32));
+            $thisEntity->setApiKey($apiKey);
+          }
+        }
+      }
+      $em->flush();
+      return $this->render('default/update_success.html.twig', array(
+        'adminPage'       => true,
+        'displayName'     => 'User',
+        'entityName'      => 'User',
+        'addedEntityName' => $addedUser,
+        'newSlug'         => $newSlug,));
+    } else {
+      return $this->render('default/update_user.html.twig', array(
+        'form'       => $form->createView(),
+        'displayName'=>'User',
+        'adminPage'  =>true,
+        'userIsAdmin'=>$userIsAdmin,
+        'slug'       =>$slug,
+        'entityName' =>'User'
+      ));
+    }
+  }
+
+
+  /**
    * Produce the form to update an entity; validate and ingest
    *
    * @param string $entityName The type of entity to be updated
@@ -48,18 +188,13 @@ class UpdateController extends Controller {
    *
    * @Route("/update/{entityName}/{slug}", defaults={"slug"=null}, name="update_entity")
    */
-  public function updateEntity($entityName, $slug, Request $request) {
+  public function updateEntityAction($entityName, $slug, Request $request) {
 
-    if ($entityName == 'User') {
-      $updateEntity = 'AppBundle\Entity\Security\\'.$entityName;
-    } else {
-      $updateEntity   = 'AppBundle\Entity\\'.$entityName;
-    }
+    $updateEntity   = 'AppBundle\Entity\\'.$entityName;
     $entityFormType = 'AppBundle\Form\Type\\' . $entityName . "Type";
     $entityTypeDisplayName = trim(preg_replace('/(?<!\ )[A-Z]/', ' $0', $entityName));
 
     $em = $this->getDoctrine()->getManager();
-    
     $userIsAdmin = $this->get('security.context')->isGranted('ROLE_ADMIN');
 
     if ($slug == null) {
@@ -73,8 +208,8 @@ class UpdateController extends Controller {
       return $this->render('default/list_of_entities_to_update.html.twig', array(
         'entities'    => $allEntities,
         'entityName'  => $entityName,
-        'adminPage'=>true,
-        'userIsAdmin'=>$userIsAdmin,
+        'adminPage'   => true,
+        'userIsAdmin' => $userIsAdmin,
         'displayName' => $entityTypeDisplayName
       ));
     }
@@ -86,17 +221,7 @@ class UpdateController extends Controller {
       );
     }
 
-    if ($entityName == 'Dataset') {
-      $datasetUid = $thisEntity->getDatasetUid();
-      if ($userIsAdmin) {
-        $form = $this->createForm(new DatasetAsAdminType($userIsAdmin, $datasetUid), $thisEntity);
-      } else {
-        $form = $this->createForm(new DatasetAsUserType($userIsAdmin, $datasetUid), $thisEntity);
-      }
-    }
-    else {
-      $form = $this->createForm(new $entityFormType(), $thisEntity);
-    }
+    $form = $this->createForm(new $entityFormType(), $thisEntity);
     $form->handleRequest($request);
     if ($form->isValid()) {
       $addedEntityName = $thisEntity->getDisplayName();
@@ -104,31 +229,6 @@ class UpdateController extends Controller {
       $thisEntity->setSlug($newSlug);
       if (method_exists($thisEntity, 'setDateUpdated')) {
         $thisEntity->setDateUpdated(new \DateTime("now"));
-      }
-      if ($entityName == 'Dataset') {
-        $newAuthorships = $thisEntity->getAuthorships();
-        $oldDataset = $em->getRepository($updateEntity)->findOneBy(array('dataset_uid'=>$datasetUid));
-        $oldAuthorships=$oldDataset->getAuthorships();
-        foreach ($oldAuthorships as $oldAuthor) {
-          if (!$newAuthorships->contains($oldAuthor)) {
-            $oldAuthorships->removeElement($oldAuthor);
-          }
-        }
-        foreach ($thisEntity->getAuthorships() as $authorship) {
-          $authorship->setDataset($thisEntity);
-          $em->persist($authorship);
-        }
-      }
-      if ($entityName == 'User') {
-        // generate a new API key if blank and user has API permissions
-        if (!$thisEntity->getApiKey()) {
-          foreach ($thisEntity->getRoles() as $role) {
-            if ($role->getRole() == 'ROLE_API_SUBMITTER') {
-              $apiKey = sha1(random_bytes(32));
-              $thisEntity->setApiKey($apiKey);
-            }
-          }
-        }
       }
       $em->flush();
       return $this->render('default/update_success.html.twig', array(
@@ -139,35 +239,14 @@ class UpdateController extends Controller {
         'newSlug'    => $newSlug,));
 
     } else {
- 
-      if ($entityName == 'Dataset') {
-        $formToRender = $userIsAdmin ? 'default/update_dataset_admin.html.twig' : 'default/update_dataset_user.html.twig';
-        return $this->render($formToRender, array(
-          'form'    => $form->createView(),
-          'displayName'=>$entityTypeDisplayName,
-          'adminPage'=>true,
-          'userIsAdmin'=>$userIsAdmin,
-          'slug'       =>$slug,
-          'entityName' =>$entityName));
-      } elseif ($entityName == 'User') {
-        return $this->render('default/update_user.html.twig', array(
-          'form'    => $form->createView(),
-          'adminPage'=>true,
-          'displayName'=>$entityTypeDisplayName,
-          'slug'      => $slug,
-          'entityName' =>$entityName));
-      } else {
-        return $this->render('default/update.html.twig', array(
-          'form'    => $form->createView(),
-          'adminPage'=>true,
-          'displayName'=>$entityTypeDisplayName,
-          'slug'      => $slug,
-          'entityName' =>$entityName));
-        
-      }
+      return $this->render('default/update.html.twig', array(
+        'form'    => $form->createView(),
+        'displayName'=>$entityTypeDisplayName,
+        'adminPage'=>true,
+        'userIsAdmin'=>$userIsAdmin,
+        'slug'       =>$slug,
+        'entityName' =>$entityName));
     }
   }
-
-
 
 }
