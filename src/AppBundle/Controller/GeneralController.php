@@ -156,17 +156,17 @@ class GeneralController extends Controller
    *
    * @return Response A Response instance
    *
-   * @Route("/dataset/{dataset_uid}", name="view_dataset")
+   * @Route("/dataset/{uid}", name="view_dataset")
    */
-  public function viewAction($dataset_uid, Request $request) {
+  public function viewAction($uid, Request $request) {
     $dataset = $this->getDoctrine()
       ->getRepository('AppBundle:Dataset')
-      ->findOneBy(array('dataset_uid'=>$dataset_uid));
+      ->findOneBy(array('dataset_uid'=>$uid));
 
     // dataset not found
     if (!$dataset) {
       throw $this->createNotFoundException(
-        'No dataset matching ID "' . $dataset_uid . '"'
+        'No dataset matching ID "' . $uid . '"'
       );
     }
     // dataset is unpublished, and user is not admin

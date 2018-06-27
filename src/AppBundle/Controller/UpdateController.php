@@ -67,9 +67,9 @@ class UpdateController extends Controller {
       );
     }
     if ($userIsAdmin) {
-      $form = $this->createForm(new DatasetAsAdminType($userIsAdmin, $datasetUid), $thisEntity);
+      $form = $this->createForm(new DatasetAsAdminType($userIsAdmin, $uid), $thisEntity);
     } else {
-      $form = $this->createForm(new DatasetAsUserType($userIsAdmin, $datasetUid), $thisEntity);
+      $form = $this->createForm(new DatasetAsUserType($userIsAdmin, $uid), $thisEntity);
     }
     $form->handleRequest($request);
     if ($form->isValid()) {
@@ -95,6 +95,7 @@ class UpdateController extends Controller {
         'displayName'     => 'Dataset',
         'entityName'      => 'Dataset',
         'addedEntityName' => $addedEntityName,
+        'uid'             => $uid,
         'newSlug'         => $newSlug,));
     } else {
       $formToRender = $userIsAdmin ? 'default/update_dataset_admin.html.twig' : 'default/update_dataset_user.html.twig';
@@ -104,6 +105,7 @@ class UpdateController extends Controller {
         'adminPage'  => true,
         'userIsAdmin'=> $userIsAdmin,
         'slug'       => $slug,
+        'uid'        => $uid,
         'entityName' => 'Dataset'
       ));
     }
