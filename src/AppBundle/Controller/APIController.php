@@ -57,17 +57,17 @@ class APIController extends Controller
    * @return Response A Response instance
    *
    * @Route(
-   *   "/api/Dataset/{slug}.{_format}", name="json_output_datasets",
-   *   defaults={"slug": "all", "_format":"json"},
+   *   "/api/Dataset/{uid}.{_format}", name="json_output_datasets",
+   *   defaults={"uid": "all", "_format":"json"},
    * ) 
    * @Method("GET")
    */ 
-  public function APIDatasetGetAction($slug, $_format, Request $request) {
+  public function APIDatasetGetAction($uid, $_format, Request $request) {
 
     $em = $this->getDoctrine()->getManager();
     $qb = $em->createQueryBuilder();
 
-    if ($slug == "all") {
+    if ($uid == "all") {
       $datasets = $qb->select('d')
                      ->from('AppBundle:Dataset', 'd')
                      ->where('d.archived = 0 OR d.archived IS NULL')
@@ -76,10 +76,10 @@ class APIController extends Controller
     } else {
       $datasets = $qb->select('d')
                      ->from('AppBundle:Dataset', 'd')
-                     ->where('d.slug = :slug')
+                     ->where('d.dataset_uid = :uid')
                      ->andWhere('d.published = 1')
                      ->andWhere('d.archived = 0 OR d.archived IS NULL')
-                     ->setParameter('slug', $slug)
+                     ->setParameter('uid', $uid)
                      ->getQuery()->getResult();
     }
 

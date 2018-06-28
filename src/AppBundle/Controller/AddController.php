@@ -129,7 +129,7 @@ class AddController extends Controller {
         'displayName'=>'Dataset',
         'addedEntityName'=>$addedEntityName,
         'userIsAdmin'=>$userIsAdmin,
-        'newSlug'=>$slug,
+        'uid'=>$datasetUid,
       ));
     } else {
 

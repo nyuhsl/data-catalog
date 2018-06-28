@@ -15,7 +15,7 @@
  
  {% for item in approvalQueue %}
  <li>
-  <a href="{{ path('update_entity', {'slug': item.slug,'entityName':'Dataset'}) }}">{{ item.getDisplayName }}</a>
+  <a href="{{ path('update_dataset', {'uid': item.datasetUid}) }}">{{ item.getDisplayName }}</a>
  </li>
  {% endfor %}
  

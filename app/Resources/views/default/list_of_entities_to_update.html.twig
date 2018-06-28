@@ -30,6 +30,10 @@
       <li class="entities-list-item">
         <a href="{{ path('update_entity', {'entityName':entityName,'slug':entity.slug}) }}">{{ entity.getDisplayName }}</a>
       </li>
+  {% elseif displayName == 'Dataset' and entity.getArchived|default(false) != true %}
+      <li class="entities-list-item">
+        <a href="{{ path('update_dataset', {'uid':entity.datasetUid}) }}">{{ entity.getDisplayName }}</a>
+      </li>
   {% else %}
     {% if entity.getArchived|default(false) != true %}
       <li class="entities-list-item">

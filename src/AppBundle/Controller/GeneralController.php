@@ -151,22 +151,22 @@ class GeneralController extends Controller
   /**
    * Produce the detailed pages for individual datasets
    *
-   * @param string $slug The slug of the dataset to be viewed
+   * @param string $dataset_uid The UID of the dataset to be viewed
    * @param Request The current HTTP request
    *
    * @return Response A Response instance
    *
-   * @Route("/dataset/{slug}", name="view_dataset")
+   * @Route("/dataset/{uid}", name="view_dataset")
    */
-  public function viewAction($slug, Request $request) {
+  public function viewAction($uid, Request $request) {
     $dataset = $this->getDoctrine()
       ->getRepository('AppBundle:Dataset')
-      ->findOneBySlug($slug);
+      ->findOneBy(array('dataset_uid'=>$uid));
 
     // dataset not found
     if (!$dataset) {
       throw $this->createNotFoundException(
-        'No dataset matching title "' . $slug . '"'
+        'No dataset matching ID "' . $uid . '"'
       );
     }
     // dataset is unpublished, and user is not admin
