@@ -13,9 +13,15 @@
  <ul>
  
  {% for entity in entities %}
- <li class="entities-list-item">
-  <a href="/remove/{{ entityName }}/{{ entity.slug }}">{{ entity.getDisplayName }}</a>
- </li>
+   {% if entityName == 'Dataset' %}
+     <li class="entities-list-item">
+      <a href="/remove/Dataset/{{ entity.getDatasetUid }}">{{ entity.getDisplayName }}</a>
+     </li>
+   {% else %}
+     <li class="entities-list-item">
+      <a href="/remove/{{ entityName }}/{{ entity.slug }}">{{ entity.getDisplayName }}</a>
+     </li>
+   {% endif %}
  {% endfor %}
  
  </ul>
