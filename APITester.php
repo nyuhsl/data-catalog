@@ -74,8 +74,8 @@ $data = array(
 
     //
     "authorships"=> array(
-      array("person"=>"Fake Person", "displayOrder"=>"1", "isCorrespondingAuthor"=>false, 'role'=>'Author'),
-      array("person"=>"Another Fake Person", "displayOrder"=>"2", "isCorrespondingAuthor"=>true, 'role'=>'Author'),
+      array("person"=>"Fake Person", "display_order"=>"1", "is_corresponding_author"=>false, 'role'=>'Author'),
+      array("person"=>"Another Fake Person", "display_order"=>"2", "is_corresponding_author"=>true, 'role'=>'Author'),
     ),
 
     // the following fields use a controlled vocabulary, so their values must exist in the database
@@ -141,7 +141,7 @@ $data = array(
   );
 
 
-$response = $client->request('POST', 'api/dataset', [
+$response = $client->request('POST', 'api/Dataset', [
   'headers' => [
     'X-AUTH-TOKEN' => "FAKE TOKEN", // YOUR API KEY GOES HERE
   ],
