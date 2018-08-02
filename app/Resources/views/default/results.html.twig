@@ -60,8 +60,8 @@
     <span class="pager-previous"><a href="#">< Prev</a></span>
   {% endif %}
   <span class="pager-text">Page <input size="2" min="1" max="{{ maxPages }}" id="pagenum-input" name="skip-to-page" value="{{ pageCounter }}" /> of {{ maxPages }}</span>
-  {% if (currentSearch.page == 0 and currentSearch.resultsPP <= results.numResults) or  
-      ((currentSearch.page * currentSearch.resultsPP) <= results.numResults) %}
+  {% if (currentSearch.page == 0 and currentSearch.resultsPP < results.numResults) or  
+      ((currentSearch.page * currentSearch.resultsPP) < results.numResults) %}
     <span class="pager-next"><a href="#">Next ></a></span>
   {% endif %}
  </div>
@@ -105,7 +105,7 @@
   <ul id="results-list" class="list-unstyled">
    {% for item in results.resultItems %}
     <li class="dataset-summary"> 
-    <h4 class="dataset-title"><a class="dataset-title-link" href="dataset/{{ item.slug }}">{{ item.dataset_title }}</a>
+    <h4 class="dataset-title"><a class="dataset-title-link" href="{{ path("view_dataset", {"uid":item.id}) }}">{{ item.dataset_title }}</a>
       {% if item.origin == "Internal" %}
         <div class="internal-dataset-badge">{{ internal_dataset_text }}</div>
       {% endif %}
@@ -178,8 +178,8 @@
     Previous Page
   </button>
 {% endif %}
-{% if (currentSearch.page == 0 and currentSearch.resultsPP <= results.numResults) or  
-      ((currentSearch.page * currentSearch.resultsPP) <= results.numResults) %}
+{% if (currentSearch.page == 0 and currentSearch.resultsPP < results.numResults) or  
+      ((currentSearch.page * currentSearch.resultsPP) < results.numResults) %}
   <button id="nextPage-button" type="button" class="nextPage btn btn-info btn-sm">
     Next Page
   </button>

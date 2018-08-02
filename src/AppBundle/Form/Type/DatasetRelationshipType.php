@@ -36,7 +36,8 @@ class DatasetRelationshipType extends AbstractType {
   public function buildForm(FormBuilderInterface $builder, array $options) {
     $builder->add('related_dataset_uid','text',array(
       'label'=>false,
-      'attr'=>array('placeholder'=>'Related Dataset UID'))
+      'required'=>true,
+      'attr'=>array('placeholder'=>'* Related Dataset UID'))
       );
     $builder->add('relationship_attributes','choice',array(
       'label'=>false,

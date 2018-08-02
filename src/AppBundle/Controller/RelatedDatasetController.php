@@ -48,8 +48,8 @@ class RelatedDatasetController extends Controller
     
     return $this->render('default/related_dataset_link.html.twig',array(
                 'title' => $dataset->getTitle(),
+                'uid' => $dataset->getDatasetUid(),
                 'slug'=> $dataset->getSlug(),
-                
                 ));
     
   }

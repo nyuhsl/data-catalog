@@ -8,7 +8,7 @@
 
 <div class="col-xs-7">
   <div class="page-header entities-list">
-    <h1>View/Update {{ displayName }}s</h1>
+    <h1>View/Update {{ displayName }}</h1>
     <p>
     {% if displayName != 'Archived Dataset' %}
       <span class="add-new-entity-link">
@@ -29,6 +29,10 @@
   {% if displayName == 'Archived Dataset' %}
       <li class="entities-list-item">
         <a href="{{ path('update_entity', {'entityName':entityName,'slug':entity.slug}) }}">{{ entity.getDisplayName }}</a>
+      </li>
+  {% elseif displayName == 'Dataset' and entity.getArchived|default(false) != true %}
+      <li class="entities-list-item">
+        <a href="{{ path('update_dataset', {'uid':entity.datasetUid}) }}">{{ entity.getDisplayName }}</a>
       </li>
   {% else %}
     {% if entity.getArchived|default(false) != true %}

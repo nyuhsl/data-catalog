@@ -3,10 +3,19 @@ import json
 import csv
 from datetime import date
 
-db_output_url = '<BASE URL OF YOUR DATA CATALOG INSTALLATION>/api/dataset/all.json'
-solr_output_url = '<BASE URL OF YOUR SOLR INSTALLATION>/solr/data_catalog/select/?q=*:*&wt=json'
-solr_submit_url = '<BASE URL OF YOUR SOLR INSTALLATION>/solr/data_catalog/update/json?commit=true&overwrite=true'
-solr_remove_url = '<BASE URL OF YOUR SOLR INSTALLATION>/solr/data_catalog/update/?commit=true'
+###
+# 
+#  Fill in the URL to your Solr core and to your data catalog installation here
+# 
+### 
+solr_core_url = 'https://www.example.com/solr/data_catalog'
+data_catalog_base_url = 'https://www.example.com'
+
+
+db_output_url = data_catalog_base_url + '/api/Dataset/all.json?output_format=solr'
+solr_output_url = solr_core_url + '/select/?q=*:*&wt=json'
+solr_submit_url = solr_core_url + '/update/json?commit=true&overwrite=true'
+solr_remove_url = solr_core_url + '/update/?commit=true'
 
 db_response = urllib2.urlopen(db_output_url)
 db_json_output = db_response.read()

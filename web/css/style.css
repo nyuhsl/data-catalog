@@ -685,3 +685,44 @@ p#phone_number strong a {
 #footer-copyright { position: absolute; left: 20px; bottom: 40px; }
 
 
+@media print {
+  *{transition:none!important;}
+
+  body {
+    font-size:18px;
+    width:100%;
+  }
+  nav.nav-links {
+    display:none !important;
+  }
+  a[href]:after {
+    content: none !important;
+  }
+  #page-header {
+    margin:1em 4em;
+    margin-bottom: 2em;
+  }
+  #search-header {
+    display:none !important;
+  }
+  #dataset-full-view-container {
+    width:95% !important;
+    margin-left:7em !important;
+    margin-bottom:5em;
+  }
+  dt {
+    margin-top:2em;
+  }
+  span.pagetitle {
+    display:inline-block;
+    background:white;
+    margin-left:3em;
+  }
+  div.update-dataset-link {
+    display:none;
+  }
+  div#suggest-dataset-link {
+    display:none;
+  }
+
+}

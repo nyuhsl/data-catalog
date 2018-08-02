@@ -22,10 +22,12 @@ The Dataset "{{ addedEntityName }}" was updated successfully.
 </p>
 <div class="spacer25"></div>
 <p>
-To view the dataset, <a href="{{ path('view_dataset', {'slug':newSlug}) }}">click here</a>.
+To view the dataset, <a href="{{ path('view_dataset', {'uid': datasetUid}) }}">click here</a>.
 </p>
 <p>
-To make further edits, <a href="{{ path('update_entity', {'slug':newSlug,'entityName':'Dataset'}) }}">click here</a>.
+To make further edits, <a href="{{ path('update_entity', {'uid': datasetUid, 'entityName':'Dataset'}) }}">click here</a>.
+<br/>
+To add another Dataset, <a href="{{ path('add_dataset') }}">click here</a>.
 </p>
 
 
