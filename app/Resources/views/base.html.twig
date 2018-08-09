@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -62,6 +62,7 @@
 
     </head>
     <body>
+      <a href="#maincontent" class="skip">Skip to content</a>
       <div class="page-wrapper">
       <header id="page-header">
         <span class="logo-container">
@@ -97,6 +98,7 @@
         <div class="row">
           <p class="search-box-description">Search here to find large public and licensed datasets</p>
           <form id="keyword-search-form" class="input-group">
+              <label for="keyword-search-input">search terms</label>
               <input type="text" class="form-control" id="keyword-search-input">
               <span class="input-group-btn">
                 <button id="keyword-search-submit" class="btn btn-default" type="submit">Go!</button>
@@ -105,7 +107,7 @@
 
         </div><!-- /.row -->
       </div> 
-      <div class="content-container">
+      <div id="maincontent" class="content-container">
 
       {# ADMIN NAV SIDEBAR #}
       {% if is_granted('ROLE_USER') and adminPage is defined and adminPage==true %}

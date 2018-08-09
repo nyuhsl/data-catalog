@@ -19,7 +19,8 @@
         "sensio/distribution-bundle": "~4.0",
         "sensio/framework-extra-bundle": "^3.0.2",
         "incenteev/composer-parameter-handler": "~2.0",
-        "guzzlehttp/guzzle": "^6.3"
+        "guzzlehttp/guzzle": "^6.3",
+        "doctrine/doctrine-fixtures-bundle": "2.3.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"
