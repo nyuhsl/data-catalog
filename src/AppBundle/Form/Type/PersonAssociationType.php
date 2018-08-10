@@ -36,19 +36,21 @@ class PersonAssociationType extends AbstractType {
     $builder->add('person', 'entity', array(
       'class'   => 'AppBundle:Person',
       'property'=> 'full_name',
+      'choice_value'=>'displayName',
       'attr'=> array('style'=>'width:50%;', 'class'=>'author-add-form'),
       'multiple'=> false,
       'label'   => false,
     ));
-    $builder->add('displayOrder', 'number', array(
+    $builder->add('display_order', 'number', array(
       'label' => false,
       'attr'     => array(
-        'placeholder'=>'Author Position #',
+        'placeholder'=>'* Author Position #',
         'style'=>'width:50%',
 
     )));
-    $builder->add('isCorrespondingAuthor', 'checkbox', array(
+    $builder->add('is_corresponding_author', 'checkbox', array(
       'label'     => 'Corresponding Author',
+      'required'=>false,
       'attr'      => array(
       )
     ));

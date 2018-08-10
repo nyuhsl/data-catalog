@@ -36,15 +36,18 @@ class OtherResourceType extends AbstractType {
   public function buildForm(FormBuilderInterface $builder, array $options) {
     $builder->add('resource_name','text',array(
       'label'=>false,
-      'attr'=>array('placeholder'=>'Resource Name/Type'))
+      'required'=>true,
+      'attr'=>array('placeholder'=>'* Resource Name/Type'))
       );
     $builder->add('resource_description','text',array(
       'label'=>false,
+      'required'=>false,
       'attr'=>array('placeholder'=>'Resource Description'))
       );
     $builder->add('resource_url','text',array(
       'label'=>false,
-      'attr'=>array('placeholder'=>'Resource URL'))
+      'required'=>true,
+      'attr'=>array('placeholder'=>'* Resource URL'))
       );
   }
 

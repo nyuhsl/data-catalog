@@ -189,4 +189,18 @@ class PersonAssociation {
     {
         return $this->dataset;
     }
+
+    /**
+     * Serialize all properties
+     *
+     * @return array
+     */
+    public function getAllProperties() {
+      return array(
+        'role'=>$this->role,
+        'is_corresponding_author'=>$this->is_corresponding_author,
+        'display_order'=>$this->display_order,
+        'person'=>$this->person->getDisplayName(),
+      );
+    }
 }

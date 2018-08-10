@@ -182,4 +182,17 @@ class DataCollectionStandard {
     {
         return $this->datasets;
     }
+
+    /**
+     * Get all properties
+     *
+     * @return array
+     **/
+    public function getAllProperties() {
+      return array(
+        'measurement_standard_name' => $this->measurement_standard_name,
+        'measurement_standard_authority' => $this->measurement_standard_authority
+      );
+    }
+
 }

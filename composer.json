@@ -20,6 +20,8 @@
         "sensio/framework-extra-bundle": "^3.0.2",
         "incenteev/composer-parameter-handler": "~2.0",
         "excelwebzone/recaptcha-bundle": "^1.5"
+        "guzzlehttp/guzzle": "^6.3",
+        "doctrine/doctrine-fixtures-bundle": "2.3.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"

@@ -28,7 +28,7 @@
 <div class="col-xs-4" id="sort-and-results">
  <div id="dropdowns-wrapper">
    <div id="sort-dropdown-wrapper">
-    <span class="dropdown-label">Sort by:</span>
+    <span class="dropdown-label"><label for="sort-dropdown">Sort by</label>:</span>
     <select class="option-dropdown" name="results_sort" id="sort-dropdown" >
       {% set sort_opts = ['name', 'relevance', 'date added', 'date published'] %}
       {% for opt in sort_opts %}
@@ -41,7 +41,7 @@
     </select>
   </div>
   <div id="results-dropdown-wrapper">
-   <span class="dropdown-label">Per page:</span>
+   <span class="dropdown-label"><label for="results_pp-dropdown">Per page</label>:</span>
    <select name="results_pp" class="option-dropdown" id="results_pp-dropdown">
      {% set results_opts = ['10','25','50'] %}
      {% for opt in results_opts %}

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -62,7 +62,7 @@
 
     </head>
     <body>
-				
+      <a href="#maincontent" class="skip">Skip to content</a>
 				<div class="container-fluid">
 					<div class="row upitt-header">
 						<div class="col-sm-12">
@@ -121,7 +121,7 @@
 						</div>
 
 					</div>
-					<div class="row">
+					<div class="row" id="maincontent">
 					 {# ADMIN NAV SIDEBAR #}
 						{% if is_granted('ROLE_USER') and adminPage is defined and adminPage==true %}
 							<div class="admin-nav-sidebar col-xs-3">

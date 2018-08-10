@@ -32,7 +32,61 @@ use AppBundle\Utils\Slugger;
  *
  */
 class RemoveController extends Controller {
-  
+
+  /**
+   * Remove a dataset
+   *
+   * @param string $uid The UID of the dataset to be removed
+   * @param Request $request The current HTTP request
+   *
+   * @return Response A Response instance
+   *
+   * @Route("/remove/Dataset/{uid}", defaults={"uid"=null}, name="remove_dataset")
+   */
+  public function removeDatasetAction($uid, Request $request) {
+    $em = $this->getDoctrine()->getManager();
+    $userIsAdmin = $this->get('security.context')->isGranted('ROLE_ADMIN');
+
+    if ($uid == null) {
+      $allEntities = $em->getRepository('AppBundle\Entity\Dataset')->findBy([], ['slug'=>'ASC']);
+      return $this->render('default/list_of_entities_to_remove.html.twig', array(
+        'entities'    => $allEntities,
+        'entityName'  => 'Dataset',
+        'adminPage'   => true,
+        'displayName' => 'Dataset' 
+      ));
+    }
+    $thisEntity = $em->getRepository('AppBundle\Entity\Dataset')->findOneBy(array('dataset_uid'=>$uid));
+    if (!$thisEntity) {
+      throw $this->createNotFoundException(
+        'No dataset with UID ' . $uid . ' was found.'
+      );
+    }
+    if ($userIsAdmin) {
+      $form = $this->createForm(new DatasetAsAdminType($userIsAdmin, $uid), $thisEntity);
+      $form->handleRequest($request);
+      if ($form->isValid() && $userIsAdmin) {
+        $em->remove($thisEntity);
+        $em->flush();
+        return $this->render('default/remove_success.html.twig', array(
+          'entityName' => 'Dataset',
+          'adminPage'  => true,
+        ));
+      }
+   
+      return $this->render('default/remove.html.twig', array(
+        'form'          => $form->createView(),
+        'displayName'   => 'Dataset',
+        'adminPage'     => true,
+        'thisEntityName'=> $thisEntity->getDisplayName(),
+        'entityName'    => 'Dataset'
+      ));
+    }
+  }
+
+
+
+
   /**
    * Remove an entity if user has admin privileges
    *
@@ -44,7 +98,7 @@ class RemoveController extends Controller {
    *
    * @Route("/remove/{entityName}/{slug}", defaults={"slug"=null}, name="remove_entity")
    */
-  public function removeEntity($entityName, $slug, Request $request) {
+  public function removeEntityAction($entityName, $slug, Request $request) {
     //preface with namespace so it can be called dynamically
     if ($entityName == 'User') {
       $removeEntity = 'AppBundle\Entity\Security\\' . $entityName;
@@ -75,7 +129,7 @@ class RemoveController extends Controller {
         'No entity of type ' . $entityName . ' was found matching this slug: ' . $slug
       );
     }
-    if($entityName == 'Dataset') {
+    if ($entityName == 'Dataset') {
       $datasetUid = $thisEntity->getDatasetUid();
       $form = $this->createForm(new DatasetAsAdminType($userIsAdmin, $datasetUid), $thisEntity);
     }
@@ -98,6 +152,6 @@ class RemoveController extends Controller {
       'adminPage'=>true,
       'thisEntityName'=>$thisEntity->getDisplayName(),
       'entityName' =>$entityName));
-   }
+  }
 
 }
