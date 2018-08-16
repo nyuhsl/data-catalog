@@ -7,7 +7,7 @@
 <script type="application/ld+json">
 {"@context": "http://schema.org",
 "@type":"ItemList",
-"mainEntityOfPage":"{{ url('homepage') }}",
+"mainEntityOfPage":"{{ url('user_search_results') }}",
 "itemListElement":[
 {% for dataset in results.resultItems %}
 {"@type": "Dataset",
@@ -15,8 +15,8 @@
 "description": "{{ dataset.description[0] }}",
 {% if dataset.dataset_alt_title is defined %}"alternateName": [{% for title in dataset.dataset_alt_title %}"{{ title|trim }}"{% if not loop.last %}, {% endif %}{% endfor %}],{% endif %}
 {#"keywords": [{% for kw in dataset.subject_keyword %}"{{ kw|trim }}"{% if not loop.last %}, {% endif %}{% endfor %}],#}
-"url": "{{ url('homepage')|trim }}{{ dataset.slug }}",
-"mainEntityOfPage": "{{ url('homepage')|trim }}{{ dataset.slug }}",
+"url": "{{ url('user_search_results')|trim }}{{ dataset.slug }}",
+"mainEntityOfPage": "{{ url('user_search_results')|trim }}{{ dataset.slug }}",
 "position":{{ loop.index }}}{% if not loop.last %},{% endif %}
 {% endfor %}
 ]}

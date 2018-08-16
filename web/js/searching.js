@@ -256,7 +256,7 @@ jQuery(function($) {
 
     }
 
-    var newURL = "/data/search?" + $.param(params);
+    var newURL = "/search?" + $.param(params);
     window.location.href = newURL;
   }
 

@@ -44,7 +44,7 @@ jQuery(function($) {
       if (thisField.charAt(thisField.length - 1) == 's') {
         thisField = thisField.substr(0, thisField.length - 1);
       }
-      var addNewLink = "<a href='/data/add/"+thisField+"?modal=true' class='addNewEntity'>Add new</a>";
+      var addNewLink = "<a href='/add/"+thisField+"?modal=true' class='addNewEntity'>Add new</a>";
       sel.parent('div').append(addNewLink);
     }
   }

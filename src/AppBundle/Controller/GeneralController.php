@@ -35,6 +35,26 @@ use AppBundle\Utils\Slugger;
   */
 class GeneralController extends Controller
 {
+
+  /**
+   * Returns the homepage
+   *
+   * @param Request The current HTTP request
+   *
+   * @return Response A Response instance
+   *
+   * @Route("/", name="homepage")
+   */
+  public function homepageAction(Request $request) {
+    
+    return $this->render('static/home.html.twig', array()); 
+  
+  }
+
+
+
+
+
   /**
    * Performs searches and produces results pages
    *
@@ -42,7 +62,6 @@ class GeneralController extends Controller
    *
    * @return Response A Response instance
    *
-   * @Route("/", name="homepage")
    * @Route("/search", name="user_search_results")
    */
   public function indexAction(Request $request) {
