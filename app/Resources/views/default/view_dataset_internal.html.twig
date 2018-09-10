@@ -146,10 +146,10 @@ $(function () {
  										{% endif %}
 
                     {% if author.getPerson.getBioUrl %}
-                      {% set popoverContent = '<p><a href="' ~ author.getPerson.getBioUrl ~ '" target="_blank">View profile</a></p><p><a href="/data/search?keyword=authors:%22' ~ author.getPerson.getFullName ~ '%22 OR corresponding_authors:%22' ~ author.getPerson.getFullName ~ '%22" target="_blank">View other datasets</a></p>' %}
+                      {% set popoverContent = '<p><a href="' ~ author.getPerson.getBioUrl ~ '" target="_blank">View profile</a></p><p><a href="/search?keyword=authors:%22' ~ author.getPerson.getFullName ~ '%22 OR corresponding_authors:%22' ~ author.getPerson.getFullName ~ '%22" target="_blank">View other datasets</a></p>' %}
 
                      {% else %}
-                    {% set popoverContent = '<p><a href="/data/search?keyword=authors:%22' ~ author.getPerson.getFullName ~ '%22 OR corresponding_authors:%22' ~ author.getPerson.getFullName ~ '%22" target="_blank">View other datasets</a></p>' %}
+                    {% set popoverContent = '<p><a href="/search?keyword=authors:%22' ~ author.getPerson.getFullName ~ '%22 OR corresponding_authors:%22' ~ author.getPerson.getFullName ~ '%22" target="_blank">View other datasets</a></p>' %}
 
                    {% endif %}
                    {% if author.isCorrespondingAuthor %}
@@ -165,10 +165,10 @@ $(function () {
                <div class="collapse" id="collapsed-authors">
                {% for author in dataset.getAuthorships|slice(5,dataset.getAuthorships.count) %}
                     {% if author.getPerson.getBioUrl %}
-                      {% set popoverContent = '<p><a href="' ~ author.getPerson.getBioUrl ~ '" target="_blank">View profile</a></p><p><a href="/data/search?keyword=authors:%22' ~ author.getPerson.getFullName ~ '%22 OR corresponding_authors:%22' ~ author.getPerson.getFullName ~ '%22" target="_blank">View other datasets</a></p>' %}
+                      {% set popoverContent = '<p><a href="' ~ author.getPerson.getBioUrl ~ '" target="_blank">View profile</a></p><p><a href="/search?keyword=authors:%22' ~ author.getPerson.getFullName ~ '%22 OR corresponding_authors:%22' ~ author.getPerson.getFullName ~ '%22" target="_blank">View other datasets</a></p>' %}
 
                      {% else %}
-                    {% set popoverContent = '<p><a href="/data/search?keyword=authors:%22' ~ author.getPerson.getFullName ~ '%22 OR corresponding_authors:%22' ~ author.getPerson.getFullName ~ '%22" target="_blank">View other datasets</a></p>' %}
+                    {% set popoverContent = '<p><a href="/search?keyword=authors:%22' ~ author.getPerson.getFullName ~ '%22 OR corresponding_authors:%22' ~ author.getPerson.getFullName ~ '%22" target="_blank">View other datasets</a></p>' %}
 
                    {% endif %}
                    {% if author.isCorrespondingAuthor %}
@@ -189,10 +189,10 @@ $(function () {
  										{% endif %}
 
                   {% if author.getPerson.getBioUrl %}
-                    {% set popoverContent = '<p><a href="' ~ author.getPerson.getBioUrl ~ '" target="_blank">View profile</a></p><p><a href="/data/search?keyword=authors:%22' ~ author.getPerson.getFullName ~ '%22 OR corresponding_authors:%22' ~ author.getPerson.getFullName ~ '%22" target="_blank">View other datasets</a></p>' %}
+                    {% set popoverContent = '<p><a href="' ~ author.getPerson.getBioUrl ~ '" target="_blank">View profile</a></p><p><a href="/search?keyword=authors:%22' ~ author.getPerson.getFullName ~ '%22 OR corresponding_authors:%22' ~ author.getPerson.getFullName ~ '%22" target="_blank">View other datasets</a></p>' %}
 
                    {% else %}
-                    {% set popoverContent = '<p><a href="/data/search?keyword=authors:%22' ~ author.getPerson.getFullName ~ '%22 OR corresponding_authors:%22' ~ author.getPerson.getFullName ~ '%22" target="_blank">View other datasets</a></p>' %}
+                    {% set popoverContent = '<p><a href="/search?keyword=authors:%22' ~ author.getPerson.getFullName ~ '%22 OR corresponding_authors:%22' ~ author.getPerson.getFullName ~ '%22" target="_blank">View other datasets</a></p>' %}
 
                  {% endif %}
                  {% if author.isCorrespondingAuthor %}
@@ -271,7 +271,7 @@ $(function () {
     {% if dataset.subjectOfStudy is not empty %}
      <dt>Subject of Study</dt>
       <dd id="subject-of-study">{% for subject in dataset.subjectOfStudy %}
-         <div class="multiple-item-list"><a href="/data/search?keyword=subject_of_study:{{ subject.getDisplayName }}">{{ subject.getDisplayName }}</a></div>
+         <div class="multiple-item-list"><a href="/search?keyword=subject_of_study:{{ subject.getDisplayName }}">{{ subject.getDisplayName }}</a></div>
          {% if subject.species is not empty %}
            <p class="related-dataset-note">{{ subject.species }}</p>
          {% endif %}
@@ -283,7 +283,7 @@ $(function () {
     {% if dataset.subjectDomains is not empty %}
      <dt>Subject Domain</dt>
       <dd>{% for domain in dataset.subjectDomains %}
-         <div class="multiple-item-list"><a href="/data/search?keyword=subject_domain:{{ domain.getDisplayName }}">{{ domain.getDisplayName }}</a></div>
+         <div class="multiple-item-list"><a href="/search?keyword=subject_domain:{{ domain.getDisplayName }}">{{ domain.getDisplayName }}</a></div>
        {% endfor %}
       </dd>
      {% endif %}
@@ -313,7 +313,7 @@ $(function () {
      {% if (dataset.subjectKeywords.count > 0) %}
         <dt>Keywords</dt>
          <dd>{% for keyword in dataset.subjectKeywords %}
-          <div class="multiple-item-list"><a href="/data/search?keyword=subject_keywords:{{ keyword.getDisplayName }}">{{ keyword.getDisplayName }}</a></div>
+          <div class="multiple-item-list"><a href="/search?keyword=subject_keywords:{{ keyword.getDisplayName }}">{{ keyword.getDisplayName }}</a></div>
           {% endfor %}
           </dd>
           {% endif %}
@@ -498,7 +498,7 @@ $(function () {
     </div>
   </div>
 </div>
-<div class="row" id="suggest-dataset-link">Do you have or know of a dataset that should be added to the catalog? <a href="/data/submit-dataset">Let us know</a>!</div>
+<div class="row" id="suggest-dataset-link">Do you have or know of a dataset that should be added to the catalog? <a href="/submit-dataset">Let us know</a>!</div>
 <div class="row" id="disclaimer"><p>Notice and Disclaimer: Please note that the information in this catalog is provided as a courtesy, as is, and with no representations or warranties of any kind.  When you contact the responsible individual(s) listed in each record, or, where applicable, access a data repository listed, you will be subject to terms and conditions required by the data custodian/data repository.  The University of Pittsburgh does not attempt to judge the scholarly quality of the data referenced and relies on the judgment and research expertise of those who created and/or deposited it.</p></div>
 </div>
 
