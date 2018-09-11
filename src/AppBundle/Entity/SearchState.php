@@ -46,10 +46,12 @@ class SearchState {
     if ($this->keyword && !$this->sort) {
       // if a keyword was entered, but sort wasn't specified
       $this->sort = 'relevance';
+      #$this->sort = 'date added';
     }
     elseif (!$this->sort) {
       // if no keyword, and no sort specified (this is the default)
-      $this->sort = 'name';
+      #$this->sort = 'name';
+      $this->sort = 'date added';
     }
     else {
       // if no keyword, but sort is specified, then
