@@ -36,7 +36,6 @@ class PersonAssociationType extends AbstractType {
     $builder->add('person', 'entity', array(
       'class'   => 'AppBundle:Person',
       'property'=> 'full_name',
-      'choice_value'=>'displayName',
       'attr'=> array('style'=>'width:50%;', 'class'=>'author-add-form'),
       'multiple'=> false,
       'label'   => false,
