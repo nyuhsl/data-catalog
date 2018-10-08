@@ -444,6 +444,13 @@ class Dataset implements JsonSerializable {
    **/
   protected $dataset_edits;
 
+  /** 
+   * @ORM\OneToMany(targetEntity="TempAccessKey", mappedBy="dataset_association", cascade={"all"})
+   **/
+  protected $temp_access_keys;
+
+
+
 
   /**
    * Constructor
@@ -474,6 +481,7 @@ class Dataset implements JsonSerializable {
     $this->related_equipment = new \Doctrine\Common\Collections\ArrayCollection();
     $this->subject_of_study = new \Doctrine\Common\Collections\ArrayCollection();
     $this->authorships = new \Doctrine\Common\Collections\ArrayCollection();
+    $this->temp_access_keys = new \Doctrine\Common\Collections\ArrayCollection();
 
     // set field defaults
     $this->published = false;
@@ -2137,6 +2145,44 @@ class Dataset implements JsonSerializable {
     {
         return $this->dataset_edits;
     }
+
+
+    /**
+     * Add temp_access_keys
+     *
+     * @param \AppBundle\Entity\TempAccessKey $tempAccessKeys
+     * @return Dataset
+     */
+    public function addTempAccessKeys(\AppBundle\Entity\TempAccessKey $tempAccessKeys)
+    {
+        $this->temp_access_keys[] = $tempAccessKeys;
+
+        return $this;
+    }
+
+    /**
+     * Remove temp_access_keys
+     *
+     * @param \AppBundle\Entity\TempAccessKey $tempAccessKeys
+     */
+    public function removeTempAccessKeys(\AppBundle\Entity\TempAccessKey $tempAccessKeys)
+    {
+        $this->temp_access_keys->removeElement($tempAccessKeys);
+    }
+
+    /**
+     * Get temp_access_keys
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTempAccessKeys()
+    {
+        return $this->temp_access_keys;
+    }
+
+
+
+
 
 
     /**
