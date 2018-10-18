@@ -115,6 +115,13 @@ class DatasetEditListener
 
         if (!is_object($user = $token->getUser())) {
             // e.g. anonymous authentication
+            if (getenv('WE_ARE_INSIDE_A_TEST')) { 
+                // return a fake user object if we're inside a test
+                $fakeUser = new \AppBundle\Entity\Security\User;
+                $fakeUser->setUsername('FAKE TEST USER');
+
+                return $fakeUser;
+            }
             return;
         }
 

@@ -16,9 +16,9 @@
     </testsuites>
 
     <php>
-        <env name ="APP_ENV" value="test" force="true"/>
+        <env name ="APP_ENV" value="test" force="true" />
         <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak" />
-
+        <env name="WE_ARE_INSIDE_A_TEST" value="true" force="true" />
     </php>
 
     <filter>
