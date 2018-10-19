@@ -30,6 +30,9 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    globals:
+        tak_ttl: '%tak_ttl%'
+
 
 # Assetic Configuration
 assetic:
