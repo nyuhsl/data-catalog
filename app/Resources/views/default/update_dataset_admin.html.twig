@@ -233,6 +233,11 @@ col-sm-4
 							{% else %}
 								<em>Not yet accessed</em>
 							{% endif %}
+							{{ date("now")|date("m/d/Y") }}
+							{% if key.firstAccess and date("now") > date(key.firstAccess|date_modify(tak_ttl)) %}
+								<span class="tak-expired">expired</span>
+							{% endif %}
+
 							<a class="btn-tak-remove label label-danger">Remove key</a>
 						</div>
 					</li>

@@ -610,6 +610,17 @@ a.authors-collapse {
   margin:1em 0em;
 }
 
+/*****************
+ * TAK
+ * **************/
+
+.tak-expired {
+
+	color: red;
+	margin: 0 1em;
+	font-weight: bold;
+
+}
 
 
 /*****************

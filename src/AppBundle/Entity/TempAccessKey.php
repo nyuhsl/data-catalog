@@ -175,5 +175,25 @@ class TempAccessKey {
         return $this;
     }
 
+    /**
+     * Find if link is exired
+     *
+     * @param string $first_access
+     * @return boolean
+     */
+		public function isValid() {
+		
+			$tak_ttl="PT72H";
+			if ($this->container->hasParameter('tak_ttl')) {
+				$tak_ttl=$this->container->getParameter('tak_ttl');
+			}					
+			if (new \DateTime()<$tak->getFirstAccess()->add(new \DateInterval($tak_ttl))) {
+				return true;
+			}
+			
+			return false;
+			
+		}			
+
 
  }

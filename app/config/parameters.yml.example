@@ -43,6 +43,10 @@ parameters:
     # Tag to display for local experts (if you want to specify the institution)
     local_expert_display: "Local Expert"
 
+    # Time To Live for temporary access key links (in hours), in PHP DateInterval format  
+    tak_ttl: "+3days"
+
+
   #
   # Technical stuff
   #
