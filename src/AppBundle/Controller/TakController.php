@@ -16,8 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
-  *  A controller handling the main search functionality, contact and About pages,
-  *  dataset views, etc.
+  *  A controller handling functions relating to Temporary Access Keys
   *
   *   This file is part of the Data Catalog project.
   *   Copyright (C) 2016 NYU Health Sciences Library

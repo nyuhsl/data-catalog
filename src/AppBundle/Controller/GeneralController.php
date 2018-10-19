@@ -13,6 +13,7 @@ use AppBundle\Form\Type\DatasetType;
 use AppBundle\Utils\Slugger;
 use Symfony\Component\Validator\Constraints as Assert;
 
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
   *  A controller handling the main search functionality, contact and About pages,
@@ -300,12 +301,11 @@ class GeneralController extends Controller
 						if ($this->container->hasParameter('tak_ttl')) {
 							$tak_ttl=$this->container->getParameter('tak_ttl');
 						}					
-						if (new \DateTime()<$tak->getFirstAccess()->add(new \DateInterval($tak_ttl))) {
+						if (new \DateTime()<$tak->getFirstAccess()->modify($tak_ttl)) {
 							$view_access=true;
 						} else {
-							throw $this->createAccessDeniedException(
-								'This temporary access key has expired.');
-						
+							throw new \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException(
+								'This temporary access link has expired.', null, 403);
 						}
 					
 					}
@@ -319,8 +319,8 @@ class GeneralController extends Controller
 
 		if ($view_access == false) {
 
-			throw $this->createAccessDeniedException(
-				'You are not authorized to view this resource.');
+			throw new \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException(
+				'You are not authorized to view this resource.', null, 403);
 		
 		}
 
