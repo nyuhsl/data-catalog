@@ -45,6 +45,7 @@ $(function () {
 "name": "{{ dataset.title }}",
 "description": "{{ dataset.description }}",
 "dateCreated": "{{ dataset.dateAdded|date("Y-m-d") }}",
+"dateModified": "{{ dataset.dateUpdated|date("Y-m-d") }}",
 "alternateName": [{% for title in dataset.datasetAlternateTitles %}"{{ title.getDisplayName|trim }}"{% if not loop.last %}, {% endif %}{% endfor %}],
 "keywords": [{% for kw in dataset.subjectKeywords %}"{{ kw.getDisplayName|trim }}"{% if not loop.last %}, {% endif %}{% endfor %}],
 "author": [{% for auth in dataset.authors %}
@@ -494,6 +495,8 @@ $(function () {
          <dd>{{ related.relationshipNotes }}</dd>
          {% endif %}
      {% endif %}
+		 <dt>Date Updated</dt>
+		 <dd>{{ dataset.dateUpdated|date("Y-m-d") }}</dd>
      </dl>
     </div>
   </div>
