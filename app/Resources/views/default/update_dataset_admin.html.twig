@@ -15,6 +15,7 @@
 {% block page_scripts %}
 <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0-beta.3/js/select2.min.js"></script>
 <script src="{{ asset('js/add_form.js') }}" type="text/javascript"></script>
+<script src="{{ asset('js/tak.js') }}" type="text/javascript"></script>
 {% endblock %}
 
 {% block form_group_class -%}
@@ -196,8 +197,11 @@ col-sm-4
   {% endif %}
   {{ form_widget(form._token) }}
   {{ form_widget(form.save) }}
-    </form> 
+
     {% if form.vars.data.datasetEdits is not empty %}
+ 
+ 			<legend>Change Log</legend>
+ 
         <div id="dataset-edits-panel">
             {% for edit in form.vars.data.datasetEdits %}
                 <span class="dataset-created-by">
@@ -211,7 +215,39 @@ col-sm-4
             {% endfor %}
         </div>
     {% endif %}
+		
+		
+			<legend>Temporary Access Keys</legend>
 
+			<div class="tak-panel">
+			{% if form.vars.data.tempAccessKeys is not empty %}
+
+				<ul>
+
+				{% for key in form.vars.data.tempAccessKeys %}
+					<li>
+						<div class="tak-entry" data-tak-uid="{{key.uuid}}">
+							<a href="/dataset/{{ uid }}?tak={{key.uuid}}">Preview link for {{ form.vars.data.title }}</a>, Generated at {{ key.generated|date('Y-m-d H:i:s') }}, First Access:
+							{% if key.firstAccess %}
+								{{ key.firstAccess|date('Y-m-d H:i:s') }}
+							{% else %}
+								<em>Not yet accessed</em>
+							{% endif %}
+							{{ date("now")|date("m/d/Y") }}
+							{% if key.firstAccess and date("now") > date(key.firstAccess|date_modify(tak_ttl)) %}
+								<span class="tak-expired">expired</span>
+							{% endif %}
+
+							<a class="btn-tak-remove label label-danger">Remove key</a>
+						</div>
+					</li>
+				
+				{% endfor %}
+			</ul>
+
+		{% endif %}
+		</div>
+		<a class="btn-tak-add label label-success">Add Temporary Access Key</a>
 
 </form>
 

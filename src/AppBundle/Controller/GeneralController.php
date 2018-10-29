@@ -11,6 +11,9 @@ use AppBundle\Entity\SearchState;
 use AppBundle\Entity\Dataset;
 use AppBundle\Form\Type\DatasetType;
 use AppBundle\Utils\Slugger;
+use Symfony\Component\Validator\Constraints as Assert;
+
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
   *  A controller handling the main search functionality, contact and About pages,
@@ -169,22 +172,68 @@ class GeneralController extends Controller
         'No dataset matching ID "' . $uid . '"'
       );
     }
-    // dataset is unpublished, and user is not admin
-    if (!$dataset->getPublished() && !$this->get('security.context')->isGranted('ROLE_ADMIN')) {
-      throw $this->createAccessDeniedException(
-        'You are not authorized to view this resource.');
-    }
-    
 
-    if ($dataset->getOrigin() == 'Internal') {
-      return $this->render('default/view_dataset_internal.html.twig', array(
-        'dataset' => $dataset,
-      ));
-    } else {
-      return $this->render('default/view_dataset_external.html.twig', array(
-        'dataset' => $dataset,
-      ));
-    }
+		$view_access=true;
+
+		if (!$dataset->getPublished() && !$this->get('security.context')->isGranted('ROLE_ADMIN')) {
+			
+			$view_access=false;
+			
+			if ($request->get('tak') && !$dataset->getPublished()) {
+	
+				$tak=$this->getDoctrine()->getRepository('AppBundle:TempAccessKey')->findOneBy(array('dataset_association'=>$uid, 'uuid'=>$request->get('tak')) );
+			
+				if (sizeof($tak)>0) {
+					
+					if (!$tak->getFirstAccess()) {
+						
+				    $em = $this->getDoctrine()->getManager();
+						$tak->setFirstAccess(  new \DateTime() );
+						$em->persist($tak);
+						$em->flush();
+						$view_access=true;
+						
+					} else {
+					
+						$tak_ttl="PT72H";
+						if ($this->container->hasParameter('tak_ttl')) {
+							$tak_ttl=$this->container->getParameter('tak_ttl');
+						}					
+						if (new \DateTime()<$tak->getFirstAccess()->modify($tak_ttl)) {
+							$view_access=true;
+						} else {
+							throw new \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException(
+								'This temporary access link has expired.', null, 403);
+						}
+					
+					}
+
+				}
+			
+			}
+
+		}
+
+
+		if ($view_access == false) {
+
+			throw new \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException(
+				'You are not authorized to view this resource.', null, 403);
+		
+		}
+
+		if ($dataset->getOrigin() == 'Internal') {
+			return $this->render('default/view_dataset_internal.html.twig', array(
+				'dataset' => $dataset,
+			));
+		} else {
+			return $this->render('default/view_dataset_external.html.twig', array(
+				'dataset' => $dataset,
+			));
+		}
+  
   }
-
+  
+	
+		
 }

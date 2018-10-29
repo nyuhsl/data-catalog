@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+  <div class="col-sm-6 col-sm-offset-2">
+    <h1>Access Denied</h1>
+
+    <div class="spacer50"></div>
+    <p class="lead">
+			{{ exception.message }}
+    </p>
+  </div>
+{% endblock %}
