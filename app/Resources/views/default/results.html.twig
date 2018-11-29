@@ -141,10 +141,13 @@
              </dd>
              {% endif %}
 						
-						{% if item.dataset_start_date is defined and item.dataset_start_date is not empty %}
-						<dt>Timeframe</dt>
-						 <dd>{{ item.dataset_start_date }} – {{ item.dataset_end_date }}</dd>
-						{% endif %} 
+							{% if item.dataset_start_date is defined and item.dataset_start_date|length and item.dataset_end_date is defined and item.dataset_end_date|length and item.dataset_start_date == item.dataset_end_date %}
+							<dt>Timeframe</dt>
+							 <dd>{{ item.dataset_start_date }}</dd>
+							{% elseif tem.dataset_start_date is defined and item.dataset_start_date|length and item.dataset_end_date is defined and item.dataset_end_date|length %}
+							<dt>Timeframe</dt>
+							 <dd>{{ item.dataset_start_date }} - {{ item.dataset_end_date }}</dd>
+							{% endif %} 
 
 						 <!--
              {% if item.subject_domain is defined and item.subject_domain[0] %}
