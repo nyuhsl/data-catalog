@@ -63,7 +63,11 @@
         </dd>
      
       <dt>Timeframe</dt>
+       {% if dataset.subjectStartDate == dataset.subjectEndDate %}
+			 <dd>{{ dataset.subjectStartDate }}</dd>
+       {% else %}
        <dd>{{ dataset.subjectStartDate }} - {{ dataset.subjectEndDate }}</dd>
+     	 {% endif %}
      
      <dt>Geographic Coverage</dt>
        <dd>
