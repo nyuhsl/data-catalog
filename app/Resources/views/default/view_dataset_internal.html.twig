@@ -195,7 +195,10 @@ $(function () {
      <dt>Description</dt>
        <dd>{{ dataset.description|raw }}</dd>
      
-      {% if dataset.subjectStartDate is not empty %}
+      {% if dataset.subjectStartDate is not empty and dataset.subjectStartDate == dataset.subjectEndDate %}
+      <dt>Timeframe</dt>
+       <dd>{{ dataset.subjectStartDate }}</dd>
+      {% elseif dataset.subjectStartDate is not empty %}
       <dt>Timeframe</dt>
        <dd>{{ dataset.subjectStartDate }} - {{ dataset.subjectEndDate }}</dd>
       {% endif %} 

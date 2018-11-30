@@ -4,6 +4,7 @@ namespace AppBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Doctrine\ORM\EntityRepository;
 
 /**
  * Form builder for Person Association entry
@@ -39,6 +40,9 @@ class PersonAssociationType extends AbstractType {
       'attr'=> array('style'=>'width:50%;', 'class'=>'author-add-form'),
       'multiple'=> false,
       'label'   => false,
+      'query_builder'=> function(EntityRepository $er) {
+          return $er->createQueryBuilder('u')->orderBy('u.full_name','ASC');
+      },
     ));
     $builder->add('display_order', 'number', array(
       'label' => false,
