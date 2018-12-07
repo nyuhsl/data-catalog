@@ -105,7 +105,16 @@
         "name":"{{ site_provider_name }}",
         "url":"{{ site_provider_url }}"
       }
-    {% endif %}
+    {% endif %},
+    "sponsor": { 
+      {% if dataset.origin == "Internal" %} 
+        "@type":"Organization",
+        "name": "{{ institution_name }}",
+        "address":"{{ institution_address }}",
+        "url":"{{ institution_url }}"
+      {% endif %}
+    }
+
 }
 
 </script>
