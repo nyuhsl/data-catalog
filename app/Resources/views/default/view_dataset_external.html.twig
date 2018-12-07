@@ -1,4 +1,6 @@
 {% extends 'base.html.twig' %}
+{% from 'default/_JSONLD_output.html.twig' import JSONLD_output %}
+
 
 
 {% block page_scripts %}
@@ -68,61 +70,7 @@ $(function () {
 
 
 {% block JSONLD_output %}
-{% spaceless %}
-<script type="application/ld+json">
-{"@context": "http://schema.org",
-"@type": "Dataset",
-"name": "{{ dataset.title }}",
-"description": "{{ dataset.description }}",
-"dateCreated": "{{ dataset.dateAdded|date("Y-m-d") }}",
-"alternateName": [{% for title in dataset.datasetAlternateTitles %}"{{ title.getDisplayName|trim }}"{% if not loop.last %}, {% endif %}{% endfor %}],
-"keywords": [{% for kw in dataset.subjectKeywords %}"{{ kw.getDisplayName|trim }}"{% if not loop.last %}, {% endif %}{% endfor %}],
-"author": [{% for auth in dataset.authors %}
-{
-      "@type": "Person",
-      "name":"{{ auth.fullName }}",
-      "url":"{{ auth.bioUrl }}"}{% if not loop.last %}, {% endif %}{% endfor %}],
-  "citation": [{% for pub in dataset.publications %}"{{ pub.citation|trim }}"{% if not loop.last %}, {% endif %}{% endfor %}],
-  "encoding": [{% for format in dataset.datasetFormats %}
-{
-      "@type": "MediaObject",
-      "encodingFormat":"{{ format.getDisplayName }}"
-      }{% if not loop.last %}, {% endif %}{% endfor %}],
-  "publisher": [{% for pubber in dataset.publishers %}
-{
-      "@type": "Organization",
-      "name":"{{ pubber.getDisplayName }}",
-      "url":"{{ pubber.publisherUrl }}"}{% if not loop.last %}, {% endif %}{% endfor %}],
-"mainEntityOfPage": "{{ app.request.uri }}",
-"url": "{{ app.request.uri }}",
-"isPartOf":
-{
-"@type": "DataCatalog",
-"name": "{{ site_name }}",
-"keywords":"science, dataset, research, data, data catalog",
-"url": "{{ site_base_url }}",
-"provider": {
-  "@type":"Organization",
-  "name":"{{ site_provider_name }}",
-  "url":"{{ site_provider_url }}",
-  "parentOrganization": {
-    "@type":"Organization",
-    "name": "{{ institution_name }}",
-    "address":"{{ institution_address }}",
-    "url":"{{ institution_url }}"
-   }
- }
-},
-"sameAs": [{% for accessPoint in dataset.dataLocations %}"{{ accessPoint.getDataAccessUrl|trim }}"{% if not loop.last %}, {% endif %}{% endfor %}],
-"provider": [{% for provider in dataset.correspondingAuthors %}
-{
-      "@type": "Person",
-      "name":"{{ provider.fullName }}",
-      "url":"{{ provider.bioUrl }}"}{% if not loop.last %}, {% endif %}{% endfor %}]
-}
-
-</script>
-{% endspaceless %}
+{{ JSONLD_output(dataset) }}
 {% endblock %}
 
 
