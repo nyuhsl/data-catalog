@@ -38,7 +38,8 @@ class PublicationType extends AbstractType {
       'attr' => array('rows'=>'7')
     ));
     $builder->add('url', 'text', array(
-     'label'=>'URL'));
+      'label'=>'URL',
+      'required'=>false));
     $builder->add('doi', 'text',array(
      'required'=>false,
      'label'   => 'DOI'));
