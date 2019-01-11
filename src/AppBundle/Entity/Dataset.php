@@ -220,13 +220,13 @@ class Dataset implements JsonSerializable {
 
 
   /**
-   * @ORM\ManyToMany(targetEntity="DataCollectionStandard", cascade={"persist"}, inversedBy="datasets")
+   * @ORM\ManyToMany(targetEntity="DataCollectionInstrument", cascade={"persist"}, inversedBy="datasets")
    * @ORM\JoinTable(name="datasets_standards",
    *                joinColumns={@ORM\JoinColumn(name="dataset_uid",referencedColumnName="dataset_uid")},
    *                inverseJoinColumns={@ORM\JoinColumn(name="standard_id",referencedColumnName="standard_id")}
    *                )
    */
-  protected $data_collection_standards;
+  protected $data_collection_instruments;
 
 
   /**
@@ -1143,36 +1143,36 @@ class Dataset implements JsonSerializable {
     }
 
     /**
-     * Add data_collection_standards
+     * Add data_collection_instruments
      *
-     * @param \AppBundle\Entity\DataCollectionStandard $dataCollectionStandards
+     * @param \AppBundle\Entity\DataCollectionInstrument $dataCollectionInstruments
      * @return Dataset
      */
-    public function addDataCollectionStandard(\AppBundle\Entity\DataCollectionStandard $dataCollectionStandard)
+    public function addDataCollectionInstruments(\AppBundle\Entity\DataCollectionInstrument $dataCollectionInstrument)
     {
-        $this->data_collection_standards[] = $dataCollectionStandard;
+        $this->data_collection_instruments[] = $dataCollectionInstrument;
 
         return $this;
     }
 
     /**
-     * Remove data_collection_standards
+     * Remove data_collection_instruments
      *
-     * @param \AppBundle\Entity\DataCollectionStandard $dataCollectionStandards
+     * @param \AppBundle\Entity\DataCollectionInstrument $dataCollectionInstruments
      */
-    public function removeDataCollectionStandard(\AppBundle\Entity\DataCollectionStandard $dataCollectionStandard)
+    public function removeDataCollectionInstrument(\AppBundle\Entity\DataCollectionInstrument $dataCollectionInstrument)
     {
-        $this->data_collection_standards->removeElement($dataCollectionStandard);
+        $this->data_collection_instruments->removeElement($dataCollectionInstrument);
     }
 
     /**
-     * Get data_collection_standards
+     * Get data_collection_instruments
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getDataCollectionStandards()
+    public function getDataCollectionInstruments()
     {
-        return $this->data_collection_standards;
+        return $this->data_collection_instruments;
     }
 
     /**
