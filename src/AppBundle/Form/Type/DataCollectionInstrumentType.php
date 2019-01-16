@@ -38,10 +38,12 @@ class DataCollectionInstrumentType extends AbstractType {
       'label'=>'Instrument Name'
     ));
     $builder->add('url', 'text', array(
-      'label'=>'URL of Instrument Description'
+      'label'=>'URL of Instrument Description',
+      'required'=>false
     ));
     $builder->add('notes', 'textarea', array(
-      'label'=>'Notes'
+      'label'=>'Notes',
+      'required'=>false
     ));
     $builder->add('save','submit',array('label'=>'Submit'));
   }
