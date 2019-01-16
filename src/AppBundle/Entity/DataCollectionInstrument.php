@@ -26,8 +26,12 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  *
+ * **********
+ * NOTE: For ease of upgrading, database tables will retain their old names for now
+ * **********
+ *
  * @ORM\Entity
- * @ORM\Table(name="data_collection_instruments")
+ * @ORM\Table(name="measurement_standards")
  * @UniqueEntity("data_collection_instrument_name")
  */
 class DataCollectionInstrument {
@@ -49,7 +53,7 @@ class DataCollectionInstrument {
   protected $slug;
 
   /**
-   * @ORM\Column(type="string", length=1026)
+   * @ORM\Column(type="string", length=256)
    */
   protected $url;
 

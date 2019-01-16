@@ -461,7 +461,7 @@ class Dataset implements JsonSerializable {
     $this->dataset_formats = new \Doctrine\Common\Collections\ArrayCollection();
     $this->awards = new \Doctrine\Common\Collections\ArrayCollection();
     $this->access_restrictions = new \Doctrine\Common\Collections\ArrayCollection();
-    $this->data_collection_standards = new \Doctrine\Common\Collections\ArrayCollection();
+    $this->data_collection_instruments = new \Doctrine\Common\Collections\ArrayCollection();
     $this->subject_genders = new \Doctrine\Common\Collections\ArrayCollection();
     $this->subject_sexes = new \Doctrine\Common\Collections\ArrayCollection();
     $this->subject_population_ages = new \Doctrine\Common\Collections\ArrayCollection();
