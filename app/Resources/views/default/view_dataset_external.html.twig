@@ -398,6 +398,15 @@ $(function () {
        </dd>
       {% endif %}
       
+      {% if (dataset.dataCollectionInstruments.count > 0) %}
+       <dt>Data Collection Instruments</dt>
+         <dd>
+      {% for instrument in dataset.dataCollectionInstruments %}
+        <div class="multiple-item-list">{{ instrument.getDisplayName }}</div>
+      {% endfor %}
+         </dd>
+      {% endif %}
+
       {% if (dataset.datasetSize is not null) %}
        <dt>Dataset Size</dt>
          <dd>{{ dataset.datasetSize }}</dd>

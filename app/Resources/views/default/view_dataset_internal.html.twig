@@ -363,11 +363,11 @@ $(function () {
        </dd>
       {% endif %}
 
-      {% if (dataset.dataCollectionStandards.count > 0) %}
-       <dt>Data Collection Standards</dt>
+      {% if (dataset.dataCollectionInstruments.count > 0) %}
+       <dt>Data Collection Instruments</dt>
          <dd>
-      {% for standard in dataset.dataCollectionStandards %}
-        <div class="multiple-item-list">{{ standard.getDisplayName }}</div>
+      {% for instrument in dataset.dataCollectionInstruments %}
+        <div class="multiple-item-list">{{ instrument.getDisplayName }}</div>
       {% endfor %}
          </dd>
       {% endif %}

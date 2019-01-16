@@ -1148,7 +1148,7 @@ class Dataset implements JsonSerializable {
      * @param \AppBundle\Entity\DataCollectionInstrument $dataCollectionInstruments
      * @return Dataset
      */
-    public function addDataCollectionInstruments(\AppBundle\Entity\DataCollectionInstrument $dataCollectionInstrument)
+    public function addDataCollectionInstrument(\AppBundle\Entity\DataCollectionInstrument $dataCollectionInstrument)
     {
         $this->data_collection_instruments[] = $dataCollectionInstrument;
 
