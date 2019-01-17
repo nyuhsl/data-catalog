@@ -117,7 +117,7 @@ class DataCollectionInstrument {
      * Set url
      *
      * @param string $url
-     * @return DataCollectionStandard
+     * @return DataCollectionInstrument
      */
     public function setUrl($url)
     {
@@ -140,7 +140,7 @@ class DataCollectionInstrument {
      * Set slug
      *
      * @param string $slug
-     * @return DataCollectionStandard
+     * @return DataCollectionInstrument
      */
     public function setSlug($slug)
     {
@@ -163,7 +163,7 @@ class DataCollectionInstrument {
      * Set notes
      *
      * @param string $notes
-     * @return DataCollectionStandard
+     * @return DataCollectionInstrument
      */
     public function setNotes($notes)
     {
@@ -186,7 +186,7 @@ class DataCollectionInstrument {
      * Add datasets
      *
      * @param \AppBundle\Entity\Dataset $datasets
-     * @return DataCollectionStandard
+     * @return DataCollectionInstrument
      */
     public function addDataset(\AppBundle\Entity\Dataset $datasets)
     {

@@ -1753,7 +1753,7 @@ class Dataset implements JsonSerializable {
       foreach ($this->related_software as $sw) { $software[]=$sw->getDisplayName(); }
       foreach ($this->dataset_formats as $format) { $formats[]=$format->getDisplayName(); }
       foreach ($this->data_types as $data_type) { $data_type_array[]=$data_type->getDisplayName(); }
-      foreach ($this->data_collection_standards as $std) { $stds[]=$std->getDisplayName(); }
+      foreach ($this->data_collection_instruments as $std) { $stds[]=$std->getDisplayName(); }
       foreach ($this->awards as $award) { $awards[]=$award->getDisplayName(); }
       foreach ($this->local_experts as $expert) { $experts[]=$expert->getDisplayName(); }
       foreach ($this->subject_domains as $domain) { $domains[]=$domain->getDisplayName(); }
@@ -1819,7 +1819,7 @@ class Dataset implements JsonSerializable {
        foreach ($this->dataset_formats as $format) { $formats[]=$format->getDisplayName(); }
        foreach ($this->awards as $award) { $awards[]=$award->getDisplayName(); }
        foreach ($this->access_restrictions as $restriction) { $restrictions[]=$restriction->getDisplayName(); }
-       foreach ($this->data_collection_standards as $std) { $stds[]=$std->getDisplayName(); }
+       foreach ($this->data_collection_instruments as $std) { $stds[]=$std->getDisplayName(); }
        foreach ($this->subject_genders as $gender) { $genders[]=$gender->getDisplayName(); }
        foreach ($this->subject_sexes as $sex) { $sexes[]=$sex->getDisplayName(); }
        foreach ($this->subject_population_ages as $age) { $ages[]=$age->getDisplayName(); }
@@ -1896,7 +1896,7 @@ class Dataset implements JsonSerializable {
       foreach ($this->related_software as $sw) { $software[]=$sw->getAllProperties(); }
       foreach ($this->dataset_formats as $format) { $formats[]=$format->getDisplayName(); }
       foreach ($this->data_types as $data_type) { $data_type_array[]=$data_type->getDisplayName(); }
-      foreach ($this->data_collection_standards as $std) { $stds[]=$std->getAllProperties(); }
+      foreach ($this->data_collection_instruments as $std) { $stds[]=$std->getAllProperties(); }
       foreach ($this->awards as $award) { $awards[]=$award->getAllProperties(); }
       foreach ($this->local_experts as $expert) { $experts[]=$expert->getAllProperties(); }
       foreach ($this->subject_domains as $domain) { $domains[]=$domain->getAllProperties(); }
