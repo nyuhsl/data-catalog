@@ -6,7 +6,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
- * Form builder for Data Collection Standard entry
+ * Form builder for Data Collection Instrument entry
  *
  *   This file is part of the Data Catalog project.
  *   Copyright (C) 2016 NYU Health Sciences Library
@@ -25,7 +25,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-class DataCollectionStandardType extends AbstractType {
+class DataCollectionInstrumentType extends AbstractType {
 
   /**
    * Build the form
@@ -34,8 +34,17 @@ class DataCollectionStandardType extends AbstractType {
    * @param array $options
    */
   public function buildForm(FormBuilderInterface $builder, array $options) {
-    $builder->add('measurement_standard_name');
-    $builder->add('measurement_standard_authority');
+    $builder->add('data_collection_instrument_name', 'text', array(
+      'label'=>'Instrument Name'
+    ));
+    $builder->add('url', 'text', array(
+      'label'=>'URL of Instrument Description',
+      'required'=>false
+    ));
+    $builder->add('notes', 'textarea', array(
+      'label'=>'Notes',
+      'required'=>false
+    ));
     $builder->add('save','submit',array('label'=>'Submit'));
   }
 
@@ -46,12 +55,12 @@ class DataCollectionStandardType extends AbstractType {
    */
   public function setDefaultOptions(OptionsResolverInterface $resolver) {
     $resolver->setDefaults(array(
-      'data_class' => 'AppBundle\Entity\DataCollectionStandard'
+      'data_class' => 'AppBundle\Entity\DataCollectionInstrument'
     ));
   }
 
   public function getName() {
-    return 'dataCollectionStandard';
+    return 'dataCollectionInstrument';
   }
 
 }

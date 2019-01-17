@@ -105,7 +105,7 @@ $data = array(
     "data_types" => array(
       "Surveys",
     ),
-    "data_collection_standards"=> array(
+    "data_collection_instruments"=> array(
       "American College of Radiology/ National Electrical Manufacturers Association 2.0 (ACR/NEMA 2.0)"
     ),
     "awards" => array(

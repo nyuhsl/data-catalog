@@ -26,11 +26,15 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  *
+ * **********
+ * NOTE: For ease of upgrading, database tables will retain their old names for now
+ * **********
+ *
  * @ORM\Entity
  * @ORM\Table(name="measurement_standards")
- * @UniqueEntity("measurement_standard_name")
+ * @UniqueEntity("data_collection_instrument_name")
  */
-class DataCollectionStandard {
+class DataCollectionInstrument {
   /**
    * @ORM\Column(type="integer",name="standard_id")
    * @ORM\Id
@@ -41,7 +45,7 @@ class DataCollectionStandard {
   /**
    * @ORM\Column(type="string",length=255, unique=true)
    */
-  protected $measurement_standard_name;
+  protected $data_collection_instrument_name;
 
   /**
    * @ORM\Column(type="string",length=256)
@@ -51,10 +55,15 @@ class DataCollectionStandard {
   /**
    * @ORM\Column(type="string", length=256)
    */
-  protected $measurement_standard_authority;
+  protected $url;
 
   /**
-   * @ORM\ManyToMany(targetEntity="Dataset", mappedBy="data_collection_standards")
+   * @ORM\Column(type="string", length=1026)
+   */
+  protected $notes;
+
+  /**
+   * @ORM\ManyToMany(targetEntity="Dataset", mappedBy="data_collection_instruments")
    **/
   protected $datasets;
 
@@ -68,7 +77,7 @@ class DataCollectionStandard {
    * @return string
    */
   public function getDisplayName() {
-    return $this->measurement_standard_name;
+    return $this->data_collection_instrument_name;
   }
 
     /**
@@ -82,56 +91,56 @@ class DataCollectionStandard {
     }
 
     /**
-     * Set measurement_standard_name
+     * Set data collection instrument name
      *
-     * @param string $measurementStandardName
-     * @return DataCollectionStandard
+     * @param string $dataCollectionInstrumentName
+     * @return DataCollectionInstrument
      */
-    public function setMeasurementStandardName($measurementStandardName)
+    public function setDataCollectionInstrumentName($dataCollectionInstrumentName)
     {
-        $this->measurement_standard_name = $measurementStandardName;
+        $this->data_collection_instrument_name = $dataCollectionInstrumentName;
 
         return $this;
     }
 
     /**
-     * Get measurement_standard_name
+     * Get data collection instrument name
      *
      * @return string 
      */
-    public function getMeasurementStandardName()
+    public function getDataCollectionInstrumentName()
     {
-        return $this->measurement_standard_name;
+        return $this->data_collection_instrument_name;
     }
 
     /**
-     * Set measurement_standard_authority
+     * Set url
      *
-     * @param string $measurementStandardAuthority
-     * @return DataCollectionStandard
+     * @param string $url
+     * @return DataCollectionInstrument
      */
-    public function setMeasurementStandardAuthority($measurementStandardAuthority)
+    public function setUrl($url)
     {
-        $this->measurement_standard_authority = $measurementStandardAuthority;
+        $this->url = $url;
 
         return $this;
     }
 
     /**
-     * Get measurement_standard_authority
+     * Get url
      *
      * @return string 
      */
-    public function getMeasurementStandardAuthority()
+    public function getUrl()
     {
-        return $this->measurement_standard_authority;
+        return $this->url;
     }
 
     /**
      * Set slug
      *
      * @param string $slug
-     * @return DataCollectionStandard
+     * @return DataCollectionInstrument
      */
     public function setSlug($slug)
     {
@@ -151,10 +160,33 @@ class DataCollectionStandard {
     }
 
     /**
+     * Set notes
+     *
+     * @param string $notes
+     * @return DataCollectionInstrument
+     */
+    public function setNotes($notes)
+    {
+        $this->notes = $notes;
+
+        return $this;
+    }
+
+    /**
+     * Get notes
+     *
+     * @return string 
+     */
+    public function getNotes()
+    {
+        return $this->notes;
+    }
+
+    /**
      * Add datasets
      *
      * @param \AppBundle\Entity\Dataset $datasets
-     * @return DataCollectionStandard
+     * @return DataCollectionInstrument
      */
     public function addDataset(\AppBundle\Entity\Dataset $datasets)
     {
@@ -190,8 +222,9 @@ class DataCollectionStandard {
      **/
     public function getAllProperties() {
       return array(
-        'measurement_standard_name' => $this->measurement_standard_name,
-        'measurement_standard_authority' => $this->measurement_standard_authority
+        'data_collection_instrument_name' => $this->data_collection_instrument_name,
+        'url' => $this->url,
+        'notes' => $this->notes
       );
     }
 
