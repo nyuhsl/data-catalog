@@ -1816,6 +1816,8 @@ class Dataset implements JsonSerializable {
        $formats = $awards = $restrictions = $stds = $genders = $sexes = $ages = $equipment = $software = $subject_of_study = [];
        $areas = $area_details = $domains = $publications = $keywords = $publishers = [];
        $authors = $data_type_array = $types_of_study = $corresponding_authors = $experts = $data_locations = $akas = $related_datasets = [];
+       $other_resource_names = $other_resource_descriptions = $related_pubs = $data_location_contents = [];
+       $accession_numbers = $access_instructions = [];
        foreach ($this->dataset_formats as $format) { $formats[]=$format->getDisplayName(); }
        foreach ($this->awards as $award) { $awards[]=$award->getDisplayName(); }
        foreach ($this->access_restrictions as $restriction) { $restrictions[]=$restriction->getDisplayName(); }
@@ -1838,6 +1840,17 @@ class Dataset implements JsonSerializable {
        foreach ($this->subject_of_study as $subject) { $subject_of_study[]=$subject->getDisplayName(); }
        foreach ($this->related_software as $sw) { $software[]=$sw->getDisplayName(); }
        foreach ($this->related_equipment as $equip) { $equipment[]=$equip->getDisplayName(); }
+
+       foreach ($this->other_resources as $resource) { 
+         $other_resource_names[]=$resource->getDisplayName(); 
+         $other_resource_descriptions[]=$resource->getResourceDescription(); 
+       }
+       foreach ($this->data_locations as $loc) { 
+         $data_locations[]=$loc->getDataAccessUrl(); 
+         $data_location_contents[]=$loc->getLocationContent(); 
+         $accession_numbers[]=$loc->getAccessionNumber(); 
+       }
+       foreach ($this->publications as $pub) { $publications[]=$pub->getDisplayName(); }
        return array(
          'id'                    => $this->dataset_uid,
          'dataset_title'         => $this->title,
@@ -1865,6 +1878,13 @@ class Dataset implements JsonSerializable {
          'subject_of_study'      => $subject_of_study,
          'related_software'      => $software,
          'related_equipment'     => $equipment,
+         'other_resource_names'     => $other_resource_names,
+         'other_resource_descriptions'     => $other_resource_descriptions,
+         'data_locations'     => $data_locations,
+         'data_location_contents'     => $data_location_contents,
+         'accession_numbers'     => $accession_numbers,
+         'publications'     => $publications,
+         'access_instructions'     => $this->access_instructions,
        );
      }
 
