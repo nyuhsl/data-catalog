@@ -472,6 +472,13 @@
   <field name="subject_keywords" type="strings"/>
   <field name="subject_of_study" type="strings"/>
   <field name="subject_population_ages" type="strings"/>
+  <field name="other_resource_names" type="strings"/>
+  <field name="other_resource_descriptions" type="strings"/>
+  <field name="data_locations" type="strings"/>
+  <field name="data_location_contents" type="strings"/>
+  <field name="accession_numbers" type="strings"/>
+  <field name="publications" type="strings"/>
+  <field name="access_instructions" type="strings"/>
   <dynamicField name="*_txt_en_split_tight" type="text_en_splitting_tight" indexed="true" stored="true"/>
   <dynamicField name="*_descendent_path" type="descendent_path" indexed="true" stored="true"/>
   <dynamicField name="*_ancestor_path" type="ancestor_path" indexed="true" stored="true"/>
