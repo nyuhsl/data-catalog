@@ -1878,13 +1878,13 @@ class Dataset implements JsonSerializable {
          'subject_of_study'      => $subject_of_study,
          'related_software'      => $software,
          'related_equipment'     => $equipment,
-         'other_resource_names'     => $other_resource_names,
-         'other_resource_descriptions'     => $other_resource_descriptions,
-         'data_locations'     => $data_locations,
+         'other_resource_names'       => $other_resource_names,
+         'other_resource_descriptions'=> $other_resource_descriptions,
+         'data_locations'             => $data_locations,
          'data_location_contents'     => $data_location_contents,
-         'accession_numbers'     => $accession_numbers,
-         'publications'     => $publications,
-         'access_instructions'     => $this->access_instructions,
+         'accession_numbers'          => $accession_numbers,
+         'publications'               => $publications,
+         'access_instructions'        => $this->access_instructions,
        );
      }
 
