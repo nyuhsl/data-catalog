@@ -154,26 +154,29 @@ class SolrSearchr {
     
     $base_query = "q=";
     $keyword_query_string = trim($this->solrKeyword);
-    // is this query trying to return all results? if so, let it through
+    // is this query trying to return ALL results? if so, let it through
     if ($keyword_query_string != "*") {
-      // if not, is this query trying to limit to one specific field? (i.e. access_instructions:"query") if so, let it through
+      // is this query trying to limit to one specific field? (i.e. access_instructions:"query") if so, let it through
       if (strpos($keyword_query_string, ":") === false) {
-        // strip apostrophes from all normal queries so as not to confuse Solr
+        // strip apostrophes from all other queries so as not to confuse Solr
         $keyword_query_string = str_replace("'", "", $keyword_query_string);
-        // construct keyword query based on fields specified in parameters.yml
-        $queryComponents = "";
-        foreach ($this->solrSearchFields as $fieldToSearch) {
-            $queryPart = $fieldToSearch . ":\"" . $keyword_query_string . "\" OR ";
-            $queryComponents .= $queryPart;
+        // Solr requires you to use double quotes when specifying a field to search
+        if (strpos($keyword_query_string, '"') === false) {
+          // if user did NOT use double quotes, add them here
+          $quoted_keyword_query_string = '"' . $keyword_query_string . '"';
+        } else {
+          // if the original query is quoted, just use it again for the field search
+          $quoted_keyword_query_string = $keyword_query_string;
         }
-        // and make extra-sure we're searching the title field
-        $keyword_query_string = $queryComponents . "dataset_title:\"" . $keyword_query_string . "\"";
+        // search all fields, and then search the title field separately to improve relevancy
+        $final_query_string = $keyword_query_string . " OR dataset_title:" . $quoted_keyword_query_string;
       } elseif (strpos($keyword_query_string, "authors:") === true) {
         // but, keep apostrophes if we're searching for proper names, these queries are double-quoted so we need an exact match
       }
     }
 
-    return $base_query . urlencode($keyword_query_string);
+    var_dump($final_query_string);
+    return $base_query . urlencode($final_query_string);
 
   }
 
