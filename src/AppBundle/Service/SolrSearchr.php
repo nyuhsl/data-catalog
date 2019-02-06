@@ -154,12 +154,12 @@ class SolrSearchr {
     
     $base_query = "q=";
     $keyword_query_string = trim($this->solrKeyword);
+    // the default state:
+    $final_query_string = $keyword_query_string;
     // is this query trying to return ALL results? if so, let it through
     if ($keyword_query_string != "*") {
       // is this query trying to limit to one specific field? (i.e. access_instructions:"query") if so, let it through
       if (strpos($keyword_query_string, ":") === false) {
-        // strip apostrophes from all other queries so as not to confuse Solr
-        $keyword_query_string = str_replace("'", "", $keyword_query_string);
         // Solr requires you to use double quotes when specifying a field to search
         if (strpos($keyword_query_string, '"') === false) {
           // if user did NOT use double quotes, add them here
@@ -175,7 +175,6 @@ class SolrSearchr {
       }
     }
 
-    var_dump($final_query_string);
     return $base_query . urlencode($final_query_string);
 
   }
