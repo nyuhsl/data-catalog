@@ -158,9 +158,8 @@ class SolrSearchr {
     $final_query_string = $keyword_query_string;
     // is this query trying to return ALL results? if so, let it through
     if ($keyword_query_string != "*") {
-      // is this query trying to limit to one specific field? (i.e. access_instructions:"query") if so, let it through
       if (strpos($keyword_query_string, ":") === false) {
-        // Solr requires you to use double quotes when specifying a field to search
+        // if we have a general query of all fields
         if (strpos($keyword_query_string, '"') === false) {
           // if user did NOT use double quotes, add them here
           $quoted_keyword_query_string = '"' . $keyword_query_string . '"';
@@ -170,8 +169,20 @@ class SolrSearchr {
         }
         // search all fields, and then search the title field separately to improve relevancy
         $final_query_string = $keyword_query_string . " OR dataset_title:" . $quoted_keyword_query_string;
-      } elseif (strpos($keyword_query_string, "authors:") === true) {
-        // but, keep apostrophes if we're searching for proper names, these queries are double-quoted so we need an exact match
+      } else {
+        // if we're limiting to one field i.e., we've clicked on a certain "Subject Domain" from a dataset record
+        // Solr requires you to use double quotes around the search terms when searching a specific field
+        // before we can check for quotes we have to separate the string on the colon
+        $field_and_term = explode(':', $keyword_query_string);
+        // make sure user has quoted their search term for Solr
+        if (substr($field_and_term[1], 0, 1) === '"') {
+          // if user has quoted their search term just use it
+          $quoted_search_term = $field_and_term[1];
+        } else {
+          // if user has not quoted their search term, add quotes here
+          $quoted_search_term = '"' . $field_and_term[1] . '"';
+        }
+        $final_query_string = $field_and_term[0] . ":" . $quoted_search_term;
       }
     }
 
