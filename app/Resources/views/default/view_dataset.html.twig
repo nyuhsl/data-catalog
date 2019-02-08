@@ -180,7 +180,7 @@
        <dt>Dataset Type</dt>
        <dd>
       {% for type in dataset.dataTypes %}
-        <div class="multiple-item-list">{{ type.getDisplayName }}</div>
+        <div class="multiple-item-list"><a href="/search?keyword=data_types:{{ type.getDisplayName }}">{{ type.getDisplayName }}</a></div>
       {% endfor %}
       </dd>
       {% endif %}
