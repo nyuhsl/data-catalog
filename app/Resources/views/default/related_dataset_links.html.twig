@@ -1,0 +1,11 @@
+<dt>Related Datasets</dt>
+<dd id="related-datasets">
+  {% for related in relatedDatasets %}
+    <div class="multiple-item-list">
+      <a target="_blank" href="{{ path('view_dataset',{'uid':related.dataset.datasetUid}) }}">{{ related.dataset.title }}</a>
+      {% if related.relationshipNotes is defined %}
+        <p class="related-dataset-note">{{ related.relationshipNotes }}</p>
+      {% endif %}
+    </div>
+  {% endfor %}
+</dd>
