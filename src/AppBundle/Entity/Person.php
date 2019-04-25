@@ -30,7 +30,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Entity
  * @ORM\Table(name="person")
  * @UniqueEntity("kid")
- * @UniqueEntity("slug")
+ * @UniqueEntity("full_name")
  */
 class Person {
   /**
