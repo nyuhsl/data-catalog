@@ -41,12 +41,12 @@ class Person {
   protected $id;
 
   /**
-   * @ORM\Column(type="string",length=128)
+   * @ORM\Column(type="string",length=128, unique=true)
    */
   protected $full_name;
 
   /**
-   * @ORM\Column(type="string",length=128, unique=true)
+   * @ORM\Column(type="string",length=128)
    */
   protected $slug;
 

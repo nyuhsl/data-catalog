@@ -39,7 +39,7 @@ class Publication {
   protected $id;
 
   /**
-   * @ORM\Column(type="string",length=512)
+   * @ORM\Column(type="string",length=512, unique=true)
    */
   protected $citation;
 
@@ -54,7 +54,7 @@ class Publication {
   protected $doi;
 
   /**
-   * @ORM\Column(type="string",length=128, unique=true)
+   * @ORM\Column(type="string",length=128)
    */
   protected $slug;
 
