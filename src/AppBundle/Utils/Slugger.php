@@ -16,6 +16,10 @@ class Slugger {
    */
   static public function slugify($text)
   {
+
+    // make 8-character hash
+    $title_hash = substr(md5($text), 0, 7);
+
     // replace non letter or digits by -
     $text = preg_replace('~[^\\pL\d]+~u', '-', $text);
 
@@ -32,6 +36,8 @@ class Slugger {
     $text = preg_replace('~[^-\w]+~', '', $text);
 
     $text = substr($text, 0, 100);
+
+    $text = $text . '-' . $title_hash;
 
     if (empty($text))
     {
