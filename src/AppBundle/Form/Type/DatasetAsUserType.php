@@ -90,14 +90,14 @@ class DatasetAsUserType extends AbstractType {
       'by_reference'=>false,
       'label'     => 'Dataset File Format',
     ));
-    $builder->add('data_collection_standards', 'entity', array(
-      'class'   => 'AppBundle:DataCollectionStandard',
-      'property'=> 'measurement_standard_name',
+    $builder->add('data_collection_instruments', 'entity', array(
+      'class'   => 'AppBundle:DataCollectionInstrument',
+      'property'=> 'data_collection_instrument_name',
       'required' => false,
       'attr'=>array('style'=>'width:100%', 'placeholder'=>''),
       'multiple' => true,
       'by_reference'=>false,
-      'label'     => 'Data Collection Standards (e.g. CDISC, DICOM, MINI, CDE)',
+      'label'     => 'Data Collection Instruments',
     ));
     //content information
     $builder->add('authorships', 'collection', array(

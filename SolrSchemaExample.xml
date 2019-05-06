@@ -486,6 +486,14 @@
     <!-- date added -->
     <field name="date_added" type="tdate" indexed="true" stored="true" multiValued="false"/>
 
+    <!-- additional fields added to search index 2019-02-01 -->
+    <field name="other_resource_names" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="other_resource_descriptions" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="data_locations" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="data_location_contents" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="accession_numbers" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="publications" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="access_instructions" type="text" indexed="true" stored="true" multiValued="true"/>
 
     <!-- This field is used to build the spellchecker index -->
     <field name="spell" type="textSpell" indexed="true" stored="true" multiValued="true"/>
@@ -529,6 +537,13 @@
    <copyField source="related_equipment" dest="text"/>
    <copyField source="related_software" dest="text"/>
    <copyField source="subject_of_study" dest="text"/>
+   <copyField source="other_resource_names" dest="text"/>
+   <copyField source="other_resource_descriptions" dest="text"/>
+   <copyField source="data_locations" dest="text"/>
+   <copyField source="data_location_contents" dest="text"/>
+   <copyField source="accession_numbers" dest="text"/>
+   <copyField source="publications" dest="text"/>
+   <copyField source="access_instructions" dest="text"/>
 
 
 

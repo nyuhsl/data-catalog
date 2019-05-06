@@ -1,4 +1,6 @@
 {% extends 'base.html.twig' %}
+{% from 'default/_JSONLD_output.html.twig' import JSONLD_output %}
+
 
 
 {% block page_scripts %}
@@ -168,10 +170,10 @@ $(function () {
  										{% endif %}
  
                     {% if author.getPerson.getBioUrl %}
-                      {% set popoverContent = '<p><a href="' ~ author.getPerson.getBioUrl ~ '" target="_blank">View profile</a></p><p><a href="/search?keyword=authors:%22' ~ author.getPerson.getFullName ~ '%22 OR corresponding_authors:%22' ~ author.getPerson.getFullName ~ '%22" target="_blank">View other datasets</a></p>' %}
+                      {% set popoverContent = '<p><a href="' ~ author.getPerson.getBioUrl ~ '" target="_blank">View profile</a></p><p><a href="/search?keyword=authors:%22' ~ author.getPerson.getFullName ~ '%22" target="_blank">View other datasets</a></p>' %}
 
                      {% else %}
-                    {% set popoverContent = '<p><a href="/search?keyword=authors:%22' ~ author.getPerson.getFullName ~ '%22 OR corresponding_authors:%22' ~ author.getPerson.getFullName ~ '%22" target="_blank">View other datasets</a></p>' %}
+                    {% set popoverContent = '<p><a href="/search?keyword=authors:%22' ~ author.getPerson.getFullName ~ '%22" target="_blank">View other datasets</a></p>' %}
 
                    {% endif %}
                    {% if author.isCorrespondingAuthor %}
@@ -187,10 +189,10 @@ $(function () {
                <div class="collapse" id="collapsed-authors">
                {% for author in dataset.getAuthorships|slice(5,dataset.getAuthorships.count) %}
                     {% if author.getPerson.getBioUrl %}
-                      {% set popoverContent = '<p><a href="' ~ author.getPerson.getBioUrl ~ '" target="_blank">View profile</a></p><p><a href="/search?keyword=authors:%22' ~ author.getPerson.getFullName ~ '%22 OR corresponding_authors:%22' ~ author.getPerson.getFullName ~ '%22" target="_blank">View other datasets</a></p>' %}
+                      {% set popoverContent = '<p><a href="' ~ author.getPerson.getBioUrl ~ '" target="_blank">View profile</a></p><p><a href="/search?keyword=authors:%22' ~ author.getPerson.getFullName ~ '%22" target="_blank">View other datasets</a></p>' %}
 
                      {% else %}
-                    {% set popoverContent = '<p><a href="/search?keyword=authors:%22' ~ author.getPerson.getFullName ~ '%22 OR corresponding_authors:%22' ~ author.getPerson.getFullName ~ '%22" target="_blank">View other datasets</a></p>' %}
+                    {% set popoverContent = '<p><a href="/search?keyword=authors:%22' ~ author.getPerson.getFullName ~ '%22" target="_blank">View other datasets</a></p>' %}
 
                    {% endif %}
                    {% if author.isCorrespondingAuthor %}
@@ -212,10 +214,10 @@ $(function () {
 									{% endif %}
 
                   {% if author.getPerson.getBioUrl %}
-                    {% set popoverContent = '<p><a href="' ~ author.getPerson.getBioUrl ~ '" target="_blank">View profile</a></p><p><a href="/search?keyword=authors:%22' ~ author.getPerson.getFullName ~ '%22 OR corresponding_authors:%22' ~ author.getPerson.getFullName ~ '%22" target="_blank">View other datasets</a></p>' %}
+                    {% set popoverContent = '<p><a href="' ~ author.getPerson.getBioUrl ~ '" target="_blank">View profile</a></p><p><a href="/search?keyword=authors:%22' ~ author.getPerson.getFullName ~ '%22" target="_blank">View other datasets</a></p>' %}
 
                    {% else %}
-                    {% set popoverContent = '<p><a href="/search?keyword=authors:%22' ~ author.getPerson.getFullName ~ '%22 OR corresponding_authors:%22' ~ author.getPerson.getFullName ~ '%22" target="_blank">View other datasets</a></p>' %}
+                    {% set popoverContent = '<p><a href="/search?keyword=authors:%22' ~ author.getPerson.getFullName ~ '%22" target="_blank">View other datasets</a></p>' %}
 
                  {% endif %}
                  {% if author.isCorrespondingAuthor %}
@@ -408,7 +410,7 @@ $(function () {
        <dt>Data Type</dt>
        <dd>
       {% for type in dataset.dataTypes %}
-        <div class="multiple-item-list">{{ type.getDisplayName }}</div>
+        <div class="multiple-item-list"><a href="/search?keyword=data_types:{{ type.getDisplayName }}">{{ type.getDisplayName }}</a></div>
       {% endfor %}
       </dd>
       {% endif %}
@@ -467,6 +469,15 @@ $(function () {
        </dd>
       {% endif %}
       
+      {% if (dataset.dataCollectionInstruments.count > 0) %}
+       <dt>Data Collection Instruments</dt>
+         <dd>
+      {% for instrument in dataset.dataCollectionInstruments %}
+        <div class="multiple-item-list">{{ instrument.getDisplayName }}</div>
+      {% endfor %}
+         </dd>
+      {% endif %}
+
       {% if (dataset.datasetSize is not null) %}
        <dt>Dataset Size</dt>
          <dd>{{ dataset.datasetSize }}</dd>

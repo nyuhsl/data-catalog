@@ -1,4 +1,5 @@
 {% extends 'base.html.twig' %}
+{% from 'default/_JSONLD_output.html.twig' import JSONLD_output %}
 
 {% block page_scripts %}
 <script>
@@ -38,6 +39,7 @@ $(function () {
 
 
 {% block JSONLD_output %}
+<<<<<<< HEAD
 {% spaceless %}
 <script type="application/ld+json">
 {"@context": "http://schema.org",
@@ -98,6 +100,9 @@ $(function () {
 }
 </script>
 {% endspaceless %}
+=======
+{{ JSONLD_output(dataset) }}
+>>>>>>> master
 {% endblock %}
 
 
@@ -147,10 +152,10 @@ $(function () {
  										{% endif %}
 
                     {% if author.getPerson.getBioUrl %}
-                      {% set popoverContent = '<p><a href="' ~ author.getPerson.getBioUrl ~ '" target="_blank">View profile</a></p><p><a href="/search?keyword=authors:%22' ~ author.getPerson.getFullName ~ '%22 OR corresponding_authors:%22' ~ author.getPerson.getFullName ~ '%22" target="_blank">View other datasets</a></p>' %}
+                      {% set popoverContent = '<p><a href="' ~ author.getPerson.getBioUrl ~ '" target="_blank">View profile</a></p><p><a href="/search?keyword=authors:%22' ~ author.getPerson.getFullName ~ '%22" target="_blank">View other datasets</a></p>' %}
 
                      {% else %}
-                    {% set popoverContent = '<p><a href="/search?keyword=authors:%22' ~ author.getPerson.getFullName ~ '%22 OR corresponding_authors:%22' ~ author.getPerson.getFullName ~ '%22" target="_blank">View other datasets</a></p>' %}
+                    {% set popoverContent = '<p><a href="/search?keyword=authors:%22' ~ author.getPerson.getFullName ~ '%22" target="_blank">View other datasets</a></p>' %}
 
                    {% endif %}
                    {% if author.isCorrespondingAuthor %}
@@ -166,10 +171,10 @@ $(function () {
                <div class="collapse" id="collapsed-authors">
                {% for author in dataset.getAuthorships|slice(5,dataset.getAuthorships.count) %}
                     {% if author.getPerson.getBioUrl %}
-                      {% set popoverContent = '<p><a href="' ~ author.getPerson.getBioUrl ~ '" target="_blank">View profile</a></p><p><a href="/search?keyword=authors:%22' ~ author.getPerson.getFullName ~ '%22 OR corresponding_authors:%22' ~ author.getPerson.getFullName ~ '%22" target="_blank">View other datasets</a></p>' %}
+                      {% set popoverContent = '<p><a href="' ~ author.getPerson.getBioUrl ~ '" target="_blank">View profile</a></p><p><a href="/search?keyword=authors:%22' ~ author.getPerson.getFullName ~ '%22" target="_blank">View other datasets</a></p>' %}
 
                      {% else %}
-                    {% set popoverContent = '<p><a href="/search?keyword=authors:%22' ~ author.getPerson.getFullName ~ '%22 OR corresponding_authors:%22' ~ author.getPerson.getFullName ~ '%22" target="_blank">View other datasets</a></p>' %}
+                    {% set popoverContent = '<p><a href="/search?keyword=authors:%22' ~ author.getPerson.getFullName ~ '%22" target="_blank">View other datasets</a></p>' %}
 
                    {% endif %}
                    {% if author.isCorrespondingAuthor %}
@@ -190,10 +195,10 @@ $(function () {
  										{% endif %}
 
                   {% if author.getPerson.getBioUrl %}
-                    {% set popoverContent = '<p><a href="' ~ author.getPerson.getBioUrl ~ '" target="_blank">View profile</a></p><p><a href="/search?keyword=authors:%22' ~ author.getPerson.getFullName ~ '%22 OR corresponding_authors:%22' ~ author.getPerson.getFullName ~ '%22" target="_blank">View other datasets</a></p>' %}
+                    {% set popoverContent = '<p><a href="' ~ author.getPerson.getBioUrl ~ '" target="_blank">View profile</a></p><p><a href="/search?keyword=authors:%22' ~ author.getPerson.getFullName ~ '%22" target="_blank">View other datasets</a></p>' %}
 
                    {% else %}
-                    {% set popoverContent = '<p><a href="/search?keyword=authors:%22' ~ author.getPerson.getFullName ~ '%22 OR corresponding_authors:%22' ~ author.getPerson.getFullName ~ '%22" target="_blank">View other datasets</a></p>' %}
+                    {% set popoverContent = '<p><a href="/search?keyword=authors:%22' ~ author.getPerson.getFullName ~ '%22" target="_blank">View other datasets</a></p>' %}
 
                  {% endif %}
                  {% if author.isCorrespondingAuthor %}
@@ -207,7 +212,8 @@ $(function () {
            {% if correspondingAuthorExists %}
              <span class="corresponding-author-note">* Corresponding Author</span>
            {% endif %}
-           {% if institutionAuthorExists %}
+           {% if i
+stitutionAuthorExists %}
              <span class="institution-author-note">+ {{ institution_author_display }}</span>
            {% endif %}
   {%endif %}
@@ -376,7 +382,7 @@ $(function () {
        <dt>Data Type</dt>
        <dd>
       {% for type in dataset.dataTypes %}
-        <div class="multiple-item-list">{{ type.getDisplayName }}</div>
+        <div class="multiple-item-list"><a href="/search?keyword=data_types:{{ type.getDisplayName }}">{{ type.getDisplayName }}</a></div>
       {% endfor %}
       </dd>
       {% endif %}
@@ -435,11 +441,11 @@ $(function () {
        </dd>
       {% endif %}
 
-      {% if (dataset.dataCollectionStandards.count > 0) %}
-       <dt>Data Collection Standards</dt>
+      {% if (dataset.dataCollectionInstruments.count > 0) %}
+       <dt>Data Collection Instruments</dt>
          <dd>
-      {% for standard in dataset.dataCollectionStandards %}
-        <div class="multiple-item-list">{{ standard.getDisplayName }}</div>
+      {% for instrument in dataset.dataCollectionInstruments %}
+        <div class="multiple-item-list">{{ instrument.getDisplayName }}</div>
       {% endfor %}
          </dd>
       {% endif %}
@@ -482,6 +488,7 @@ $(function () {
        {% endif %}
 
        {% if (dataset.relatedDatasets.count > 0) %}
+<<<<<<< HEAD
        <dt>Related Datasets</dt>
         <dd id="related-datasets">
          {% for related in dataset.relatedDatasets %}
@@ -500,6 +507,10 @@ $(function () {
      {% endif %}
 		 <dt>Data Catalog Record Updated</dt>
 		 <dd>{{ dataset.dateUpdated|date("Y-m-d") }}</dd>
+=======
+         {{ render(controller('AppBundle:RelatedDataset:relatedDataset',{'relatedDatasets':dataset.relatedDatasets})) }}
+       {% endif %}
+>>>>>>> master
      </dl>
     </div>
   </div>

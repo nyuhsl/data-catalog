@@ -31,11 +31,11 @@
    {% if ':' in currentSearch.keyword %}
     {# {% set keyword = currentSearch.keyword|split(':')[1] %} #}
    <button class="keyword-breadcrumb btn btn-default btn-xs">
-     "{{ currentSearch.keyword }}"
+     {{ currentSearch.keyword }}
    </button>
    {% else %}
    <button class="keyword-breadcrumb btn btn-default btn-xs">
-     Keyword: "{{ currentSearch.keyword }}"
+     Keyword: {{ currentSearch.keyword }}
    </button>
    {% endif %}  
   {% endif %} 

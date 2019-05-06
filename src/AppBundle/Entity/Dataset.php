@@ -220,13 +220,13 @@ class Dataset implements JsonSerializable {
 
 
   /**
-   * @ORM\ManyToMany(targetEntity="DataCollectionStandard", cascade={"persist"}, inversedBy="datasets")
+   * @ORM\ManyToMany(targetEntity="DataCollectionInstrument", cascade={"persist"}, inversedBy="datasets")
    * @ORM\JoinTable(name="datasets_standards",
    *                joinColumns={@ORM\JoinColumn(name="dataset_uid",referencedColumnName="dataset_uid")},
    *                inverseJoinColumns={@ORM\JoinColumn(name="standard_id",referencedColumnName="standard_id")}
    *                )
    */
-  protected $data_collection_standards;
+  protected $data_collection_instruments;
 
 
   /**
@@ -461,7 +461,7 @@ class Dataset implements JsonSerializable {
     $this->dataset_formats = new \Doctrine\Common\Collections\ArrayCollection();
     $this->awards = new \Doctrine\Common\Collections\ArrayCollection();
     $this->access_restrictions = new \Doctrine\Common\Collections\ArrayCollection();
-    $this->data_collection_standards = new \Doctrine\Common\Collections\ArrayCollection();
+    $this->data_collection_instruments = new \Doctrine\Common\Collections\ArrayCollection();
     $this->subject_genders = new \Doctrine\Common\Collections\ArrayCollection();
     $this->subject_sexes = new \Doctrine\Common\Collections\ArrayCollection();
     $this->subject_population_ages = new \Doctrine\Common\Collections\ArrayCollection();
@@ -1143,36 +1143,36 @@ class Dataset implements JsonSerializable {
     }
 
     /**
-     * Add data_collection_standards
+     * Add data_collection_instruments
      *
-     * @param \AppBundle\Entity\DataCollectionStandard $dataCollectionStandards
+     * @param \AppBundle\Entity\DataCollectionInstrument $dataCollectionInstruments
      * @return Dataset
      */
-    public function addDataCollectionStandard(\AppBundle\Entity\DataCollectionStandard $dataCollectionStandard)
+    public function addDataCollectionInstrument(\AppBundle\Entity\DataCollectionInstrument $dataCollectionInstrument)
     {
-        $this->data_collection_standards[] = $dataCollectionStandard;
+        $this->data_collection_instruments[] = $dataCollectionInstrument;
 
         return $this;
     }
 
     /**
-     * Remove data_collection_standards
+     * Remove data_collection_instruments
      *
-     * @param \AppBundle\Entity\DataCollectionStandard $dataCollectionStandards
+     * @param \AppBundle\Entity\DataCollectionInstrument $dataCollectionInstruments
      */
-    public function removeDataCollectionStandard(\AppBundle\Entity\DataCollectionStandard $dataCollectionStandard)
+    public function removeDataCollectionInstrument(\AppBundle\Entity\DataCollectionInstrument $dataCollectionInstrument)
     {
-        $this->data_collection_standards->removeElement($dataCollectionStandard);
+        $this->data_collection_instruments->removeElement($dataCollectionInstrument);
     }
 
     /**
-     * Get data_collection_standards
+     * Get data_collection_instruments
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getDataCollectionStandards()
+    public function getDataCollectionInstruments()
     {
-        return $this->data_collection_standards;
+        return $this->data_collection_instruments;
     }
 
     /**
@@ -1753,7 +1753,7 @@ class Dataset implements JsonSerializable {
       foreach ($this->related_software as $sw) { $software[]=$sw->getDisplayName(); }
       foreach ($this->dataset_formats as $format) { $formats[]=$format->getDisplayName(); }
       foreach ($this->data_types as $data_type) { $data_type_array[]=$data_type->getDisplayName(); }
-      foreach ($this->data_collection_standards as $std) { $stds[]=$std->getDisplayName(); }
+      foreach ($this->data_collection_instruments as $std) { $stds[]=$std->getDisplayName(); }
       foreach ($this->awards as $award) { $awards[]=$award->getDisplayName(); }
       foreach ($this->local_experts as $expert) { $experts[]=$expert->getDisplayName(); }
       foreach ($this->subject_domains as $domain) { $domains[]=$domain->getDisplayName(); }
@@ -1816,10 +1816,12 @@ class Dataset implements JsonSerializable {
        $formats = $awards = $restrictions = $stds = $genders = $sexes = $ages = $equipment = $software = $subject_of_study = [];
        $areas = $area_details = $domains = $publications = $keywords = $publishers = [];
        $authors = $data_type_array = $types_of_study = $corresponding_authors = $experts = $data_locations = $akas = $related_datasets = [];
+       $other_resource_names = $other_resource_descriptions = $related_pubs = $data_location_contents = [];
+       $accession_numbers = $access_instructions = [];
        foreach ($this->dataset_formats as $format) { $formats[]=$format->getDisplayName(); }
        foreach ($this->awards as $award) { $awards[]=$award->getDisplayName(); }
        foreach ($this->access_restrictions as $restriction) { $restrictions[]=$restriction->getDisplayName(); }
-       foreach ($this->data_collection_standards as $std) { $stds[]=$std->getDisplayName(); }
+       foreach ($this->data_collection_instruments as $std) { $stds[]=$std->getDisplayName(); }
        foreach ($this->subject_genders as $gender) { $genders[]=$gender->getDisplayName(); }
        foreach ($this->subject_sexes as $sex) { $sexes[]=$sex->getDisplayName(); }
        foreach ($this->subject_population_ages as $age) { $ages[]=$age->getDisplayName(); }
@@ -1838,6 +1840,17 @@ class Dataset implements JsonSerializable {
        foreach ($this->subject_of_study as $subject) { $subject_of_study[]=$subject->getDisplayName(); }
        foreach ($this->related_software as $sw) { $software[]=$sw->getDisplayName(); }
        foreach ($this->related_equipment as $equip) { $equipment[]=$equip->getDisplayName(); }
+
+       foreach ($this->other_resources as $resource) { 
+         $other_resource_names[]=$resource->getDisplayName(); 
+         $other_resource_descriptions[]=$resource->getResourceDescription(); 
+       }
+       foreach ($this->data_locations as $loc) { 
+         $data_locations[]=$loc->getDataAccessUrl(); 
+         $data_location_contents[]=$loc->getLocationContent(); 
+         $accession_numbers[]=$loc->getAccessionNumber(); 
+       }
+       foreach ($this->publications as $pub) { $publications[]=$pub->getDisplayName(); }
        return array(
          'id'                    => $this->dataset_uid,
          'dataset_title'         => $this->title,
@@ -1865,6 +1878,13 @@ class Dataset implements JsonSerializable {
          'subject_of_study'      => $subject_of_study,
          'related_software'      => $software,
          'related_equipment'     => $equipment,
+         'other_resource_names'       => $other_resource_names,
+         'other_resource_descriptions'=> $other_resource_descriptions,
+         'data_locations'             => $data_locations,
+         'data_location_contents'     => $data_location_contents,
+         'accession_numbers'          => $accession_numbers,
+         'publications'               => $publications,
+         'access_instructions'        => $this->access_instructions,
        );
      }
 
@@ -1896,7 +1916,7 @@ class Dataset implements JsonSerializable {
       foreach ($this->related_software as $sw) { $software[]=$sw->getAllProperties(); }
       foreach ($this->dataset_formats as $format) { $formats[]=$format->getDisplayName(); }
       foreach ($this->data_types as $data_type) { $data_type_array[]=$data_type->getDisplayName(); }
-      foreach ($this->data_collection_standards as $std) { $stds[]=$std->getAllProperties(); }
+      foreach ($this->data_collection_instruments as $std) { $stds[]=$std->getAllProperties(); }
       foreach ($this->awards as $award) { $awards[]=$award->getAllProperties(); }
       foreach ($this->local_experts as $expert) { $experts[]=$expert->getAllProperties(); }
       foreach ($this->subject_domains as $domain) { $domains[]=$domain->getAllProperties(); }

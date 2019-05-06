@@ -160,14 +160,14 @@ class DatasetType extends AbstractType {
     $builder->add('dataset_size', 'text', array(
       'required' => false,
       'label'    => 'Dataset Size'));
-    $builder->add('data_collection_standards', 'entity', array(
-      'class'   => 'AppBundle:DataCollectionStandard',
-      'property'=> 'measurement_standard_name',
+    $builder->add('data_collection_instruments', 'entity', array(
+      'class'   => 'AppBundle:DataCollectionInstrument',
+      'property'=> 'data_collection_instrument_name',
       'required' => false,
       'attr'=>array('style'=>'width:100%', 'placeholder'=>''),
       'multiple' => true,
       'by_reference'=>false,
-      'label'     => 'Data Collection Standards (e.g. CDISC, DICOM, MINI, CDE)',
+      'label'     => 'Data Collection Instruments',
     ));
     $builder->add('data_types', 'entity', array(
       'class'   => 'AppBundle:DataType',

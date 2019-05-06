@@ -1,0 +1,122 @@
+{% macro JSONLD_output(dataset) %}
+{% spaceless %}
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Dataset",
+  "name": "{{ dataset.title }}",
+  "description": "{{ dataset.description }}",
+  "dateCreated": "{{ dataset.dateAdded|date("Y-m-d") }}",
+  {% if dataset.subjectStartDate is not empty and dataset.subjectStartDate == dataset.subjectEndDate %}
+    "temporalCoverage":"{{ dataset.subjectStartDate }}",
+  {% elseif dataset.subjectStartDate is not empty %}
+    {% if dataset.subjectEndDate|trim == "Present" %}
+      "temporalCoverage":"{{ dataset.subjectStartDate }}-01-01/..",
+    {% else %}
+      "temporalCoverage":"{{ dataset.subjectStartDate }}-01-01/{{ dataset.subjectEndDate }}-12-31",
+    {% endif %}
+  {% endif %}
+  {% if dataset.subjectGeographicAreaDetails is not empty %}
+    "spatialCoverage": 
+      [
+        {% for area in dataset.subjectGeographicAreaDetails %}
+          "{{ area.getGeographicAreaDetailName }}"{% if not loop.last %}, {% endif %}
+        {% endfor %}
+      ],
+  {% elseif dataset.subjectGeographicAreas is not empty %}
+    "spatialCoverage": 
+      [
+        {% for area in dataset.subjectGeographicAreas %}
+          "{{ area.getGeographicAreaName }}"{% if not loop.last %}, {% endif %}
+        {% endfor %}
+      ],
+  {% endif %}
+  "alternateName": 
+    [{% for title in dataset.datasetAlternateTitles %}
+      "{{ title.getDisplayName|trim }}"{% if not loop.last %}, {% endif %}
+    {% endfor %}],
+  "keywords": 
+    [{% for kw in dataset.subjectKeywords %}
+      "{{ kw.getDisplayName|trim }}"{% if not loop.last %}, {% endif %}
+    {% endfor %}],
+  "author": 
+    [{% for auth in dataset.authors %}
+      {
+        "@type": "Person",
+        "name":"{{ auth.fullName }}",
+        "url":"{{ auth.bioUrl }}"}{% if not loop.last %}, {% endif %}
+    {% endfor %}],
+  "citation": 
+    [{% for pub in dataset.publications %}
+      "{{ pub.citation|trim }}"{% if not loop.last %}, {% endif %}
+    {% endfor %}],
+  "encoding": 
+    [{% for format in dataset.datasetFormats %}
+      {
+        "@type": "MediaObject",
+        "encodingFormat":"{{ format.getDisplayName }}"
+      }{% if not loop.last %}, {% endif %}
+    {% endfor %}],
+  "publisher": 
+    [{% for pubber in dataset.publishers %}
+      {
+        "@type": "Organization",
+        "name":"{{ pubber.getDisplayName }}",
+        "url":"{{ pubber.publisherUrl }}"
+      }{% if not loop.last %}, {% endif %}
+    {% endfor %}],
+  "mainEntityOfPage": "{{ app.request.uri }}",
+  "url": "{{ app.request.uri }}",
+  "includedInDataCatalog": {
+      "@type": "DataCatalog",
+      "name": "{{ site_name }}",
+      "keywords": ["science", "dataset", "research", "data", "data catalog"],
+      "url": "{{ site_base_url }}",
+      "creator": {
+        "@type":"Organization",
+        "name":"{{ site_provider_name }}",
+        "url":"{{ site_provider_url }}",
+        "parentOrganization": {
+          "@type":"Organization",
+          "name": "{{ institution_name }}",
+          "address":"{{ institution_address }}",
+          "url":"{{ institution_url }}"
+        }
+      }
+  },
+  "sameAs": 
+    [{% for accessPoint in dataset.dataLocations %}
+      {% if 'mailto' not in accessPoint.dataAccessUrl %}
+          "{{ accessPoint.getDataAccessUrl|trim }}"{% if not loop.last %}, {% endif %}
+      {% endif %}
+    {% endfor %}],
+  "provider": 
+    {% if dataset.origin == "External" %}
+      [{% for pubber in dataset.publishers %}
+        {
+          "@type": "Organization",
+          "name":"{{ pubber.getDisplayName }}",
+          "url":"{{ pubber.publisherUrl }}"
+        }{% if not loop.last %}, {% endif %}
+      {% endfor %}]
+    {% else %}    
+      {
+        "@type": "Organization",
+        "name":"{{ site_provider_name }}",
+        "url":"{{ site_provider_url }}"
+      }
+    {% endif %},
+    "sponsor": { 
+      {% if dataset.origin == "Internal" %} 
+        "@type":"Organization",
+        "name": "{{ institution_name }}",
+        "address":"{{ institution_address }}",
+        "url":"{{ institution_url }}"
+      {% endif %}
+    }
+
+}
+
+</script>
+{% endspaceless %}
+{% endmacro %}

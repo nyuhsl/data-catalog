@@ -180,7 +180,7 @@
        <dt>Dataset Type</dt>
        <dd>
       {% for type in dataset.dataTypes %}
-        <div class="multiple-item-list">{{ type.getDisplayName }}</div>
+        <div class="multiple-item-list"><a href="/search?keyword=data_types:{{ type.getDisplayName }}">{{ type.getDisplayName }}</a></div>
       {% endfor %}
       </dd>
       {% endif %}
@@ -207,22 +207,8 @@
         <dd><a target="_blank" href="{{ dataset.pubmedSearch }}">View articles which use this dataset</a></dd>
        
        {% if (dataset.relatedDatasets.count > 0) %}
-       <dt>Related Datasets</dt>
-        <dd id="related-datasets">
-         {% for related in dataset.relatedDatasets %}
-          <div class="multiple-item-list">
-           {{ render(controller('AppBundle:RelatedDataset:relatedDataset',{'id':related.relatedDatasetUid})) }}
-           {% if related.relationshipNotes %}
-           <p class="related-dataset-note">{{ related.relationshipNotes }}</p>
-           {% endif %}
-          </div>
-         {% endfor %}
-       </dd>
-         {% if (related.relationshipNotes is defined) %}
-         <dt>Related Dataset - Note</dt>
-         <dd>{{ related.relationshipNotes }}</dd>
-         {% endif %}
-     {% endif %}
+         {{ render(controller('AppBundle:RelatedDataset:relatedDataset',{'relatedDatasets':dataset.relatedDatasets})) }}
+       {% endif %}
      </dl>
     </div>
   </div>
