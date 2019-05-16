@@ -39,7 +39,6 @@ $(function () {
 
 
 {% block JSONLD_output %}
-<<<<<<< HEAD
 {% spaceless %}
 <script type="application/ld+json">
 {"@context": "http://schema.org",
@@ -100,9 +99,6 @@ $(function () {
 }
 </script>
 {% endspaceless %}
-=======
-{{ JSONLD_output(dataset) }}
->>>>>>> master
 {% endblock %}
 
 
@@ -212,8 +208,7 @@ $(function () {
            {% if correspondingAuthorExists %}
              <span class="corresponding-author-note">* Corresponding Author</span>
            {% endif %}
-           {% if i
-stitutionAuthorExists %}
+           {% if institutionAuthorExists %}
              <span class="institution-author-note">+ {{ institution_author_display }}</span>
            {% endif %}
   {%endif %}
@@ -488,7 +483,6 @@ stitutionAuthorExists %}
        {% endif %}
 
        {% if (dataset.relatedDatasets.count > 0) %}
-<<<<<<< HEAD
        <dt>Related Datasets</dt>
         <dd id="related-datasets">
          {% for related in dataset.relatedDatasets %}
@@ -507,10 +501,6 @@ stitutionAuthorExists %}
      {% endif %}
 		 <dt>Data Catalog Record Updated</dt>
 		 <dd>{{ dataset.dateUpdated|date("Y-m-d") }}</dd>
-=======
-         {{ render(controller('AppBundle:RelatedDataset:relatedDataset',{'relatedDatasets':dataset.relatedDatasets})) }}
-       {% endif %}
->>>>>>> master
      </dl>
     </div>
   </div>
