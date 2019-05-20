@@ -89,7 +89,7 @@ class Person {
   /**
    * @ORM\OneToMany(targetEntity="PersonAssociation", mappedBy="person")
    */
-  protected $dataset_associations;
+  protected $datasetAssociations;
 
 
   /**
