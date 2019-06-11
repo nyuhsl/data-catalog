@@ -179,7 +179,7 @@ $(function () {
        {% endif %}
      
 
-        {% if dataset.localExperts|length > 1 %}
+        {% if dataset.localExperts|length > 0 %}
          <dt>{{ local_expert_display }}</dt><dd>
          {% for expert in dataset.localExperts %}
             <div class="multiple-item-list">
