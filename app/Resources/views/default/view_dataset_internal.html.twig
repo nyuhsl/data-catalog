@@ -85,6 +85,8 @@ $(function () {
 								{% if author.getPerson.getBioUrl %}
 									{% if author.getPerson.getDatasetAssociations|length > 1 %}
 										{% set popoverContent = '<p><a href="' ~ author.getPerson.getBioUrl ~ '" target="_blank">View profile</a></p><p><a href="/search?keyword=authors:%22' ~ author.getPerson.getFullName ~ '%22" target="_blank">View other datasets</a></p>' %}
+									{% else %}
+										{% set popoverContent = '<p><a href="' ~ author.getPerson.getBioUrl ~ '" target="_blank">View profile</a></p>' %}
 									{% endif %}
 								{% else %}
 									{% if author.getPerson.getDatasetAssociations|length > 1 %}
@@ -109,6 +111,8 @@ $(function () {
 										{% if author.getPerson.getBioUrl %}
 											{% if author.getPerson.getDatasetAssociations|length > 1 %}
 												{% set popoverContent = '<p><a href="' ~ author.getPerson.getBioUrl ~ '" target="_blank">View profile</a></p><p><a href="/search?keyword=authors:%22' ~ author.getPerson.getFullName ~ '%22" target="_blank">View other datasets</a></p>' %}
+											{% else %}
+												{% set popoverContent = '<p><a href="' ~ author.getPerson.getBioUrl ~ '" target="_blank">View profile</a></p>' %}
 											{% endif %}
 										 {% else %}
 											{% if author.getPerson.getDatasetAssociations|length > 1 %}
