@@ -85,6 +85,8 @@ $(function () {
 								{% if author.getPerson.getBioUrl %}
 									{% if author.getPerson.getDatasetAssociations|length > 1 %}
 										{% set popoverContent = '<p><a href="' ~ author.getPerson.getBioUrl ~ '" target="_blank">View profile</a></p><p><a href="/search?keyword=authors:%22' ~ author.getPerson.getFullName ~ '%22" target="_blank">View other datasets</a></p>' %}
+									{% else %}
+										{% set popoverContent = '<p><a href="' ~ author.getPerson.getBioUrl ~ '" target="_blank">View profile</a></p>' %}
 									{% endif %}
 								{% else %}
 									{% if author.getPerson.getDatasetAssociations|length > 1 %}
@@ -109,6 +111,8 @@ $(function () {
 										{% if author.getPerson.getBioUrl %}
 											{% if author.getPerson.getDatasetAssociations|length > 1 %}
 												{% set popoverContent = '<p><a href="' ~ author.getPerson.getBioUrl ~ '" target="_blank">View profile</a></p><p><a href="/search?keyword=authors:%22' ~ author.getPerson.getFullName ~ '%22" target="_blank">View other datasets</a></p>' %}
+											{% else %}
+												{% set popoverContent = '<p><a href="' ~ author.getPerson.getBioUrl ~ '" target="_blank">View profile</a></p>' %}
 											{% endif %}
 										 {% else %}
 											{% if author.getPerson.getDatasetAssociations|length > 1 %}
@@ -179,7 +183,7 @@ $(function () {
        {% endif %}
      
 
-        {% if dataset.localExperts|length > 0 %}
+        {% if dataset.localExperts|length > 1 %}
          <dt>{{ local_expert_display }}</dt><dd>
          {% for expert in dataset.localExperts %}
             <div class="multiple-item-list">

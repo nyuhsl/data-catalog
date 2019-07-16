@@ -1,0 +1,92 @@
+##
+##
+## This is a sample parameters.yml file. Your installation will need at
+## least these parameters. Use this file to customize your installation
+## and tell Symfony about your database and Solr servers.
+##
+## This file must be copied into the ./dev/ and ./prod/ directories:
+## ./dev/parameters.yml will have your Dev database and Solr installation
+## ./prod/parameters.yml will have the production info
+##
+## If you use git/github, MAKE SURE ALL THESE FILES ARE IN YOUR .GITIGNORE!!!
+## You should see the line "app/config/**/parameters.yml" in there by default.
+##
+##
+
+
+parameters:
+  #
+  # Set these parameters for your installation so we can use them in our templates
+  # Some of this information is used in the Structured Data output
+  #
+    site_name: "Generic Data Catalog"
+    site_description: "This is a generic description of a generic data catalog."
+    site_base_url: "http://datacatalog.hsls.pitt.edu"
+    site_provider_name: "Generic Library or Department that Made the Data Catalog"
+    site_provider_url: "http://datacatalog.hsls.pitt.edu"
+    institution_name: "Generic Academic Institution"
+    institution_name_short: "Our Institution"
+    institution_address: "3550 Terrace Street, Pittsburgh, PA  USA"
+    institution_url: "http://www.pitt.edu"
+    
+    # Options for the contact form
+    contact_email_to: 
+    contact_email_from: 
+    institutional_affiliation_options:
+      - "Generic School of Medicine"
+      - "Generic School of Engineering"
+      - "Generic School of Etc."
+
+    # Badge to display for internal datasets
+    internal_dataset_text: "Internal Dataset"
+
+    # Tag to display for local experts (if you want to specify the institution)
+    local_expert_display: "Local Expert"
+
+
+  #
+  # Technical stuff
+  #
+    database_driver: pdo_mysql
+    database_name: nyudb_from_dc
+    database_host: 127.0.0.1
+    database_user: nyudbuser
+    database_password: m0re5mU
+    database_port: 3306
+    mailer_transport: smtp
+    mailer_host: 127.0.0.1
+    mailer_user: null
+    mailer_password: null
+    locale: en
+    secret: 01dMaNseDGET0ffofm1LAwN78uuY 
+    # If you're using LDAP authentication
+    ldap.host:
+    ldap.port: 
+
+  #
+  # Solr stuff. You mostly want to set the server URL.
+  # The other settings are a bit more involved to change.
+  #
+    solrsearchr_server: testbox1.hsls.pitt.edu:8983/solr/collection1/
+    solrsearchr_format: json
+    solrsearchr_facets:
+        - origin_fq
+        - subject_domain_fq
+        - subject_geographic_area_fq
+        - access_restrictions_fq
+    solrsearchr_fields_to_search: 
+        - _text_
+    solrsearchr_fields_to_display:
+        - id
+        - origin
+        - dataset_title
+        - dataset_alt_title
+        - authors
+        - description
+        - subject_domain
+        - access_restrictions
+        - local_experts
+        - subject_geographic_area
+        - dataset_start_date
+        - dataset_end_date
+
