@@ -4,6 +4,7 @@ namespace AppBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Form\Extension\Core\ChoiceList\ChoiceList;
 
 /**
  * Form builder for Person entry
@@ -35,12 +36,23 @@ class PersonType extends AbstractType {
    */
   public function buildForm(FormBuilderInterface $builder, array $options) {
     $builder->add('full_name');
-    $builder->add('kid');
+    $builder->add('works_here', 'checkbox', array(
+      'required'=>false,
+      'empty_data'=>null,
+      'label'=>'Affiliated with our institution?',
+    ));
+    $builder->add('kid', 'text', array(
+      'required'=>false,
+      'label'=>'Username',
+    ));
     $builder->add('orcid_id', 'text', array(
       'required' => false,
       'label'    => 'ORCID ID',
     ));
-    $builder->add('bio_url');
+    $builder->add('bio_url', 'text', array(
+      'required' => false,
+      'label'    => 'Bio URL'
+    ));
     $builder->add('email');
     $builder->add('save', 'submit');
   }
