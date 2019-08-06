@@ -85,7 +85,13 @@ class Person {
    */
   protected $email;
 
-  
+
+  /**
+   * @ORM\Column(type="boolean", options={"default"=false}, nullable=true)
+   */
+  protected $works_here;
+
+
   /**
    * @ORM\OneToMany(targetEntity="PersonAssociation", mappedBy="person")
    */
@@ -305,6 +311,32 @@ class Person {
         return $this->orcid_id;
     }
 
+
+    /**
+     * Set works_here
+     *
+     * @param string $worksHere
+     * @return Person
+     */
+    public function setWorksHere($worksHere)
+    {
+        $this->works_here = $worksHere;
+
+        return $this;
+    }
+
+
+    /**
+     * Get works_here
+     *
+     * @return string 
+     */
+    public function getWorksHere()
+    {
+        return $this->works_here;
+    }
+
+
     public function getDatasetAssociations()
     {
       return $this->datasetAssociations->toArray();
@@ -349,7 +381,8 @@ class Person {
         'first_name'=>$this->first_name,
         'orcid_id'=>$this->orcid_id,
         'bio_url'=>$this->bio_url,
-        'email'=>$this->email
+        'email'=>$this->email,
+        'works_here'=>$this->works_here
       );
     }
 }
