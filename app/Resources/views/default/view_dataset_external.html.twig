@@ -293,7 +293,10 @@ $(function () {
           <dd>
            {% for location in dataset.dataLocations %}
               <div class="multiple-item-list">
-               <a class="btn btn-primary" target="_blank" href="{{ location.getDataAccessUrl }}" onclick="trackOutboundLink('{{ location.getDataAccessUrl }}', '{{ dataset.title }} (via {{ location.getDataLocation }})');">Access via {{ location.getDataLocation }}</a><p class="data-location-description"><span class="data-location-title"></span> <span class="data-location-content">{{ location.getLocationContent }}</span>
+                {% if location.getDataAccessUrl is not null %}
+                  <a class="btn btn-primary" target="_blank" href="{{ location.getDataAccessUrl }}" onclick="trackOutboundLink('{{ location.getDataAccessUrl }}', '{{ dataset.title }} (via {{ location.getDataLocation }})');">Access via {{ location.getDataLocation }}</a>
+                {% endif %}
+                <p class="data-location-description"><span class="data-location-title"></span> <span class="data-location-content">{{ location.getLocationContent }}</span>
                {% if location.getAccessionNumber %}
                  <br/><span class="data-location-accession-number">Accession #: {{ location.getAccessionNumber  }}</span>
                {% endif %}

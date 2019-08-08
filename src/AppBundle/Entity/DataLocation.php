@@ -46,7 +46,7 @@ class DataLocation {
   protected $location_content;
 
   /**
-   * @ORM\Column(type="string",length=1028)
+   * @ORM\Column(type="string",length=1028, nullable=true)
    */
   protected $data_access_url;
 
