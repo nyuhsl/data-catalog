@@ -114,7 +114,7 @@ $(function () {
 								{% set popoverContent = popoverContent ~ '<p><a href="' ~ author.getPerson.getBioUrl ~ '" target="_blank">View profile</a></p>' %}
 							{% endif %}
 							{% if author.getPerson.getOrcidId %}
-								{% set popoverContent = popoverContent ~ '<p><a href="' ~ author.getPerson.getOrcidId ~ '" target="_blank">ORCID iD:'~author.getPerson.getOrcidId~'</a></p>' %}
+								{% set popoverContent = popoverContent ~ '<p><a href="' ~ author.getPerson.getOrcidId ~ '" target="_blank">ORCID Profile</a></p>' %}
 							{% endif %}
 							{% if author.getPerson.getDatasetAssociations|length > 1 %}
 								{% set popoverContent = popoverContent ~ '<p><a href="/search?keyword=authors:%22' ~ author.getPerson.getFullName ~ '%22" target="_blank">View other datasets</a></p>' %}
