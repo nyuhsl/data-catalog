@@ -105,7 +105,6 @@ $(function () {
 				<div class="dataset-authors-section">
 					<span class="dataset-detail-authors">Author(s):
 						{% set correspondingAuthorExists = false %}
-						{% set authorCount = 0 %}
 						{% for author in dataset.getAuthorships %}
 							{% set popoverContent = '' %}
 							{% set authorNote = '' %}
@@ -122,23 +121,12 @@ $(function () {
 							{% if author.isCorrespondingAuthor %}
 								{% set correspondingAuthorExists = true %}
 								{% set authorClass = authorClass ~ ' corresponding-author' %}
-								{% set authorNote = authorNote ~ '+' %}
+								{% set authorNote = authorNote ~ '*' %}
 							{% endif %}
 
-							{% if popoverContent %}<a tabindex="0" class="author-name" role="button" data-toggle="popover" title="{{ author.getPerson.getFullName }}" data-content="{{ popoverContent }}">{% endif %}<span class="{{ authorClass }}">{{ author.getPerson.getFullName }}</span><span class="author-note">{{ authorNote }}</span>{% if popoverContent %}</a>{% endif %}{% if not loop.last and authorCount != 4%}, {% endif %}
+							{% if popoverContent %}<a tabindex="0" class="author-name" role="button" data-toggle="popover" title="{{ author.getPerson.getFullName }}" data-content="{{ popoverContent }}">{% endif %}<span class="{{ authorClass }}">{{ author.getPerson.getFullName }}</span><span class="author-note">{{ authorNote }}</span>{% if popoverContent %}</a>{% endif %}{% if not loop.last %}, {% endif %}
 
-							{% set authorCount = authorCount + 1 %}
-							{% if authorCount == 5 and not loop.last %}
-								&hellip;<a class="collapsed-toggle authors-collapse" data-toggle="collapse" href="#collapsed-authors" aria-expanded="false" aria-controls="collapsed-authors">
-									 See more...
-								</a>
-								<div class="collapse" id="collapsed-authors">
-							{% endif %}
 						{% endfor %}
-
-						{% if authorCount > 4 %}
-								</div>
-						{% endif %}
 						
 					</span>
 					{% if correspondingAuthorExists %}
