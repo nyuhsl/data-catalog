@@ -15,11 +15,6 @@
         or <a href="{{ path('add_new_entity', {'entityName':entityName}) }}">add a new {{ displayName }}</a>
       </span>
     {% endif %}
-    {% if entityName == 'Dataset' and displayName != 'Archived Dataset' %}
-      <span class="view-archived-datasets-link">
-        <a href="{{ path('update_entity', {entityName:'ArchivedDatasets'}) }}">View archived datasets</a>
-      </span>
-    {% endif %}
     </p>
   </div>
 
