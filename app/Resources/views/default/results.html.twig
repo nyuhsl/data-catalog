@@ -132,7 +132,7 @@
              </dd>
              {% endif %}
 
-             <dt>Description</dt><dd><p>{{ item.description[0]|raw }}</p></dd>
+             <dt>Description</dt><dd><p>{{ item.description[0]|striptags|truncate(400, true) }}</p></dd>
 
              {% if item.subject_domain is defined and item.subject_domain[0] %}
                <dt>Subject</dt><dd>{% for subject in item.subject_domain %} 
@@ -140,11 +140,6 @@
                {% endfor %}</dd>
              {% endif %}
 
-             {% if item.subject_geographic_area is defined and item.subject_geographic_area[0] %}
-               <dt>Geographic Coverage</dt><dd>{% for area in item.subject_geographic_area %}
-                 <div class="multiple-item-list">{{ area }}</div>
-               {% endfor %}</dd>
-             {% endif %}
 
 							{% if item.dataset_start_date is defined and item.dataset_start_date|length and item.dataset_end_date is defined and item.dataset_end_date|length and item.dataset_start_date == item.dataset_end_date %}
 							<dt>Timeframe</dt>
