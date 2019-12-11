@@ -39,16 +39,28 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 class GeneralController extends Controller
 {
   /**
+   * Display splash page
+   *
+   * @return Response A Response instance
+   *
+   *
+   * @Route("/", name="homepage")
+   */
+  public function indexAction(Request $request) {
+    return $this->render('default/index.html.twig');
+  }
+
+
+  /**
    * Performs searches and produces results pages
    *
    * @param Request The current HTTP request
    *
    * @return Response A Response instance
    *
-   * @Route("/", name="homepage")
    * @Route("/search", name="user_search_results")
    */
-  public function indexAction(Request $request) {
+  public function searchAction(Request $request) {
     
     $currentSearch = new SearchState($request);
 

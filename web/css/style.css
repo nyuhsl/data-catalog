@@ -32,16 +32,17 @@ http://ryanfait.com/
   height:50px;
 }
 #page-header {
- height:100px;
- background: black;
+  background: black;
   position:relative;
-  padding:1em;
 }
 #page-header span {
   display:inline-block;
 }
 #header-logo {
-  height:75px;
+  height:42px;
+}
+.logos-container {
+  padding:.75em;
 }
 #content-wrapper {
   margin-bottom:5em;
@@ -52,10 +53,10 @@ http://ryanfait.com/
 .page-header.entities-list {
     overflow:hidden;
 }
-.pagetitle {
+.frontpage-sitename {
   color:white;
   vertical-align:bottom;
-  margin-left:3em;
+  margin-bottom:1.25em;
 }
 .pagetitlelink {
   color:rgb(243,243,243);
@@ -76,42 +77,43 @@ http://ryanfait.com/
   text-decoration:underline;
 }
 
-.nav-links {
-  display:inline-block;
-  position:absolute;
-  bottom:0;
-  right:0;
+.menu-bar {
+  background:white;
+  width:100%;
 }
-
-.nav-tabs {
+.menu-links {
   border-bottom:none;
+  list-style-type:none;
+  margin-bottom:0;
 }
-.nav-tabs li {
+.menu-links li {
   margin-bottom:0px;
+  display:inline-block;
+  padding:.5em .25em;;
+
 }
-.nav-tabs>li>a {
+.menu-links>li>a {
   border-radius:2px 2px 0px 0px;
-  
-  height:32px;
-}
-.nav-tabs>li>a {
-  padding:5px 15px;
-  color:rgb(200,200,200);
-}
-.nav-tabs>li>a:hover {
   color:black;
 }
-.nav-tabs>li:hover {
+.menu-links>li>a {
+  padding:5px 15px;
 }
-.nav-tabs>li.active>a {
-  background:#f8f8f8;
+.menu-links>li>a:hover {
+  color:#580f8b;
+  background:white;
+  border:none;
+  text-decoration:none;
+}
+.menu-links>li:hover {
+  background:white;
+}
+.menu-links>li.active>a {
   margin-right:0px;
 }
-.nav-tabs>li:not(.active) {
-  background: rgba(140,140,140,.42);
+.menu-links>li:not(.active) {
 }
-.nav-tabs>li.privileged-nav-link>a {
-  color:rgb(236, 161, 108);
+.menu-links>li.privileged-nav-link>a {
 }
 
 
@@ -163,6 +165,9 @@ a.skip:hover {
   width: 1px;
   text-align: left;
   overflow: hidden;
+}
+#keyword-search-form.input-group {
+  width:100%;
 }
 
 
@@ -283,12 +288,44 @@ li span.facet-numresults {
 .search-box-description {
 color:gray;
 }
-#search-header {
+#frontpage-search-container {
   text-align:center;
-  background:#f8f8f8;
+  background:black;
   width:100%;
   border-bottom:1px solid lightgray;
   padding:2em 15px;
+  margin-bottom:2em;
+}
+#frontpage-search-form-container {
+  margin:auto;
+  margin-bottom:-72px;
+  width:600px;
+}
+#frontpage-search-form-container #keyword-search-input {
+  padding:.75em;
+  height:auto;
+  font-size:1.25em;
+  background:#f7f7f7;
+}
+#frontpage-search-form-container #keyword-search-submit {
+  border-radius:0;
+  padding:.75em;
+  background: #580f8b;
+  background-image:none;
+  color:white;
+  text-shadow:none;
+  border:1px solid #580f8b;
+  font-size:1.25em;
+  margin-left:0px;
+}
+#frontpage-search-form-container #keyword-search-submit:hover {
+  background:#692d96;
+}
+#frontpage-search-form-container .input-group-btn {
+  font-size:inherit;
+}
+#frontpage-search-hints {
+  text-align:left;
 }
 
 
