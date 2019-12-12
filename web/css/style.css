@@ -89,7 +89,7 @@ http://ryanfait.com/
 .menu-links li {
   margin-bottom:0px;
   display:inline-block;
-  padding:.5em .25em;;
+  padding:.5em 1em;
 
 }
 .menu-links>li>a {
@@ -114,6 +114,9 @@ http://ryanfait.com/
 .menu-links>li:not(.active) {
 }
 .menu-links>li.privileged-nav-link>a {
+}
+.admin-menu-link a {
+  color:#e1480c !important;
 }
 
 
@@ -294,7 +297,7 @@ color:gray;
   width:100%;
   border-bottom:1px solid lightgray;
   padding:2em 15px;
-  margin-bottom:2em;
+  margin-bottom:3em;
 }
 #frontpage-search-form-container {
   margin:auto;
@@ -326,6 +329,10 @@ color:gray;
 }
 #frontpage-search-hints {
   text-align:left;
+}
+.search-hint {
+  text-decoration:underline;
+  padding:0em .3em;
 }
 
 

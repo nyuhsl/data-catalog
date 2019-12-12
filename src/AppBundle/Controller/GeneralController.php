@@ -39,15 +39,18 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 class GeneralController extends Controller
 {
   /**
-   * Display splash page
+   * Display splash page, checking if we have an institution-specific version first
    *
    * @return Response A Response instance
-   *
-   *
    * @Route("/", name="homepage")
    */
   public function indexAction(Request $request) {
-    return $this->render('default/index.html.twig');
+    if ($this->get('templating')->exists('institution/index.html.twig')) {
+      return $this->render('institution/index.html.twig',array()); 
+    }
+    else {
+      return $this->render('default/index.html.twig', array());
+    }
   }
 
 
@@ -57,7 +60,6 @@ class GeneralController extends Controller
    * @param Request The current HTTP request
    *
    * @return Response A Response instance
-   *
    * @Route("/search", name="user_search_results")
    */
   public function searchAction(Request $request) {
@@ -101,6 +103,48 @@ class GeneralController extends Controller
     }
     else {
       return $this->render('default/about.html.twig', array());
+    }
+
+  }
+
+
+  /**
+   * Produce How To Use the Catalog page, checking if we have an institution-
+   * specific version.
+   *
+   * @param Request The current HTTP request
+   *
+   * @return Response A Response instance
+   * @Route("/how-to-use-the-catalog", name="how_to_use_catalog")
+   */
+  public function howToUseTheCatalogAction(Request $request) {
+
+    if ($this->get('templating')->exists('institution/how_to_use_catalog.html.twig')) {
+      return $this->render('institution/how_to_use_catalog.html.twig',array()); 
+    }
+    else {
+      return $this->render('default/how_to_use_catalog.html.twig', array());
+    }
+
+  }
+
+
+  /**
+   * Produce the FAQ page, checking if we have an institution-
+   * specific version.
+   *
+   * @param Request The current HTTP request
+   *
+   * @return Response A Response instance
+   * @Route("/frequently-asked-questions", name="faq")
+   */
+  public function faqAction(Request $request) {
+
+    if ($this->get('templating')->exists('institution/faq.html.twig')) {
+      return $this->render('institution/faq.html.twig',array()); 
+    }
+    else {
+      return $this->render('default/faq.html.twig', array());
     }
 
   }
