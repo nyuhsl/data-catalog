@@ -1,6 +1,6 @@
 <div id="frontpage-search-container">
-  <div class="frontpage-sitename-container">
-    <h1 class="frontpage-sitename">{{ site_name }}</h1>
+  <div id="frontpage-sitename-container">
+    <h1 id="frontpage-sitename">{{ site_name }}</h1>
   </div>
   <div id="frontpage-search-form-container">
     <form id="keyword-search-form" class="input-group">
@@ -15,4 +15,5 @@
       try <a class="search-hint" href="/search?keyword=electronic health records">electronic health records</a> or <a class="search-hint" href="/search?keyword=health care costs">health care costs</a>
     </div>
   </div>
+  <a href="{{ path('contact') }}" id="frontpage-submit-dataset" aria-label="Submit your Dataset!">Submit Your Dataset!</a>
 </div>

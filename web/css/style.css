@@ -53,7 +53,7 @@ http://ryanfait.com/
 .page-header.entities-list {
     overflow:hidden;
 }
-.frontpage-sitename {
+#frontpage-sitename {
   color:white;
   vertical-align:bottom;
   margin-bottom:1.25em;
@@ -307,7 +307,7 @@ color:gray;
 #frontpage-search-form-container {
   margin:auto;
   margin-bottom:-72px;
-  width:600px;
+  width:550px;
 }
 #frontpage-search-form-container #keyword-search-input {
   padding:.75em;
@@ -317,7 +317,7 @@ color:gray;
 }
 #frontpage-search-form-container #keyword-search-submit {
   border-radius:0;
-  padding:.75em;
+  padding:.75em 1em;
   background: #580f8b;
   background-image:none;
   color:white;
@@ -339,6 +339,22 @@ color:gray;
   text-decoration:underline;
   padding:0em .3em;
 }
+#frontpage-submit-dataset {
+  background:#279989;
+  width:100px;
+  height:100px;
+  border-radius:50%;
+  display:inline-block;
+  float:right;
+  padding-top:30px;
+  color:white;
+  margin-top:-23px;
+  margin-right:8em;
+}
+#frontpage-submit-dataset:hover {
+  text-decoration:none;
+  background:#40C1AC;
+}
 /**********
  * interior page search container
  *********/
@@ -356,7 +372,7 @@ color:gray;
   color:white;
 }
 #interior-page-search-form-container {
-  width:50%;
+  width:40%;
   float:right;
   margin-right:5em;
 }
