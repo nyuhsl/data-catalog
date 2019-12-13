@@ -174,7 +174,9 @@ a.skip:hover {
 }
 
 
-#content {
+#homepage-container {
+  text-align:center;
+  padding-top:4em;
 }
 .update-dataset-link {
   padding-top:.5em;
@@ -291,6 +293,9 @@ li span.facet-numresults {
 .search-box-description {
 color:gray;
 }
+/***********
+ * Frontpage search container
+ ***********/
 #frontpage-search-container {
   text-align:center;
   background:black;
@@ -333,6 +338,48 @@ color:gray;
 .search-hint {
   text-decoration:underline;
   padding:0em .3em;
+}
+/**********
+ * interior page search container
+ *********/
+#interior-page-search-container {
+  overflow:hidden;
+  padding:1em;
+  background:black;
+}
+.interior-page-sitename-container {
+  width:20%;
+  float:left;
+}
+.interior-page-sitename {
+  margin:0;
+  color:white;
+}
+#interior-page-search-form-container {
+  width:50%;
+  float:right;
+  margin-right:5em;
+}
+#interior-page-search-form-container .input-group-btn {
+}
+#interior-page-search-form-container #keyword-search-submit {
+  border-radius:0;
+  padding:.25em .75em;
+  background: #580f8b;
+  background-image:none;
+  color:white;
+  text-shadow:none;
+  border:1px solid #580f8b;
+  margin-left:0px;
+}
+#interior-page-search-form-container #keyword-search-submit:hover {
+  background:#692d96;
+}
+#interior-page-search-form-container #keyword-search-input {
+  padding:.25em;
+  height:auto;
+  font-size:1em;
+  background:#f7f7f7;
 }
 
 
@@ -684,6 +731,12 @@ div.footer-wrapper {
         height: 175px;
         padding: 40px 0 30px 0;
         background: transparent;
+}
+.login-link {
+  margin:2em 5em;
+  color:gray;
+  display:inline-block;
+  
 }
 
 #footer_logo {

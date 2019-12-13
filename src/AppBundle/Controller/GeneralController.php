@@ -49,7 +49,7 @@ class GeneralController extends Controller
       return $this->render('institution/index.html.twig',array()); 
     }
     else {
-      return $this->render('default/index.html.twig', array());
+      return $this->render('index.html.twig', array());
     }
   }
 
@@ -102,7 +102,7 @@ class GeneralController extends Controller
       return $this->render('institution/about.html.twig',array()); 
     }
     else {
-      return $this->render('default/about.html.twig', array());
+      return $this->render('about.html.twig', array());
     }
 
   }
@@ -123,7 +123,7 @@ class GeneralController extends Controller
       return $this->render('institution/how_to_use_catalog.html.twig',array()); 
     }
     else {
-      return $this->render('default/how_to_use_catalog.html.twig', array());
+      return $this->render('how_to_use_catalog.html.twig', array());
     }
 
   }
@@ -144,7 +144,7 @@ class GeneralController extends Controller
       return $this->render('institution/faq.html.twig',array()); 
     }
     else {
-      return $this->render('default/faq.html.twig', array());
+      return $this->render('faq.html.twig', array());
     }
 
   }
