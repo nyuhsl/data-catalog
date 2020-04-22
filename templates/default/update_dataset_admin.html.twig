@@ -1,0 +1,266 @@
+{% extends 'base.html.twig' %}
+{% form_theme form with ['bootstrap_3_horizontal_layout.html.twig',
+                          _self] %}
+{% from 'default/_widget_prototype_macro.html.twig' import widget_prototype %}
+
+{% block page_title %}
+<title>Update a Dataset</title>
+{% endblock %}
+
+{% block page_stylesheets %}
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0-beta.3/css/select2.min.css" />
+{% endblock %}
+
+
+{% block page_scripts %}
+<script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0-beta.3/js/select2.min.js"></script>
+<script src="{{ asset('js/add_form.js') }}" type="text/javascript"></script>
+<script src="{{ asset('js/tak.js') }}" type="text/javascript"></script>
+{% endblock %}
+
+{% block form_group_class -%}
+col-sm-8
+{%- endblock form_group_class %}
+
+{% block form_label_class -%}
+col-sm-4
+{%- endblock form_label_class %}
+
+
+
+
+{% block content %}
+<div class="col-xs-7" >
+<div class="page-header">
+<div class="update-dataset-link">
+ <a href="{{ path('view_dataset',{'uid':uid}) }}">
+  View entry for this dataset
+ </a>
+</div>
+<h1>
+  Update dataset
+  {% if form.children.archived.vars.data == true %} 
+    <small>[ARCHIVED]</small>
+  {% endif %}
+</h1>
+</div>
+  {{ form_start(form) }}
+  {% if form.vars.valid == false %}
+    <div class="alert alert-danger"><strong>There was an error in this form</strong>. Please scroll down for more information.</div>
+  {% endif %}
+  {{ form_errors(form) }}
+  <fieldset>
+   <legend>General Dataset Information</legend>
+    {{ form_row(form.dataset_uid) }}
+    {{ form_row(form.title) }}
+    {# DATASET ALTERNATE TITLES #}
+      <div class="form-group multiple">
+        <label class="col-sm-4 control-label" for="{{ form.dataset_alternate_titles.vars.name }}">
+          {{ form.dataset_alternate_titles.vars.label }}
+        </label>
+        <div class="col-sm-8">
+          <a class="btn-add label label-success" data-target="add-{{ form.dataset_alternate_titles.vars.name}}">Add item</a>
+        </div>
+        <div class="add-{{ form.dataset_alternate_titles.vars.name}}" data-prototype="{{ widget_prototype(form.dataset_alternate_titles, 'Remove item')|escape }}">
+        {% for widget in form.dataset_alternate_titles %}
+          {{ widget_prototype(widget, 'Remove item') }}
+        {% endfor %}
+        </div>
+      </div>
+   {% if userIsAdmin %}
+    {{ form_row(form.origin) }}
+   {% endif %}
+    {{ form_row(form.description) }}
+    {{ form_row(form.subject_domains) }}
+    {{ form_row(form.subject_keywords) }}
+   {% if userIsAdmin %}
+    {{ form_row(form.published) }}
+   {% endif %}
+  </fieldset>
+  <fieldset>
+    <legend>Author Information</legend>
+    {# AUTHORS #}
+      <div class="form-group multiple">
+        <label class="col-sm-4 control-label" for="{{ form.authorships.vars.name }}">
+          {{ form.authorships.vars.label }}
+        </label>
+        <div class="col-sm-8">
+          <a class="btn-add label label-success" data-target="add-{{ form.authorships.vars.name}}">Add item</a>
+        </div>
+        <div class="add-{{ form.authorships.vars.name}}" data-prototype="{{ widget_prototype(form.authorships, 'Remove item')|escape }}">
+        {% for widget in form.authorships %}
+          {{ widget_prototype(widget, 'Remove item') }}
+        {% endfor %}
+        </div>
+      </div>
+      {{ form_row(form.publishers) }}
+  </fieldset>
+  <fieldset>
+    <legend>Data Location Information</legend>
+      {# DATA LOCATION URLS #}
+      <div class="form-group multiple">
+        <label class="col-sm-4 control-label" for="{{ form.data_locations.vars.name }}">
+          {{ form.data_locations.vars.label }}
+        </label>
+        <div class="col-sm-8">
+          <a class="btn-add label label-success" data-target="add-{{ form.data_locations.vars.name}}">Add item</a>
+        </div>
+        <div class="add-{{ form.data_locations.vars.name}}" data-prototype="{{ widget_prototype(form.data_locations, 'Remove item')|escape }}">
+        {% for widget in form.data_locations %}
+          {{ widget_prototype(widget, 'Remove item') }}
+        {% endfor %}
+        </div>
+      </div>
+     {% if userIsAdmin %}
+      {{ form_row(form.date_archived) }}
+     {% endif %}
+      {# OTHER RESOURCES #}
+      <div class="form-group multiple">
+        <label class="col-sm-4 control-label" for="{{ form.other_resources.vars.name }}">
+          {{ form.other_resources.vars.label }}
+        </label>
+        <div class="col-sm-8">
+          <a class="btn-add label label-success" data-target="add-{{ form.other_resources.vars.name}}">Add item</a>
+        </div>
+        <div class="add-{{ form.other_resources.vars.name}}" data-prototype="{{ widget_prototype(form.other_resources, 'Remove item')|escape }}">
+        {% for widget in form.other_resources %}
+          {{ widget_prototype(widget, 'Remove item') }}
+        {% endfor %}
+        </div>
+      </div>
+  </fieldset>
+  <fieldset>
+    <legend>Access</legend>
+      {{ form_row(form.access_instructions) }}
+      {% if userIsAdmin %}
+        {{ form_row(form.access_restrictions) }}
+      {% endif %}
+  </fieldset>
+  <fieldset>
+    <legend>Detailed Dataset Information</legend>
+      {{ form_row(form.study_types) }}
+      {{ form_row(form.subject_of_study) }}
+      {{ form_row(form.related_equipment) }}
+      {{ form_row(form.related_software) }}
+      {{ form_row(form.dataset_formats) }}
+      {{ form_row(form.dataset_size) }}
+      {{ form_row(form.data_types) }}
+      {{ form_row(form.data_collection_instruments) }}
+      {{ form_row(form.subject_start_date) }}
+      {{ form_row(form.subject_end_date) }}
+      {{ form_row(form.subject_genders) }}
+      {{ form_row(form.subject_sexes) }}
+      {{ form_row(form.subject_population_ages) }}
+      {{ form_row(form.subject_geographic_areas) }}
+      {{ form_row(form.subject_geographic_area_details) }}
+  </fieldset>
+  <fieldset>
+    <legend>Grants and Publications</legend>
+      {{ form_row(form.publications) }}
+      {{ form_row(form.awards) }}
+     {% if userIsAdmin %}
+      {# RELATED DATASETS #}
+      <div class="form-group multiple">
+        <label class="col-sm-4 control-label" for="{{ form.related_datasets.vars.name }}">
+          {{ form.related_datasets.vars.label }}
+        </label>
+        <div class="col-sm-8">
+          <a class="btn-add label label-success" data-target="add-{{ form.related_datasets.vars.name}}">Add item</a>
+        </div>
+        <div class="add-{{ form.related_datasets.vars.name}}" data-prototype="{{ widget_prototype(form.related_datasets, 'Remove item')|escape }}">
+        {% for widget in form.related_datasets %}
+          {{ widget_prototype(widget, 'Remove item') }}
+        {% endfor %}
+        </div>
+      </div>
+      {{ form_row(form.pubmed_search) }}
+     {% endif %}
+      {{ form_row(form.local_experts) }}
+  </fieldset>
+  {% if userIsAdmin %}
+  <fieldset>
+    <legend>Administration</legend>
+      {{ form_row(form.erd_url) }}
+      {{ form_row(form.library_catalog_url) }}
+      {{ form_row(form.licensing_details) }}
+      {{ form_row(form.license_expiration_date) }}
+      {{ form_row(form.subscriber) }}
+      {{ form_row(form.archived) }}
+      {{ form_row(form.archival_notes) }}
+  </fieldset>
+  <fieldset>
+      <legend></legend>
+      {{ form_row(form.last_edit_notes) }}
+  </fieldset>
+
+
+  {% endif %}
+  {{ form_widget(form._token) }}
+  {{ form_widget(form.save) }}
+
+    {% if form.vars.data.datasetEdits is not empty %}
+ 
+ 			<legend>Change Log</legend>
+ 
+        <div id="dataset-edits-panel">
+            {% for edit in form.vars.data.datasetEdits %}
+                <span class="dataset-created-by">
+                    <strong>{{ edit.editType|capitalize }} by <em>{{ edit.user }}</em> at {{ edit.timestamp|date('Y-m-d H:i:s') }}</strong>
+                    {% if edit.editNotes %}
+                        <br/>
+                        <span class="dataset-edit-notes">{{ edit.editNotes }}</span>
+                    {% endif %}
+                </span>
+                <br/>
+            {% endfor %}
+        </div>
+    {% endif %}
+		
+		
+			<legend>Temporary Access Keys</legend>
+
+			<div class="tak-panel">
+			{% if form.vars.data.tempAccessKeys is not empty %}
+
+				<ul>
+
+				{% for key in form.vars.data.tempAccessKeys %}
+					<li>
+						<div class="tak-entry" data-tak-uid="{{key.uuid}}">
+							<a href="/dataset/{{ uid }}?tak={{key.uuid}}">Preview link for {{ form.vars.data.title }}</a>, Generated at {{ key.generated|date('Y-m-d H:i:s') }}, First Access:
+							{% if key.firstAccess %}
+								{{ key.firstAccess|date('Y-m-d H:i:s') }}
+							{% else %}
+								<em>Not yet accessed</em>
+							{% endif %}
+							{{ date("now")|date("m/d/Y") }}
+							{% if key.firstAccess and date("now") > date(key.firstAccess|date_modify(tak_ttl)) %}
+								<span class="tak-expired">expired</span>
+							{% endif %}
+
+							<a class="btn-tak-remove label label-danger">Remove key</a>
+						</div>
+					</li>
+				
+				{% endfor %}
+			</ul>
+
+		{% endif %}
+		</div>
+		<a class="btn-tak-add label label-success">Add Temporary Access Key</a>
+
+</form>
+
+
+
+</div>
+
+<div id="addEntityFormModal" class="modal fade">
+  <div class="modal-dialog" >
+    <div id="addEntityFormModalContent" class="modal-content">
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+

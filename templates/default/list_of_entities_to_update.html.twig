@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block page_title %}
+ <title>Update Entities</title>
+{% endblock %}
+
+{% block content %}
+
+<div class="col-xs-7">
+  <div class="page-header entities-list">
+    <h1>View/Update {{ displayName }}</h1>
+    <p>
+    {% if displayName != 'Archived Dataset' %}
+      <span class="add-new-entity-link">
+        or <a href="{{ path('add_new_entity', {'entityName':entityName}) }}">add a new {{ displayName }}</a>
+      </span>
+    {% endif %}
+    {% if entityName == 'Dataset' and displayName != 'Archived Dataset' %}
+      <span class="view-archived-datasets-link">
+        <a href="{{ path('update_entity', {entityName:'ArchivedDatasets'}) }}">View archived datasets</a>
+      </span>
+    {% endif %}
+    </p>
+  </div>
+
+<ul>
+ 
+{% for entity in entities %}
+  {% if displayName == 'Archived Dataset' %}
+      <li class="entities-list-item">
+        <a href="{{ path('update_entity', {'entityName':entityName,'slug':entity.slug}) }}">{{ entity.getDisplayName }}</a>
+      </li>
+  {% elseif displayName == 'Dataset' and entity.getArchived|default(false) != true %}
+      <li class="entities-list-item">
+        <a href="{{ path('update_dataset', {'uid':entity.datasetUid}) }}">{{ entity.getDisplayName }}</a>
+      </li>
+  {% else %}
+    {% if entity.getArchived|default(false) != true %}
+      <li class="entities-list-item">
+        <a href="{{ path('update_entity', {'entityName':entityName,'slug':entity.slug}) }}">{{ entity.getDisplayName }}</a>
+      </li>
+    {% endif %}
+  {% endif %}
+{% endfor %}
+ 
+</ul>
+
+<div class="spacer25"></div>
+
+</div>
+
+{% endblock %}

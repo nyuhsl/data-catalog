@@ -1,0 +1,95 @@
+#
+#
+# !! NOTE:
+# !    Please disable the in_memory provider for production
+# !    It is meant for DEVELOPMENT only
+# !    Please read all comments below
+#
+#
+#
+# you can read more about security in the related section of the documentation
+# http://symfony.com/doc/current/book/security.html
+security:
+    # http://symfony.com/doc/current/book/security.html#encoding-the-user-s-password
+    encoders:
+      Symfony\Component\Security\Core\User\User: plaintext
+      App\Entity\Security\User: plaintext
+
+    # http://symfony.com/doc/current/book/security.html#hierarchical-roles
+    role_hierarchy:
+        ROLE_ADMIN:       ROLE_USER
+        ROLE_API_SUBMITTER: [ROLE_USER, ROLE_ADMIN]
+        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+
+    # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
+    providers:
+      # ! DISABLE the in_memory provider for prod
+      in_memory:
+         memory:
+           users:
+             admin: { password: adminpass, roles: [ 'ROLE_ADMIN' ] }
+             user: { password: userpass, roles: [ 'ROLE_USER' ] }
+      users:
+        entity: { class: App:Security\User }
+      api_provider:
+          entity: { class: App:Security\User, property: apiKey }
+
+    firewalls:
+        dev:
+            pattern:  ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        #login:
+        #    security: false
+        #default:
+        #    anonymous: ~
+        #    http_basic: ~
+
+        api:
+            pattern: ^/api
+            methods: [POST]
+            guard:
+              provider: api_provider
+              authenticators:
+                - app.api_token_authenticator
+        secured_area:
+            pattern: ^/
+            anonymous: ~
+            #
+            # ! The in_memory provider should be used in DEV ONLY
+            # !
+            # ! Please configure the LDAP authentication below, or
+            # ! use Symfony's native user management/auth if you don't
+            # ! want to tie in to your institutional system
+            #
+            form_login:
+              provider: in_memory
+              login_path: /login
+              check_path: /login_check
+              default_target_path: admin_panel
+            #form_login_ldap:
+            #  service: app.ldap
+            #  dn_string: ** FILL THIS OUT **
+            #  login_path: /login
+            #  check_path: /login_check
+            #  default_target_path: admin_panel
+            logout:
+              path: /logout
+              target: /
+
+
+    # http://symfony.com/doc/current/cookbook/security/access_control.html
+
+    # !!!! NOTE: this is a basic setup for DEVELOPMENT ONLY
+    # !!!! Production systems should require HTTPS
+    access_control:
+    #    - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+    #    - { path: ^/login_check, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        - { path: ^/add, roles: ROLE_USER }
+        - { path: ^/remove, roles: ROLE_ADMIN }
+        - { path: ^/update, roles: ROLE_ADMIN }
+        - { path: ^/admin, roles: ROLE_USER }
+        - { path: ^/dashboard, roles: ROLE_USER }
+        - { path: ^/users, roles: ROLE_ADMIN }
+        - { path: ^/manage, roles: ROLE_ADMIN }
+        - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api, roles: ROLE_API_SUBMITTER, methods: [POST], requires_channel: https }

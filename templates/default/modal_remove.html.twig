@@ -1,0 +1,21 @@
+{% form_theme form with ['bootstrap_3_layout.html.twig'] %}
+
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <h4 class="modal-title" id="add_entity_modal_title">REMOVE EXISTING {{ displayName }}</h4>
+</div>
+<div class="modal-body">
+<h5 class="remove-entity-warning">WARNING! This action cannot be undone!</h5>
+{{ form(form, {'attr':{'data-targetentity':entityName}}) }}
+<br/>
+</div>
+
+<div class="modal-footer">
+</div>
+
+<script>
+
+
+</script>

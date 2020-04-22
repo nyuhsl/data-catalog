@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+{% block page_scripts %}
+{% endblock %}
+
+
+
+{% block content %}
+{# {{ dump() }} #}
+<div class="col-xs-2" >
+<div class="spacer50"></div>
+</div>
+<div id="search-stats-header col-xs-offset-2" class="clearfix">
+<div class="col-xs-6" id="facet-breadcrumbs">
+ {% if currentSearch.keyword %}
+   <button class="keyword-breadcrumb btn btn-default btn-xs">
+     Keyword: "{{ currentSearch.keyword }}"
+   </button>
+   {% endif %} 
+ {% for facet in currentSearch.facets %}
+   {% set facetSplit = facet|split(':') %}
+    
+   <button data-machine-name="{{ facet }}" class="facetBreadcrumb btn btn-default btn-xs">
+    {{ results.facetMappings[facetSplit[0]] }}:{{ facetSplit[1] }} 
+   </button>
+ {% endfor %}
+</div>
+<div class="col-xs-4" id="sort-and-results">
+ <div id="dropdowns-wrapper">
+   <div id="sort-dropdown-wrapper">
+    <span class="dropdown-label"><label for="sort-dropdown">Sort by</label>:</span>
+    <select class="option-dropdown" name="results_sort" id="sort-dropdown" >
+      {% set sort_opts = ['name', 'relevance', 'date added', 'date published'] %}
+      {% for opt in sort_opts %}
+       {% if (opt == currentSearch.sort) %} 
+         <option selected>{{ opt }}</option>
+       {% else %} 
+         <option>{{ opt }}</option>
+       {% endif %}
+      {% endfor %}
+    </select>
+  </div>
+  <div id="results-dropdown-wrapper">
+   <span class="dropdown-label"><label for="results_pp-dropdown">Per page</label>:</span>
+   <select name="results_pp" class="option-dropdown" id="results_pp-dropdown">
+     {% set results_opts = ['10','25','50'] %}
+     {% for opt in results_opts %}
+       {% if (opt == currentSearch.resultsPP) %}
+         <option selected>{{ opt }}</option>
+       {% else %}
+         <option>{{ opt }}</option>
+       {% endif %}
+      {% endfor %}
+   </select>
+   </div>
+ </div>
+ {% if (results.numResults) %}
+   <div id="numresults-wrapper">
+   Results Found: <span id="number-of-results">{{ results.numResults }}</span>
+   </div>
+{% endif %}
+</div>
+</div>
+<div class="col-xs-8 col-xs-offset-2" id="results-container">
+ <div class="spacer25"></div>
+  <h2 class="no-results">Sorry, this search returned no results.</h2> 
+  <p>Please try removing some search criteria or <a href="/">starting over</a>.</p>
+  <div class="spacer50"></div>
+  <div class="spacer25"></div>
+  <h4>Still not finding what you're looking for?</h4>
+   <strong><a style="font-size:1.1em;" href="{{ path('contact') }}">Contact us</a></strong> to suggest new datasets or new topic areas to cover.
+ 
+
+
+
+
+
+
+
+
+
+</div>    
+</div>
+{% endblock %}

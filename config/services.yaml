@@ -5,6 +5,81 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
 
+    solrsearchr_server: localhost:8983/solr/mycore/
+    #solrsearchr_server: testbox1.hsls.pitt.edu:8983/solr/collection1/
+    solrsearchr_format: json
+    #
+    # Comment out any 'solrsearchr_facets' below that
+    # you don't want to appear on the results page.
+    #
+    solrsearchr_facets:
+        - origin_fq
+        - subject_domain_fq
+        - subject_geographic_area_fq
+        - access_restrictions_fq
+    solrsearchr_fields_to_search: 
+        - _text_
+    solrsearchr_fields_to_display:
+        - id
+        - origin
+        - dataset_title
+        - dataset_alt_title
+        - authors
+        - description
+        - subject_domain
+        - access_restrictions
+        - local_experts
+        - subject_geographic_area
+        - dataset_start_date
+        - dataset_end_date
+
+    #
+    # Set these parameters for your installation so we can use them in our templates
+    # Some of this information is used in the Structured Data output
+    #
+
+    site_name: "Generic Data Catalog"
+    site_description: "This is a generic description of a generic data catalog."
+    site_base_url: "http://www.example.com"
+    site_provider_name: "Generic Library or Department that Made the Data Catalog"
+    site_provider_url: "http://library.example.edu"
+    institution_name: "Generic Academic Institution"
+    institution_name_short: "Our Institution"
+    institution_address: "123 Fake Street, Springfield USA"
+    institution_url: "http://www.example.edu"
+    
+    # Options for the contact form
+    contact_email_to: 
+    contact_email_from: 
+    institutional_affiliation_options:
+      - "Generic School of Medicine"
+      - "Generic School of Engineering"
+      - "Generic School of Etc."
+
+    # Badge to display for internal datasets
+    internal_dataset_text: "Internal Dataset"
+
+    # Tag to display for local experts (if you want to specify the institution)
+    local_expert_display: "Local Expert"
+
+    # Time To Live for temporary access key links (in hours), in PHP DateInterval format  
+    tak_ttl: "+3days"
+
+    # If you're using LDAP authentication
+    ldap.host:
+    ldap.port: 
+
+
+    fs_solr:
+        endpoints:
+            core0:
+                schema: http
+                host: host
+                port: 8983
+                path: /solr/mycore
+                core: corename
+                timeout: 5
+
 services:
     # default configuration for services in *this* file
     _defaults:
@@ -25,3 +100,38 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    SolrSearchr:
+        class:  App\Service\SolrSearchr
+        public: true
+        arguments:  
+          - "%solrsearchr_server%"
+          - "%solrsearchr_format%"
+          - "%solrsearchr_facets%"
+          - "%solrsearchr_fields_to_display%"
+          - "%solrsearchr_fields_to_search%"
+
+    app.ldap:
+        class: Symfony\Component\Ldap\LdapClient
+        arguments: ["%ldap.host%", "%ldap.port%"]
+    app.user_checker:
+        class: App\Security\UserChecker
+        arguments: ["@doctrine.orm.entity_manager", "@monolog.logger"]
+    app.api_provider:
+        class: App\Security\ApiUserProvider
+        arguments: ["@doctrine.orm.entity_manager", "@monolog.logger"]
+    AppBundle.type.access_restriction_selector:
+        class: App\Form\Type\AccessRestrictionSelectorType
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+          - { name: form.type, alias: access_restriction_selector }
+    app.listener:
+        class: App\EventListener\DatasetEditListener
+        arguments: ["@security.token_storage"]
+        tags:
+          - { name: doctrine.event_listener, event: onFlush }
+    app.api_token_authenticator:
+        class: App\Security\ApiTokenAuthenticator
+    #    service_name:
+    #        class: AppBundle\Directory\ClassName
+    #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]

@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block page_stylesheets %}
+{% endblock %}
+
+
+{% block page_scripts %}
+{% endblock %}
+
+
+{% block content %}
+<div class="col-xs-5 col-xs-offset-2" >
+
+<h1>Dataset Administration</h1>
+<div class="spacer25"></div>
+
+<ul>
+ <li>
+  <a href="{{ path('approval_queue') }}">View Unpublished Datasets</a>
+ </li>
+ <li>
+  <a href="{{ path('add_dataset', {'entityName':'Dataset'}) }}">Add a New Dataset</a>
+ </li>
+ <li>
+  <a href="{{ path('update_entity', {'entityName':'Dataset'}) }}">Edit an Existing Dataset</a>
+ </li>
+ <div class="spacer25"></div>
+ <li>
+  <a href="{{ path('remove_entity', {'entityName':'Dataset'}) }}">Remove a Dataset</a>
+ </li>
+</ul>
+
+
+</div>
+
+{% endblock %}
+
