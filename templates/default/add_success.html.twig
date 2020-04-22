@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block page_title %}
+<title>Entity Added!</title>
+{% endblock %}
+
+{% block page_stylesheets %}
+{% endblock %}
+
+
+{% block page_scripts %}
+{% endblock %}
+
+
+{% block content %}
+<div class="col-xs-5" >
+<div class="page-header">
+<h1>New {{ displayName }} Added!</h1>
+</div>
+<p>
+The {{ displayName }} "{{ addedEntityName }}" was updated successfully.
+</p>
+<div class="spacer25"></div>
+<p>
+{% if userIsAdmin %}
+  {% if entityName == 'Dataset' %}
+    To view or make further edits, <a href="{{ path('update_dataset', {'uid':uid}) }}">click here</a>.
+    <br/>
+    <br/>
+    To add another dataset, <a href="{{ path('add_dataset') }}">click here</a>.
+  {% else %} 
+    To view or make further edits, <a href="{{ path('update_entity', {'slug':newSlug,'entityName':entityName}) }}">click here</a>.
+    <br/>
+    <br/>
+    To add another {{ displayName }}, <a href="{{ path('add_new_entity', {'entityName':entityName}) }}">click here</a>.
+  {% endif %}
+<br/><br/>
+{% else %}
+ Our staff will review your submission. Thank you for using the Data Catalog!
+{% endif %}
+</p>
+
+
+</div>
+
+{% endblock %}
+

@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block page_title %}
+<title>Dataset Added!</title>
+{% endblock %}
+
+{% block page_stylesheets %}
+{% endblock %}
+
+
+{% block page_scripts %}
+{% endblock %}
+
+
+{% block content %}
+<div class="col-xs-5" >
+<div class="page-header">
+<h1>New Dataset Added!</h1>
+</div>
+<p>
+The Dataset "{{ addedEntityName }}" was updated successfully.
+</p>
+<div class="spacer25"></div>
+<p>
+To view the dataset, <a href="{{ path('view_dataset', {'uid': datasetUid}) }}">click here</a>.
+</p>
+<p>
+To make further edits, <a href="{{ path('update_entity', {'uid': datasetUid, 'entityName':'Dataset'}) }}">click here</a>.
+<br/>
+To add another Dataset, <a href="{{ path('add_dataset') }}">click here</a>.
+</p>
+
+
+</div>
+
+{% endblock %}
+

@@ -1,0 +1,20 @@
+{% if queueLength > 0 %}
+ <span class="badge">{{ queueLength }}</span>
+   {#
+     <a href="{{ path('approval_queue') }}"><span class="queue-notification label label-default">
+     There
+      {% if queueLength == 1 %}
+       is
+      {% else %}
+       are
+      {% endif %}
+      {{ queueLength }} 
+      unpublished
+      {% if queueLength == 1 %}
+      dataset
+      {% else %}
+      datasets
+      {% endif %}
+     </span></a>
+#}
+{% endif %} 

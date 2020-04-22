@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block page_title %}
+ <title>Remove Entities</title>
+{% endblock %}
+
+{% block content %}
+
+<div class="col-xs-7">
+ <div class="page-header">
+ <h1>Choose a {{ displayName }} to REMOVE</h1>
+ </div>
+ <ul>
+ 
+ {% for entity in entities %}
+   {% if entityName == 'Dataset' %}
+     <li class="entities-list-item">
+      <a href="/remove/Dataset/{{ entity.getDatasetUid }}">{{ entity.getDisplayName }}</a>
+     </li>
+   {% else %}
+     <li class="entities-list-item">
+      <a href="/remove/{{ entityName }}/{{ entity.slug }}">{{ entity.getDisplayName }}</a>
+     </li>
+   {% endif %}
+ {% endfor %}
+ 
+ </ul>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,16 @@
+twig:
+    default_path: '%kernel.project_dir%/templates'
+    debug: '%kernel.debug%'
+    strict_variables: '%kernel.debug%'
+    globals:
+        site_description: '%site_description%'
+        site_name: '%site_name%'
+        site_base_url: '%site_base_url%'
+        site_provider_name: '%site_provider_name%'
+        site_provider_url: '%site_provider_url%'
+        institution_name: '%institution_name%'
+        institution_name_short: '%institution_name_short%'
+        institution_address: '%institution_address%'
+        institution_url: '%institution_url%'
+        internal_dataset_text: '%internal_dataset_text%'
+        local_expert_display: '%local_expert_display%'

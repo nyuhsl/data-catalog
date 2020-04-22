@@ -5,10 +5,19 @@
         "php": "^7.1.3",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "floriansemm/solr-bundle": "^1.7",
+        "sensio/framework-extra-bundle": "^5.2",
+        "symfony/asset": "4.2.*",
         "symfony/console": "4.2.*",
         "symfony/dotenv": "4.2.*",
         "symfony/flex": "^1.1",
+        "symfony/form": "4.2.*",
         "symfony/framework-bundle": "4.2.*",
+        "symfony/orm-pack": "^1.0",
+        "symfony/security-bundle": "4.2.*",
+        "symfony/security-core": "4.2.*",
+        "symfony/twig-bundle": "4.2.*",
+        "symfony/validator": "4.2.*",
         "symfony/yaml": "4.2.*"
     },
     "config": {
@@ -55,5 +64,8 @@
             "allow-contrib": false,
             "require": "4.2.*"
         }
+    },
+    "require-dev": {
+        "symfony/web-server-bundle": "4.2.*"
     }
 }

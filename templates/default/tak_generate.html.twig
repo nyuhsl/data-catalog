@@ -1,0 +1,45 @@
+<script>
+ 
+function copyToClipboard() {
+	//var frag=document.createDocumentFragment();
+	//var fragd=frag.appendChild(document.createElement('div'));
+	//var tlink=document.createElement('a');
+	//tlink.setAttribute('href', document.getElementById('generated-tak').getAttribute('href'));
+	//tlink.text=document.getElementById('generated-tak').text;
+	//fragd.appendChild(tlink);
+	//frag.appendChild(fragd);
+	//var thtml=fragd.innerHTML;
+	const el = document.createElement('textarea');
+	el.value = document.getElementById('generated-tak').getAttribute('href');
+	document.body.appendChild(el);
+	el.select();
+	document.execCommand('copy');
+	document.body.removeChild(el);
+};
+
+</script>
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <h4 class="modal-title" id="add_entity_modal_title">New Temporary Access Key</h4>
+</div>
+<div class="modal-body">
+
+<a id="generated-tak" href="{{ url('homepage') }}dataset/{{ dataset_uid }}?tak={{ uuid }}">Preview link for {{ dataset_title }}</a>&nbsp;:&nbsp;<a style="cursor: pointer;" onclick="copyToClipboard();">Copy to clipboard</a>
+</div>
+
+<div class="modal-footer">
+</div>
+
+<script>
+
+	if ($(".tak-panel ul").length==0) {
+		$(".tak-panel").append($("<ul>"));
+	}
+		
+	var new_tak=document.createElement("li");
+	new_tak.innerHTML='<div data-tak-uid="{{ uuid }}" class="tak-entry"><a href="{{ url('homepage') }}dataset/{{ dataset_uid }}?tak={{uuid}}">Preview link for {{ dataset_title }}</a>, Generated at {{ generated|date('Y-m-d H:i:s') }}, First Access: <em>Not yet accessed</em>&nbsp;<a class="btn-tak-remove label label-danger">Remove key</a></div>';
+	$(".tak-panel ul").append(new_tak);
+ 
+</script>

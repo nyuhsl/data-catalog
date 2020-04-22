@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+
+{% block content %}
+
+
+<div class="col-xs-6 col-xs-offset-2" id="login-form-container">
+
+  <h2>Login</h2>
+  {% if error %}
+      <div class="alert alert-danger" id="login-form-error">
+        <strong>
+         {{ error.messageKey }}
+        </strong>
+      </div>
+  {% endif %}
+  <form class="form-horizontal" action="{{ path('login_check') }}" method="post">
+    <div class="form-group">
+      <label class="col-sm-2 control-label" for="username">Username:</label>
+      <div class="col-sm-6">
+        <input class="form-control" type="text" id="username" name="_username" value="{{ last_username }}" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label" for="password">Password:</label>
+      <div class="col-sm-6">
+        <input type="password" class="form-control" id="password" name="_password" />
+      </div>
+    </div>
+      {#
+          If you want to control the URL the user
+          is redirected to on success (more details below)
+          <input type="hidden" name="_target_path" value="/account" />
+      #}
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" class="btn btn-default">Sign in</button>
+      </div>
+    </div>
+  </form>
+
+</div>
+
+{% endblock %}

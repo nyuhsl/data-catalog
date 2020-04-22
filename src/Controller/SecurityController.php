@@ -1,0 +1,76 @@
+<?php
+namespace App\Controller;
+
+use Symfony\Component\HttpFoundation\Response;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+
+
+/**
+ * A controller to log users in and out
+ *
+ *   This file is part of the Data Catalog project.
+ *   Copyright (C) 2016 NYU Health Sciences Library
+ *
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+class SecurityController extends Controller {
+
+  /**
+   * Login handler
+   *
+   * @param Request The current HTTP request
+   *
+   * @return Response A Response instance
+   *
+   * @Route("/login", name="login_route")
+   */
+  public function loginAction(Request $request) {
+    $authenticationUtils = $this->get('security.authentication_utils');
+
+    // get login error if exists
+    $error = $authenticationUtils->getLastAuthenticationError();
+
+    //last username entered by the user
+    $lastUsername = $authenticationUtils->getLastUsername();
+
+    return $this->render(
+      'security/login.html.twig',
+      array(
+        'last_username' => $lastUsername,
+        'error'         => $error,
+      )
+    );
+  }
+  
+  
+  /**
+   * Placeholder function for Symfony
+   *
+   * @Route("/login_check", name="login_check")
+   */
+  public function loginCheckAction(Request $request) {
+  }
+
+  /**
+   * Placeholder function for Symfony
+   *
+   * @Route("/logout", name="logout")
+   */
+  public function logoutAction(Request $request) {
+  }
+
+}
