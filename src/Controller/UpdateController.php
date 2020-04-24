@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Security;
 use App\Entity\Dataset;
 use App\Form\Type\DatasetAsUserType;
 use App\Form\Type\DatasetAsAdminType;
@@ -34,6 +35,12 @@ use App\Utils\Slugger;
  */
 class UpdateController extends Controller {
 
+  private $security;
+
+  public function __construct(Security $security) {
+    $this->security = $security;
+  }
+
 
   /**
    * Produce the form to update a dataset; validate and ingest
@@ -49,7 +56,7 @@ class UpdateController extends Controller {
    */
   public function UpdateDatasetAction($uid, Request $request) {
     $em = $this->getDoctrine()->getManager();
-    $userIsAdmin = $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN');
+    $userIsAdmin = $this->security->isGranted('ROLE_ADMIN');
     if ($uid == null) {
       $allEntities = $em->getRepository('App\Entity\Dataset')->findBy([], ['slug'=>'ASC']);
       return $this->render('default/list_of_entities_to_update.html.twig', array(
@@ -125,7 +132,7 @@ class UpdateController extends Controller {
    */
   public function UpdateUserAction($user, Request $request) {
     $em = $this->getDoctrine()->getManager();
-    $userIsAdmin = $this->get('security.context')->isGranted('ROLE_ADMIN');
+    $userIsAdmin = $this->security->isGranted('ROLE_ADMIN');
     if ($user == null) {
       $allEntities = $em->getRepository('App\Entity\Security\User')->findBy([], ['slug'=>'ASC']);
       return $this->render('default/list_of_entities_to_update.html.twig', array(
@@ -195,7 +202,7 @@ class UpdateController extends Controller {
     $entityTypeDisplayName = trim(preg_replace('/(?<!\ )[A-Z]/', ' $0', $entityName));
 
     $em = $this->getDoctrine()->getManager();
-    $userIsAdmin = $this->get('security.context')->isGranted('ROLE_ADMIN');
+    $userIsAdmin = $this->security->isGranted('ROLE_ADMIN');
 
     if ($slug == null) {
       if ($entityName == 'ArchivedDatasets') {

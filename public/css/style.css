@@ -1,0 +1,772 @@
+* {
+  margin: 0;
+}
+html, body {
+  height: 100%;
+}
+.page-wrapper {
+  min-height: 100%;
+  margin: 0 auto -175px; /* the bottom margin is the negative value of the footer's height */
+}
+footer, .push {
+  height: 175px; /* '.push' must be the same height as 'footer' */
+  clear:both;
+}
+
+/*
+
+Sticky Footer by Ryan Fait
+http://ryanfait.com/
+
+*/
+
+
+.label-warning {
+  background:#C25019;
+}
+
+.spacer25 {
+  height:25px;
+}
+.spacer50 {
+  height:50px;
+}
+#page-header {
+ height:100px;
+ background: black;
+  position:relative;
+  padding:1em;
+}
+#page-header span {
+  display:inline-block;
+}
+#header-logo {
+  height:75px;
+}
+#content-wrapper {
+  margin-bottom:5em;
+}
+.page-header {
+  margin-top:1em;
+}
+.page-header.entities-list {
+    overflow:hidden;
+}
+.pagetitle {
+  color:white;
+  vertical-align:bottom;
+  margin-left:3em;
+}
+.pagetitlelink {
+  color:rgb(243,243,243);
+}
+.pagetitlelink:hover {
+  color:white;
+  text-decoration:none;
+}
+
+#logged-in-badge {
+  text-align:right;
+  margin-right:.2em;
+  margin-bottom:1.25em;
+}
+
+.queue-notification:hover,
+.greeting:hover {
+  text-decoration:underline;
+}
+
+.nav-links {
+  display:inline-block;
+  position:absolute;
+  bottom:0;
+  right:0;
+}
+
+.nav-tabs {
+  border-bottom:none;
+}
+.nav-tabs li {
+  margin-bottom:0px;
+}
+.nav-tabs>li>a {
+  border-radius:2px 2px 0px 0px;
+  
+  height:32px;
+}
+.nav-tabs>li>a {
+  padding:5px 15px;
+  color:rgb(200,200,200);
+}
+.nav-tabs>li>a:hover {
+  color:black;
+}
+.nav-tabs>li:hover {
+}
+.nav-tabs>li.active>a {
+  background:#f8f8f8;
+  margin-right:0px;
+}
+.nav-tabs>li:not(.active) {
+  background: rgba(140,140,140,.42);
+}
+.nav-tabs>li.privileged-nav-link>a {
+  color:rgb(236, 161, 108);
+}
+
+
+.admin-nav-sidebar {
+  max-width:250px;
+  font-size:.9em;
+  margin-top:1em;
+  min-width:245px;
+  border-bottom:1px dotted gray;
+  padding:1em 1em 3em 1em;
+}
+.admin-nav-sidebar li.active>a {
+  background:#e8e8e8;
+  color:rgb(82, 82, 82);
+}
+.list-group-item.active>.badge, .nav-pills>.active>a>.badge {
+  color:white;
+  background:#777;
+}
+
+
+.skip {
+  position: absolute;
+  top: -1000px;
+  left: -1000px;
+  height: 1px;
+  width: 1px;
+  text-align: left;
+  overflow: hidden;
+}
+    
+a.skip:active, 
+a.skip:focus, 
+a.skip:hover {
+  position: relative;
+  left: 0; 
+  top: 0;
+  width: auto; 
+  height: auto; 
+  overflow: visible; 
+  display: block;
+}
+
+#keyword-search-form label {
+  position: absolute;
+  top: -1000px;
+  left: -1000px;
+  height: 1px;
+  width: 1px;
+  text-align: left;
+  overflow: hidden;
+}
+
+
+#content {
+}
+.update-dataset-link {
+  padding-top:.5em;
+}
+.update-dataset-link a,
+.entity-add-link,
+.entity-remove-link {
+  color:rgb(224, 101, 101);
+}
+.entity-remove-link:hover {
+  color:red;
+}
+.entities-list-item {
+  margin:.7em 0em;
+}
+
+.add-new-entity-link {
+    float:left;
+}
+.view-archived-datasets-link {
+    float:right;
+}
+#facets-pane {
+  padding:.5em;
+  border-right:1px solid lightgray;
+  border-bottom:1px solid lightgray;
+  
+}
+.facet-section {
+  padding:.5em;
+}
+.facetBreadcrumb {
+  margin:.25em;
+}
+
+.facetBreadcrumb:hover .facetRemove {
+  color:white;
+  font-weight:bold;
+}
+  
+#internal-only-filter-container {
+    padding-top:1.5em;
+    padding-left:1em;
+}
+.internal-dataset-badge {
+    margin-left:.35em;
+    display:inline-block;
+    font-size:.63em;
+    color:#ededed;
+    font-weight:bold;
+    background:#59228e;
+    padding:.35em;
+    vertical-align:top;
+}
+.internal-dataset-badge.details-page {
+    vertical-align:text-top;
+}
+
+
+button.nextPage {
+ float:right;
+}
+button.prevPage {
+ float:left;
+}
+
+#pagerContainer {
+ margin:0 auto;
+margin-top:1.5em;
+margin-bottom:10em;
+ width:70%;
+}
+
+#results-list {
+  padding-left:3em;
+}
+
+#results-list li {
+  padding:1.25em 0em;
+  border-bottom:1px solid lightgray;
+}
+
+#facets-list {
+  font-size:.9em;
+  padding-left:.25em;
+}
+
+#results-list dd,dt {
+  padding:.25em 0em;
+}
+
+.facet-header {
+  padding:.25em 0em;
+  border-bottom:1px solid lightgray;
+  color:rgb(100,100,100);
+}
+
+li.facet-item {
+  padding:.5em 0em;
+  overflow:auto;
+  font-size:.9em;
+}
+
+
+li span.facet-name {
+  float:left;
+}
+
+li span.facet-numresults {
+  float:right;
+  color:rgb(121,121,121);
+}
+
+.search-box-description {
+color:gray;
+}
+#search-header {
+  text-align:center;
+  background:#f8f8f8;
+  width:100%;
+  border-bottom:1px solid lightgray;
+  padding:2em 15px;
+}
+
+
+
+
+
+/**
+ * FORMS
+ **/
+a.btn-add {
+  cursor:pointer;
+}
+form .visual-break {
+  margin-top:3em !important;
+  border-top:1px solid rgb(140, 0, 197);
+  padding-top:3em !important;
+}
+
+.select2-container, .select2-drop, .select2-search, .select2-search input {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 100%;
+}
+.select2-container .select2-choice {
+    height: 34px;
+}
+.select2-container .select2-choice .select2-arrow {
+    display: none;
+}
+form.input-group {
+  width:50%;
+  margin:0 auto;
+  vertical-align:middle;
+}
+form.form-group input {
+}
+.form-horizontal .form-group  {
+  clear:both;
+  padding:1.25em 0em;
+  margin:0em;
+/*  border-top:1px dotted lightgray;*/
+  
+}
+fieldset {
+ margin-bottom:5em;
+}
+legend {
+ border-bottom:2px solid #59008D;
+ padding:.5em;
+ color:#59008D;
+}
+.form-group.multiple:first {
+  margin-top:3em;
+}
+.form-group.multiple div[class^="col-sm-"] {
+  padding-top:7px;
+}
+.form-group .control-label {
+  text-align:right;
+}
+:not(.radio) > label.required:not(.no-asterisk):before {
+  content: "* ";
+}
+
+.remove-entity-warning {
+  color:red;
+}
+
+#pager-wrapper {
+  text-align:right;
+  font-size:.9em;
+  float:right;
+  clear:both;
+}
+#pagenum-input {
+  border-radius:3px;
+  border:1px solid darkgray;
+  text-align:right;
+}
+
+#pager-wrapper .pager-text {
+  margin:.25em .5em;
+}
+  
+
+#search-stats-header {
+padding:.5em 0em;
+overflow:auto;
+}
+#sort-and-results select {
+  font-size:.8em;
+}
+
+#sort-and-results {
+  font-size:.9em;
+}
+
+#sort-and-results #dropdowns-wrapper {
+float:right;
+font-size:.9em;
+text-align:right;
+clear:both;
+margin-top:.25em;
+}
+
+#sort-dropdown-wrapper, #results-dropdown-wrapper {
+  display:inline-block;
+}
+
+#sort-and-results .dropdown-label {
+font-size:.9em;
+}
+
+#numresults-wrapper {
+float:right;
+clear:both;
+text-align:right;
+color:gray;
+font-size:.95em;
+margin-top:.25em;
+}
+#number-of-results {
+font-size:1.1em;
+}
+
+div[data-prototype] div[data-content] {
+  width:66%;
+  margin-left:34%;
+  padding:.25em;
+  clear:both;
+  border-radius:5px;
+  position:relative;
+  margin-top:1em;
+}
+
+
+div[data-prototype] div[data-content] .form-group {
+  border-top:none;
+  padding:0em;
+  margin-bottom:1.5em;
+}
+div[data-prototype] div[data-content] .form-group .col-sm-8 {
+  width:100% !important;
+}
+div[data-prototype] div[data-content] .btn-remove {
+  position:absolute;
+  right:19px;
+  bottom:7px;
+}
+
+form.remove-form button {
+  background:rgb(255, 62, 62);
+}
+
+.form-group.has-error .help-block,
+.form-group.has-error label {
+  color:red;
+}
+
+
+.modal-success.glyphicon-ok-sign {
+  font-size:4em;
+  color:green;
+}
+#added-entity-name {
+  font-weight:bold;
+}
+
+#dataset-edits-panel {
+  margin-top:7em;
+  font-size:.9em;
+}
+.dataset-created-by {
+    margin-bottom:.5em;
+    display:inline-block;
+}
+.dataset-edit-notes {
+    border-left:1px solid lightgray;
+    margin-left:2em;
+    padding-left:11px;
+}
+
+/**************
+ *
+ * DATASET DETAIL VIEW
+ *
+ *************/
+#dataset-detail-titlebox {
+  margin-bottom:1.5em;
+  border-bottom: 1px solid lightgray;
+}
+#dataset-detail-description dd,
+#dataset-detail-sidebar dd {
+  margin-bottom:1em;
+}
+
+#dataset-detail-description {
+  padding-right:35px;
+}
+
+
+.dataset-detail-alttitle,
+.dataset-detail-id,
+.dataset-detail-authors,
+.dataset-detail-issued {
+  color:gray;
+}
+.dataset-detail-access-instructions {
+  font-size:.9em;
+}
+
+.dataset-detail-authors {
+ margin-bottom:0em;
+}
+
+.dataset-authors-section {
+ margin-bottom:0em;
+}
+.corresponding-author-note {
+  font-size:.75em;
+  display:block;
+}
+.data-location-description {
+  font-size:.85em;
+  color:rgb(110,110,110);
+  margin-bottom:14px;
+}
+.data-location-title {
+  font-weight:bold;
+}
+
+.related-dataset-note,
+.other-resource-description {
+  padding-left:1em;
+  border-left:1px solid lightgray;
+  color:rgb(77,77,77);
+}
+
+#other-resources,
+#equipment-used,
+#software-used,
+#related-datasets {
+ font-size:.9em;
+}
+
+#subject-of-study .related-dataset-note {
+  font-size:0.9em;
+}
+
+#equipment-used .multiple-item-list,
+#software-used .multiple-item-list {
+  margin-bottom:10px;
+}
+.internal-dataset {
+  color:orange;
+  font-weight:bold;
+  font-size:45%;
+}
+
+.assoc-publication {
+ font-size:85%;
+ margin-bottom:1em;
+}
+
+.assoc-publication-link {
+ 
+}
+
+.grant-item {
+ margin-bottom:.75em;
+}
+
+.dataset-detail-authors .author-name {
+  cursor: pointer;
+}
+
+#suggest-dataset-link {
+  margin-top:10em;
+}
+
+a.authors-collapse {
+  font-size:11px;
+  margin-left:2em;
+
+}
+
+
+/*******************
+ *   CONTACT FORM
+ *****************/
+.reason-list {
+  height:100px;
+}
+#contact-form {
+}
+.contact-form-copy {
+  margin:2.5em 0em 4em 0em;
+  width:50%;
+}
+.button-centerer {
+  width:50%;
+  text-align:center;
+  margin-top:2em;
+  margin-bottom:8em;
+}
+.alert-success {
+  text-align:center;
+}
+#contactFormEmail .checker {
+  display:none;
+}
+
+
+/*****************
+ * ABOUT PAGE
+ * **************/
+.about-page-title {
+  margin:1em 0em;
+}
+
+/*****************
+ * TAK
+ * **************/
+
+.tak-expired {
+
+	color: red;
+	margin: 0 1em;
+	font-weight: bold;
+
+}
+
+
+/*****************
+ * FOOTER
+ * **************/
+#footer {
+        background-color: #333;
+        background: url(../img/background_gradient.gif) repeat-x 0 0 #333;
+        margin-top:7em;
+        clear:both;
+        width:100%;
+}
+div.footer-wrapper {
+        margin: 1em auto 0 auto;
+        position: relative;
+        min-height: 150px;
+        height: 175px;
+        padding: 40px 0 30px 0;
+        background: transparent;
+}
+
+#footer_logo {
+    float: right;
+    padding: 5px 0 0;
+    position: relative;
+    right: 1em;
+}
+p#phone_number {
+        position: absolute;
+        top: 42px;
+        right: 0;
+        color: #fff;
+        text-align: right;
+        padding-right: 20px;
+        background: url(../img/icon_phone.gif) no-repeat right top;
+}
+p#phone_number strong {
+        font-family: SortsMillGoudy, Georgia, "Times New Roman", Times, Serif;
+        display: block;
+        font-weight: bold;
+        font-size: 28px;
+        line-height: 24px;
+        letter-spacing: 2px;
+        *padding-bottom: 10px;
+}
+/* style to make the phone number white
+on mobile devices that convert this to a link */
+p#phone_number strong a {
+        color: #fff;
+}
+
+#footer_primary,
+#footer_secondary {
+        /*display: block;*/
+        /*ORIGINAL WIDTH width: 760px;*/
+        width: 85%;
+        zoom: 1;
+        clear: none;
+        margin: 0 0 15px 0;
+
+}
+#footer_primary:after,
+#footer_secondary:after {
+        content: '.';
+        display: block;
+        height: 0px;
+        visibility: hidden;
+        clear: both;
+}
+#footer_primary li,
+#footer_secondary li {
+        list-style: none;
+        float: left;
+        *display: inline;
+        padding: 0 15px 0 0;
+        font-size: 11px;
+        color: #ccc;
+}
+#footer_primary li {
+        padding: 0 15px 0 19px;
+        background: url(../img/bullet.gif) no-repeat left 8px;
+}
+#footer_primary li:first-child,
+#footer_primary li.first {
+        padding: 0 15px 0 0;
+        background: none;
+}
+#footer_primary li a,
+#footer_secondary li a {
+        color: #a5a5a5;
+        font-size: 16px;
+        border-bottom: 1px solid #333;
+        *zoom: 1;
+        background: transparent;
+}
+#footer_secondary li a {
+        color: #ccc;
+        font-size: 12px;
+}
+#footer_primary li a:hover,
+#footer_secondary li a:hover {
+        text-decoration: none;
+        border-bottom: 1px dotted #999;
+}
+#footer_logo { background-color: transparent; }
+#footer-copyright { position: absolute; left: 20px; bottom: 40px; }
+
+
+@media print {
+  *{transition:none!important;}
+
+  body {
+    font-size:18px;
+    width:100%;
+  }
+  nav.nav-links {
+    display:none !important;
+  }
+  a[href]:after {
+    content: none !important;
+  }
+  #page-header {
+    margin:1em 4em;
+    margin-bottom: 2em;
+  }
+  #search-header {
+    display:none !important;
+  }
+  #dataset-full-view-container {
+    width:85% !important;
+    margin-left:7em !important;
+    margin-bottom:5em;
+  }
+  dt {
+    margin-top:2em;
+  }
+  span.pagetitle {
+    display:inline-block;
+    background:white;
+    margin-left:3em;
+  }
+  div.update-dataset-link {
+    display:none;
+  }
+  div#suggest-dataset-link {
+    display:none;
+  }
+
+}

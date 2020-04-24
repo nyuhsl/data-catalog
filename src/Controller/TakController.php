@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\SearchResults;
 use App\Entity\SearchState;
@@ -38,6 +39,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 class TakController extends Controller
 {
   
+  private $security;
+
+  public function __construct(Security $security) {
+    $this->security = $security;
+  }
+
   /**
    * Create a TAK for a dataset
    *
@@ -51,7 +58,7 @@ class TakController extends Controller
 
   public function generateTak($uid, Request $request) {
   
-		if ($this->get('security.context')->isGranted('ROLE_ADMIN')) {
+		if ($this->security->isGranted('ROLE_ADMIN')) {
 
 			$dataset=$this->getDoctrine()->getRepository('AppBundle:Dataset')->findOneBy(array('dataset_uid'=>$uid));
 
@@ -113,7 +120,7 @@ class TakController extends Controller
 
 		$data = ['response'=>'DENIED','keys'=>[],'dataset'=>0];
 
-		if ($this->get('security.context')->isGranted('ROLE_ADMIN')) {
+		if ($this->security->isGranted('ROLE_ADMIN')) {
 
 			$dataset=$this->getDoctrine()->getRepository('AppBundle:Dataset')->findOneBy(array('dataset_uid'=>$uid));
 
@@ -158,7 +165,7 @@ class TakController extends Controller
 
 		$data = ['response'=>'DENIED', 'uuid'=>'', 'dataset'=>0];
 
-		if ($this->get('security.context')->isGranted('ROLE_ADMIN')) {
+		if ($this->security->isGranted('ROLE_ADMIN')) {
 
 			$tak=$this->getDoctrine()->getRepository('AppBundle:TempAccessKey')->findOneBy(array('uuid'=>$uuid));
 
