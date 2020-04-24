@@ -5,7 +5,7 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
 
-    solrsearchr_server: localhost:8983/solr/mycore/
+    solrsearchr_server: localhost:8983/solr/data-catalog/
     #solrsearchr_server: testbox1.hsls.pitt.edu:8983/solr/collection1/
     solrsearchr_format: json
     #

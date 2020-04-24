@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -36,6 +37,8 @@ use App\Utils\Slugger;
 class APIController extends Controller
 {
 
+  private $security;
+
   /**
    *  We have several pseudo-entities that all relate back to the Person
    *  entity. We'll check this array so we know if we encounter one of them.
@@ -46,6 +49,9 @@ class APIController extends Controller
      'CorrespondingAuthor',
   );
 
+  public function __construct(Security $security) {
+    $this->security = $security;
+  }
 
   /**
    * Produce the JSON output
@@ -134,7 +140,7 @@ class APIController extends Controller
     $submittedData = json_decode($request->getContent(), true);
     $dataset = new Dataset();
     $em = $this->getDoctrine()->getManager();
-    $userCanSubmit = $this->get('security.context')->isGranted('ROLE_API_SUBMITTER');
+    $userCanSubmit = $this->security->isGranted('ROLE_API_SUBMITTER');
 
     $datasetUid = $em->getRepository('AppBundle:Dataset')
                      ->getNewDatasetId();
@@ -192,7 +198,7 @@ class APIController extends Controller
       $addTemplate = 'add.html.twig';
     }
 
-    $userCanSubmit = $this->get('security.context')->isGranted('ROLE_API_SUBMITTER');
+    $userCanSubmit = $this->security->isGranted('ROLE_API_SUBMITTER');
     
     //prefix with namespaces so it can be called dynamically
     if (in_array($entityName, $this->personEntities)) {

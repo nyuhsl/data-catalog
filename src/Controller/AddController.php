@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Dataset;
 use App\Form\Type\DatasetAsAdminType;
@@ -34,6 +35,12 @@ use App\Utils\Slugger;
  */
 class AddController extends Controller {
 
+  private $security;
+
+  public function __construct(Security $security) {
+    $this->security = $security;
+  }
+
   /**
    *  We have several pseudo-entities that all relate back to the Person
    *  entity. We'll check this array so we know if we encounter one of them.
@@ -55,7 +62,7 @@ class AddController extends Controller {
    */
   public function addAction(Request $request) {
     $dataset = new Dataset();
-    $userIsAdmin = $this->get('security.context')->isGranted('ROLE_ADMIN');
+    $userIsAdmin = $this->security->isGranted('ROLE_ADMIN');
     $em = $this->getDoctrine()->getManager();
     $datasetUid = $em->getRepository('AppBundle:Dataset')
                      ->getNewDatasetId();
@@ -95,7 +102,7 @@ class AddController extends Controller {
   public function ingestDataset(Request $request) {
     $dataset = new Dataset();
     $em = $this->getDoctrine()->getManager();
-    $userIsAdmin = $this->get('security.context')->isGranted('ROLE_ADMIN');
+    $userIsAdmin = $this->security->isGranted('ROLE_ADMIN');
 
     $datasetUid = $em->getRepository('AppBundle:Dataset')
                      ->getNewDatasetId();
@@ -168,7 +175,7 @@ class AddController extends Controller {
       $successTemplate = "modal_" . $successTemplate;
     }
 
-    $userIsAdmin = $this->get('security.context')->isGranted('ROLE_ADMIN');
+    $userIsAdmin = $this->security->isGranted('ROLE_ADMIN');
     
     //make user-friendly name for display
     $entityTypeDisplayName = trim(preg_replace('/(?<!\ )[A-Z]/', ' $0', $entityName));

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,6 +33,11 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
  */
 class CacheController extends Controller {
 
+  private $security;
+
+  public function __construct(Security $security) {
+    $this->security = $security;
+  }
 
   /**
    * Clear the APC cache if user has admin privileges
@@ -44,7 +50,7 @@ class CacheController extends Controller {
    */
   public function clearCache(Request $request) {
 
-    $userIsAdmin = $this->get('security.context')->isGranted('ROLE_ADMIN');
+    $userIsAdmin = $this->security->isGranted('ROLE_ADMIN');
 
     if ($userIsAdmin) {
       apc_clear_cache();
@@ -68,7 +74,7 @@ class CacheController extends Controller {
    */
   public function viewCache(Request $request) {
 
-    $userIsAdmin = $this->get('security.context')->isGranted('ROLE_ADMIN');
+    $userIsAdmin = $this->security->isGranted('ROLE_ADMIN');
 
     if ($userIsAdmin) {
       return new Response(var_dump(apc_cache_info()));

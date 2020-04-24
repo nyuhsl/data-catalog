@@ -5,6 +5,7 @@ namespace App\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Dataset;
 use App\Form\Type\DatasetAsAdminType;
@@ -33,6 +34,12 @@ use App\Utils\Slugger;
  */
 class RemoveController extends Controller {
 
+  private $security;
+
+  public function __construct(Security $security) {
+    $this->security = $security;
+  }
+
   /**
    * Remove a dataset
    *
@@ -45,7 +52,7 @@ class RemoveController extends Controller {
    */
   public function removeDatasetAction($uid, Request $request) {
     $em = $this->getDoctrine()->getManager();
-    $userIsAdmin = $this->get('security.context')->isGranted('ROLE_ADMIN');
+    $userIsAdmin = $this->security->isGranted('ROLE_ADMIN');
 
     if ($uid == null) {
       $allEntities = $em->getRepository('App\Entity\Dataset')->findBy([], ['slug'=>'ASC']);
@@ -110,7 +117,7 @@ class RemoveController extends Controller {
 
     $em = $this->getDoctrine()->getManager();
 
-    $userIsAdmin = $this->get('security.context')->isGranted('ROLE_ADMIN');
+    $userIsAdmin = $this->security->isGranted('ROLE_ADMIN');
 
     if ($slug == null) {
       $allEntities = $em->getRepository($removeEntity)->findAll();

@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Security;
 use App\Entity\SearchResults;
 use App\Entity\SearchState;
 use App\Entity\Dataset;
@@ -39,6 +40,12 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
   */
 class GeneralController extends Controller
 {
+  private $security;
+
+  public function __construct(Security $security) {
+    $this->security = $security;
+  }
+
   /**
    * Performs searches and produces results pages
    *
@@ -85,7 +92,7 @@ class GeneralController extends Controller
    */
   public function aboutAction(Request $request) {
 
-    if ($this->get('templating')->exists('institution/about.html.twig')) {
+    if ($this->get('twig')->getLoader()->exists('institution/about.html.twig')) {
       return $this->render('institution/about.html.twig',array()); 
     }
     else {
@@ -176,7 +183,7 @@ class GeneralController extends Controller
 
 		$view_access=true;
 
-		if (!$dataset->getPublished() && !$this->get('security.context')->isGranted('ROLE_ADMIN')) {
+		if (!$dataset->getPublished() && !$this->security->isGranted('ROLE_ADMIN')) {
 			
 			$view_access=false;
 			
