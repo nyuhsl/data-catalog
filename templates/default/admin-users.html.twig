@@ -5,7 +5,10 @@
 {% endblock %}
 
 {% block content %}
-<div class="col-xs-7">
+<div class="container-fluid">
+<div class="row">
+{% include 'default/_admin-sidebar-menu.html.twig' %}
+<div class="col-7">
  <div class="page-header">
   <h1>Manage Users of this Website</h1>
   </div>
@@ -20,5 +23,6 @@
 </div> 
 
  </div>
-
+</div>
+</div>
 {% endblock %}
