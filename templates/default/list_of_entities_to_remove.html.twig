@@ -5,8 +5,10 @@
 {% endblock %}
 
 {% block content %}
-
-<div class="col-xs-7">
+<div class="container-fluid">
+<div class="row">
+{% include 'default/_admin-sidebar-menu.html.twig' %}
+<div class="col-7">
  <div class="page-header">
  <h1>Choose a {{ displayName }} to REMOVE</h1>
  </div>
@@ -26,6 +28,8 @@
  
  </ul>
 
+</div>
+</div>
 </div>
 
 {% endblock %}

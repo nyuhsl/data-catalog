@@ -1,0 +1,33 @@
+      {# ADMIN NAV SIDEBAR #}
+      {% if is_granted('ROLE_USER') and adminPage is defined and adminPage==true %}
+        <div class="admin-nav-sidebar col-3">
+        <ul class="nav flex-column nav-pills">
+        {% if is_granted('ROLE_ADMIN') %}
+        <li class="nav-item {% if app.request.get('_route') == 'approval_queue' %}active{% endif %}" role="presentation">
+          <a class="nav-link" href="{{ path('approval_queue') }}">View Unpublished Datasets
+          {{ render(controller('App\\Controller\\QueueController:queueLengthAction')) }}
+        </a>
+         </li>
+        {% endif %}
+        <li class="nav-item {% if app.request.get('_route') == 'add_dataset' or app.request.get('_route') =='ingest_dataset' %}active{% endif %}" role="presentation">
+          <a class="nav-link" href="{{ path('add_dataset', {'entityName':'Dataset'}) }}">Add a New Dataset</a>
+         </li>
+        {% if is_granted('ROLE_ADMIN') %}
+        <li class="nav-item {% if 'update/Dataset' in app.request.requestUri  %}active{% endif %}" role="presentation">
+          <a class="nav-link" href="{{ path('update_entity', {'entityName':'Dataset'}) }}">Edit an Existing Dataset</a>
+         </li>
+         <div class="spacer25"></div>
+        <li class="nav-item {% if app.request.get('_route') == 'admin_manage' or ('update' in app.request.requestUri and 'update/Dataset' not in app.request.requestUri and 'update/User' not in app.request.requestUri) %}active{% endif %}" role="presentation">
+          <a class="nav-link" href="{{ path('admin_manage') }}">Manage Related Entities</a>
+         </li>
+        <li class="nav-item {% if app.request.get('_route') == 'admin_users' or 'update/User' in app.request.requestUri %}active{% endif %}" role="presentation">
+          <a class="nav-link" href="{{ path('admin_users') }}">Manage Website Users</a>
+         </li>
+         <div class="spacer25"></div>
+         <li class="nav-item {% if 'remove/Dataset' in app.request.requestUri %}active{% endif %}" role="presentation">
+          <a class="nav-link" href="{{ path('remove_entity', {'entityName':'Dataset'}) }}">Remove a Dataset</a>
+         </li>
+        {% endif %}
+        </ul>
+        </div>
+      {% endif %}
