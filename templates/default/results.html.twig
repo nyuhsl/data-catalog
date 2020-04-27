@@ -24,7 +24,54 @@
 {% endblock %}
 
 {% block content %}
-<div class="col-sm-10 right-pane col-sm-push-2 clearfix">
+<div class="container-fluid">
+<div class="row">
+<div class="col-2" id="facets-pane">
+<h4 class="facet-pane-header">Filter by</h4>
+
+  <div class="checkbox facet-section" id="internal-only-filter-container">
+    <label>
+      <input 
+        class="" 
+        {% if "origin_fq:Internal" in currentSearch.facets %}
+          checked="checked"
+        {% endif %}
+        type="checkbox" 
+        id="internal-only-filter"
+      >
+        {{ institution_name_short }} Datasets Only 
+    </label>
+  </div>
+  {% for category,facets in results.facets if category != 'Origin' %}
+    {% set facetSection = [] %}
+    {% for facet in facets %} 
+     {% set fullFacet = results.facetMappings[category] ~ ':"' ~ facet.facetItem ~ '"' %}
+     {% if fullFacet not in currentSearch.facets %}
+       {% set facetSection = facetSection|merge([facet]) %}
+     {% endif %}
+    {% endfor %}
+    {% if facetSection|length > 0 %}
+     <div class="facet-section">
+      <h5 class="facet-header">{{ category }}</h5>
+        <ul class="facets-list list-unstyled">
+      {% for facet in facetSection %}
+        {% if facet.facetItem != '' and facet.facetCount is defined and facet.facetCount > 0 %}
+          <li class="facet-item">
+            <span class="facet-name">
+              <a href="#" data-solrfacetcategory="{{ results.facetMappings[category] }}" data-solrfacetvalue="{{ facet.facetItem }}">{{ facet.facetItem }}</a>
+             </span>
+            <span class="facet-numresults">
+              {{ facet.facetCount }}
+            </span>
+          </li>
+          {% endif %}
+      {% endfor %}
+        </ul>
+       </div>
+     {% endif %}
+   {% endfor %}
+</div>
+<div class="col-sm-10 right-pane clearfix">
 <div class="row">
 <div class="col-sm-8" id="facet-breadcrumbs">
  {% if currentSearch.keyword %}
@@ -101,7 +148,7 @@
 </div>
 </div>
 <div class="row">
-<div class="col-sm-11" id="results-container">
+<div class="col-sm-10" id="results-container">
   <ul id="results-list" class="list-unstyled">
    {% for item in results.resultItems %}
     <li class="dataset-summary"> 
@@ -192,49 +239,6 @@
 </div>
 </div>
 </div>
-<div class="col-sm-2 col-sm-pull-10" id="facets-pane">
-<h4 class="facet-pane-header">Filter by</h4>
-
-  <div class="checkbox facet-section" id="internal-only-filter-container">
-    <label>
-      <input 
-        class="" 
-        {% if "origin_fq:Internal" in currentSearch.facets %}
-          checked="checked"
-        {% endif %}
-        type="checkbox" 
-        id="internal-only-filter"
-      >
-        {{ institution_name_short }} Datasets Only 
-    </label>
-  </div>
-  {% for category,facets in results.facets if category != 'Origin' %}
-    {% set facetSection = [] %}
-    {% for facet in facets %} 
-     {% set fullFacet = results.facetMappings[category] ~ ':"' ~ facet.facetItem ~ '"' %}
-     {% if fullFacet not in currentSearch.facets %}
-       {% set facetSection = facetSection|merge([facet]) %}
-     {% endif %}
-    {% endfor %}
-    {% if facetSection|length > 0 %}
-     <div class="facet-section">
-      <h5 class="facet-header">{{ category }}</h5>
-        <ul class="facets-list list-unstyled">
-      {% for facet in facetSection %}
-        {% if facet.facetItem != '' and facet.facetCount is defined and facet.facetCount > 0 %}
-          <li class="facet-item">
-            <span class="facet-name">
-              <a href="#" data-solrfacetcategory="{{ results.facetMappings[category] }}" data-solrfacetvalue="{{ facet.facetItem }}">{{ facet.facetItem }}</a>
-             </span>
-            <span class="facet-numresults">
-              {{ facet.facetCount }}
-            </span>
-          </li>
-          {% endif %}
-      {% endfor %}
-        </ul>
-       </div>
-     {% endif %}
-   {% endfor %}
+</div>
 </div>
 {% endblock %}
