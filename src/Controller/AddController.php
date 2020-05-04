@@ -64,12 +64,13 @@ class AddController extends Controller {
     $dataset = new Dataset();
     $userIsAdmin = $this->security->isGranted('ROLE_ADMIN');
     $em = $this->getDoctrine()->getManager();
-    $datasetUid = $em->getRepository('AppBundle:Dataset')
+    $datasetUid = $em->getRepository('App:Dataset')
                      ->getNewDatasetId();
     $dataset->setDatasetUid($datasetUid);
 
     if ($userIsAdmin) {
-      $form = $this->createForm(new DatasetAsAdminType($userIsAdmin, $datasetUid), $dataset, array(
+      $form = $this->createForm(DatasetAsAdminType::class, $dataset, array(
+	  'datasetUid' => $datasetUid,
           'action' => $this->generateUrl('ingest_dataset')));
       return $this->render('default/add_dataset_admin.html.twig', array(
         'form'=> $form->createView(),
@@ -77,7 +78,8 @@ class AddController extends Controller {
         'userIsAdmin'=>$userIsAdmin,
       ));
     } else {
-      $form = $this->createForm(new DatasetAsUserType($userIsAdmin, $datasetUid), $dataset, array(
+      $form = $this->createForm(DatasetAsUserType::class, $dataset, array(
+	  'datasetUid' => $datasetUid,
           'action' => $this->generateUrl('ingest_dataset')));
       return $this->render('default/add_dataset_user.html.twig', array(
         'form'=> $form->createView(),
@@ -109,9 +111,11 @@ class AddController extends Controller {
     $dataset->setDatasetUid($datasetUid);
     
     if ($userIsAdmin) {
-      $form = $this->createForm(new DatasetAsAdminType($userIsAdmin, $datasetUid), $dataset);
+      $form = $this->createForm(DatasetAsAdminType::class, $dataset, array(
+	  'datasetUid' => $datasetUid));
     } else {
-      $form = $this->createForm(new DatasetAsUserType($userIsAdmin, $datasetUid), $dataset);
+      $form = $this->createForm(DatasetAsUserType::class, $dataset, array(
+	  'datasetUid' => $datasetUid));
     }
 
     $form->handleRequest($request);

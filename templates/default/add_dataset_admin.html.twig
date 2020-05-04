@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-{% form_theme form with ['bootstrap_3_horizontal_layout.html.twig', _self] %}
+{% form_theme form with ['bootstrap_4_horizontal_layout.html.twig', _self] %}
 {% from 'default/_widget_prototype_macro.html.twig' import widget_prototype %}
 
 {% block page_title %}
@@ -27,7 +27,9 @@ col-sm-4
 
 
 {% block content %}
-<div class="col-xs-7" >
+<div class="container">
+<div class="row justify-content-center">
+<div class="col-9" >
 <div class="page-header">
 <h1>Add a new dataset</h1>
 <p class="text-muted"><small>Note: Any Local Experts or Authors associated with this dataset <a href="{{ path('add_new_entity', {'entityName':'Person'}) }}">must be in the system</a> before filling out this form.</small></p>
@@ -38,12 +40,12 @@ col-sm-4
   {% endif %}
   {{ form_errors(form) }}
   <fieldset>
-   <legend>General Dataset Information</legend>
+   <legend class="section-header">General Dataset Information</legend>
     {{ form_row(form.dataset_uid) }}
     {{ form_row(form.title) }}
     {# DATASET ALTERNATE TITLES #}
-      <div class="form-group multiple">
-        <label class="col-sm-4 control-label" for="{{ form.dataset_alternate_titles.vars.name }}">
+      <div class="form-group row multiple">
+        <label class="col-sm-4 col-form-label" for="{{ form.dataset_alternate_titles.vars.name }}">
           {{ form.dataset_alternate_titles.vars.label }}
         </label>
         <div class="col-sm-8">
@@ -66,9 +68,9 @@ col-sm-4
     {% endif %}
   </fieldset>
   <fieldset>
-    <legend>Author Information</legend>
+    <legend class="section-header">Author Information</legend>
     {# AUTHORS #}
-      <div class="form-group multiple">
+      <div class="form-group row multiple">
         <label class="col-sm-4 control-label" for="{{ form.authorships.vars.name }}">
           {{ form.authorships.vars.label }}
         </label>
@@ -86,9 +88,9 @@ col-sm-4
       {% endif %}
   </fieldset>
   <fieldset>
-    <legend>Data Location Information</legend>
+    <legend class="section-header">Data Location Information</legend>
       {# DATA LOCATION URLS #}
-      <div class="form-group multiple">
+      <div class="form-group row multiple">
         <label class="col-sm-4 control-label" for="{{ form.data_locations.vars.name }}">
           {{ form.data_locations.vars.label }}
         </label>
@@ -105,7 +107,7 @@ col-sm-4
         {{ form_row(form.date_archived) }}
       {% endif %}
       {# OTHER RESOURCES #}
-      <div class="form-group multiple">
+      <div class="form-group row multiple">
         <label class="col-sm-4 control-label" for="{{ form.other_resources.vars.name }}">
           {{ form.other_resources.vars.label }}
         </label>
@@ -120,14 +122,14 @@ col-sm-4
       </div>
   </fieldset>
   <fieldset>
-    <legend>Access</legend>
+    <legend class="section-header">Access</legend>
       {{ form_row(form.access_instructions) }}
       {% if userIsAdmin %}
         {{ form_row(form.access_restrictions) }}
       {% endif %}
   </fieldset>
   <fieldset>
-    <legend>Detailed Dataset Information</legend>
+    <legend class="section-header">Detailed Dataset Information</legend>
       {{ form_row(form.study_types) }}
       {{ form_row(form.subject_of_study) }}
       {{ form_row(form.related_equipment) }}
@@ -145,12 +147,12 @@ col-sm-4
       {{ form_row(form.subject_geographic_area_details) }}
   </fieldset>
   <fieldset>
-    <legend>Grants and Publications</legend>
+    <legend class="section-header">Grants and Publications</legend>
       {{ form_row(form.publications) }}
       {{ form_row(form.awards) }}
       {% if userIsAdmin %}
       {# RELATED DATASETS #}
-      <div class="form-group multiple">
+      <div class="form-group row multiple">
         <label class="col-sm-4 control-label" for="{{ form.related_datasets.vars.name }}">
           {{ form.related_datasets.vars.label }}
         </label>
@@ -172,7 +174,7 @@ col-sm-4
   </fieldset>
   {% if userIsAdmin %}
   <fieldset>
-    <legend>Administration</legend>
+    <legend class="section-header">Administration</legend>
       {{ form_row(form.erd_url) }}
       {{ form_row(form.library_catalog_url) }}
       {{ form_row(form.licensing_details) }}
@@ -187,9 +189,8 @@ col-sm-4
 
 
 </form>
-
-
-
+</div>
+</div>
 </div>
 
 <div id="addEntityFormModal" class="modal fade">
