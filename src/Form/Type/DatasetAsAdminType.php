@@ -3,7 +3,7 @@ namespace App\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Doctrine\ORM\EntityRepository;
 
 use Symfony\Component\Form\Extension\Core\ChoiceList\ChoiceList;
@@ -43,54 +43,20 @@ class DatasetAsAdminType extends AbstractType {
 
   protected $years;
   protected $yearsIncludingPresent;
-  protected $userIsAdmin;
-  protected $datasetUid;
+  protected $options;
 
-  public function __construct($userIsAdmin = null, $datasetUid=0) {
+  public function __construct(array $options = []) {
     $this->years = range(date('Y'),1790);
     $yearList = range(date('Y'),1790);
     array_unshift($yearList, "Present");
     $this->yearsIncludingPresent = array_combine($yearList, $yearList);
-    $this->userIsAdmin = $userIsAdmin;
-    $this->datasetUid = $datasetUid;
+
+    $resolver = new OptionsResolver();
+    $this->configureOptions($resolver);
+
+    $this->options = $resolver->resolve($options);
   }
   
-  /**
-   * set userIsAdmin
-   *
-   * @param boolean $userIsAdmin
-   */
-  public function setUserIsAdmin($userIsAdmin) {
-    $this->userIsAdmin = $userIsAdmin;
-  }
-
-  /**
-   * get userIsAdmin
-   *
-   * @return boolean
-   */
-  public function getUserIsAdmin() {
-    return $this->userIsAdmin;
-  }
-
-  /**
-   * set datasetUid
-   *
-   * @param integer $datasetUid
-   */
-  public function setDatasetUid($datasetUid) {
-    $this->datasetUid = $datasetUid;
-  }
-
-  /**
-   * get datasetUid
-   *
-   * @return integer
-   */
-  public function getDatasetUid() {
-    return $this->datasetUid;
-  }
-
   /**
    * Build the form
    *
@@ -101,7 +67,7 @@ class DatasetAsAdminType extends AbstractType {
     //identifying information
     $builder->add('dataset_uid', TextareaType::class, array(
       'disabled' => true,
-      'data'     => $this->datasetUid,
+      'data'     => $options['datasetUid'],
       'label'    => 'Dataset ID',
     ));
     $builder->add('title', TextareaType::class, array(
@@ -467,12 +433,15 @@ class DatasetAsAdminType extends AbstractType {
   /**
    * Set defaults
    *
-   * @param OptionsResolverInterface
+   * @param array 
    */
-  public function setDefaultOptions(OptionsResolverInterface $resolver) {
+  public function configureOptions(OptionsResolver $resolver) {
+
     $resolver->setDefaults(array(
       'data_class' => 'App\Entity\Dataset',
+      'datasetUid' => null,
     ));
+
   }
 
 }

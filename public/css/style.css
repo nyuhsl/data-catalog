@@ -336,7 +336,7 @@ form.form-group input {
 fieldset {
  margin-bottom:5em;
 }
-legend {
+legend.section-header {
  border-bottom:2px solid #59008D;
  padding:.5em;
  color:#59008D;
