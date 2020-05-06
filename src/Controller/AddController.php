@@ -191,17 +191,18 @@ class AddController extends Controller {
       $newEntity = 'App\Entity\\Person';
     } else {
       $newEntity = 'App\Entity\\' . $entityName;
+      
     }
     $newEntityFormType = 'App\Form\Type\\' . $entityName . "Type";
 
     $em = $this->getDoctrine()->getManager();
-    $form = $this->createForm(new $newEntityFormType(), 
+    $form = $this->createForm($newEntityFormType, 
                               new $newEntity(),
                               array(
                                 'action'=>$action,
                                 'method'=>'POST'));
     $form->handleRequest($request);
-    if ($form->isValid()) {
+    if ($form->isSubmitted() && $form->isValid()) {
       $entity = $form->getData();
 
       // Create a slug using each entity's getDisplayName method
