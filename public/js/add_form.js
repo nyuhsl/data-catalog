@@ -39,7 +39,7 @@ jQuery(function($) {
   function makeAddNewLink() {
     sel = $(this);
     if (sel.attr('multiple') !== undefined) {
-      var thisField = sel.attr('id').replace('dataset_','');
+      var thisField = sel.attr('id').replace('dataset_as_admin_','');
       thisField = toTitleCase(thisField.replace(/_/g,' ')).replace(/ /g,'');
       if (thisField.charAt(thisField.length - 1) == 's') {
         thisField = thisField.substr(0, thisField.length - 1);
