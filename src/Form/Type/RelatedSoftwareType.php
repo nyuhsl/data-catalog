@@ -46,7 +46,7 @@ class RelatedSoftwareType extends AbstractType {
       'label'=>'Software URL',
       'required'=>false,
     ));
-    $builder->add('save','submit',array('label'=>'Submit'));
+    $builder->add('save',SubmitType::class,array('label'=>'Submit'));
   }
 
   /**

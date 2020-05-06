@@ -37,7 +37,7 @@ class PublisherType extends AbstractType {
   public function buildForm(FormBuilderInterface $builder, array $options) {
     $builder->add('publisher_name');
     $builder->add('publisher_url');
-    $builder->add('save','submit',array('label'=>'Submit'));
+    $builder->add('save',SubmitType::class,array('label'=>'Submit'));
   }
 
   /**

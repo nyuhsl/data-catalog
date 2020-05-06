@@ -39,7 +39,7 @@ class SubjectDomainType extends AbstractType {
     $builder->add('mesh_code', 'text', array(
       'label' => 'MeSH URI',
     ));
-    $builder->add('save','submit',array('label'=>'Submit'));
+    $builder->add('save',SubmitType::class,array('label'=>'Submit'));
   }
 
   /**

@@ -46,7 +46,7 @@ class DataCollectionInstrumentType extends AbstractType {
       'label'=>'Notes',
       'required'=>false
     ));
-    $builder->add('save','submit',array('label'=>'Submit'));
+    $builder->add('save',SubmitType::class,array('label'=>'Submit'));
   }
 
   /**
