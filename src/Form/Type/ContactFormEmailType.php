@@ -70,7 +70,7 @@ class ContactFormEmailType extends AbstractType {
       'required'=>false,
       'attr'=>array('class'=>'checker'),
       'label_attr'=>array('class'=>'no-asterisk checker')));
-    $builder->add('save','submit',array('label'=>'Send'));
+    $builder->add('save',SubmitType::class,array('label'=>'Send'));
   }
 
 

@@ -44,7 +44,7 @@ class PublicationType extends AbstractType {
     $builder->add('doi', 'text',array(
      'required'=>false,
      'label'   => 'DOI'));
-    $builder->add('save','submit',array('label'=>'Submit'));
+    $builder->add('save',SubmitType::class,array('label'=>'Submit'));
   }
 
   /**

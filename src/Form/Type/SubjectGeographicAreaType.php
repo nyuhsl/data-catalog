@@ -37,7 +37,7 @@ class SubjectGeographicAreaType extends AbstractType {
   public function buildForm(FormBuilderInterface $builder, array $options) {
     $builder->add('geographic_area_name');
     $builder->add('geographic_area_authority');
-    $builder->add('save','submit',array('label'=>'Submit'));
+    $builder->add('save',SubmitType::class,array('label'=>'Submit'));
   }
 
   /**

@@ -48,7 +48,7 @@ class AwardType extends AbstractType {
       'required'=>false,
       'label'=>'NIH Reporter URL',
     ));
-    $builder->add('save','submit',array('label'=>'Submit'));
+    $builder->add('save',SubmitType::class,array('label'=>'Submit'));
   }
 
   public function setDefaultOptions(OptionsResolverInterface $resolver) {

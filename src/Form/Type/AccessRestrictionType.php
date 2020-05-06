@@ -37,7 +37,7 @@ class AccessRestrictionType extends AbstractType {
    */
   public function buildForm(FormBuilderInterface $builder, array $options) {
     $builder->add('restriction');
-    $builder->add('save','submit',array('label'=>'Submit'));
+    $builder->add('save',SubmitType::class,array('label'=>'Submit'));
   }
 
   /**

@@ -36,7 +36,7 @@ class SubjectGenderType extends AbstractType {
    */
   public function buildForm(FormBuilderInterface $builder, array $options) {
     $builder->add('subject_gender');
-    $builder->add('save','submit',array('label'=>'Submit'));
+    $builder->add('save',SubmitType::class,array('label'=>'Submit'));
   }
 
   /**

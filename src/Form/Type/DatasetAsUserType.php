@@ -144,7 +144,7 @@ class DatasetAsUserType extends AbstractType {
     ));
 
 
-    $builder->add('save','submit',array(
+    $builder->add('save',SubmitType::class,array(
       "label"=>"Submit",
       'attr'=>array('class'=>'spacer')));
      
