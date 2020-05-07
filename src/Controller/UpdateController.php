@@ -206,7 +206,7 @@ class UpdateController extends Controller {
 
     if ($slug == null) {
       if ($entityName == 'ArchivedDatasets') {
-          $allEntities = $em->getRepository('AppBundle:Dataset')->findAllArchived();
+          $allEntities = $em->getRepository('App:Dataset')->findAllArchived();
           $entityName = 'Dataset';
           $entityTypeDisplayName = 'Archived Dataset';
       } else {

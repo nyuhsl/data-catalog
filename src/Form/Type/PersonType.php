@@ -5,6 +5,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 /**
  * Form builder for Person entry
@@ -37,7 +38,7 @@ class PersonType extends AbstractType {
   public function buildForm(FormBuilderInterface $builder, array $options) {
     $builder->add('full_name');
     $builder->add('kid');
-    $builder->add('orcid_id', 'text', array(
+    $builder->add('orcid_id', Text::class, array(
       'required' => false,
       'label'    => 'ORCID ID',
     ));

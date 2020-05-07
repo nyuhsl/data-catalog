@@ -5,6 +5,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 /**
  * Form builder for Related Equipment entry
@@ -37,7 +38,7 @@ class RelatedEquipmentType extends AbstractType {
   public function buildForm(FormBuilderInterface $builder, array $options) {
     $builder->add('related_equipment');
     $builder->add('equipment_description');
-    $builder->add('equipment_url', 'text', array(
+    $builder->add('equipment_url', TextType::class, array(
       'label' => 'Equipment URL',
       'required' => false
     ));

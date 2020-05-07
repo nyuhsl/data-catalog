@@ -60,13 +60,13 @@ class TakController extends Controller
   
 		if ($this->security->isGranted('ROLE_ADMIN')) {
 
-			$dataset=$this->getDoctrine()->getRepository('AppBundle:Dataset')->findOneBy(array('dataset_uid'=>$uid));
+			$dataset=$this->getDoctrine()->getRepository('App:Dataset')->findOneBy(array('dataset_uid'=>$uid));
 
 			if ($dataset) {
 
 				do {
 					$uuid=uniqid( true );
-				} while($this->getDoctrine()->getRepository('AppBundle:TempAccessKey')->findOneBy(array('uuid'=>$uuid)));
+				} while($this->getDoctrine()->getRepository('App:TempAccessKey')->findOneBy(array('uuid'=>$uuid)));
 
 				$em = $this->getDoctrine()->getManager();
 				$tak = new \App\Entity\TempAccessKey;
@@ -122,11 +122,11 @@ class TakController extends Controller
 
 		if ($this->security->isGranted('ROLE_ADMIN')) {
 
-			$dataset=$this->getDoctrine()->getRepository('AppBundle:Dataset')->findOneBy(array('dataset_uid'=>$uid));
+			$dataset=$this->getDoctrine()->getRepository('App:Dataset')->findOneBy(array('dataset_uid'=>$uid));
 
 			if ($dataset) {
 
-				$taks=$this->getDoctrine()->getRepository('AppBundle:TempAccessKey')->findBy(array('dataset_association'=>$dataset->getId() ));
+				$taks=$this->getDoctrine()->getRepository('App:TempAccessKey')->findBy(array('dataset_association'=>$dataset->getId() ));
 
 				foreach($taks as $t=>$v) {
 
@@ -167,7 +167,7 @@ class TakController extends Controller
 
 		if ($this->security->isGranted('ROLE_ADMIN')) {
 
-			$tak=$this->getDoctrine()->getRepository('AppBundle:TempAccessKey')->findOneBy(array('uuid'=>$uuid));
+			$tak=$this->getDoctrine()->getRepository('App:TempAccessKey')->findOneBy(array('uuid'=>$uuid));
 
 			if ($tak) {
 

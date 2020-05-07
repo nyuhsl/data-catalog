@@ -47,6 +47,6 @@ class ApiUserProvider implements UserProviderInterface {
      * @return Boolean
      */
     function supportsClass($class) {
-        return $class === 'AppBundle\Entity\Security\User';
+        return $class === 'App\Entity\Security\User';
     }
 }

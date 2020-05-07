@@ -5,6 +5,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 /**
  * Form builder for Publication entry
@@ -35,13 +37,13 @@ class PublicationType extends AbstractType {
    * @param array $options
    */
   public function buildForm(FormBuilderInterface $builder, array $options) {
-    $builder->add('citation', 'textarea', array(
+    $builder->add('citation', TextareaType::class, array(
       'attr' => array('rows'=>'7')
     ));
-    $builder->add('url', 'text', array(
+    $builder->add('url', TextType::class, array(
       'label'=>'URL',
       'required'=>false));
-    $builder->add('doi', 'text',array(
+    $builder->add('doi', TextType::class,array(
      'required'=>false,
      'label'   => 'DOI'));
     $builder->add('save',SubmitType::class,array('label'=>'Submit'));

@@ -5,6 +5,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 /**
  * Form builder for Subject of Study entry
@@ -35,8 +36,8 @@ class SubjectOfStudyType extends AbstractType {
    * @param array $options
    */
   public function buildForm(FormBuilderInterface $builder, array $options) {
-    $builder->add('subject_of_study', 'text', array('label'=>'Subject of Study'));
-    $builder->add('species', 'text', array(
+    $builder->add('subject_of_study', TextType::class, array('label'=>'Subject of Study'));
+    $builder->add('species', TextType::class, array(
       'label'=>'Species (Strain)',
       'required'=>false,
     
