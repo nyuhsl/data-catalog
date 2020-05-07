@@ -9,7 +9,11 @@
 <div class="modal-body">
 
 {{ form(form, {'attr':{'data-targetentity':entityName}}) }}
-<img src="/img/ajax-loader.gif" id="loading-indicator" style="display:none" />
+<div class="text-center">
+  <div id="loading-indicator" class="spinner-grow" style="display:none; width: 3rem; height: 3rem;" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+</div>
 <br/>
 </div>
 

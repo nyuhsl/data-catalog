@@ -87,7 +87,8 @@ jQuery(function($) {
       // find out the new entity's name and type, and which <select> element we're dealing with here
       var displayName = $('#addEntityFormModalContent #entity-display-name').attr('data-displayname');
       var addedEntityName = $('#addEntityFormModalContent #added-entity-name').text().trim();
-      var selectBoxId = 'select#dataset_' + displayName.replace(/ /g,'_') +'s';
+      var selectBoxId = 'select#dataset_as_admin_' + displayName.replace(/ /g,'_') +'s';
+        console.log(selectBoxId);
       if (!$(selectBoxId).length){selectBoxId = selectBoxId.slice(0,-1);}
       // Symfony uses the actual database IDs as the values in <select> option lists. To trick Symfony
       // into accepting our brand-new item, we need to calculate its database ID and use it as the option value
