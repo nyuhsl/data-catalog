@@ -75,13 +75,13 @@ class APIController extends Controller
 
     if ($uid == "all") {
       $datasets = $qb->select('d')
-                     ->from('AppBundle:Dataset', 'd')
+                     ->from('App:Dataset', 'd')
                      ->where('d.archived = 0 OR d.archived IS NULL')
                      ->andWhere('d.published = 1')
                      ->getQuery()->getResult();
     } else {
       $datasets = $qb->select('d')
-                     ->from('AppBundle:Dataset', 'd')
+                     ->from('App:Dataset', 'd')
                      ->where('d.dataset_uid = :uid')
                      ->andWhere('d.published = 1')
                      ->andWhere('d.archived = 0 OR d.archived IS NULL')
@@ -142,7 +142,7 @@ class APIController extends Controller
     $em = $this->getDoctrine()->getManager();
     $userCanSubmit = $this->security->isGranted('ROLE_API_SUBMITTER');
 
-    $datasetUid = $em->getRepository('AppBundle:Dataset')
+    $datasetUid = $em->getRepository('App:Dataset')
                      ->getNewDatasetId();
     $dataset->setDatasetUid($datasetUid);
 
@@ -202,11 +202,11 @@ class APIController extends Controller
     
     //prefix with namespaces so it can be called dynamically
     if (in_array($entityName, $this->personEntities)) {
-      $newEntity = 'AppBundle\Entity\\Person';
+      $newEntity = 'App\Entity\\Person';
     } else {
-      $newEntity = 'AppBundle\Entity\\' . $entityName;
+      $newEntity = 'App\Entity\\' . $entityName;
     }
-    $newEntityFormType = 'AppBundle\Form\Type\\' . $entityName . "Type";
+    $newEntityFormType = 'App\Form\Type\\' . $entityName . "Type";
 
     $em = $this->getDoctrine()->getManager();
     if ($userCanSubmit) {
@@ -262,9 +262,9 @@ class APIController extends Controller
     $em = $this->getDoctrine()->getManager();
     $qb = $em->createQueryBuilder();
     if (in_array($entityName, $this->personEntities)) {
-      $entity = 'AppBundle\Entity\\Person';
+      $entity = 'App\Entity\\Person';
     } else {
-      $entity = 'AppBundle\Entity\\' . $entityName;
+      $entity = 'App\Entity\\' . $entityName;
     }
 
     if ($slug == "all") {

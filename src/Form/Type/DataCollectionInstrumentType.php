@@ -5,6 +5,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 /**
  * Form builder for Data Collection Instrument entry
@@ -35,14 +37,14 @@ class DataCollectionInstrumentType extends AbstractType {
    * @param array $options
    */
   public function buildForm(FormBuilderInterface $builder, array $options) {
-    $builder->add('data_collection_instrument_name', 'text', array(
+    $builder->add('data_collection_instrument_name', TextType::class, array(
       'label'=>'Instrument Name'
     ));
-    $builder->add('url', 'text', array(
+    $builder->add('url', TextType::class, array(
       'label'=>'URL of Instrument Description',
       'required'=>false
     ));
-    $builder->add('notes', 'textarea', array(
+    $builder->add('notes', TextAreaType::class, array(
       'label'=>'Notes',
       'required'=>false
     ));

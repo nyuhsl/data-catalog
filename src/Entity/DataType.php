@@ -1,5 +1,5 @@
 <?php
-// src/AppBundle/Entity/DataType.php
+// src/App/Entity/DataType.php
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;

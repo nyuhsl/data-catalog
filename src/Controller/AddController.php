@@ -106,7 +106,7 @@ class AddController extends Controller {
     $em = $this->getDoctrine()->getManager();
     $userIsAdmin = $this->security->isGranted('ROLE_ADMIN');
 
-    $datasetUid = $em->getRepository('AppBundle:Dataset')
+    $datasetUid = $em->getRepository('App:Dataset')
                      ->getNewDatasetId();
     $dataset->setDatasetUid($datasetUid);
     

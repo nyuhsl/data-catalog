@@ -5,6 +5,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 /**
  * Form builder for Related Software entry
@@ -35,14 +36,14 @@ class RelatedSoftwareType extends AbstractType {
    * @param array $options
    */
   public function buildForm(FormBuilderInterface $builder, array $options) {
-    $builder->add('software_name', 'text', array(
+    $builder->add('software_name', TextType::class, array(
       'label'=>'Software Name',
     ));
-    $builder->add('software_description', 'text', array(
+    $builder->add('software_description', TextType::class, array(
       'label'=>'Software Description',
       'required'=>false,
     ));
-    $builder->add('software_url', 'text', array(
+    $builder->add('software_url', TextType::class, array(
       'label'=>'Software URL',
       'required'=>false,
     ));

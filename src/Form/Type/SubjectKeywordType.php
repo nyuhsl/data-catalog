@@ -5,6 +5,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 /**
  * Form builder for Subject Keyword entry
@@ -36,7 +37,7 @@ class SubjectKeywordType extends AbstractType {
    */
   public function buildForm(FormBuilderInterface $builder, array $options) {
     $builder->add('keyword');
-    $builder->add('mesh_code', 'text', array(
+    $builder->add('mesh_code', TextType::class, array(
       'label' => 'URI',
       'required' => false,
     ));

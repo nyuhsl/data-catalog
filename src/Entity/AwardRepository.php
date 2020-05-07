@@ -28,7 +28,7 @@ class AwardRepository extends EntityRepository
     public function findAllOrdered() {
       return $this->getEntityManager()
         ->createQuery(
-          'SELECT a FROM AppBundle:Award a ORDER BY a.award ASC'
+          'SELECT a FROM App:Award a ORDER BY a.award ASC'
         )
         ->getResult();
     }

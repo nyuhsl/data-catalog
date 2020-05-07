@@ -43,7 +43,7 @@ class RelatedDatasetController extends Controller
 
     $em = $this->getDoctrine()->getManager();
 
-    $dataset = $em->getRepository('AppBundle:Dataset')
+    $dataset = $em->getRepository('App:Dataset')
          ->findOneBy(array('dataset_uid'=>$id));
     
     return $this->render('default/related_dataset_link.html.twig',array(

@@ -1,5 +1,5 @@
 <?php
-// src/AppBundle/Entity/DataLocationURL.php
+// src/App/Entity/DataLocationURL.php
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
