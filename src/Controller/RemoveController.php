@@ -72,7 +72,7 @@ class RemoveController extends Controller {
     if ($userIsAdmin) {
       $form = $this->createForm(new DatasetAsAdminType($userIsAdmin, $uid), $thisEntity);
       $form->handleRequest($request);
-      if ($form->isValid() && $userIsAdmin) {
+      if ($form->isSubmitted() && $form->isValid() && $userIsAdmin) {
         $em->remove($thisEntity);
         $em->flush();
         return $this->render('default/remove_success.html.twig', array(
@@ -144,7 +144,7 @@ class RemoveController extends Controller {
       $form = $this->createForm(new $entityFormType(), $thisEntity);
     }
     $form->handleRequest($request);
-    if ($form->isValid() && $userIsAdmin) {
+    if ($form->isSubmitted() && $form->isValid() && $userIsAdmin) {
       $em->remove($thisEntity);
       $em->flush();
       return $this->render('default/remove_success.html.twig', array(

@@ -76,10 +76,10 @@ class UpdateController extends Controller {
     if ($userIsAdmin) {
       $form = $this->createForm(DatasetAsAdminType::class, new Dataset($userIsAdmin, $uid));
     } else {
-      $form = $this->createForm(new DatasetAsUserType($userIsAdmin, $uid), $thisEntity[0]);
+      $form = $this->createForm(DatasetAsUserType::class, new Dataset($userIsAdmin, $uid), $thisEntity[0]);
     }
     $form->handleRequest($request);
-    if ($form->isValid()) {
+    if ($form->isSubmitted() && $form->isValid()) {
       $addedEntityName = $thisEntity->getDisplayName();
       $newSlug = Slugger::slugify($addedEntityName);
       $thisEntity->setSlug($newSlug);
@@ -151,7 +151,7 @@ class UpdateController extends Controller {
     }
     $form = $this->createForm(new \App\Form\Type\UserType, $thisEntity);
     $form->handleRequest($request);
-    if ($form->isValid()) {
+    if ($form->isSubmitted() && $form->isValid()) {
       $addedUser = $thisEntity->getDisplayName();
       $newSlug = Slugger::slugify($addedUser);
       $thisEntity->setSlug($newSlug);
@@ -230,7 +230,7 @@ class UpdateController extends Controller {
 
     $form = $this->createForm(new $entityFormType(), $thisEntity);
     $form->handleRequest($request);
-    if ($form->isValid()) {
+    if ($form->isSubmitted() && $form->isValid()) {
       $addedEntityName = $thisEntity->getDisplayName();
       $newSlug = Slugger::slugify($addedEntityName);
       $thisEntity->setSlug($newSlug);
