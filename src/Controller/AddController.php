@@ -120,7 +120,7 @@ class AddController extends Controller {
 
     $form->handleRequest($request);
 
-    if ($form->isValid()) {
+    if ($form->isSubmitted() && $form->isValid()) {
       $dataset = $form->getData();
       
       $addedEntityName = $dataset->getTitle();

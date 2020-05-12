@@ -126,7 +126,7 @@ class GeneralController extends Controller
     $em = $this->getDoctrine()->getManager();
     $form = $this->createForm(new \App\Form\Type\ContactFormEmailType($affiliationOptions), $contactFormEmail);
     $form->handleRequest($request);
-    if ($form->isValid()) {
+    if ($form->isSubmitted() && $form->isValid()) {
       $email = $form->getData();
 
       // save their submission to the database first

@@ -149,7 +149,7 @@ class APIController extends Controller
     if ($userCanSubmit) {
       $form = $this->createForm(new DatasetViaApiType($userCanSubmit, $datasetUid), $dataset, array('csrf_protection'=>false));
       $form->submit($submittedData);
-      if ($form->isValid()) {
+      if ($form->isSubmitted() && $form->isValid()) {
         $dataset = $form->getData();
         // enforce that all datasets ingested via the API will start out unpublished
         $dataset->setPublished(false);
@@ -214,7 +214,7 @@ class APIController extends Controller
                                 new $newEntity(),
                                 array('csrf_protection'=>false));
       $form->submit($submittedData);
-      if ($form->isValid()) {
+      if ($form->isSubmitted() && $form->isValid()) {
         $entity = $form->getData();
 
         // Create a slug using each entity's getDisplayName method
