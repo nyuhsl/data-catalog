@@ -3,7 +3,7 @@ namespace App\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 /**
@@ -48,9 +48,9 @@ class AuthorType extends AbstractType {
   /**
    * Set default options
    *
-   * @param OptionsResolverInterface
+   * @param OptionsResolver
    */
-  public function setDefaultOptions(OptionsResolverInterface $resolver) {
+  public function configureOptions(OptionsResolver $resolver) {
     $resolver->setDefaults(array(
       'data_class' => 'App\Entity\Person'
     ));
