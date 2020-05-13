@@ -70,7 +70,7 @@ class RemoveController extends Controller {
       );
     }
     if ($userIsAdmin) {
-      $form = $this->createForm(new DatasetAsAdminType($userIsAdmin, $uid), $thisEntity);
+      $form = $this->createForm(DatasetAsAdminType::class, $thisEntity);
       $form->handleRequest($request);
       if ($form->isSubmitted() && $form->isValid() && $userIsAdmin) {
         $em->remove($thisEntity);
@@ -141,7 +141,7 @@ class RemoveController extends Controller {
       $form = $this->createForm(new DatasetAsAdminType($userIsAdmin, $datasetUid), $thisEntity);
     }
     else {
-      $form = $this->createForm(new $entityFormType(), $thisEntity);
+      $form = $this->createForm($entityFormType, $thisEntity);
     }
     $form->handleRequest($request);
     if ($form->isSubmitted() && $form->isValid() && $userIsAdmin) {

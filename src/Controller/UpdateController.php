@@ -74,7 +74,7 @@ class UpdateController extends Controller {
       );
     }
     if ($userIsAdmin) {
-      $form = $this->createForm(DatasetAsAdminType::class, new Dataset($userIsAdmin, $uid));
+      $form = $this->createForm(DatasetAsAdminType::class, $thisEntity);
     } else {
       $form = $this->createForm(DatasetAsUserType::class, new Dataset($userIsAdmin, $uid), $thisEntity[0]);
     }
@@ -228,7 +228,7 @@ class UpdateController extends Controller {
       );
     }
 
-    $form = $this->createForm(new $entityFormType(), $thisEntity);
+    $form = $this->createForm($entityFormType, $thisEntity);
     $form->handleRequest($request);
     if ($form->isSubmitted() && $form->isValid()) {
       $addedEntityName = $thisEntity->getDisplayName();
