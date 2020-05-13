@@ -5,7 +5,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use App\Form\DataTransformer\AccessRestrictionToStringTransformer;
 use Doctrine\Common\Persistence\ObjectManager;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Form for Access Restriction Selector
@@ -55,9 +55,9 @@ class AccessRestrictionSelectorType extends AbstractType
     }
 
     /**
-     * @param OptionsResolverInterface 
+     * @param OptionsResolver 
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'invalid_message' => 'The selected access restriction does not exist',
