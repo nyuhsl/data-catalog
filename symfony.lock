@@ -83,9 +83,6 @@
     "psr/log": {
         "version": "1.1.0"
     },
-    "psr/simple-cache": {
-        "version": "1.0.1"
-    },
     "sensio/framework-extra-bundle": {
         "version": "5.2",
         "recipe": {
@@ -127,6 +124,9 @@
     },
     "symfony/dotenv": {
         "version": "v4.2.3"
+    },
+    "symfony/error-handler": {
+        "version": "v4.4.8"
     },
     "symfony/event-dispatcher": {
         "version": "v4.2.3"
@@ -170,6 +170,9 @@
     "symfony/intl": {
         "version": "v4.2.9"
     },
+    "symfony/mime": {
+        "version": "v4.4.8"
+    },
     "symfony/options-resolver": {
         "version": "v4.2.9"
     },
@@ -179,8 +182,17 @@
     "symfony/polyfill-intl-icu": {
         "version": "v1.11.0"
     },
+    "symfony/polyfill-intl-idn": {
+        "version": "v1.17.0"
+    },
     "symfony/polyfill-mbstring": {
         "version": "v1.10.0"
+    },
+    "symfony/polyfill-php72": {
+        "version": "v1.17.0"
+    },
+    "symfony/polyfill-php73": {
+        "version": "v1.17.0"
     },
     "symfony/process": {
         "version": "v4.2.3"
@@ -241,6 +253,9 @@
             "version": "4.1",
             "ref": "0cdc982334f45d554957a6167e030482795bf9d7"
         }
+    },
+    "symfony/var-dumper": {
+        "version": "v4.4.8"
     },
     "symfony/var-exporter": {
         "version": "v4.2.3"
