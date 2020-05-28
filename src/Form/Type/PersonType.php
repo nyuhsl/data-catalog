@@ -38,13 +38,13 @@ class PersonType extends AbstractType {
   public function buildForm(FormBuilderInterface $builder, array $options) {
     $builder->add('full_name');
     $builder->add('kid');
-    $builder->add('orcid_id', Text::class, array(
+    $builder->add('orcid_id', TextType::class, array(
       'required' => false,
       'label'    => 'ORCID ID',
     ));
     $builder->add('bio_url');
     $builder->add('email');
-    $builder->add('save', 'submit');
+    $builder->add('save', SubmitType::class,array('label'=>'Submit'));
   }
 
   /**

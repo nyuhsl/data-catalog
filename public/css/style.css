@@ -298,8 +298,18 @@ color:gray;
 /**
  * FORMS
  **/
-a.btn-add {
+a.btn-add,
+a.btn-remove {
   cursor:pointer;
+  color:white;
+  font-weight:bold;
+  padding:0em .5em;
+  font-size:.6em;
+  vertical-align:top;
+}
+a.btn-add:hover,
+a.btn-remove:hover {
+  color:white;
 }
 form .visual-break {
   margin-top:3em !important;
@@ -420,8 +430,6 @@ font-size:1.1em;
 }
 
 div[data-prototype] div[data-content] {
-  width:66%;
-  margin-left:34%;
   padding:.25em;
   clear:both;
   border-radius:5px;
@@ -434,13 +442,14 @@ div[data-prototype] div[data-content] .form-group {
   border-top:none;
   padding:0em;
   margin-bottom:1.5em;
+  margin-top:0em;
 }
 div[data-prototype] div[data-content] .form-group .col-sm-8 {
   width:100% !important;
 }
 div[data-prototype] div[data-content] .btn-remove {
   position:absolute;
-  right:19px;
+  right:205px;
   bottom:7px;
 }
 
