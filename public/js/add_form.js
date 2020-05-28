@@ -53,7 +53,7 @@ jQuery(function($) {
   /**
    * Make sure we can remove items from embedded forms
    */
-  var removeItemLink   = '<a class="btn-remove label label-danger" >Remove item</a>';
+  var removeItemLink   = '<a class="btn-remove btn btn-danger" >Remove item</a>';
   $('.form-group.multiple div[data-content]').append(removeItemLink);
 
 
@@ -66,7 +66,7 @@ jQuery(function($) {
     var url = $(this).attr('href');
     $.get(url, function(data) {
       $("#addEntityFormModalContent").html(data);
-      $("#addEntityFormModal").modal({show:true});
+      $("#addEntityFormModal").modal({show:true,backdrop:'static'});
     });
   });
 
@@ -88,7 +88,7 @@ jQuery(function($) {
       var displayName = $('#addEntityFormModalContent #entity-display-name').attr('data-displayname');
       var addedEntityName = $('#addEntityFormModalContent #added-entity-name').text().trim();
       var selectBoxId = 'select#dataset_as_admin_' + displayName.replace(/ /g,'_') +'s';
-        console.log(selectBoxId);
+        //console.log(selectBoxId);
       if (!$(selectBoxId).length){selectBoxId = selectBoxId.slice(0,-1);}
       // Symfony uses the actual database IDs as the values in <select> option lists. To trick Symfony
       // into accepting our brand-new item, we need to calculate its database ID and use it as the option value
@@ -102,7 +102,7 @@ jQuery(function($) {
       //
       // Fetching ID from data-id attribute of element
       var nextOption =  $('#addEntityFormModalContent #entity-display-name').attr('data-id');
-      console.log("nextOption:"+nextOption);      
+     // console.log("nextOption:"+nextOption);      
       $(selectBoxId).append('<option value="'+nextOption+'">'+addedEntityName+'</option>');
 
       var currentVals = $(selectBoxId).val();
@@ -147,7 +147,7 @@ jQuery(function($) {
     var target = $(this).attr('data-target');
     var collectionHolder = $('.' + target);
     // create a link to remove this item
-    var removeItemLink   = '<a class="btn-remove label label-danger" data-related="'+target+'">Remove item</a>';
+    var removeItemLink   = '<a class="btn-remove btn btn-danger" data-related="'+target+'">Remove item</a>';
 
     if (!collectionHolder.attr('data-counter')) {
       collectionHolder.attr('data-counter', collectionHolder.children().length);
@@ -165,7 +165,7 @@ jQuery(function($) {
     collectionHolder.find('div:empty').remove();
     // active Select2.js on any new child <select>s
     var childSelects = collectionHolder.find('select');
-    childSelects.select2({width:'resolve'});
+    childSelects.select2({width:'100%'});
 
     event && event.preventDefault();
   });

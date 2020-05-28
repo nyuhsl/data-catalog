@@ -30,7 +30,9 @@ col-sm-4
 
 
 {% block content %}
-<div class="col-xs-7" >
+<div class="container">
+<div class="row justify-content-center">
+<div class="col-xs-9" >
 <div class="page-header">
 <div class="update-dataset-link">
  <a href="{{ path('view_dataset',{'uid':uid}) }}">
@@ -54,18 +56,19 @@ col-sm-4
     {{ form_row(form.dataset_uid) }}
     {{ form_row(form.title) }}
     {# DATASET ALTERNATE TITLES #}
-      <div class="form-group multiple">
+      <div class="form-group row multiple">
         <label class="col-sm-4 control-label" for="{{ form.dataset_alternate_titles.vars.name }}">
           {{ form.dataset_alternate_titles.vars.label }}
         </label>
         <div class="col-sm-8">
-          <a class="btn-add label label-success" data-target="add-{{ form.dataset_alternate_titles.vars.name}}">Add item</a>
+          <a class="btn-add btn btn-success" role="button" data-target="add-{{ form.dataset_alternate_titles.vars.name}}">Add item</a>
+          <div class="add-{{ form.dataset_alternate_titles.vars.name}}" data-prototype="{{ widget_prototype(form.dataset_alternate_titles, 'Remove item')|escape }}">
+           {% for widget in form.dataset_alternate_titles %}
+            {{ widget_prototype(widget, 'Remove item') }}
+           {% endfor %}
+           </div>
         </div>
-        <div class="add-{{ form.dataset_alternate_titles.vars.name}}" data-prototype="{{ widget_prototype(form.dataset_alternate_titles, 'Remove item')|escape }}">
-        {% for widget in form.dataset_alternate_titles %}
-          {{ widget_prototype(widget, 'Remove item') }}
-        {% endfor %}
-        </div>
+
       </div>
    {% if userIsAdmin %}
     {{ form_row(form.origin) }}
@@ -80,17 +83,17 @@ col-sm-4
   <fieldset>
     <legend>Author Information</legend>
     {# AUTHORS #}
-      <div class="form-group multiple">
+      <div class="form-group row multiple">
         <label class="col-sm-4 control-label" for="{{ form.authorships.vars.name }}">
           {{ form.authorships.vars.label }}
         </label>
         <div class="col-sm-8">
-          <a class="btn-add label label-success" data-target="add-{{ form.authorships.vars.name}}">Add item</a>
-        </div>
-        <div class="add-{{ form.authorships.vars.name}}" data-prototype="{{ widget_prototype(form.authorships, 'Remove item')|escape }}">
-        {% for widget in form.authorships %}
-          {{ widget_prototype(widget, 'Remove item') }}
-        {% endfor %}
+          <a class="btn-add btn btn-success" role="button" data-target="add-{{ form.authorships.vars.name}}">Add item</a>
+          <div class="add-{{ form.authorships.vars.name}}" data-prototype="{{ widget_prototype(form.authorships, 'Remove item')|escape }}">
+             {% for widget in form.authorships %}
+              {{ widget_prototype(widget, 'Remove item') }}
+             {% endfor %}
+          </div>
         </div>
       </div>
       {{ form_row(form.publishers) }}
@@ -98,34 +101,34 @@ col-sm-4
   <fieldset>
     <legend>Data Location Information</legend>
       {# DATA LOCATION URLS #}
-      <div class="form-group multiple">
+      <div class="form-group row multiple">
         <label class="col-sm-4 control-label" for="{{ form.data_locations.vars.name }}">
           {{ form.data_locations.vars.label }}
         </label>
         <div class="col-sm-8">
-          <a class="btn-add label label-success" data-target="add-{{ form.data_locations.vars.name}}">Add item</a>
-        </div>
-        <div class="add-{{ form.data_locations.vars.name}}" data-prototype="{{ widget_prototype(form.data_locations, 'Remove item')|escape }}">
-        {% for widget in form.data_locations %}
-          {{ widget_prototype(widget, 'Remove item') }}
-        {% endfor %}
+          <a class="btn-add btn btn-success" role="button" data-target="add-{{ form.data_locations.vars.name}}">Add item</a>
+          <div class="add-{{ form.data_locations.vars.name}}" data-prototype="{{ widget_prototype(form.data_locations, 'Remove item')|escape }}">
+            {% for widget in form.data_locations %}
+              {{ widget_prototype(widget, 'Remove item') }}
+            {% endfor %}
+          </div>
         </div>
       </div>
      {% if userIsAdmin %}
       {{ form_row(form.date_archived) }}
      {% endif %}
       {# OTHER RESOURCES #}
-      <div class="form-group multiple">
+      <div class="form-group row multiple">
         <label class="col-sm-4 control-label" for="{{ form.other_resources.vars.name }}">
           {{ form.other_resources.vars.label }}
         </label>
         <div class="col-sm-8">
-          <a class="btn-add label label-success" data-target="add-{{ form.other_resources.vars.name}}">Add item</a>
-        </div>
-        <div class="add-{{ form.other_resources.vars.name}}" data-prototype="{{ widget_prototype(form.other_resources, 'Remove item')|escape }}">
-        {% for widget in form.other_resources %}
-          {{ widget_prototype(widget, 'Remove item') }}
-        {% endfor %}
+          <a class="btn-add btn btn-success" role="button" data-target="add-{{ form.other_resources.vars.name}}">Add item</a>
+          <div class="add-{{ form.other_resources.vars.name}}" data-prototype="{{ widget_prototype(form.other_resources, 'Remove item')|escape }}">
+            {% for widget in form.other_resources %}
+              {{ widget_prototype(widget, 'Remove item') }}
+            {% endfor %}
+          </div>
         </div>
       </div>
   </fieldset>
@@ -160,17 +163,17 @@ col-sm-4
       {{ form_row(form.awards) }}
      {% if userIsAdmin %}
       {# RELATED DATASETS #}
-      <div class="form-group multiple">
+      <div class="form-group row multiple">
         <label class="col-sm-4 control-label" for="{{ form.related_datasets.vars.name }}">
           {{ form.related_datasets.vars.label }}
         </label>
         <div class="col-sm-8">
-          <a class="btn-add label label-success" data-target="add-{{ form.related_datasets.vars.name}}">Add item</a>
-        </div>
-        <div class="add-{{ form.related_datasets.vars.name}}" data-prototype="{{ widget_prototype(form.related_datasets, 'Remove item')|escape }}">
-        {% for widget in form.related_datasets %}
-          {{ widget_prototype(widget, 'Remove item') }}
-        {% endfor %}
+          <a class="btn-add btn btn-success" role="button" data-target="add-{{ form.related_datasets.vars.name}}">Add item</a>
+          <div class="add-{{ form.related_datasets.vars.name}}" data-prototype="{{ widget_prototype(form.related_datasets, 'Remove item')|escape }}">
+            {% for widget in form.related_datasets %}
+              {{ widget_prototype(widget, 'Remove item') }}
+            {% endfor %}
+          </div>
         </div>
       </div>
       {{ form_row(form.pubmed_search) }}
@@ -238,7 +241,7 @@ col-sm-4
 								<span class="tak-expired">expired</span>
 							{% endif %}
 
-							<a class="btn-tak-remove label label-danger">Remove key</a>
+							<a class="btn-tak-remove btn btn-danger">Remove key</a>
 						</div>
 					</li>
 				
@@ -247,12 +250,14 @@ col-sm-4
 
 		{% endif %}
 		</div>
-		<a class="btn-tak-add label label-success">Add Temporary Access Key</a>
+		<a class="btn-tak-add btn btn-success" role="button">Add Temporary Access Key</a>
 
 </form>
 
 
 
+</div>
+</div>
 </div>
 
 <div id="addEntityFormModal" class="modal fade">
