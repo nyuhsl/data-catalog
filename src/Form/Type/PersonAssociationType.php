@@ -43,7 +43,7 @@ class PersonAssociationType extends AbstractType {
     $builder->add('person', EntityType::class, array(
       'class'   => 'App:Person',
       'choice_label'=> 'full_name',
-      'attr'=> array('style'=>'width:50%;', 'class'=>'author-add-form'),
+      'attr'=> array('style'=>'width:100%;', 'class'=>'author-add-form'),
       'multiple'=> false,
       'label'   => false,
       'query_builder'=> function(EntityRepository $er) {
@@ -54,7 +54,7 @@ class PersonAssociationType extends AbstractType {
       'label' => false,
       'attr'     => array(
         'placeholder'=>'* Author Position #',
-        'style'=>'width:50%',
+        'style'=>'width:100%',
 
     )));
     $builder->add('is_corresponding_author', CheckboxType::class, array(
