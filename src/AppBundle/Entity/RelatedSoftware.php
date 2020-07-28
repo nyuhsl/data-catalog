@@ -251,6 +251,7 @@ class RelatedSoftware {
         return array(
             'software_name'=>$this->software_name,
             'software_description'=>$this->software_description,
+            'software_version'=>$this->software_version,
             'software_url'=>$this->software_url
         );
     }
