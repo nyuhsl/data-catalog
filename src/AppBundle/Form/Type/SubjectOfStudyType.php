@@ -38,7 +38,10 @@ class SubjectOfStudyType extends AbstractType {
     $builder->add('species', 'text', array(
       'label'=>'Species (Strain)',
       'required'=>false,
-    
+    ));
+    $builder->add('tissue_cell_line', 'text', array(
+      'label'=>'Tissue/Cell Line',
+      'required'=>false,
     ));
     $builder->add('save','submit',array('label'=>'Submit'));
   }

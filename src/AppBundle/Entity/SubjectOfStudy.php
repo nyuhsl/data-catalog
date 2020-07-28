@@ -49,6 +49,11 @@ class SubjectOfStudy {
   protected $species;
 
   /**
+   * @ORM\Column(type="string",length=255, nullable=true)
+   */
+  protected $tissue_cell_line;
+
+  /**
    * @ORM\Column(type="string",length=256)
    */
   protected $slug;
@@ -111,6 +116,29 @@ class SubjectOfStudy {
     public function setSpecies($species)
     {
         $this->species = $species;
+
+        return $this;
+    }
+
+    /**
+     * Get tissue_cell_line
+     *
+     * @return string 
+     */
+    public function getTissueCellLine()
+    {
+        return $this->tissue_cell_line;
+    }
+
+    /**
+     * Set tissue_cell_line
+     *
+     * @param string $tissue_cell_line
+     * @return SubjectOfStudy
+     */
+    public function setTissueCellLine($tissue_cell_line)
+    {
+        $this->tissue_cell_line = $tissue_cell_line;
 
         return $this;
     }
@@ -193,7 +221,8 @@ class SubjectOfStudy {
     public function getAllProperties() {
         return array(
             'subject_of_study'=>$this->subject_of_study,
-            'species'=>$this->species
+            'species'=>$this->species,
+            'tissue_cell_line' => $this->tissue_cell_line
         );
     }
 }

@@ -176,6 +176,9 @@ $(function () {
          {% if subject.species is not empty %}
            <p class="related-dataset-note">{{ subject.species }}</p>
          {% endif %}
+         {% if subject.getTissueCellLine is not empty %}
+           <p class="related-dataset-note">{{ subject.getTissueCellLine }}</p>
+         {% endif %}
        {% endfor %}
       </dd>
      {% endif %}
