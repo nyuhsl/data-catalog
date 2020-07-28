@@ -41,6 +41,10 @@ class RelatedSoftwareType extends AbstractType {
       'label'=>'Software Description',
       'required'=>false,
     ));
+    $builder->add('software_version', 'text', array(
+      'label'=>'Software Version',
+      'required'=>false,
+    ));
     $builder->add('software_url', 'text', array(
       'label'=>'Software URL',
       'required'=>false,
