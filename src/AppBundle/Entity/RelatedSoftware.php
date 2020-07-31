@@ -51,6 +51,11 @@ class RelatedSoftware {
   /**
    * @ORM\Column(type="string",length=512, unique=false, nullable=true)
    */
+  protected $software_version;
+
+  /**
+   * @ORM\Column(type="string",length=512, unique=false, nullable=true)
+   */
   protected $software_url;
 
   /**
@@ -108,6 +113,29 @@ class RelatedSoftware {
     }
 
     /**
+     * Get software_version
+     *
+     * @return string 
+     */
+    public function getSoftwareVersion()
+    {
+        return $this->software_version;
+    }
+
+    /**
+     * Set software_version
+     *
+     * @param string $software_version
+     * @return RelatedSoftware
+     */
+    public function setSoftwareVersion($software_version)
+    {
+        $this->software_version = $software_version;
+
+        return $this;
+    }
+    
+    /**
      * Set software_description
      *
      * @param string $software_description
@@ -129,6 +157,7 @@ class RelatedSoftware {
     {
         return $this->software_description;
     }
+
 
     /**
      * Set software_url
@@ -222,6 +251,7 @@ class RelatedSoftware {
         return array(
             'software_name'=>$this->software_name,
             'software_description'=>$this->software_description,
+            'software_version'=>$this->software_version,
             'software_url'=>$this->software_url
         );
     }

@@ -343,6 +343,9 @@ $(function () {
           {% else %}
             {{ sw.getDisplayName }}
           {% endif %}
+					{% if sw.softwareVersion is not empty %}
+						<span>, Version: {{ sw.softwareVersion }}</span>
+					{% endif %}
           {% if sw.softwareDescription is not empty %}
             <p class="related-dataset-note">{{ sw.softwareDescription }}</p>
           {% endif %}
