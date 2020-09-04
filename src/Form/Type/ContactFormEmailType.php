@@ -5,6 +5,10 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 /**
  * Form builder for Contact Us form
@@ -27,7 +31,16 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
  */
 class ContactFormEmailType extends AbstractType {
 
-  private $affiliationOptions;
+  protected $options;
+  protected $affiliationOptions;
+
+  /**
+   * Build institutional affiliation options list
+   * 
+   * @param array $options
+   */
+  public function __construct(array $options = []) {
+  }
 
   /**
    * Build the form
@@ -36,21 +49,21 @@ class ContactFormEmailType extends AbstractType {
    * @param array $options
    */
   public function buildForm(FormBuilderInterface $builder, array $options) {
-    $builder->add('employee_id', 'text', array(
+    $builder->add('employee_id', TextType::class, array(
       'label'=> 'Employee ID',
       'label_attr'=>array('class'=>'no-asterisk'),
     ));
-    $builder->add('full_name', 'text', array(
+    $builder->add('full_name', TextType::class, array(
       'label_attr'=>array('class'=>'no-asterisk')));
-    $builder->add('email_address', 'email', array(
+    $builder->add('email_address', EmailType::class, array(
       'label_attr'=>array('class'=>'no-asterisk')));
-    $builder->add('affiliation', 'choice', array(
+    $builder->add('affiliation', ChoiceType::class, array(
       'label'=>'Institutional Affiliation',
       'label_attr'=>array('class'=>'no-asterisk'),
-      'choices' => $this->affiliationOptions
+      'choices' => $options['affiliationOptions'],
     ));
        
-    $builder->add('reason', 'choice', array(
+    $builder->add('reason', ChoiceType::class, array(
       'expanded'=>true,
       'label_attr'=>array('class'=>'no-asterisk'),
       'choices' =>array(
@@ -61,12 +74,12 @@ class ContactFormEmailType extends AbstractType {
       ),
       'multiple'=>false)
     );
-    $builder->add('message_body', 'textarea', array(
+    $builder->add('message_body', TextareaType::class, array(
       'attr' => array('rows'=>'5'),
       'label_attr'=>array('class'=>'no-asterisk'),
       'label'=>'Please provide some details about your question/comment',
     ));
-    $builder->add('checker', 'text', array(
+    $builder->add('checker', TextType::class, array(
       'required'=>false,
       'attr'=>array('class'=>'checker'),
       'label_attr'=>array('class'=>'no-asterisk checker')));
@@ -74,18 +87,6 @@ class ContactFormEmailType extends AbstractType {
   }
 
 
-  /**
-   * Build institutional affiliation options list
-   * 
-   * @param array $affiliationOptions
-   */
-  public function __construct(array $affiliationOptions = []) {
-    $this->affiliationOptions = [];
-
-    foreach ($affiliationOptions as $option) {
-      $this->affiliationOptions[$option] = $option;
-    }
-  }
 
 
   /**
@@ -95,7 +96,8 @@ class ContactFormEmailType extends AbstractType {
    */
   public function configureOptions(OptionsResolver $resolver) {
     $resolver->setDefaults(array(
-      'data_class' => 'App\Entity\ContactFormEmail'
+        'data_class' => 'App\Entity\ContactFormEmail',
+        'affiliationOptions' => null,
     ));
   }
 

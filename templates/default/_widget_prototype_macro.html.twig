@@ -8,7 +8,7 @@
     {% set name = widget.vars.label %}
   {% endif %}
 
-  <div data-content="add-{{ name }}">
+  <div data-content="add-{{ name }}" class="dynamic-form-element-container">
     <div class="add-{{name}}">
     {{ form_widget(form) }}
     {# <a class="btn-remove btn btn-danger" role="button" data-related="add-{{ name }}">{{ remove_text }}</a>#}

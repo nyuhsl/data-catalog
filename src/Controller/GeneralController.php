@@ -12,6 +12,7 @@ use App\Entity\SearchState;
 use App\Entity\Dataset;
 use App\Service\SolrSearchr;
 use App\Form\Type\DatasetType;
+use App\Form\Type\ContactFormEmailType;
 use App\Utils\Slugger;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -121,10 +122,15 @@ class GeneralController extends Controller
     // Get email addresses and institution list from parameters.yml
     $emailTo = $this->container->getParameter('contact_email_to');
     $emailFrom = $this->container->getParameter('contact_email_from');
-    $affiliationOptions = $this->container->getParameter('institutional_affiliation_options');
-
+    $affiliations = $this->container->getParameter('institutional_affiliation_options');
+    $affiliationOptions = [];
+    foreach ($affiliations as $key=>$value) {
+      $affiliationOptions[$value] = $value;
+    }
+       
+      
     $em = $this->getDoctrine()->getManager();
-    $form = $this->createForm(new \App\Form\Type\ContactFormEmailType($affiliationOptions), $contactFormEmail);
+    $form = $this->createForm(ContactFormEmailType::class, $contactFormEmail, ['affiliationOptions'=>$affiliationOptions]);
     $form->handleRequest($request);
     if ($form->isSubmitted() && $form->isValid()) {
       $email = $form->getData();
