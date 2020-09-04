@@ -24,13 +24,17 @@ col-sm-5
 
 
 {% block content %}
-<div class="col-sm-6 col-sm-offset-2" >
+<div class="container-fluid">
+<div class="row">
+<div class="col-sm-6 offset-sm-2" >
 <div class="page-header">
 <h1>Contact Us</h1>
 </div>
 
 {{ form(form) }}
 
+</div>
+</div>
 </div>
 
 {% endblock %}

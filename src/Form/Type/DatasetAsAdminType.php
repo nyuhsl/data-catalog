@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityRepository;
 
 use Symfony\Component\Form\Extension\Core\ChoiceList\ChoiceList;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -65,12 +66,12 @@ class DatasetAsAdminType extends AbstractType {
    */
   public function buildForm(FormBuilderInterface $builder, array $options) {
     //identifying information
-    $builder->add('dataset_uid', TextareaType::class, array(
+    $builder->add('dataset_uid', TextType::class, array(
       'disabled' => true,
       'data'     => $options['datasetUid'],
       'label'    => 'Dataset ID',
     ));
-    $builder->add('title', TextareaType::class, array(
+    $builder->add('title', TextType::class, array(
       'required' => true,
       'label'    => 'Dataset Title'
     ));
@@ -140,7 +141,7 @@ class DatasetAsAdminType extends AbstractType {
       'allow_delete' => true,
       'allow_add' => true
     ));
-    $builder->add('pubmed_search', TextareaType::class, array(
+    $builder->add('pubmed_search', TextType::class, array(
       'required' => false,
       'label'    => 'PubMed Search URL'
     ));
@@ -195,7 +196,7 @@ class DatasetAsAdminType extends AbstractType {
       'by_reference'=>false,
       'label'     => 'Dataset File Format',
     ));
-    $builder->add('dataset_size', TextareaType::class, array(
+    $builder->add('dataset_size', TextType::class, array(
       'required' => false,
       'label'    => 'Dataset Size'
     ));
@@ -382,11 +383,11 @@ class DatasetAsAdminType extends AbstractType {
       'label'     => 'Subject Keywords',
     ));
      
-    $builder->add('erd_url', TextareaType::class, array(
+    $builder->add('erd_url', TextType::class, array(
       'required' => false,
       'label'    => 'ERD URL'
     ));
-    $builder->add('library_catalog_url', TextareaType::class, array(
+    $builder->add('library_catalog_url', TextType::class, array(
       'required' => false,
       'label'    => 'Library Catalog URL'
     ));
@@ -398,7 +399,7 @@ class DatasetAsAdminType extends AbstractType {
       'required' => false,
       'label'    => 'License Expiration Date'
     ));
-    $builder->add('subscriber', TextareaType::class, array(
+    $builder->add('subscriber', TextType::class, array(
       'required' => false,
       'label'    => 'Subscriber'
     ));
