@@ -71,7 +71,7 @@ http://ryanfait.com/
 #logged-in-badge {
   text-align:right;
   margin-right:.2em;
-  margin-bottom:1.25em;
+  margin-bottom:.5em;
 }
 
 .queue-notification:hover,
@@ -79,6 +79,10 @@ http://ryanfait.com/
   text-decoration:underline;
 }
 
+.nav.top-menu {
+    font-size:.9em;
+    background:rgba(140,140,140,.42);
+}
 .nav-links {
   display:inline-block;
   position:absolute;
@@ -86,46 +90,54 @@ http://ryanfait.com/
   right:0;
 }
 
-.nav-tabs {
+.nav.top-menu {
   border-bottom:none;
 }
-.nav-tabs li {
+.nav.top-menu li {
   margin-bottom:0px;
-  padding:.2em;
 }
-.nav-tabs>li>a {
+.nav.top-menu>li>a {
   border-radius:2px 2px 0px 0px;
   
   height:32px;
 }
-.nav-tabs>li>a {
+.nav.top-menu>li>a {
   padding:5px 15px;
   color:rgb(200,200,200);
 }
-.nav-tabs>li>a:hover {
+.nav.top-menu>li>a:hover {
   color:black;
 }
-.nav-tabs>li:hover {
+.nav.top-menu .nav-item:hover {
+  background:lightgray;
 }
-.nav-tabs>li.active>a {
+.nav.top-menu>li.active>a {
   background:#f8f8f8;
+  color:black;
   margin-right:0px;
 }
-.nav-tabs>li:not(.active) {
+.nav.top-menu>li:not(.active) {
   background: rgba(140,140,140,.42);
 }
-.nav-tabs>li.privileged-nav-link>a {
+.nav.top-menu>li.privileged-nav-link>a {
   color:rgb(236, 161, 108);
 }
 
 
 .admin-nav-sidebar {
   max-width:250px;
-  font-size:.9em;
+  font-size:.85em;
   margin-top:1em;
   min-width:245px;
   border-bottom:1px dotted gray;
   padding:1em 1em 3em 1em;
+}
+.admin-nav-sidebar .nav-item:hover {
+    background:lightgray;
+    border-radius:3px;
+}
+.admin-nav-sidebar .nav-link {
+    color:#337ab7;
 }
 .admin-nav-sidebar li.active>a {
   background:#e8e8e8;
@@ -484,7 +496,7 @@ form.remove-form button {
 }
 
 
-.modal-success.glyphicon-ok-sign {
+.modal-success.icon-ok-circle {
   font-size:4em;
   color:green;
 }

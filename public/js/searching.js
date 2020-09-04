@@ -29,12 +29,12 @@ jQuery(function($) {
    */
   $('.keyword-breadcrumb.btn').hover(
     function() {
-      $(this).attr('class','keyword-breadcrumb btn btn-xs btn-danger');
-      $(this).append('<span class="glyphicon glyphicon-remove"></span>');
+      $(this).attr('class','keyword-breadcrumb btn btn-sm btn-outline-danger');
+      $(this).append('<i class="icon-remove-sign"></i>');
     },
     function() {
-      $(this).attr('class','keyword-breadcrumb btn btn-xs btn-default');
-      $(this).children('.glyphicon').remove();
+      $(this).attr('class','keyword-breadcrumb btn btn-sm btn-outline-secondary');
+      $(this).children('.icon-remove-sign').remove();
   });
 
 
@@ -54,12 +54,12 @@ jQuery(function($) {
    */
   $('.facetBreadcrumb.btn').on({
     mouseover: function() {
-      $(this).attr('class','facetBreadcrumb btn btn-xs btn-danger');
-      $(this).append('<span class="glyphicon glyphicon-remove"></span>');
+      $(this).attr('class','facetBreadcrumb btn btn-sm btn-outline-danger');
+      $(this).append('<i class="icon-remove-sign"></i>');
     },
     mouseout: function() {
-      $(this).attr('class','facetBreadcrumb btn btn-xs btn-default');
-      $(this).children('.glyphicon').remove();
+      $(this).attr('class','facetBreadcrumb btn btn-sm btn-outline-secondary');
+      $(this).children('.icon-remove-sign').remove();
     }
   });
 

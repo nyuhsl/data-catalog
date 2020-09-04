@@ -77,11 +77,11 @@
  {% if currentSearch.keyword %}
    {% if ':' in currentSearch.keyword %}
     {# {% set keyword = currentSearch.keyword|split(':')[1] %} #}
-   <button class="keyword-breadcrumb btn btn-default btn-xs">
+   <button class="keyword-breadcrumb btn btn-outline-secondary btn-sm">
      {{ currentSearch.keyword }}
    </button>
    {% else %}
-   <button class="keyword-breadcrumb btn btn-default btn-xs">
+   <button class="keyword-breadcrumb btn btn-outline-secondary btn-sm">
      Keyword: {{ currentSearch.keyword }}
    </button>
    {% endif %}  
@@ -89,7 +89,7 @@
  {% for facet in currentSearch.facets %}
    {% set facetSplit = facet|split(':') %}
    {% if facetSplit[0] != "origin_fq" %} 
-     <button data-machine-name="{{ facet }}" class="facetBreadcrumb btn btn-default btn-xs">
+     <button data-machine-name="{{ facet }}" class="facetBreadcrumb btn btn-outline-secondary btn-sm">
        {{ results.facetMappings[facetSplit[0]] }}:{{ facetSplit[1] }} 
      </button>
    {% endif %}
