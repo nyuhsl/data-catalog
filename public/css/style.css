@@ -223,7 +223,7 @@ a.skip:hover {
 .internal-dataset-badge {
     margin-left:.35em;
     display:inline-block;
-    font-size:.63em;
+    font-size:.5em;
     color:#ededed;
     font-weight:bold;
     background:#59228e;
@@ -258,14 +258,17 @@ margin-bottom:10em;
   border-bottom:1px solid lightgray;
 }
 
+#results-list dt {
+  text-align:right;
+}
+#results-list dd {
+  padding-left:1.5em;
+}
 #facets-list {
   font-size:.9em;
   padding-left:.25em;
 }
 
-#results-list dd,dt {
-  padding:.25em 0em;
-}
 
 .facet-header {
   padding:.25em 0em;
