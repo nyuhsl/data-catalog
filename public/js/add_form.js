@@ -143,7 +143,7 @@ jQuery(function($) {
   /**
    * Handle embedded forms (i.e. forms that get added inside the main form, rather than in a modal)
    */
-  $('.btn-add[data-target]').on('click', function(event) {
+  $('.btn-success[data-target]').on('click', function(event) {
     var target = $(this).attr('data-target');
     var collectionHolder = $('.' + target);
     // create a link to remove this item

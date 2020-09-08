@@ -8,6 +8,7 @@
         <title>{{ site_name }}</title>
         {% endblock %}
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}" />
         <link rel="stylesheet" type="text/css" href="{{ asset('css/institution/custom.css') }}" />
 
@@ -74,20 +75,20 @@
         <nav class="nav-links">
           {% if is_granted('ROLE_USER') %}
            <h4 id="logged-in-badge">
-             <a href="{{ path('admin_panel') }}"><span class="greeting label label-warning">Welcome!</span></a>
+             <a href="{{ path('admin_panel') }}"><span class="btn btn-info">Welcome!</span></a>
            </h4>
           {% endif %}
-          <ul class="nav nav-tabs">
-            <li class="home-nav-link {% if app.request.get('_route') == 'default_search_results'%}active{% endif %} "><a href="/">Home</a></li>
-            <li class="about-nav-link {% if app.request.get('_route') == 'about' %}active{% endif %}"><a href="{{ path('about') }}">About the Catalog</a></li>
-            <li class="contact-page-link {% if app.request.get('_route') == 'contact' %}active{% endif %}"><a href="{{ path('contact') }}">Contact Us</a></li>
+          <ul class="nav top-menu">
+            <li class="home-nav-link nav-item {% if app.request.get('_route') == 'default_search_results'%}active{% endif %} "><a class="nav-link" href="/">Home</a></li>
+            <li class="about-nav-link nav-item {% if app.request.get('_route') == 'about' %}active{% endif %}"><a class="nav-link" href="{{ path('about') }}">About the Catalog</a></li>
+            <li class="contact-page-link nav-item {% if app.request.get('_route') == 'contact' %}active{% endif %}"><a class="nav-link" href="{{ path('contact') }}">Contact Us</a></li>
             {% if is_granted('ROLE_USER') %}
-              <li class="privileged-nav-link admin-page-link {% if is_granted('ROLE_USER') and adminPage is defined and adminPage==true %}active{% endif %}"><a href="{{ path('admin_panel') }}">Admin</a></li>
+              <li class="nav-item privileged-nav-link admin-page-link {% if is_granted('ROLE_USER') and adminPage is defined and adminPage==true %}active{% endif %}"><a class="nav-link" href="{{ path('admin_panel') }}">Admin</a></li>
             {% endif %}
             {% if is_granted('ROLE_USER') %}
-              <li class="privileged-nav-link"><a href="{{ path('logout') }}">Logout</a></li>
+              <li class="privileged-nav-link nav-item"><a class="nav-link" href="{{ path('logout') }}">Logout</a></li>
             {% else %}
-              <li class="login-link hidden-xs"><a href="{{ path('login_route') }}">Login</a></li>
+              <li class="login-link hidden-xs nav-item"><a class="nav-link" href="{{ path('login_route') }}">Login</a></li>
             {% endif %}
 
           </ul>
@@ -100,7 +101,7 @@
               <label for="keyword-search-input">search terms</label>
               <input type="text" class="form-control" id="keyword-search-input">
               <span class="input-group-btn">
-                <button id="keyword-search-submit" class="btn btn-default" type="submit">Go!</button>
+                <button id="keyword-search-submit" class="btn btn-secondary" type="submit">Go!</button>
               </span>
           </form>
 

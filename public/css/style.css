@@ -13,6 +13,9 @@ footer, .push {
   clear:both;
 }
 
+#login-form-container {
+    padding-top:2em;
+}
 /*
 
 Sticky Footer by Ryan Fait
@@ -68,7 +71,7 @@ http://ryanfait.com/
 #logged-in-badge {
   text-align:right;
   margin-right:.2em;
-  margin-bottom:1.25em;
+  margin-bottom:.5em;
 }
 
 .queue-notification:hover,
@@ -76,6 +79,10 @@ http://ryanfait.com/
   text-decoration:underline;
 }
 
+.nav.top-menu {
+    font-size:.9em;
+    background:rgba(140,140,140,.42);
+}
 .nav-links {
   display:inline-block;
   position:absolute;
@@ -83,45 +90,54 @@ http://ryanfait.com/
   right:0;
 }
 
-.nav-tabs {
+.nav.top-menu {
   border-bottom:none;
 }
-.nav-tabs li {
+.nav.top-menu li {
   margin-bottom:0px;
 }
-.nav-tabs>li>a {
+.nav.top-menu>li>a {
   border-radius:2px 2px 0px 0px;
   
   height:32px;
 }
-.nav-tabs>li>a {
+.nav.top-menu>li>a {
   padding:5px 15px;
   color:rgb(200,200,200);
 }
-.nav-tabs>li>a:hover {
+.nav.top-menu>li>a:hover {
   color:black;
 }
-.nav-tabs>li:hover {
+.nav.top-menu .nav-item:hover {
+  background:lightgray;
 }
-.nav-tabs>li.active>a {
+.nav.top-menu>li.active>a {
   background:#f8f8f8;
+  color:black;
   margin-right:0px;
 }
-.nav-tabs>li:not(.active) {
+.nav.top-menu>li:not(.active) {
   background: rgba(140,140,140,.42);
 }
-.nav-tabs>li.privileged-nav-link>a {
+.nav.top-menu>li.privileged-nav-link>a {
   color:rgb(236, 161, 108);
 }
 
 
 .admin-nav-sidebar {
   max-width:250px;
-  font-size:.9em;
+  font-size:.85em;
   margin-top:1em;
   min-width:245px;
   border-bottom:1px dotted gray;
   padding:1em 1em 3em 1em;
+}
+.admin-nav-sidebar .nav-item:hover {
+    background:lightgray;
+    border-radius:3px;
+}
+.admin-nav-sidebar .nav-link {
+    color:#337ab7;
 }
 .admin-nav-sidebar li.active>a {
   background:#e8e8e8;
@@ -164,12 +180,16 @@ a.skip:hover {
   text-align: left;
   overflow: hidden;
 }
+#keyword-search-submit {
+  border-radius:0;
+  }
 
 
 #content {
 }
 .update-dataset-link {
   padding-top:.5em;
+  padding-bottom:1em;
 }
 .update-dataset-link a,
 .entity-add-link,
@@ -210,11 +230,12 @@ a.skip:hover {
 #internal-only-filter-container {
     padding-top:1.5em;
     padding-left:1em;
+    font-size:.9em;
 }
 .internal-dataset-badge {
     margin-left:.35em;
     display:inline-block;
-    font-size:.63em;
+    font-size:.5em;
     color:#ededed;
     font-weight:bold;
     background:#59228e;
@@ -249,14 +270,17 @@ margin-bottom:10em;
   border-bottom:1px solid lightgray;
 }
 
+#results-list dt {
+  text-align:right;
+}
+#results-list dd {
+  padding-left:1.5em;
+}
 #facets-list {
   font-size:.9em;
   padding-left:.25em;
 }
 
-#results-list dd,dt {
-  padding:.25em 0em;
-}
 
 .facet-header {
   padding:.25em 0em;
@@ -298,16 +322,17 @@ color:gray;
 /**
  * FORMS
  **/
-a.btn-add,
+a.btn-success,
 a.btn-remove {
   cursor:pointer;
   color:white;
   font-weight:bold;
-  padding:0em .5em;
+  padding:.25em .75em;
   font-size:.6em;
+  border-radius:3px;
   vertical-align:top;
 }
-a.btn-add:hover,
+a.btn-success:hover,
 a.btn-remove:hover {
   color:white;
 }
@@ -435,22 +460,30 @@ div[data-prototype] div[data-content] {
   border-radius:5px;
   position:relative;
   margin-top:1em;
+  display: flex;
+  justify-content: flex-end;
+  width:100%;
 }
 
+div[data-prototype],
+.dynamic-form-element-container > div {
+  width:100%;
+}
 
 div[data-prototype] div[data-content] .form-group {
   border-top:none;
   padding:0em;
   margin-bottom:1.5em;
   margin-top:0em;
+  justify-content:flex-end;
 }
 div[data-prototype] div[data-content] .form-group .col-sm-8 {
   width:100% !important;
 }
 div[data-prototype] div[data-content] .btn-remove {
   position:absolute;
-  right:205px;
-  bottom:7px;
+  right:19px;
+  bottom:0px;
 }
 
 form.remove-form button {
@@ -463,7 +496,7 @@ form.remove-form button {
 }
 
 
-.modal-success.glyphicon-ok-sign {
+.modal-success.icon-ok-circle {
   font-size:4em;
   color:green;
 }
@@ -611,7 +644,7 @@ a.authors-collapse {
 .alert-success {
   text-align:center;
 }
-#contactFormEmail .checker {
+#contact_form_email .checker {
   display:none;
 }
 
