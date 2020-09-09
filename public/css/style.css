@@ -32,16 +32,17 @@ http://ryanfait.com/
   height:50px;
 }
 #page-header {
- height:100px;
  background: black;
   position:relative;
-  padding:1em;
 }
 #page-header span {
   display:inline-block;
 }
 #header-logo {
-  height:75px;
+  height:42px;
+}
+.logos-container {
+    padding:.75em;
 }
 #content-wrapper {
   margin-bottom:5em;
@@ -52,10 +53,10 @@ http://ryanfait.com/
 .page-header.entities-list {
     overflow:hidden;
 }
-.pagetitle {
+#frontpage-sitename {
   color:white;
   vertical-align:bottom;
-  margin-left:3em;
+  margin-bottom:1.25em;
 }
 .pagetitlelink {
   color:rgb(243,243,243);
@@ -76,45 +77,44 @@ http://ryanfait.com/
   text-decoration:underline;
 }
 
-.nav-links {
-  display:inline-block;
-  position:absolute;
-  bottom:0;
-  right:0;
+.menu-bar {
+    background:white;
+    width:100%;
 }
 
-.nav-tabs {
+.menu-links {
   border-bottom:none;
+  list-style-type:none;
+  margin-bottom:0;
 }
-.nav-tabs li {
+.menu-links li {
   margin-bottom:0px;
+  display:inline-block;
+  padding:.5em 1em;
 }
-.nav-tabs>li>a {
+.menu-links>li>a {
   border-radius:2px 2px 0px 0px;
-  
-  height:32px;
+  color:black;  
 }
-.nav-tabs>li>a {
-  padding:5px 15px;
-  color:rgb(200,200,200);
+.menu-links>li>a {
+    padding:5px 15px;
 }
-.nav-tabs>li>a:hover {
-  color:black;
+.menu-links>li>a:hover {
+  color:#580f8b;
+  background:white;
+  border:none;
+  text-decoration:none;
 }
-.nav-tabs>li:hover {
+.menu-links>li:hover {
+  background:white;
 }
-.nav-tabs>li.active>a {
-  background:#f8f8f8;
+.menu-links>li.active>a {
   margin-right:0px;
 }
-.nav-tabs>li:not(.active) {
-  background: rgba(140,140,140,.42);
-}
-.nav-tabs>li.privileged-nav-link>a {
-  color:rgb(236, 161, 108);
-}
 
-
+.admin-menu-link a {
+  color:#e1480c !important;
+}
 .admin-nav-sidebar {
   max-width:250px;
   font-size:.9em;
@@ -165,6 +165,13 @@ a.skip:hover {
   overflow: hidden;
 }
 
+#keyword-search-form.input-group {
+  width:100%;
+}
+#homepage-container {
+  text-align:center;
+  padding-top:4em;
+}
 
 #content {
 }
@@ -283,14 +290,109 @@ li span.facet-numresults {
 .search-box-description {
 color:gray;
 }
-#search-header {
+
+/*********************************
+ *
+ *  FRONTPAGE SEARCH CONTAINER
+ *
+ ********************************/
+#frontpage-search-container {
   text-align:center;
-  background:#f8f8f8;
+  background:black;
   width:100%;
   border-bottom:1px solid lightgray;
   padding:2em 15px;
+  margin-bottom:3em;
 }
 
+#frontpage-search-form-container #keyword-search-input {
+  padding:.75em;
+  height:auto;
+  font-size:1.25em;
+  background:#f7f7f7;
+}
+#frontpage-search-form-container #keyword-search-submit {
+  border-radius:0;
+  padding:.75em 1em;
+  background: #580f8b;
+  background-image:none;
+  color:white;
+  text-shadow:none;
+  border:1px solid #580f8b;
+  font-size:1.25em;
+  margin-left:0px;
+}
+#frontpage-search-form-container #keyword-search-submit:hover {
+  background:#692d96;
+}
+#frontpage-search-form-container .input-group-btn {
+  font-size:inherit;
+}
+#frontpage-search-hints {
+  text-align:left;
+}
+.search-hint {
+  text-decoration:underline;
+  padding:0em .3em;
+}
+#frontpage-submit-dataset {
+  background:#279989;
+  width:100px;
+  height:100px;
+  border-radius:50%;
+  display:inline-block;
+  float:right;
+  padding-top:30px;
+  color:white;
+  margin-top:-23px;
+  margin-right:8em;
+}
+#frontpage-submit-dataset:hover {
+  text-decoration:none;
+  background:#40C1AC;
+}
+/**********
+ * interior page search container
+ *********/
+#interior-page-search-container {
+  overflow:hidden;
+  padding:1em;
+  background:black;
+}
+.interior-page-sitename-container {
+  width:20%;
+  float:left;
+}
+.interior-page-sitename {
+  margin:0;
+  color:white;
+}
+#interior-page-search-form-container {
+  width:40%;
+  float:right;
+  margin-right:5em;
+}
+#interior-page-search-form-container .input-group-btn {
+}
+#interior-page-search-form-container #keyword-search-submit {
+  border-radius:0;
+  padding:.25em .75em;
+  background: #580f8b;
+  background-image:none;
+  color:white;
+  text-shadow:none;
+  border:1px solid #580f8b;
+  margin-left:0px;
+}
+#interior-page-search-form-container #keyword-search-submit:hover {
+  background:#692d96;
+}
+#interior-page-search-form-container #keyword-search-input {
+  padding:.25em;
+  height:auto;
+  font-size:1em;
+  background:#f7f7f7;
+}
 
 
 
@@ -639,6 +741,12 @@ a.authors-collapse {
 /*****************
  * FOOTER
  * **************/
+.login-link {
+  margin:2em 5em;
+  color:gray;
+  display:inline-block;
+
+}
 #footer {
         background-color: #333;
         background: url(../img/background_gradient.gif) repeat-x 0 0 #333;
