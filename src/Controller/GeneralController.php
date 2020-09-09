@@ -70,10 +70,9 @@ class GeneralController extends Controller
    *
    * @return Response A Response instance
    *
-   * @Route("/", name="homepage")
    * @Route("/search", name="user_search_results")
    */
-  public function indexAction(Request $request) {
+  public function searchAction(Request $request) {
     
     $currentSearch = new SearchState($request);
 
