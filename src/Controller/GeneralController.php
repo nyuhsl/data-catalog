@@ -46,6 +46,23 @@ class GeneralController extends Controller
     $this->security = $security;
   }
 
+
+  /**
+   * Display splash page, checking if we have an institution-specific version first
+   *
+   * @return Response A Response instance
+   * @Route("/", name="homepage")
+   */
+  public function indexAction(Request $request) {
+    if ($this->get('templating')->exists('institution/index.html.twig')) {
+      return $this->render('institution/index.html.twig',array()); 
+    }
+    else {
+      return $this->render('index.html.twig', array());
+    }
+  }
+
+
   /**
    * Performs searches and produces results pages
    *
@@ -96,9 +113,50 @@ class GeneralController extends Controller
       return $this->render('institution/about.html.twig',array()); 
     }
     else {
-      return $this->render('default/about.html.twig', array());
+      return $this->render('about.html.twig', array());
     }
 
+  }
+
+
+  /**
+   * Produce How To Use the Catalog page, checking if we have an institution-
+   * specific version.
+   *
+   * @param Request The current HTTP request
+   *
+   * @return Response A Response instance
+   * @Route("/how-to-use-the-catalog", name="how_to_use_catalog")
+   */
+  public function howToUseTheCatalogAction(Request $request) {
+
+    if ($this->get('templating')->exists('institution/how_to_use_catalog.html.twig')) {
+      return $this->render('institution/how_to_use_catalog.html.twig',array()); 
+    }
+    else {
+      return $this->render('how_to_use_catalog.html.twig', array());
+    }
+
+  }
+
+
+  /**
+   * Produce the FAQ page, checking if we have an institution-
+   * specific version.
+   *
+   * @param Request The current HTTP request
+   *
+   * @return Response A Response instance
+   * @Route("/frequently-asked-questions", name="faq")
+   */
+  public function faqAction(Request $request) {
+
+    if ($this->get('templating')->exists('institution/faq.html.twig')) {
+      return $this->render('institution/faq.html.twig',array()); 
+    }
+    else {
+      return $this->render('faq.html.twig', array());
+    }
   }
 
 
