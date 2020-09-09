@@ -1,0 +1,19 @@
+<div id="frontpage-search-container">
+  <div id="frontpage-sitename-container">
+    <h1 id="frontpage-sitename">{{ site_name }}</h1>
+  </div>
+  <div id="frontpage-search-form-container">
+    <form id="keyword-search-form" class="input-group">
+      <label for="keyword-search-input">search terms</label>
+      <input type="text" class="form-control" id="keyword-search-input">
+        <span class="input-group-btn">
+          <button id="keyword-search-submit" class="btn btn-default search-button" type="submit">Search</button>
+        </span>
+      </input>
+    </form>
+    <div id="frontpage-search-hints">
+      try <a class="search-hint" href="/search?keyword=electronic health records">electronic health records</a> or <a class="search-hint" href="/search?keyword=health care costs">health care costs</a>
+    </div>
+  </div>
+  <a href="{{ path('contact') }}" id="frontpage-submit-dataset" aria-label="Submit your Dataset!">Submit Your Dataset!</a>
+</div>
