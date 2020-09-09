@@ -54,7 +54,7 @@ class GeneralController extends Controller
    * @Route("/", name="homepage")
    */
   public function indexAction(Request $request) {
-    if ($this->get('templating')->exists('institution/index.html.twig')) {
+    if ($this->get('twig')->getLoader()->exists('institution/index.html.twig')) {
       return $this->render('institution/index.html.twig',array()); 
     }
     else {
