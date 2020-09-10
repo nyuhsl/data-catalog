@@ -26,7 +26,7 @@
 {% block content %}
 <div class="container-fluid">
 <div class="row">
-<div class="col-2" id="facets-pane">
+<div class="col-3" id="facets-pane">
 <h4 class="facet-pane-header">Filter by</h4>
 
   <div class="checkbox facet-section" id="internal-only-filter-container">
@@ -71,7 +71,7 @@
      {% endif %}
    {% endfor %}
 </div>
-<div class="col-sm-10 right-pane clearfix">
+<div class="col-sm-9 right-pane clearfix">
 <div class="row">
 <div class="col-sm-8" id="facet-breadcrumbs">
  {% if currentSearch.keyword %}
@@ -148,14 +148,14 @@
 </div>
 </div>
 <div class="row">
-<div class="col-sm-10" id="results-container">
+<div class="col-sm-11" id="results-container">
   <ul id="results-list" class="list-unstyled">
    {% for item in results.resultItems %}
     <li class="dataset-summary"> 
-    <h4 class="dataset-title"><a class="dataset-title-link" href="{{ path("view_dataset", {"uid":item.id}) }}">{{ item.dataset_title }}</a>
       {% if item.origin == "Internal" %}
         <div class="internal-dataset-badge">{{ internal_dataset_text }}</div>
       {% endif %}
+    <h4 class="dataset-title"><a class="dataset-title-link" href="{{ path("view_dataset", {"uid":item.id}) }}">{{ item.dataset_title }}</a>
     </h4>
             <dl class="row">
 
@@ -179,7 +179,7 @@
              </dd>
              {% endif %}
 
-             <dt class="col-sm-3">Description</dt><dd class="col-sm-9"><p>{{ item.description[0]|raw }}</p></dd>
+             <dt class="col-sm-3">Description</dt><dd class="col-sm-9"><p>{{ item.description[0]|striptags|truncate(400,true) }}</p></dd>
 
              {% if item.subject_domain is defined and item.subject_domain[0] %}
                <dt class="col-sm-3">Subject</dt><dd class="col-sm-9">{% for subject in item.subject_domain %} 
