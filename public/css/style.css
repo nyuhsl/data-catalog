@@ -13,6 +13,10 @@ footer, .push {
   clear:both;
 }
 
+#maincontent {
+    padding-top:.75em;
+}
+
 #login-form-container {
     padding-top:2em;
 }
@@ -59,7 +63,7 @@ http://ryanfait.com/
 #frontpage-sitename {
   color:white;
   vertical-align:bottom;
-  margin-bottom:1.25em;
+  margin-bottom:1em;
 }
 .pagetitlelink {
   color:rgb(243,243,243);
@@ -93,7 +97,7 @@ http://ryanfait.com/
 .menu-links li {
   margin-bottom:0px;
   display:inline-block;
-  padding:.5em 1em;
+  padding:.35em 1em;
 }
 .menu-links>li>a {
   border-radius:2px 2px 0px 0px;
@@ -214,7 +218,7 @@ a.skip:hover {
   padding:.5em;
   border-right:1px solid lightgray;
   border-bottom:1px solid lightgray;
-  
+  max-width:300px;  
 }
 .facet-section {
   padding:.5em;
@@ -234,13 +238,13 @@ a.skip:hover {
     font-size:.9em;
 }
 .internal-dataset-badge {
-    margin-left:.35em;
+    margin-bottom:.75em;
     display:inline-block;
-    font-size:.5em;
-    color:#ededed;
-    font-weight:bold;
+    font-size:.7em;
+    color:white;
     background:#59228e;
-    padding:.35em;
+    padding:.3em .7em;
+    border-radius:3px;
     vertical-align:top;
 }
 .internal-dataset-badge.details-page {
@@ -262,8 +266,12 @@ margin-bottom:10em;
  width:70%;
 }
 
+li.dataset-summary h4 {
+    margin-bottom:.75rem;
+}
+
 #results-list {
-  padding-left:3em;
+  padding-left:1.25em;
 }
 
 #results-list li {
@@ -323,15 +331,20 @@ color:gray;
   margin-bottom:3em;
 }
 
+#frontpage-search-form-container {
+    width: 550px;
+    margin:auto;
+    margin-bottom:-78px;
+}
 #frontpage-search-form-container #keyword-search-input {
-  padding:.75em;
+  padding:.5em;
   height:auto;
   font-size:1.25em;
   background:#f7f7f7;
 }
 #frontpage-search-form-container #keyword-search-submit {
   border-radius:0;
-  padding:.75em 1em;
+  padding:.5em 1em;
   background: #580f8b;
   background-image:none;
   color:white;
@@ -355,14 +368,15 @@ color:gray;
 }
 #frontpage-submit-dataset {
   background:#279989;
-  width:100px;
-  height:100px;
+  width:95px;
+  height:95px;
   border-radius:50%;
   display:inline-block;
   float:right;
-  padding-top:30px;
+  padding-top:27px;
   color:white;
-  margin-top:-23px;
+  font-size:.9em;
+  margin-top:-14px;
   margin-right:8em;
 }
 #frontpage-submit-dataset:hover {
@@ -378,7 +392,6 @@ color:gray;
   background:black;
 }
 .interior-page-sitename-container {
-  width:20%;
   float:left;
 }
 .interior-page-sitename {
@@ -519,7 +532,7 @@ overflow:auto;
 }
 
 #sort-and-results {
-  font-size:.9em;
+  font-size:.8em;
 }
 
 #sort-and-results #dropdowns-wrapper {
@@ -544,7 +557,7 @@ clear:both;
 text-align:right;
 color:gray;
 font-size:.95em;
-margin-top:.25em;
+margin-top:-5px;
 }
 #number-of-results {
 font-size:1.1em;
