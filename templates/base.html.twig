@@ -65,52 +65,33 @@
       <a href="#maincontent" class="skip">Skip to content</a>
       <div class="page-wrapper">
       <header id="page-header">
-        <span class="logo-container">
+        <div class="logos-container">
         {# tell us where your site's logo lives in 'institution/logo.html.twig' #}
         {% include ['institution/logo.html.twig','logo.html.twig'] ignore missing %}
-        </span>
-        <span class="pagetitle">
-          <h2><a class="pagetitlelink" href="/">{{ site_name }}</a></h2>
-        </span>
-        <nav class="nav-links">
-          {% if is_granted('ROLE_USER') %}
-           <h4 id="logged-in-badge">
-             <a href="{{ path('admin_panel') }}"><span class="btn btn-info">Welcome!</span></a>
-           </h4>
-          {% endif %}
-          <ul class="nav top-menu">
-            <li class="home-nav-link nav-item {% if app.request.get('_route') == 'default_search_results'%}active{% endif %} "><a class="nav-link" href="/">Home</a></li>
-            <li class="about-nav-link nav-item {% if app.request.get('_route') == 'about' %}active{% endif %}"><a class="nav-link" href="{{ path('about') }}">About the Catalog</a></li>
-            <li class="contact-page-link nav-item {% if app.request.get('_route') == 'contact' %}active{% endif %}"><a class="nav-link" href="{{ path('contact') }}">Contact Us</a></li>
+        </div>
+ 		<nav class="menu-bar">
+          <ul class="menu-links">
+            <li class="menu-link {% if app.request.get('_route') == 'about' %}active{% endif %}"><a href="{{ path('about') }}">About</a></li>
+            <li class="menu-link {% if app.request.get('_route') == 'how_to_use_catalog' %}active{% endif %}"><a href="{{ path('how_to_use_catalog') }}">How To Use the Catalog</a></li>
+            <li class="menu-link {% if app.request.get('_route') == 'faq' %}active{% endif %}"><a href="{{ path('faq') }}">Frequently Asked Questions</a></li>
             {% if is_granted('ROLE_USER') %}
-              <li class="nav-item privileged-nav-link admin-page-link {% if is_granted('ROLE_USER') and adminPage is defined and adminPage==true %}active{% endif %}"><a class="nav-link" href="{{ path('admin_panel') }}">Admin</a></li>
+              <li class="menu-link admin-menu-link {% if is_granted('ROLE_USER') and adminPage is defined and adminPage==true %}active{% endif %}"><a href="{{ path('admin_panel') }}">Admin</a></li>
             {% endif %}
             {% if is_granted('ROLE_USER') %}
-              <li class="privileged-nav-link nav-item"><a class="nav-link" href="{{ path('logout') }}">Logout</a></li>
-            {% else %}
-              <li class="login-link hidden-xs nav-item"><a class="nav-link" href="{{ path('login_route') }}">Login</a></li>
+              <li class="menu-link admin-menu-link logout-link"><a href="{{ path('logout') }}">Logout</a></li>
             {% endif %}
-
           </ul>
         </nav>
       </header> 
-      <div id="search-header">
-        <div class="">
-          <p class="search-box-description">Search here to find large public and licensed datasets</p>
-          <form id="keyword-search-form" class="input-group">
-              <label for="keyword-search-input">search terms</label>
-              <input type="text" class="form-control" id="keyword-search-input">
-              <span class="input-group-btn">
-                <button id="keyword-search-submit" class="btn btn-secondary" type="submit">Go!</button>
-              </span>
-          </form>
-
-        </div>
-      </div> 
-      <div id="maincontent" class="content-container">
-
+      {% if app.request.get("_route") == 'homepage' %}
+        {% include ['frontpage_search_bar.html.twig'] ignore missing %}
+      {% else %}
+        {% include ['search_bar.html.twig'] ignore missing %}
+      {% endif %}
+    <div id="maincontent" class="content-container">
 
       {% block content %}{% endblock %}
+
       {% block javascripts %}
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
@@ -124,11 +105,9 @@
       </div>
       <div class="push"></div>
     </div>
-      <footer id="footer">
 
         {# Use the file 'institution/footer.html.twig' for your institution-specific footer content #}
         {% include ['institution/footer.html.twig','footer.html.twig'] ignore missing %}
 
-      </footer>
   </body>
 </html>
