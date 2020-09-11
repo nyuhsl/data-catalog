@@ -130,7 +130,7 @@ class GeneralController extends Controller
    */
   public function howToUseTheCatalogAction(Request $request) {
 
-    if ($this->get('templating')->exists('institution/how_to_use_catalog.html.twig')) {
+    if ($this->get('twig')->getLoader()->exists('institution/how_to_use_catalog.html.twig')) {
       return $this->render('institution/how_to_use_catalog.html.twig',array()); 
     }
     else {
@@ -151,7 +151,7 @@ class GeneralController extends Controller
    */
   public function faqAction(Request $request) {
 
-    if ($this->get('templating')->exists('institution/faq.html.twig')) {
+    if ($this->get('twig')->getLoader()->exists('institution/faq.html.twig')) {
       return $this->render('institution/faq.html.twig',array()); 
     }
     else {

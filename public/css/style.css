@@ -14,7 +14,7 @@ footer, .push {
 }
 
 #maincontent {
-    padding-top:.75em;
+    padding-top:.25em;
 }
 
 #login-form-container {
@@ -632,6 +632,9 @@ form.remove-form button {
  * DATASET DETAIL VIEW
  *
  *************/
+#dataset-full-view-container {
+    padding-top:2em;
+}
 #dataset-detail-titlebox {
   margin-bottom:1.5em;
   border-bottom: 1px solid lightgray;
@@ -646,12 +649,16 @@ form.remove-form button {
 }
 
 
-.dataset-detail-alttitle,
+.dataset-detail-alttitle h6,
 .dataset-detail-id,
 .dataset-detail-authors,
 .dataset-detail-issued {
   color:gray;
+  font-size:.9em;
 }
+.dataset-detail-alttitle p {
+  margin-bottom:.5em;
+  }
 .dataset-detail-access-instructions {
   font-size:.9em;
 }

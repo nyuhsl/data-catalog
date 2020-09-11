@@ -15,7 +15,7 @@ var trackOutboundLink = function(url, label) {
 */
 $(function () {
   $('[data-toggle="popover"]').popover({
-     'html':'true',
+     'html':true,
      'animation':false,
      'trigger':'manual',
      'placement':'bottom',
@@ -50,8 +50,8 @@ $(function () {
 
 {% block content %}
 <div class="container">
-<div id="dataset-full-view-container" class="col-xs-8 col-xs-offset-2">
 <div class="row">
+<div id="dataset-full-view-container" class="col-10 offset-1">
   <div class="" id="dataset-detail-titlebox">
   {% if is_granted('ROLE_ADMIN') %}
   <div class="update-dataset-link">
@@ -60,18 +60,18 @@ $(function () {
    </a>
   </div>
   {% endif %}
-     <h1 class="dataset-detail-maintitle">{{ dataset.title }} 
-       <small><div class="internal-dataset-badge details-page">{{ internal_dataset_text }}</div></small> 
+     <div class="internal-dataset-badge details-page">{{ internal_dataset_text }}</div>
+     <h2 class="dataset-detail-maintitle">{{ dataset.title }} 
        {% if dataset.published == false %}<small>[unpublished]</small>{%endif%}
        {% if dataset.archived == true %}<small>[archived]</small>{%endif%}
-     </h1>
+     </h2>
       <span class="dataset-detail-alttitle">
       {% if dataset.datasetAlternateTitles.count > 0 %}
-       <h5>Alternate Titles(s): 
+       <h6>Alternate Titles(s): 
         {% for title in dataset.datasetAlternateTitles %}
         {{ title.getDisplayName|trim }}{% if not loop.last %}, {% endif %}
         {% endfor %}
-        </h5>
+        </h6>
       {% endif %}
     <p>
       <span class="dataset-detail-id">UID: {{ dataset.id }}</span>
@@ -144,8 +144,9 @@ $(function () {
     </p>
   </div>
 </div>
+</div>
 <div class="row">
-   <div class="col-sm-7 col-sm-pull-0" id="dataset-detail-description">
+   <div class="col-6 offset-1" id="dataset-detail-description">
    <dl>
      <dt>Description</dt>
        <dd>{{ dataset.description|raw }}</dd>
@@ -253,8 +254,8 @@ $(function () {
      
      </dl>
     </div>
-    <div class="col-sm-4 col-sm-push-0" id="dataset-detail-sidebar">
-      <div id="dataset-detail-accesspanel" class="row">
+    <div class="col-4" id="dataset-detail-sidebar">
+      <div id="dataset-detail-accesspanel" class="">
        <dl>
          
           <dd>
@@ -380,7 +381,7 @@ $(function () {
     
     </dl>
    </div>
-   <div class="row" id="dataset-detail-relatedpanel">
+   <div class="" id="dataset-detail-relatedpanel">
      <dl>
        {% if (dataset.awards.count > 0) %}
        <dt>Grant Support</dt>
