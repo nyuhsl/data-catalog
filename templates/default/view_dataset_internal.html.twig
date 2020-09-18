@@ -7,8 +7,13 @@
 * Record outbound link clicks for Analytics
 */
 var trackOutboundLink = function(url, label) {
-  ga('send', 'event', 'outbound', 'click', label);
+  gtag('event', 'click', {
+    'event_category': 'outbound',
+    'event_label': label,
+    'transport_type': 'beacon'
+  });
 }
+
 
 /**
 * Initialize Author popovers
