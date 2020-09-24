@@ -5,8 +5,7 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
 
-    solrsearchr_server: localhost:8983/solr/data-catalog/
-    #solrsearchr_server: testbox1.hsls.pitt.edu:8983/solr/collection1/
+    solrsearchr_server: http://localhost:8983/datacatalog # just as en xample
     solrsearchr_format: json
     #
     # Comment out any 'solrsearchr_facets' below that
@@ -43,8 +42,8 @@ parameters:
     site_base_url: "http://www.example.com"
     site_provider_name: "Generic Library or Department that Made the Data Catalog"
     site_provider_url: "http://library.example.edu"
-    institution_name: "Generic Academic Institution"
-    institution_name_short: "Our Institution"
+    institution_name: "Generic Institution"
+    institution_name_short: "Generic U."
     institution_address: "123 Fake Street, Springfield USA"
     institution_url: "http://www.example.edu"
     
