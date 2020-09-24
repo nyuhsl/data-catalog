@@ -44,10 +44,30 @@ $(function () {
 
   // initialize Publisher popovers
   $('.publishers-list [data-toggle="popover"]').popover({
-     'html':'true',
+     'html':true,
      'animation':false,
      'trigger':'manual',
      'placement':'top',
+  }).on("mouseenter", function () {
+    var _this = this;
+    $(this).popover("show");
+    $(".popover").on("mouseleave", function () {
+      $(_this).popover('hide');
+    });
+  }).on("mouseleave", function () {
+    var _this = this;
+    setTimeout(function () {
+        if (!$(".popover:hover").length) {
+            $(_this).popover("hide");
+        }
+    }, 200);
+  });
+  // initialize local expert popovers
+  $('.local-expert-popover-link').popover({
+     'html':true,
+     'animation':false,
+     'trigger':'manual',
+     'placement':'right',
   }).on("mouseenter", function () {
     var _this = this;
     $(this).popover("show");
@@ -121,10 +141,10 @@ $(function () {
 
                    {% endif %}
                    {% if author.isCorrespondingAuthor %}
-                      <a tabindex="0" class="corresponding-author author-name" role="button" data-toggle="popover" title="{{ author.getPerson.getFullName }}" data-content="{{ popoverContent }}">{{ author.getPerson.getFullName }}*</a>{% if not loop.last %},{% endif %}{% if loop.last %}...{% endif %}
+                      <a href="#" tabindex="0" class="corresponding-author author-name" role="button" data-toggle="popover" title="{{ author.getPerson.getFullName }}" data-content="{{ popoverContent }}">{{ author.getPerson.getFullName }}*</a>{% if not loop.last %},{% endif %}{% if loop.last %}...{% endif %}
                       {% set correspondingAuthorExists = true %}
                    {% else %}
-                      <a tabindex="0" class="author-name" role="button" data-toggle="popover" title="{{ author.getPerson.getFullName }}" data-content="{{ popoverContent }}">{{ author.getPerson.getFullName }}</a>{% if not loop.last %}, {% endif %}{% if loop.last %}...{%endif %}
+                      <a href="#" tabindex="0" class="author-name" role="button" data-toggle="popover" title="{{ author.getPerson.getFullName }}" data-content="{{ popoverContent }}">{{ author.getPerson.getFullName }}</a>{% if not loop.last %}, {% endif %}{% if loop.last %}...{%endif %}
                    {% endif %}
                {% endfor %}
                 <a class="collapsed-toggle authors-collapse" data-toggle="collapse" href="#collapsed-authors" aria-expanded="false" aria-controls="collapsed-authors">
@@ -140,10 +160,10 @@ $(function () {
 
                    {% endif %}
                    {% if author.isCorrespondingAuthor %}
-                      <a tabindex="0" class="corresponding-author author-name" role="button" data-toggle="popover" title="{{ author.getPerson.getFullName }}" data-content="{{ popoverContent }}">{{ author.getPerson.getFullName }}*</a>{% if not loop.last %}, {% endif %}
+                      <a href="#" tabindex="0" class="corresponding-author author-name" role="button" data-toggle="popover" title="{{ author.getPerson.getFullName }}" data-content="{{ popoverContent }}">{{ author.getPerson.getFullName }}*</a>{% if not loop.last %}, {% endif %}
                       {% set correspondingAuthorExists = true %}
                    {% else %}
-                      <a tabindex="0" class="author-name" role="button" data-toggle="popover" title="{{ author.getPerson.getFullName }}" data-content="{{ popoverContent }}">{{ author.getPerson.getFullName }}</a>{% if not loop.last %}, {% endif %}
+                      <a href="#" tabindex="0" class="author-name" role="button" data-toggle="popover" title="{{ author.getPerson.getFullName }}" data-content="{{ popoverContent }}">{{ author.getPerson.getFullName }}</a>{% if not loop.last %}, {% endif %}
                    {% endif %}
                 {% endfor %}
                 </div>
@@ -160,10 +180,10 @@ $(function () {
 
                  {% endif %}
                  {% if author.isCorrespondingAuthor %}
-                    <a tabindex="0" class="corresponding-author author-name" role="button" data-toggle="popover" title="{{ author.getPerson.getFullName }}" data-content="{{ popoverContent }}">{{ author.getPerson.getFullName }}*</a>{% if not loop.last %}, {% endif %}
+                    <a href="#" tabindex="0" class="corresponding-author author-name" role="button" data-toggle="popover" title="{{ author.getPerson.getFullName }}" data-content="{{ popoverContent }}">{{ author.getPerson.getFullName }}*</a>{% if not loop.last %}, {% endif %}
                     {% set correspondingAuthorExists = true %}
                  {% else %}
-                    <a tabindex="0" class="author-name" role="button" data-toggle="popover" title="{{ author.getPerson.getFullName }}" data-content="{{ popoverContent }}">{{ author.getPerson.getFullName }}</a>{% if not loop.last %}, {% endif %}
+                    <a href="#" tabindex="0" class="author-name" role="button" data-toggle="popover" title="{{ author.getPerson.getFullName }}" data-content="{{ popoverContent }}">{{ author.getPerson.getFullName }}</a>{% if not loop.last %}, {% endif %}
                  {% endif %}
                {% endfor %}
            {% endif %}
@@ -241,8 +261,9 @@ $(function () {
         {% if dataset.localExperts|length > 0 %}
          <dt>{{ local_expert_display }}</dt><dd>
          {% for expert in dataset.localExperts %}
+            {% set popoverContent = '<p><a href="' ~ expert.bioUrl ~ '" target="_blank">View profile</a></p><p><a href="https://openredcap.nyumc.org/apps/redcap/surveys/?s=FRAFFH79JM" target="_blank">Contact this Local Expert</a></p>' %}
             <div class="multiple-item-list">
-              <a href="{{ expert.bioUrl }}" target="_blank">{{ expert.fullName }}</a>
+              <a class="local-expert-popover-link" href="#" data-toggle="popover" data-content="{{ popoverContent }}" data-original-title="{{ expert.fullName }}">{{ expert.fullName }}</a>
             </div>
          {% endfor %}
          {% endif %}
