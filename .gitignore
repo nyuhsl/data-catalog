@@ -4,6 +4,9 @@
 /.env.local
 /.env.local.php
 /.env.*.local
+
+/config/services.yaml
+
 /public/bundles/
 /var/
 /vendor/
@@ -12,3 +15,8 @@
 ###> symfony/web-server-bundle ###
 /.web-server-pid
 ###< symfony/web-server-bundle ###
+#
+#### ignore institution specific stuff ###
+/public/css/institution/
+/public/img/institution/
+/templates/institution/

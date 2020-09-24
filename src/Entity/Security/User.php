@@ -75,19 +75,26 @@ class User implements UserInterface, EquatableInterface, \Serializable
 
 
   /**
-   * @ORM\ManyToMany(targetEntity="Role", inversedBy="users", cascade={"persist", "detach", "merge", "refresh"})
-   * @ORM\JoinTable(name="user_role",
-   *   joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="user_id")},
-   *   inverseJoinColumns={@ORM\JoinColumn(name="role_id", referencedColumnName="role_id")}
-   *   )
+   * @ORM\Column(type="json")
    */
-  protected $roles;
+  protected $roles = [];
 
 
+  public function getRoles() {
+    $roles - $this->roles;
+    $roles[] = 'ROLE_USER';
+
+    return array_unique($roles);
+  }
+
+  public function setRoles(array $roles) {
+    $this->roles = $roles;
+
+    return $this;
+  }
 
     public function __construct()
     {
-      $this->roles = new ArrayCollection();
 
     }
     
@@ -100,14 +107,6 @@ class User implements UserInterface, EquatableInterface, \Serializable
       return $this->username;
     }
 
-    /**
-     * Get roles
-     *
-     * @return array User roles
-     */
-    public function getRoles() {
-      return $this->roles->toArray();
-    }
 
 
     /**
@@ -305,29 +304,6 @@ class User implements UserInterface, EquatableInterface, \Serializable
 
 
     /**
-     * Add roles
-     *
-     * @param \App\Entity\Security\Role $roles
-     * @return User
-     */
-    public function addRole(\App\Entity\Security\Role $roles)
-    {
-        $this->roles[] = $roles;
-
-        return $this;
-    }
-
-    /**
-     * Remove roles
-     *
-     * @param \App\Entity\Security\Role $roles
-     */
-    public function removeRole(\App\Entity\Security\Role $roles)
-    {
-        $this->roles->removeElement($roles);
-    }
-
-    /**
      * Set id
      *
      * @param integer $id
@@ -364,6 +340,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
             $this->username,
             $this->slug,
             $this->password,
+            $this->roles,
             $this->firstName,
             $this->lastName
         ));
@@ -380,7 +357,8 @@ class User implements UserInterface, EquatableInterface, \Serializable
             $this->slug,
             $this->password,
             $this->firstName,
-            $this->lastName
+            $this->lastName,
+            $this->roles
         ) = \unserialize($serialized);
     }
 

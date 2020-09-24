@@ -84,9 +84,11 @@
         </nav>
       </header> 
       {% if app.request.get("_route") == 'homepage' %}
-        {% include ['frontpage_search_bar.html.twig'] ignore missing %}
+        {# CHECK FOR CUSTOM FRONTPAGE SEARCH BAR TEMPLATE #}
+        {% include ['institution/frontpage_search_bar.html.twig','frontpage_search_bar.html.twig'] ignore missing %}
       {% else %}
-        {% include ['search_bar.html.twig'] ignore missing %}
+        {# CHECK FOR CUSTOM INTERIOR PAGE SEARCH BAR TEMPLATE #}
+        {% include ['institution/search_bar.html.twig','search_bar.html.twig'] ignore missing %}
       {% endif %}
     <div id="maincontent" class="content-container">
 

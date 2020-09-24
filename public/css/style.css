@@ -65,6 +65,13 @@ http://ryanfait.com/
   vertical-align:bottom;
   margin-bottom:1em;
 }
+.sitename-link {
+  color:white;
+}
+.sitename-link:hover {
+  color:white;
+  text-decoration:none;
+}
 .pagetitlelink {
   color:rgb(243,243,243);
 }
