@@ -666,6 +666,41 @@ form.remove-form button {
 .dataset-detail-alttitle p {
   margin-bottom:.5em;
   }
+
+#dataset-detail-accesspanel {
+  border:1px solid black;
+  margin-bottom:2em;
+}
+
+#accesspanel-titlebox {
+  border-bottom:1px solid black;
+  padding:.5em;
+  text-align:center;
+}
+#accesspanel-titlebox h4 {
+  margin-bottom:0;
+}
+
+#accesspanel-details {
+  padding:1em;
+}
+
+#accesspanel-details dd {
+  margin-bottom:2em;
+}
+#access-buttons-container dd {
+  margin-bottom:0;
+  text-align:center;
+}
+
+#access-buttons-container a.btn {
+  background-color:#b18cdb;
+  border-color:#b18cdb;
+}
+#access-buttons-container a.btn:hover {
+  background-color:#c2a0e9;
+  border-color:#c2a0e9;
+}
 .dataset-detail-access-instructions {
   font-size:.9em;
 }
