@@ -283,22 +283,14 @@ $(function () {
     </div>
     <div class="col-4" id="dataset-detail-sidebar">
       <div id="dataset-detail-accesspanel" class="">
+       <div id="accesspanel-titlebox">
+          <h4>Access</h4>
+       </div>
+       <div id="accesspanel-details">
        <dl>
-         
-          <dd>
-           {% for location in dataset.dataLocations %}
-              <div class="multiple-item-list">
-                <a class="btn btn-primary" target="_blank" href="{{ location.getDataAccessUrl }}" onclick="trackOutboundLink('{{ location.getDataAccessUrl }}', '{{ dataset.title }} (via {{ location.getDataLocation }})');">Access via {{ location.getDataLocation }}</a><p class="data-location-description"><span class="data-location-title"></span> <span class="data-location-content">{{ location.getLocationContent }}</span>
-               {% if location.getAccessionNumber %}
-                 <br/><span class="data-location-accession-number">Accession #: {{ location.getAccessionNumber  }}</span>
-               {% endif %}
-               </p>
-              </div>
-           {% endfor %} 
-          </dd>
       
       {% if (dataset.accessRestrictions.count > 0) %}
-       <dt>Access Restrictions</dt>
+       <dt>Restrictions</dt>
          <dd class="dataset-detail-access-restrictions">
           {% for restriction in dataset.accessRestrictions %}
            <div class="multiple-item-list">{{ restriction.getDisplayName }}</div>
@@ -306,9 +298,26 @@ $(function () {
          </dd>
       {% endif %}
       
-      <dt>Access Instructions</dt>
+      <dt>Instructions</dt>
          <dd>{{ dataset.accessInstructions|raw }}</dd>
-      
+      <div id="access-buttons-container">
+         <dd>
+           {% for location in dataset.dataLocations %}
+              <div class="multiple-item-list">
+                {% if location.getDataAccessUrl is not empty %}
+                <a class="btn btn-primary" target="_blank" href="{{ location.getDataAccessUrl }}" onclick="trackOutboundLink('{{ location.getDataAccessUrl }}', '{{ dataset.title }} (via {{ location.getDataLocation }})');">Access via {{ location.getDataLocation }}</a><p class="data-location-description"><span class="data-location-title"></span> <span class="data-location-content">{{ location.getLocationContent }}</span>
+                {% endif %}
+               {% if location.getAccessionNumber %}
+                 <br/><span class="data-location-accession-number">Accession #: {{ location.getAccessionNumber  }}</span>
+               {% endif %}
+               </p>
+              </div>
+           {% endfor %} 
+          </dd>
+         </div>
+        </div>
+      </div> 
+  
       {% if (dataset.publications.count > 0) %}
        <dt>Associated Publications</dt>
        <dd>
@@ -407,8 +416,6 @@ $(function () {
       {% endif %}
     
     </dl>
-   </div>
-   <div class="" id="dataset-detail-relatedpanel">
      <dl>
        {% if (dataset.awards.count > 0) %}
        <dt>Grant Support</dt>
@@ -444,8 +451,8 @@ $(function () {
      </dl>
     </div>
   </div>
-</div>
 <div class="row" id="suggest-dataset-link">Do you have or know of a dataset that should be added to the catalog? <a href="{{ path('contact') }}">Let us know</a>!</div>
+</div>
 </div>
 </div>
 
