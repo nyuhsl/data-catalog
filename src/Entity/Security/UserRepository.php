@@ -2,7 +2,6 @@
 namespace App\Entity\Security;
 
 use App\Entity\Security\User;
-use App\Entity\Security\Role;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NoResultException;
 use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
@@ -60,6 +59,27 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
 
       return $userData;
 
+    }
+
+
+   public function getDatabaseRoles($username) {
+    
+      $q = $this->createQueryBuilder('u')
+                ->where('u.username = :username')
+                ->setParameter('username',$username)
+                ->getQuery();
+      try {
+        $userData = $q->getSingleResult();
+      } catch (NoResultException $e) {
+        $message = sprintf(
+          'Unable to find database user "%s"', $username
+        );
+        throw new UsernameNotFoundException($message, 0, $e);
+      }
+     
+      $databaseRoles = $userData->getRoles();
+
+      return $databaseRoles;
     }
 
 
