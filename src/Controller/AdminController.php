@@ -45,8 +45,7 @@ class AdminController extends Controller
    * @Route("/dashboard", name="admin_panel")
    */
   public function adminAction(Request $request) {
-    
-
+   var_dump($this->getUser()->getRoles()); 
     return $this->render('default/admin-home.html.twig',array(
       'adminPage'=>true,
                 ));

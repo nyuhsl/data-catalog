@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 /** 
  * Form builder for User entry
@@ -47,20 +48,21 @@ class UserType extends AbstractType {
     $builder->add('username');
     $builder->add('firstName');
     $builder->add('lastName');
-    $builder->add('roles', 'entity', array(
-      'required'=>true,
-      'class'   =>'App\Entity\Security\Role',
-      'property'=>'name',
+    $builder->add('roles', ChoiceType::class, array(
+      'choices' => array(
+        'ROLE_ADMIN' => array('Admin' => 'ROLE_ADMIN'),
+        'ROLE_USER' => array('User' => 'ROLE_USER')
+      ),
       'multiple'=>true,
-      'label'   => 'Website role',
       'expanded'=>true,
+      'required'=>true
     ));
     $builder->add('apiKey', null, array(
       'required' => false,
-      'read_only'=>true
+      'attr' => array('readonly'=>true)
     ));
 
-    $builder->add('save', 'submit');
+    $builder->add('save', SubmitType::class,array('label'=>'Submit'));
   }
 
   /**

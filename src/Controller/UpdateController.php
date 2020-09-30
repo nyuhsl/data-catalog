@@ -10,6 +10,7 @@ use Symfony\Component\Security\Core\Security;
 use App\Entity\Dataset;
 use App\Form\Type\DatasetAsUserType;
 use App\Form\Type\DatasetAsAdminType;
+use App\Form\Type\UserType;
 use App\Utils\Slugger;
 
 
@@ -149,7 +150,8 @@ class UpdateController extends Controller {
         'No user \'' . $user . '\' was found'
       );
     }
-    $form = $this->createForm(new \App\Form\Type\UserType, $thisEntity);
+    $form = $this->createForm(UserType::class, $thisEntity);
+var_dump($this->getUser()->getRoles());
     $form->handleRequest($request);
     if ($form->isSubmitted() && $form->isValid()) {
       $addedUser = $thisEntity->getDisplayName();
@@ -157,7 +159,7 @@ class UpdateController extends Controller {
       $thisEntity->setSlug($newSlug);
       if (!$thisEntity->getApiKey()) {
         foreach ($thisEntity->getRoles() as $role) {
-          if ($role->getRole() == 'ROLE_API_SUBMITTER') {
+          if ($role == 'ROLE_API_SUBMITTER') {
             $apiKey = sha1(random_bytes(32));
             $thisEntity->setApiKey($apiKey);
           }

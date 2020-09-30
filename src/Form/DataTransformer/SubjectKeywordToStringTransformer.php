@@ -67,7 +67,6 @@ class SubjectKeywordToStringTransformer implements DataTransformerInterface {
     /*for ($i=1; $i<=count($subjectKeyword); $i++) {
       $subjectKeyword[$i] = $subjectKeyword[$i]->getKeyword();
     }
-    var_dump($subjectKeyword);
     return $subjectKeyword;*/
 
   }
@@ -95,7 +94,6 @@ class SubjectKeywordToStringTransformer implements DataTransformerInterface {
     }
 
    /* if (null === $subjectKeyword) {
-      var_dump("FUCKED UP");
       throw new TransformationFailedException(sprintf(
         'The SubjectKeyword "%s" does not exist',
         $keyword
