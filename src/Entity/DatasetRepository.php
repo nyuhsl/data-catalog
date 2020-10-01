@@ -29,7 +29,7 @@ class DatasetRepository extends EntityRepository
     {
         return $this->getEntityManager()
             ->createQuery(
-                'SELECT count(d) FROM App:Dataset d WHERE d.published=false'
+                'SELECT count(d) FROM App:Dataset d WHERE d.published=false and d.archived=false'
             )
             ->getSingleScalarResult();
     }
@@ -37,7 +37,7 @@ class DatasetRepository extends EntityRepository
     public function findAllUnpublished() {
       return $this->getEntityManager()
         ->createQuery(
-          'SELECT d FROM App:Dataset d WHERE d.published=false'
+          'SELECT d FROM App:Dataset d WHERE d.published=false and d.archived=false'
         )
         ->getResult();
     }
