@@ -151,7 +151,6 @@ class UpdateController extends Controller {
       );
     }
     $form = $this->createForm(UserType::class, $thisEntity);
-var_dump($this->getUser()->getRoles());
     $form->handleRequest($request);
     if ($form->isSubmitted() && $form->isValid()) {
       $addedUser = $thisEntity->getDisplayName();
