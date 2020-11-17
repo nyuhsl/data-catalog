@@ -151,6 +151,7 @@ col-sm-4
     <legend class="section-header">Grants and Publications</legend>
       {{ form_row(form.publications) }}
       {{ form_row(form.awards) }}
+      {{ form_row(form.projects) }}
       {% if userIsAdmin %}
       {# RELATED DATASETS #}
       <div class="form-group row multiple">
@@ -184,7 +185,7 @@ col-sm-4
   </fieldset>
   {% endif %}
   {{ form_widget(form._token) }}
-  {{ form_widget(form.save) }}
+  {{ form_widget(form.save, {'attr':{'class':'btn btn-primary'}}) }}
     </form> 
 
 

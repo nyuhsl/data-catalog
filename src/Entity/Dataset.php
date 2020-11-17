@@ -210,6 +210,17 @@ class Dataset implements JsonSerializable {
 
 
   /**
+   * @ORM\ManyToMany(targetEntity="Project", cascade={"persist"}, inversedBy="datasets")
+   * @ORM\JoinTable(name="datasets_projects",
+   *                joinColumns={@ORM\JoinColumn(name="dataset_uid",referencedColumnName="dataset_uid")},
+   *                inverseJoinColumns={@ORM\JoinColumn(name="project_id",referencedColumnName="project_id")}
+   *                )
+   * @ORM\OrderBy({"project_name"="ASC"})
+   */
+  protected $projects;
+
+
+  /**
    * @ORM\ManyToMany(targetEntity="AccessRestriction", cascade={"persist"}, inversedBy="datasets")
    * @ORM\JoinTable(name="datasets_access_restrictions",
    *                joinColumns={@ORM\JoinColumn(name="dataset_uid",referencedColumnName="dataset_uid")},
@@ -460,6 +471,7 @@ class Dataset implements JsonSerializable {
     $this->date_added = new \DateTime("now");
     $this->dataset_formats = new \Doctrine\Common\Collections\ArrayCollection();
     $this->awards = new \Doctrine\Common\Collections\ArrayCollection();
+    $this->projects = new \Doctrine\Common\Collections\ArrayCollection();
     $this->access_restrictions = new \Doctrine\Common\Collections\ArrayCollection();
     $this->data_collection_instruments = new \Doctrine\Common\Collections\ArrayCollection();
     $this->subject_genders = new \Doctrine\Common\Collections\ArrayCollection();
@@ -1109,6 +1121,41 @@ class Dataset implements JsonSerializable {
         return $this->awards;
     }
 
+
+    /**
+     * Add projects
+     *
+     * @param \App\Entity\Project $projects
+     * @return Dataset
+     */
+    public function addProject(\App\Entity\Project $projects)
+    {
+        $this->projects[] = $projects;
+
+        return $this;
+    }
+
+    /**
+     * Remove projects
+     *
+     * @param \App\Entity\Project $projects
+     */
+    public function removeProject(\App\Entity\Project $projects)
+    {
+        $this->projects->removeElement($projects);
+    }
+
+    /**
+     * Get projects
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getProjects()
+    {
+        return $this->projects;
+    }
+
+
     /**
      * Add access_restrictions
      *
@@ -1731,7 +1778,7 @@ class Dataset implements JsonSerializable {
      * @return array
      */
     public function jsonSerialize() {
-      $formats = $awards = $restrictions = $stds = $genders = $sexes = $ages = [];
+      $formats = $awards = $projects = $restrictions = $stds = $genders = $sexes = $ages = [];
       $equipment = $software = $subject_of_study = $others = [];
       $locs = $rel = $areas = $area_details = $domains = $publications = $keywords = $publishers = [];
       $authors = $data_type_array = $types_of_study = $corresponding_authors = $experts = [];
@@ -1755,6 +1802,7 @@ class Dataset implements JsonSerializable {
       foreach ($this->data_types as $data_type) { $data_type_array[]=$data_type->getDisplayName(); }
       foreach ($this->data_collection_instruments as $std) { $stds[]=$std->getDisplayName(); }
       foreach ($this->awards as $award) { $awards[]=$award->getDisplayName(); }
+      foreach ($this->projects as $project) { $projects[]=$project->getDisplayName(); }
       foreach ($this->local_experts as $expert) { $experts[]=$expert->getDisplayName(); }
       foreach ($this->subject_domains as $domain) { $domains[]=$domain->getDisplayName(); }
       foreach ($this->subject_genders as $gender) { $genders[]=$gender->getDisplayName(); }
@@ -1793,6 +1841,7 @@ class Dataset implements JsonSerializable {
         'data_types'                => $data_type_array,
         'data_collection_standards' => $stds,
         'awards'                    => $awards,
+        'projects'                  => $projects,
         'local_experts'             => $experts,
         'subject_domains'           => $domains,
         'subject_genders'           => $genders,
@@ -1814,12 +1863,13 @@ class Dataset implements JsonSerializable {
      public function serializeForSolr() {
         
        $formats = $awards = $restrictions = $stds = $genders = $sexes = $ages = $equipment = $software = $subject_of_study = [];
-       $areas = $area_details = $domains = $publications = $keywords = $publishers = [];
+       $areas = $projects = $area_details = $domains = $publications = $keywords = $publishers = [];
        $authors = $data_type_array = $types_of_study = $corresponding_authors = $experts = $data_locations = $akas = $related_datasets = [];
        $other_resource_names = $other_resource_descriptions = $related_pubs = $data_location_contents = [];
        $accession_numbers = $access_instructions = [];
        foreach ($this->dataset_formats as $format) { $formats[]=$format->getDisplayName(); }
        foreach ($this->awards as $award) { $awards[]=$award->getDisplayName(); }
+       foreach ($this->projects as $project) { $projects[]=$project->getDisplayName(); }
        foreach ($this->access_restrictions as $restriction) { $restrictions[]=$restriction->getDisplayName(); }
        foreach ($this->data_collection_instruments as $std) { $stds[]=$std->getDisplayName(); }
        foreach ($this->subject_genders as $gender) { $genders[]=$gender->getDisplayName(); }
@@ -1868,6 +1918,7 @@ class Dataset implements JsonSerializable {
          'study_types'           => $types_of_study,
          'collection_standards'  => $stds,
          'awards'                => $awards,
+         'projects'              => $projects,
          'access_restrictions'   => $restrictions,
          'subject_population_ages'=>$ages,
          'subject_geographic_area'=>$areas,
@@ -1897,7 +1948,7 @@ class Dataset implements JsonSerializable {
      * @return array
      */
     public function serializeComplete() {
-      $formats = $awards = $restrictions = $stds = $genders = $sexes = $ages = [];
+      $formats = $projects = $awards = $restrictions = $stds = $genders = $sexes = $ages = [];
       $equipment = $software = $subject_of_study = $others = [];
       $locs = $rel = $areas = $area_details = $domains = $publications = $keywords = $publishers = [];
       $authors = $data_type_array = $types_of_study = $corresponding_authors = $experts = [];
@@ -1918,6 +1969,7 @@ class Dataset implements JsonSerializable {
       foreach ($this->data_types as $data_type) { $data_type_array[]=$data_type->getDisplayName(); }
       foreach ($this->data_collection_instruments as $std) { $stds[]=$std->getAllProperties(); }
       foreach ($this->awards as $award) { $awards[]=$award->getAllProperties(); }
+      foreach ($this->projects as $project) { $projects[]=$project->getAllProperties(); }
       foreach ($this->local_experts as $expert) { $experts[]=$expert->getAllProperties(); }
       foreach ($this->subject_domains as $domain) { $domains[]=$domain->getAllProperties(); }
       foreach ($this->subject_genders as $gender) { $genders[]=$gender->getDisplayName(); }
@@ -1956,6 +2008,7 @@ class Dataset implements JsonSerializable {
         'data_types'                => $data_type_array,
         'data_collection_standards' => $stds,
         'awards'                    => $awards,
+        'projects'                  => $projects,
         'local_experts'             => $experts,
         'subject_domains'           => $domains,
         'subject_genders'           => $genders,
