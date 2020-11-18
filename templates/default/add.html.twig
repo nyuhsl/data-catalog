@@ -19,12 +19,12 @@
 
 
 {% block form_group_class -%}
-col-sm-5
+col-sm-6
 {%- endblock form_group_class %}
 
 
 {% block form_label_class -%}
-col-sm-2
+col-sm-3
 {%- endblock form_label_class %}
 
 
@@ -32,8 +32,9 @@ col-sm-2
 
 
 {% block content %}
-
-<div class="col-xs-7" >
+<div class="container">
+<div class="row">
+<div class="col-sm-9 offset-sm-1" >
 <div class="page-header">
 <h1>Add a new {{ displayName }}</h1>
 </div>
