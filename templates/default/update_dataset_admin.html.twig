@@ -202,10 +202,9 @@ col-sm-4
   {% endif %}
   {{ form_widget(form._token) }}
   {{ form_widget(form.save, {'attr':{'class':'btn btn-primary'}}) }}
-
     {% if form.vars.data.datasetEdits is not empty %}
- 
- 			<legend>Change Log</legend>
+       <div class="spacer50"></div>
+ 	  <legend>Change Log</legend>
  
         <div id="dataset-edits-panel">
             {% for edit in form.vars.data.datasetEdits %}
@@ -221,7 +220,7 @@ col-sm-4
         </div>
     {% endif %}
 		
-		
+<div class="spacer50"></div>
 			<legend>Temporary Access Keys</legend>
 
 			<div class="tak-panel">

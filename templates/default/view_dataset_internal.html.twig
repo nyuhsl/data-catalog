@@ -99,9 +99,13 @@ $(function () {
         {% endfor %}
         </h6>
       {% endif %}
-    <p>
-      <span class="dataset-detail-id">UID: {{ dataset.id }}</span>
-      </p>
+     </span>
+    {% if dataset.getProjects is not empty %}
+      {% for project in dataset.getProjects %}
+         <div class="dataset-detail-projects">Part of: <a href="{{ project.getProjectUrl }}" target="_blank">{{ project.getProjectName }}</a> | {{ project.getProjectDescription }}</div>
+       {% endfor %}
+    {% endif %}
+      <div class="dataset-detail-id">UID: {{ dataset.id }}</div>
          {% if dataset.getAuthorships is not empty %}
           <div class="dataset-authors-section">
           <span class="dataset-detail-authors">Author(s):
