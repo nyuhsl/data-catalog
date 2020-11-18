@@ -240,6 +240,18 @@ class DatasetAsAdminType extends AbstractType {
       'by_reference'=>false,
       'label'     => 'Grants',
     ));
+    $builder->add('projects', EntityType::class, array(
+      'class'   => 'App:Project',
+      'choice_label'=> 'project_name',
+      'required' => false,
+      'query_builder'=> function(EntityRepository $er) {
+          return $er->createQueryBuilder('u')->orderBy('u.project_name','ASC');
+      },
+      'attr'=>array('style'=>'width:100%'),
+      'multiple' => true,
+      'by_reference'=>false,
+      'label'     => 'Related Projects',
+    ));
     $builder->add('related_datasets', CollectionType::class, array(
       'entry_type' => DatasetRelationshipType::class,
       'required' => true,
