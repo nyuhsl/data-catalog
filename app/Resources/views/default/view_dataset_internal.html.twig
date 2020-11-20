@@ -73,6 +73,11 @@ $(function () {
 					</h5>
 				{% endif %}
 			</span>
+ {% if dataset.getProjects is not empty %}
+      {% for project in dataset.getProjects %}
+         <div class="dataset-detail-projects">Part of: <a href="{{ project.getProjectUrl }}" target="_blank">{{ project.getProjectName }}</a> | {{ project.getProjectDescription }}</div>
+       {% endfor %}
+    {% endif %}
 			<p>
 				<span class="dataset-detail-id">UID: {{ dataset.id }}</span>
 			</p>
