@@ -266,6 +266,15 @@ class DatasetAsAdminType extends AbstractType {
       'by_reference'=>false,
       'label'     => 'Grants',
     ));
+    $builder->add('projects', 'entity', array(
+      'class'   => 'AppBundle:Project',
+      'property'=> 'project_name',
+      'required' => false,
+      'attr'    => array('id'=>'dataset_projects','style'=>'width:100%'),
+      'multiple' => true,
+      'by_reference'=>false,
+      'label'     => 'Related Projects',
+    ));
     $builder->add('related_datasets', 'collection', array(
       'type'      => new DatasetRelationshipType(),
       'required' => true,

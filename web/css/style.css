@@ -494,6 +494,7 @@ form.remove-form button {
 .dataset-detail-alttitle,
 .dataset-detail-id,
 .dataset-detail-authors,
+.dataset-detail-projects,
 .dataset-detail-issued {
   color:gray;
 }
