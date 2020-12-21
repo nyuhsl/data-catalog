@@ -24,6 +24,7 @@
  */
 jQuery(function($) {
 
+
   /**
    * Interactivity with breadcrumbs
    */

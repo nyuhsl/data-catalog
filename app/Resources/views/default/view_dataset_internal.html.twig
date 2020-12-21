@@ -1,39 +1,8 @@
 {% extends 'base.html.twig' %}
 {% from 'default/_JSONLD_output.html.twig' import JSONLD_output %}
-{% block page_scripts %}
-<script>
-/**
-* Record outbound link clicks for Analytics
-*/
-var trackOutboundLink = function(url, label) {
-  ga('send', 'event', 'outbound', 'click', label);
-}
 
-/**
-* Initialize Author popovers
-*/
-$(function () {
-  $('[data-toggle="popover"]').popover({
-     'html':'true',
-     'animation':false,
-     'trigger':'manual',
-     'placement':'bottom',
-  }).on("mouseenter", function () {
-    var _this = this;
-    $(this).popover("show");
-    $(".popover").on("mouseleave", function () {
-      $(_this).popover('hide');
-    });
-  }).on("mouseleave", function () {
-    var _this = this;
-    setTimeout(function () {
-        if (!$(".popover:hover").length) {
-            $(_this).popover("hide");
-        }
-    }, 200);
-  });
-})
-</script>
+{% block page_scripts %}
+<script src="{{ asset('js/dataset_details.js') }}"></script>
 {% endblock %}
 
 
