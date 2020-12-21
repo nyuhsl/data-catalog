@@ -24,21 +24,6 @@
  */
 jQuery(function($) {
 
-  /**
-   * survey functionality
-   */
-    window.setTimeout(function() {
-      $(".survey-tab").animate({bottom: 40},"slow");
-      $(".survey-tab").animate({bottom: 14},"slow");
-      $(".survey-tab").animate({bottom: 24}, "slow");
-      $(".survey-tab").animate({bottom: 21}, "slow");
-    }, 1000);
-    $('.survey-tab').click(function() {
-        $('.survey-container').show({});
-    });
-    $('.x-out-survey').click(function() {
-        $('.survey-container').hide({});
-    });
 
   /**
    * Interactivity with breadcrumbs
