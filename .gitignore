@@ -57,4 +57,5 @@ app/config/common/security.yml
 app/Resources/views/institution/*
 web/css/institution/*
 web/js/institution/*
+web/img/institution/*
 src/AppBundle/Form/Type/ContactFormEmailType.php

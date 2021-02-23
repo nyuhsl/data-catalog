@@ -215,17 +215,31 @@
      
      </dl>
     </div>
-    <div class="col-sm-4 col-sm-push-0" id="dataset-detail-sidebar">
+    <div class="col-sm-5 col-sm-push-0" id="dataset-detail-sidebar">
       <div id="dataset-detail-accesspanel" class="row">
-       <dl>
-         
-          <dd>
-           {% for location in dataset.dataLocations %}
+        <div id="accesspanel-titlebox">
+          <h4><strong>Access</strong></h4>
+        </div>
+        <div id="accesspanel-details">
+          <dl>
+            {% if (dataset.accessRestrictions.count > 0) %}
+              <dt>Restrictions</dt>
+              <dd class="dataset-detail-access-restrictions">
+              {% for restriction in dataset.accessRestrictions %}
+                <div class="multiple-item-list">{{ restriction.getDisplayName }}</div>
+              {% endfor %}
+              </dd>
+            {% endif %}
+
+            <dt>Instructions</dt>
+            <dd>{{ dataset.accessInstructions|raw }}</dd>
+          <div id="access-buttons-container">
+            <dd>
+            {% for location in dataset.dataLocations %}
               <div class="multiple-item-list">
                 {% if location.getDataAccessUrl is not null %}
-                  <a class="btn btn-primary" target="_blank" href="{{ location.getDataAccessUrl }}" onclick="trackOutboundLink('{{ location.getDataAccessUrl }}', '{{ dataset.title }} (via {{ location.getDataLocation }})');">Access via {{ location.getDataLocation }}</a>
-                {% endif %}
-                <p class="data-location-description"><span class="data-location-title"></span> <span class="data-location-content">{{ location.getLocationContent }}</span>
+                  <a class="btn btn-primary" target="_blank" href="{{ location.getDataAccessUrl }}" onclick="trackOutboundLink('{{ location.getDataAccessUrl }}', '{{ dataset.title }} (via {{ location.getDataLocation }})');">Access via {{ location.getDataLocation }}</a><p class="data-location-description"><span class="data-location-title"></span> <span class="data-location-content">{{ location.getLocationContent }}</span>
+               {% endif %}
                {% if location.getAccessionNumber %}
                  <br/><span class="data-location-accession-number">Accession #: {{ location.getAccessionNumber  }}</span>
                {% endif %}
@@ -233,18 +247,11 @@
               </div>
            {% endfor %} 
           </dd>
+         </div>
+        </div>
+       </div>
       
-      {% if (dataset.accessRestrictions.count > 0) %}
-       <dt>Access Restrictions</dt>
-         <dd class="dataset-detail-access-restrictions">
-          {% for restriction in dataset.accessRestrictions %}
-           <div class="multiple-item-list">{{ restriction.getDisplayName }}</div>
-          {% endfor %}
-         </dd>
-      {% endif %}
       
-      <dt>Access Instructions</dt>
-         <dd>{{ dataset.accessInstructions|raw }}</dd>
       
       {% if (dataset.publications.count > 0) %}
        <dt>Associated Publications</dt>
@@ -342,8 +349,6 @@
       {% endif %}
     
     </dl>
-   </div>
-   <div class="row" id="dataset-detail-relatedpanel">
      <dl>
        {% if dataset.pubmedSearch is not empty %}
        <dt>PubMed Search</dt>
@@ -366,7 +371,6 @@
        {% endif %}
      </dl>
     </div>
-  </div>
 </div>
 <div class="row" id="suggest-dataset-link">Do you have or know of a dataset that should be added to the catalog? <a href="{{ path('contact') }}">Let us know</a>!</div>
 </div>

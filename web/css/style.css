@@ -371,6 +371,12 @@ color:gray;
   margin:0;
   color:white;
 }
+.interior-site-name-link {
+  color:white;
+}
+.interior-site-name-link:hover {
+  color:white;
+}
 #interior-page-search-form-container {
   width:40%;
   float:right;
@@ -604,6 +610,37 @@ form.remove-form button {
 .dataset-detail-projects,
 .dataset-detail-issued {
   color:gray;
+}
+
+#dataset-detail-accesspanel {
+  border:1px solid black;
+  margin-bottom:2em;
+}
+#accesspanel-titlebox {
+  border-bottom:1px solid black;
+  padding:.5em;
+  text-align:center;
+}
+#accesspanel-titlebox h4 {
+  margin-bottom:0;
+}
+#accesspanel-details {
+  padding:1em;
+}
+#access-buttons-container dd {
+  margin-bottom:0;
+  text-align:center;
+}
+#access-buttons-container a.btn {
+  background-color:#b18cdb;
+  border-color:#b18cdb;
+}
+#access-buttons-container .btn-primary {
+  background-image:none;
+}
+#access-buttons-container a.btn:hover {
+  background-color:#c2a0e9;
+  border-color:#c2a0e9;
 }
 .dataset-detail-access-instructions {
   font-size:.9em;
