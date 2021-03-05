@@ -244,6 +244,15 @@ class GeneralController extends Controller
       );
     }
 
+    // if dataset archived
+    if ($dataset->getArchived() && !$this->get('security.context')->isGranted('ROLE_ADMIN')) {
+      throw $this->createNotFoundException(
+        'Sorry, this dataset is no longer available. Please try another search.'
+      );
+    }
+
+    
+
 		$view_access=true;
 
 		if (!$dataset->getPublished() && !$this->security->isGranted('ROLE_ADMIN')) {
@@ -289,7 +298,7 @@ class GeneralController extends Controller
 		if ($view_access == false) {
 
 			throw new \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException(
-				'You are not authorized to view this resource.', null, 403);
+				'Sorry, you are not authorized to view this resource.', null, 403);
 		
 		}
 
