@@ -679,6 +679,7 @@ form.remove-form button {
 }
 #accesspanel-titlebox h4 {
   margin-bottom:0;
+  font-weight:bold;
 }
 
 #accesspanel-details {
