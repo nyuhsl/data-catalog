@@ -5,7 +5,7 @@ namespace App\EventListener;
 use Doctrine\ORM\Event\OnFlushEventArgs;
 use App\Entity\Dataset;
 use App\Entity\DatasetEdit;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
  * Listen for Doctrine onFlush events and record info about a dataset edit
@@ -32,7 +32,7 @@ class DatasetEditListener
 {
     private $tokenStorage;
 
-    public function __construct(TokenStorage $tokenStorage = null) 
+    public function __construct(TokenStorageInterface $tokenStorage = null) 
     {
         $this->tokenStorage = $tokenStorage;
     }
