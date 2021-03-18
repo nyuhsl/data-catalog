@@ -3,7 +3,6 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://netdna.bootstrapcdn.com https://stackpath.bootstrapcdn.com https://*.nyu.edu https://*.nyumc.org https://fonts.googleapis.com; script-src 'self' https://cdnjs.cloudflare.com https://www.googletagmanager.com https://script.crazyegg.com https://ajax.googleapis.com https://stackpath.bootstrapcdn.com; object-src 'none'; frame-ancestors 'self'; form-action 'self'" />
         <meta name="description" content="{{ site_description  }}">
         {% block page_title %}
         <title>{{ site_name }}</title>
@@ -79,7 +78,7 @@
               <li class="menu-link admin-menu-link {% if is_granted('ROLE_USER') and adminPage is defined and adminPage==true %}active{% endif %}"><a href="{{ path('admin_panel') }}">Admin</a></li>
             {% endif %}
             {% if is_granted('ROLE_USER') %}
-              <li class="menu-link admin-menu-link logout-link"><a href="{{ path('logout') }}">Logout</a></li>
+              <li class="menu-link admin-menu-link logout-link"><a href="{{ path('app_logout') }}">Logout</a></li>
             {% endif %}
           </ul>
         </nav>

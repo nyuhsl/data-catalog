@@ -6,20 +6,20 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "sensio/framework-extra-bundle": "^5.2",
-        "symfony/asset": "4.2.*",
-        "symfony/console": "4.2.*",
-        "symfony/dotenv": "4.2.*",
+        "symfony/asset": "4.4.*",
+        "symfony/console": "4.4.*",
+        "symfony/dotenv": "4.4.*",
         "symfony/flex": "^1.1",
-        "symfony/form": "4.2.*",
-        "symfony/framework-bundle": "4.2.*",
+        "symfony/form": "4.4.*",
+        "symfony/framework-bundle": "4.4.*",
         "symfony/ldap": "4.4.*",
         "symfony/monolog-bundle": "^3.5",
         "symfony/orm-pack": "^1.0",
-        "symfony/security-bundle": "4.2.*",
-        "symfony/security-core": "4.2.*",
-        "symfony/twig-bundle": "4.2.*",
-        "symfony/validator": "4.2.*",
-        "symfony/yaml": "4.2.*",
+        "symfony/security-bundle": "4.4.*",
+        "symfony/security-core": "4.4.*",
+        "symfony/twig-bundle": "4.4.*",
+        "symfony/validator": "4.4.*",
+        "symfony/yaml": "4.4.*",
         "twig/extensions": "^1.5"
     },
     "config": {
@@ -68,6 +68,6 @@
         }
     },
     "require-dev": {
-        "symfony/web-server-bundle": "4.2.*"
+        "symfony/web-server-bundle": "4.4.*"
     }
 }

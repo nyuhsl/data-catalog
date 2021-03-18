@@ -64,7 +64,7 @@ security:
             form_login:
               provider: in_memory
               login_path: /login
-              check_path: /login_check
+              check_path: /login
               default_target_path: admin_panel
             #form_login_ldap:
             #  service: app.ldap
