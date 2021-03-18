@@ -36,7 +36,7 @@ class SecurityController extends Controller {
    *
    * @return Response A Response instance
    *
-   * @Route("/login", name="login_route")
+   * @Route("/login", name="login")
    */
   public function loginAction(Request $request) {
     $authenticationUtils = $this->get('security.authentication_utils');
@@ -56,21 +56,5 @@ class SecurityController extends Controller {
     );
   }
   
-  
-  /**
-   * Placeholder function for Symfony
-   *
-   * @Route("/login_check", name="login_check")
-   */
-  public function loginCheckAction(Request $request) {
-  }
-
-  /**
-   * Placeholder function for Symfony
-   *
-   * @Route("/logout", name="logout")
-   */
-  public function logoutAction(Request $request) {
-  }
 
 }
