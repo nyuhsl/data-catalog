@@ -981,3 +981,8 @@ p#phone_number strong a {
   }
 
 }
+@media only screen and (max-width: 1020px) {
+  #frontpage-submit-dataset {
+  display:none;
+  }
+}
