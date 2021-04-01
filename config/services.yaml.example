@@ -5,7 +5,8 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
 
-    solrsearchr_server: http://localhost:8983/datacatalog # just as en xample
+    # This is the URL to your Solr core. Please use a trailing slash
+    solrsearchr_server: http://example.com:8983/datacatalog/
     solrsearchr_format: json
     #
     # Comment out any 'solrsearchr_facets' below that
