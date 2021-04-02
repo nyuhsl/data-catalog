@@ -7,7 +7,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Ldap\Entry;
-use Symfony\Component\Security\Core\User\LdapUserProvider as BaseLdapUserProvider;
+use Symfony\Component\Ldap\Security\LdapUserProvider as BaseLdapUserProvider;
 use Symfony\Component\Ldap\Security\LdapUser;
 use App\Entity\Security\UserRepositoryInterface;
 
@@ -31,7 +31,7 @@ class CustomLdapUserProvider extends BaseLdapUserProvider implements ContainerAw
      */
     public function supportsClass($class)
     {
-        return $class === 'App\Entity\Security\User';
+	return LdapUser::class === $class || is_subclass_of($class, LdapUser::class);
     }
 
     /**
