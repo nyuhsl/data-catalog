@@ -33,12 +33,12 @@ $('.empty-api-key').click(function (e) {
 
 
 {% block form_group_class -%}
-col-sm-5
+col-sm-8
 {%- endblock form_group_class %}
 
 
 {% block form_label_class -%}
-col-sm-2
+col-sm-3
 {%- endblock form_label_class %}
 
 
@@ -46,8 +46,10 @@ col-sm-2
 
 
 {% block content %}
-
-<div class="col-xs-7" >
+<div class="container-fluid">
+<div class="row">
+{% include 'default/_admin-sidebar-menu.html.twig' %}
+<div class="col-7" >
 <div class="page-header">
 <h1>Update User</h1>
 </div>
@@ -60,8 +62,8 @@ col-sm-2
 <br/>
 {{ form_row(form.apiKey, {'label':'API Key'}) }}
 <div class="form-group" style="margin-top:-1em;">
-<label class="col-sm-2 control-label"></label>
-<div class="col-sm-5">
+<label class="col-sm-3 control-label"></label>
+<div class="col-sm-8 offset-3">
 <p class="api-help-text" style="color:#666666;font-size:.9em;"><a href="#" class="copy-api-key">Click here to copy the API key to your clipboard.</a>
 <br/><br/>
 To generate a new key, make sure the "API User" role is checked above. <a href="#" class="empty-api-key">Click here</a> to erase the old API key, and then hit "Save." A new key will be generated.</p>
@@ -76,6 +78,8 @@ To generate a new key, make sure the "API User" role is checked above. <a href="
 <div class="spacer50"></div>
 </div>
 
+</div>
+</div>
 
 {% endblock %}
 

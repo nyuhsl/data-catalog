@@ -212,7 +212,7 @@ class AddController extends Controller {
       // also generate the API key for new API users here
       if ($entityName == 'User') {
         foreach ($entity->getRoles() as $role) {
-          if ($role->getRole() == 'ROLE_API_SUBMITTER') {
+          if ($role == 'ROLE_API_SUBMITTER') {
             $apiKey = sha1(random_bytes(32));
             $entity->setApiKey($apiKey);
           }
