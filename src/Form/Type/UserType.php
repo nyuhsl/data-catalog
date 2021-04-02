@@ -51,7 +51,8 @@ class UserType extends AbstractType {
     $builder->add('roles', ChoiceType::class, array(
       'choices' => array(
         'ROLE_ADMIN' => array('Admin' => 'ROLE_ADMIN'),
-        'ROLE_USER' => array('User' => 'ROLE_USER')
+        'ROLE_USER' => array('User' => 'ROLE_USER'),
+        'ROLE_API_SUBMITTER' => array('API Submitter' => 'ROLE_API_SUBMITTER')
       ),
       'multiple'=>true,
       'expanded'=>true,
