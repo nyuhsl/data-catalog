@@ -47,11 +47,7 @@ class RelatedDatasetController extends Controller
     $datasetsForDisplay = array();
     foreach ($relatedDatasets as $related) {
       // find dataset IF it is published AND not archived
-      $relatedDataset = $em->findOneBy(array(
-                             'dataset_uid' => $related->getRelatedDatasetUid(), 
-                             'published'   => 1,
-                             'archived'    => 0
-                        ));
+      $relatedDataset = $em->getRelatedDataset($related->getRelatedDatasetUid());
       if ($relatedDataset) {
         $section = array('dataset' => $relatedDataset);
         $notes = $related->getRelationshipNotes();

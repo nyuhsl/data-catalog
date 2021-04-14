@@ -67,5 +67,13 @@ class DatasetRepository extends EntityRepository
 
     }
 
+    public function getRelatedDataset($datasetUid) {
+      return $this->getEntityManager()
+        ->createQuery(
+          'SELECT d from AppBundle:Dataset d WHERE d.dataset_uid=' . $datasetUid . ' AND d.published=1 AND d.archived != 1'
+        )
+        ->getSingleResult();
+    }
+
 
 }
