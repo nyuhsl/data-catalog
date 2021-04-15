@@ -115,6 +115,9 @@ class AddController extends Controller {
       $addedEntityName = $dataset->getTitle();
       $slug = Slugger::slugify($addedEntityName);
       $dataset->setSlug($slug);
+
+      // set archived field manually so it doesn't go in as NULL
+      $dataset->setArchived(false);
       
       $em->persist($dataset);
       foreach ($dataset->getAuthorships() as $authorship) {
