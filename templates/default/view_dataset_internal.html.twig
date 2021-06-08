@@ -44,7 +44,8 @@
      </span>
     {% if dataset.getProjects is not empty %}
       {% for project in dataset.getProjects %}
-         <div class="dataset-detail-projects">Part of: <a href="{{ project.getProjectUrl }}" target="_blank">{{ project.getProjectName }}</a> | {{ project.getProjectDescription }}</div>
+         {% set popoverContent = '<p><a href="' ~ project.getProjectUrl ~ '" target="_blank">View project website</a></p><p><a href="/search?keyword=projects:%22' ~ project.getProjectName ~ '%22" target="_blank">View other datasets from this project</a></p>' %}
+         <div class="dataset-detail-projects">Part of: <a href="#" tabindex="0" role="button" data-toggle="popover" title="{{ project.getProjectName }}" data-content="{{ popoverContent }}">{{ project.getProjectName }}</a> | {{ project.getProjectDescription }}</div>
        {% endfor %}
     {% endif %}
       <div class="dataset-detail-id">UID: {{ dataset.id }}</div>
