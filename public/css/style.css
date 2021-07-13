@@ -697,6 +697,7 @@ form.remove-form button {
 #access-buttons-container a.btn {
   background-color:#b18cdb;
   border-color:#b18cdb;
+  white-space:normal;
 }
 #access-buttons-container a.btn:hover {
   background-color:#c2a0e9;
