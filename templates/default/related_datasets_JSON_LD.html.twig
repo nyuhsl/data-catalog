@@ -1,0 +1,8 @@
+{% for related in relatedDatasets %}
+  {
+    "@type": "Dataset",
+    "name": "{{ related.dataset.title }}",
+    "description": "{{ related.dataset.description }}",
+    "url": "{{ absolute_url(path('view_dataset',{'uid':related.dataset.datasetUid})) }}"
+  }{% if not loop.last %}, {% endif %}
+{% endfor %}
