@@ -4,9 +4,20 @@
 {
   "@context": "http://schema.org",
   "@type": "Dataset",
+
   "name": "{{ dataset.title }}",
   "description": "{{ dataset.description }}",
-  "dateCreated": "{{ dataset.dateAdded|date("Y-m-d") }}",
+  "datePublished": "{{ dataset.dateAdded|date("Y-m-d") }}",
+  "dateModified": "{{ dataset.dateUpdated|date("Y-m-d") }}",
+
+  {% if dataset.accessRestrictions.count > 0 %}
+    {% for x in dataset.accessRestrictions %}
+       {% if x.getDisplayName == "Free to All" %}
+         "isAccessibleForFree": true,
+       {% endif %}
+    {% endfor %}
+  {% endif %}
+    
   {% if dataset.subjectStartDate is not empty and dataset.subjectStartDate == dataset.subjectEndDate %}
     "temporalCoverage":"{{ dataset.subjectStartDate }}",
   {% elseif dataset.subjectStartDate is not empty %}
@@ -16,6 +27,7 @@
       "temporalCoverage":"{{ dataset.subjectStartDate }}-01-01/{{ dataset.subjectEndDate }}-12-31",
     {% endif %}
   {% endif %}
+  
   {% if dataset.subjectGeographicAreaDetails is not empty %}
     "spatialCoverage": 
       [
@@ -31,25 +43,74 @@
         {% endfor %}
       ],
   {% endif %}
+
   "alternateName": 
     [{% for title in dataset.datasetAlternateTitles %}
       "{{ title.getDisplayName|trim }}"{% if not loop.last %}, {% endif %}
     {% endfor %}],
+
   "keywords": 
     [{% for kw in dataset.subjectKeywords %}
-      "{{ kw.getDisplayName|trim }}"{% if not loop.last %}, {% endif %}
+      "{{ kw.getDisplayName|trim }}",
+    {% endfor %}
+    {% for domain in dataset.subjectDomains %}
+      "{{ domain.getDisplayName|trim }}"{% if not loop.last %}, {% endif %}
     {% endfor %}],
-  "author": 
-    [{% for auth in dataset.authors %}
+
+  {% set correspondingAuthor = [] %}
+  "creator":
+    {% if dataset.origin == "External" %}
+      [{% for pubber in dataset.publishers %}
+        {
+          "@type": "Organization",
+          "name":"{{ pubber.getDisplayName }}",
+          "url":"{{ pubber.publisherUrl }}"
+        }{% if not loop.last %}, {% endif %}
+      {% endfor %}]
+    {% else %}    
+      [
+      {% if dataset.getAuthorships is not empty %}
+        {% for auth in dataset.getAuthorships %}
+	  {% if auth.isCorrespondingAuthor %}
+	    {% set correspondingAuthor = correspondingAuthor|merge([auth]) %}
+	  {% endif %}
+          {
+            "@type": "Person",
+            "name":"{{ auth.getPerson.getFullName }}",
+            "url":"{{ auth.getPerson.getBioUrl }}"}{% if not loop.last %}, {% endif %}
+        {% endfor %},
+      {% endif %}
       {
-        "@type": "Person",
-        "name":"{{ auth.fullName }}",
-        "url":"{{ auth.bioUrl }}"}{% if not loop.last %}, {% endif %}
-    {% endfor %}],
+        "@type": "Organization",
+        "name":"{{ site_provider_name }}",
+        "url":"{{ site_provider_url }}"
+      }
+      ]
+    {% endif %},
+
+  {% if correspondingAuthor is not empty %}
+    "contactPoint": [
+      {% for auth in correspondingAuthor %}
+        {
+          "@type": "Person",
+	  "name":"{{ auth.getPerson.getFullName }}",
+          "url": "{{ auth.getPerson.getBioUrl }}"
+        }{% if not loop.last %}, {% endif %}
+      {% endfor %}
+      ],
+  {% endif %}
+
   "citation": 
     [{% for pub in dataset.publications %}
-      "{{ pub.citation|trim }}"{% if not loop.last %}, {% endif %}
+      "{{ pub.citation|trim }} {{ pub.doi|trim }}"{% if not loop.last %}, {% endif %}
     {% endfor %}],
+
+    {% if (dataset.relatedDatasets.count > 0) %}
+       "isRelatedTo": [
+           {{ render(controller('App\\Controller\\RelatedDatasetController:relatedDatasetAction',{'relatedDatasets':dataset.relatedDatasets, 'format':'json'})) }}
+       ],
+    {% endif %}
+
   "encoding": 
     [{% for format in dataset.datasetFormats %}
       {
@@ -57,6 +118,7 @@
         "encodingFormat":"{{ format.getDisplayName }}"
       }{% if not loop.last %}, {% endif %}
     {% endfor %}],
+
   "publisher": 
     [{% for pubber in dataset.publishers %}
       {
@@ -65,6 +127,7 @@
         "url":"{{ pubber.publisherUrl }}"
       }{% if not loop.last %}, {% endif %}
     {% endfor %}],
+
   "mainEntityOfPage": "{{ app.request.uri }}",
   "url": "{{ app.request.uri }}",
   "includedInDataCatalog": {
@@ -84,28 +147,15 @@
         }
       }
   },
+
   "sameAs": 
     [{% for accessPoint in dataset.dataLocations %}
       {% if 'mailto' not in accessPoint.dataAccessUrl %}
           "{{ accessPoint.getDataAccessUrl|trim }}"{% if not loop.last %}, {% endif %}
       {% endif %}
     {% endfor %}],
-  "provider": 
-    {% if dataset.origin == "External" %}
-      [{% for pubber in dataset.publishers %}
-        {
-          "@type": "Organization",
-          "name":"{{ pubber.getDisplayName }}",
-          "url":"{{ pubber.publisherUrl }}"
-        }{% if not loop.last %}, {% endif %}
-      {% endfor %}]
-    {% else %}    
-      {
-        "@type": "Organization",
-        "name":"{{ site_provider_name }}",
-        "url":"{{ site_provider_url }}"
-      }
-    {% endif %},
+
+
     "sponsor": { 
       {% if dataset.origin == "Internal" %} 
         "@type":"Organization",

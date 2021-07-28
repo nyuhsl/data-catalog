@@ -393,7 +393,7 @@
        {% endif %}
        
        {% if (dataset.relatedDatasets.count > 0) %}
-         {{ render(controller('App\\Controller\\RelatedDatasetController:relatedDatasetAction',{'relatedDatasets':dataset.relatedDatasets})) }}
+         {{ render(controller('App\\Controller\\RelatedDatasetController:relatedDatasetAction',{'relatedDatasets':dataset.relatedDatasets, 'format':'html'})) }}
        {% endif %}
      </dl>
     </div>

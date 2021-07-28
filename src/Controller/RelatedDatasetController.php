@@ -40,7 +40,7 @@ class RelatedDatasetController extends Controller
    *
    * @return Response A Response instance
    */
-  public function relatedDatasetAction($relatedDatasets) {
+  public function relatedDatasetAction($relatedDatasets, $format) {
 
     $em = $this->getDoctrine()->getManager()->getRepository('App:Dataset');;
 
@@ -63,9 +63,15 @@ class RelatedDatasetController extends Controller
     }
     
     if ($datasetsForDisplay) {
-      return $this->render('default/related_dataset_links.html.twig',array(
-                  'relatedDatasets' => $datasetsForDisplay,
-                  ));
+      if ($format == 'html') {
+	      return $this->render('default/related_dataset_links.html.twig',
+		      array('relatedDatasets' => $datasetsForDisplay)
+              );
+      } elseif ($format == 'json') {
+	      return $this->render('default/related_datasets_JSON_LD.html.twig',
+		      array('relatedDatasets' => $datasetsForDisplay)
+	      );
+      }
     } else {
       // return empty response so the "Related Datasets" field will not appear
       return new Response();
