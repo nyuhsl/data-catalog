@@ -245,7 +245,7 @@ class GeneralController extends Controller
     }
 
     // if dataset archived
-    if ($dataset->getArchived() && !$this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    if ($dataset->getArchived() && !$this->security->isGranted('ROLE_ADMIN')) {
       throw $this->createNotFoundException(
         'Sorry, this dataset is no longer available. Please try another search.'
       );
