@@ -534,7 +534,7 @@ padding:.5em 0em;
 overflow:auto;
 }
 #sort-and-results select {
-  font-size:.8em;
+  padding-bottom:.25em;
 }
 
 #sort-and-results {
