@@ -224,8 +224,10 @@
     Previous Page
   </button>
 {% endif %}
-{% if (currentSearch.page == 0 and currentSearch.resultsPP < results.numResults) or  
-      ((currentSearch.page * currentSearch.resultsPP) < results.numResults) %}
+{{ dump(currentSearch) }}
+{{ dump(results.numResults) }}
+{% if (currentSearch.page == 0 and (currentSearch.resultsPP < results.numResults)) or  
+      (currentSearch.page > 0 and ((currentSearch.page * currentSearch.resultsPP) < results.numResults)) %}
   <button id="nextPage-button" type="button" class="nextPage btn btn-info btn-sm">
     Next Page
   </button>
