@@ -231,7 +231,7 @@ col-sm-4
 				{% for key in form.vars.data.tempAccessKeys %}
 					<li>
 						<div class="tak-entry" data-tak-uid="{{key.uuid}}">
-							<a href="/dataset/{{ uid }}?tak={{key.uuid}}">Preview link for {{ form.vars.data.title }}</a>, Generated at {{ key.generated|date('Y-m-d H:i:s') }}, First Access:
+							<a href="/dataset/{{ uid }}?tak={{key.uuid}}">Preview link for {{ form.vars.data.title }}</a>, Generated at {{ key.generation|date('Y-m-d H:i:s') }}, First Access:
 							{% if key.firstAccess %}
 								{{ key.firstAccess|date('Y-m-d H:i:s') }}
 							{% else %}

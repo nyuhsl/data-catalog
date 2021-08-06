@@ -56,6 +56,12 @@ class UpdateController extends Controller {
    * @Route("/update/Dataset/{uid}", defaults={"uid"=null}, name="update_dataset")
    */
   public function UpdateDatasetAction($uid, Request $request) {
+  
+		$tak_ttl="PT72H";
+		if ($this->container->hasParameter('tak_ttl')) {
+			$tak_ttl=$this->container->getParameter('tak_ttl');
+		}
+  
     $em = $this->getDoctrine()->getManager();
     $userIsAdmin = $this->security->isGranted('ROLE_ADMIN');
     if ($uid == null) {
@@ -113,7 +119,8 @@ class UpdateController extends Controller {
         'adminPage'  => true,
         'userIsAdmin'=> $userIsAdmin,
         'uid'        => $uid,
-        'entityName' => 'Dataset'
+        'entityName' => 'Dataset',
+        'tak_ttl' => $tak_ttl
       ));
     }
   }

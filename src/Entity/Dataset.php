@@ -1936,6 +1936,7 @@ class Dataset implements JsonSerializable {
          'accession_numbers'          => $accession_numbers,
          'publications'               => $publications,
          'access_instructions'        => $this->access_instructions,
+         'date_updated'          => $this->date_updated,
        );
      }
 
