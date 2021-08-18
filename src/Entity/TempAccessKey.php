@@ -46,10 +46,10 @@ class TempAccessKey {
   /**
    * @ORM\Column(type="datetime",length=128,nullable=false)
    */
-  protected $generated;
+  protected $generation;
 
   /**
-   * @ORM\Column(type="datetime",nullable=true)
+   * @ORM\Column(type="datetime",nullable=false)
    */
   protected $first_access;
   
@@ -132,25 +132,25 @@ class TempAccessKey {
     }
 
     /**
-     * Set generated
+     * Set generation
      *
-     * @param string $generated
+     * @param string $generation
      * @return TempAccessKey
      */
-    public function setGenerated($generated)
+    public function setGeneration($generation)
     {
-        $this->generated = $generated;
+        $this->generation = $generation;
         return $this;
     }
 
     /**
-     * Get generated
+     * Get generation
      *
      * @return string 
      */
-    public function getGenerated()
+    public function getgeneration()
     {
-        return $this->generated;
+        return $this->generation;
     }
 
     /**
