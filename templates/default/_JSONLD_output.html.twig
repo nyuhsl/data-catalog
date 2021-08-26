@@ -51,7 +51,7 @@
 
   "keywords": 
     [{% for kw in dataset.subjectKeywords %}
-      "{{ kw.getDisplayName|trim }}",
+      "{{ kw.getDisplayName|trim }}"{% if not loop.last %}, {% endif %}
     {% endfor %}
     {% for domain in dataset.subjectDomains %}
       "{{ domain.getDisplayName|trim }}"{% if not loop.last %}, {% endif %}
