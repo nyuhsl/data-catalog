@@ -438,7 +438,8 @@ color:gray;
  * FORMS
  **/
 a.btn-success,
-a.btn-remove {
+a.btn-remove,
+a.btn-tak-remove {
   cursor:pointer;
   color:white;
   font-weight:bold;
@@ -825,8 +826,8 @@ a.authors-collapse {
 	color: red;
 	margin: 0 1em;
 	font-weight: bold;
-
 }
+
 
 
 /*****************

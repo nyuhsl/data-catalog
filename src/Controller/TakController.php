@@ -72,7 +72,7 @@ class TakController extends Controller
 				$tak = new \App\Entity\TempAccessKey;
 
 				$tak->setUuid( $uuid );
-				$tak->setGenerated(  new \DateTime() );
+				$tak->setGeneration(  new \DateTime() );
 				$tak->setDatasetAssociation($dataset);
 				
 				$em->persist($tak);
@@ -83,7 +83,7 @@ class TakController extends Controller
 					'uuid' => $uuid,
 					'dataset_uid' => $dataset->getId(),
 					'dataset_title' => $dataset->getTitle(),
-					'generated' => $tak->getGenerated()
+					'generated' => $tak->getGeneration()
 					
 				));
 
@@ -130,7 +130,7 @@ class TakController extends Controller
 
 				foreach($taks as $t=>$v) {
 
-					$data['keys'][]=['id'=>$v->getId(), 'uuid'=>$v->getUuid(), 'generated'=>$v->getGenerated(), 'first_access'=>$v->getFirstAccess() ];
+					$data['keys'][]=['id'=>$v->getId(), 'uuid'=>$v->getUuid(), 'generated'=>$v->getGeneration(), 'first_access'=>$v->getFirstAccess() ];
 
 				}
 				

@@ -19,10 +19,10 @@ function copyToClipboard() {
 
 </script>
 <div class="modal-header">
+  <h4 class="modal-title" id="add_entity_modal_title">New Temporary Access Key</h4>
   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>
-  <h4 class="modal-title" id="add_entity_modal_title">New Temporary Access Key</h4>
 </div>
 <div class="modal-body">
 
@@ -39,7 +39,7 @@ function copyToClipboard() {
 	}
 		
 	var new_tak=document.createElement("li");
-	new_tak.innerHTML='<div data-tak-uid="{{ uuid }}" class="tak-entry"><a href="{{ url('homepage') }}dataset/{{ dataset_uid }}?tak={{uuid}}">Preview link for {{ dataset_title }}</a>, Generated at {{ generated|date('Y-m-d H:i:s') }}, First Access: <em>Not yet accessed</em>&nbsp;<a class="btn-tak-remove label label-danger">Remove key</a></div>';
+	new_tak.innerHTML='<div data-tak-uid="{{ uuid }}" class="tak-entry"><a href="{{ url('homepage') }}dataset/{{ dataset_uid }}?tak={{uuid}}">Preview link for {{ dataset_title }}</a>, Generated at {{ generated|date('Y-m-d H:i:s') }}, First Access: <em>Not yet accessed</em>&nbsp;<a class="btn-tak-remove btn btn-danger">Remove key</a></div>';
 	$(".tak-panel ul").append(new_tak);
  
 </script>

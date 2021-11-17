@@ -49,7 +49,7 @@ class TempAccessKey {
   protected $generation;
 
   /**
-   * @ORM\Column(type="datetime",nullable=false)
+   * @ORM\Column(type="datetime",nullable=true)
    */
   protected $first_access;
   
