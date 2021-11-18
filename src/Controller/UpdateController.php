@@ -81,7 +81,7 @@ class UpdateController extends Controller {
       );
     }
     if ($userIsAdmin) {
-      $form = $this->createForm(DatasetAsAdminType::class, $thisEntity);
+      $form = $this->createForm(DatasetAsAdminType::class, $thisEntity, array('datasetUid'=>$uid));
     } else {
       $form = $this->createForm(DatasetAsUserType::class, new Dataset($userIsAdmin, $uid), $thisEntity[0]);
     }
