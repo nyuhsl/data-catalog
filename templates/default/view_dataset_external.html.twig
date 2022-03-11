@@ -33,7 +33,7 @@
    </a>
   </div>
   {% endif %}
-     <h2 class="dataset-detail-maintitle">{{ dataset.title }} 
+     <h2 class="dataset-detail-maintitle">{{ dataset.title|raw }} 
        {% if dataset.published == false %}<small>[unpublished]</small>{%endif%}
        {% if dataset.archived == true %}<small>[archived]</small>{%endif%}
      </h2>
