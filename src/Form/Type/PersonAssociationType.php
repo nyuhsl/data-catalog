@@ -42,7 +42,11 @@ class PersonAssociationType extends AbstractType {
   public function buildForm(FormBuilderInterface $builder, array $options) {
     $builder->add('person', EntityType::class, array(
       'class'   => 'App:Person',
-      'choice_label'=> 'full_name',
+      'choice_label'=> function($choice) {
+          $thisKid = empty($choice->getKid()) ? '' : " (" . $choice->getKid() . ")";
+          $thisChoice = $choice->getFullName() . $thisKid;
+          return $thisChoice;
+      },
       'attr'=> array('style'=>'width:100%;', 'class'=>'author-add-form'),
       'multiple'=> false,
       'label'   => false,
