@@ -185,7 +185,11 @@
         {% if dataset.localExperts|length > 0 %}
          <dt>{{ local_expert_display }}</dt><dd>
          {% for expert in dataset.localExperts %}
-            {% set popoverContent = '<p><a href="' ~ expert.bioUrl ~ '" target="_blank">View profile</a></p><p><a href="https://openredcap.nyumc.org/apps/redcap/surveys/?s=FRAFFH79JM" target="_blank">Contact this Local Expert</a></p>' %}
+           {% if expert.bioUrl is not empty %}
+             {% set popoverContent = '<p><a href="' ~ expert.bioUrl ~ '" target="_blank">View profile</a></p><p><a href="' ~  local_expert_contact_form  ~ '" target="_blank">Contact this Local Expert</a></p>' %}
+           {% else %}
+             {% set popoverContent = '<p><a href="' ~ local_expert_contact_form ~ '" target="_blank">Contact this Local Expert</a></p>' %}
+           {% endif %}
             <div class="multiple-item-list">
               <a class="local-expert-popover-link" href="#" data-toggle="popover" data-content="{{ popoverContent }}" data-original-title="{{ expert.fullName }}">{{ expert.fullName }}</a>
             </div>
