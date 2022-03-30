@@ -61,6 +61,7 @@ parameters:
 
     # Tag to display for local experts (if you want to specify the institution)
     local_expert_display: "Local Expert"
+    local_expert_contact_form: "https://www.example.com"
 
     # Time To Live for temporary access key links (in hours), in PHP DateInterval format  
     tak_ttl: "+3days"
