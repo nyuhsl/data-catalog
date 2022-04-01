@@ -186,9 +186,9 @@
          <dt>{{ local_expert_display }}</dt><dd>
          {% for expert in dataset.localExperts %}
            {% if expert.bioUrl is not empty %}
-             {% set popoverContent = '<p><a href="' ~ expert.bioUrl ~ '" target="_blank">View profile</a></p><p><a href="' ~  local_expert_contact_form  ~ '" target="_blank">Contact this Local Expert</a></p>' %}
+             {% set popoverContent = '<p><a href="' ~ expert.bioUrl ~ '" target="_blank">View profile</a></p><p><div id="Local expert ' ~ expert.fullName ~ ' contacted for dataset: ' ~ dataset.title ~ '"></div><a href="' ~  local_expert_contact_form  ~ '" target="_blank" class="local-expert-contact-link">Contact this Local Expert</a></p>' %}
            {% else %}
-             {% set popoverContent = '<p><a href="' ~ local_expert_contact_form ~ '" target="_blank">Contact this Local Expert</a></p>' %}
+             {% set popoverContent = '<p><div id="Local expert ' ~ expert.fullName ~ ' contacted for dataset: ' ~ dataset.title ~ '"></div><a class="local-expert-contact-link" href="' ~ local_expert_contact_form ~ '" target="_blank">Contact this Local Expert</a></p>' %}
            {% endif %}
             <div class="multiple-item-list">
               <a class="local-expert-popover-link" href="#" data-toggle="popover" data-content="{{ popoverContent }}" data-original-title="{{ expert.fullName }}">{{ expert.fullName }}</a>
