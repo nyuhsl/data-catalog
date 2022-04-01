@@ -78,6 +78,12 @@ $(function () {
         }
     }, 200);
   });
+  // track local expert contact form links if present
+  $(document).on('click', '.local-expert-contact-link', function() {
+      var url = null;
+      var label = $(this).siblings("div").attr('id');
+      trackOutboundLink(url, label);
+  });
 })
 
 
