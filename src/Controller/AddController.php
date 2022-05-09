@@ -211,6 +211,12 @@ class AddController extends Controller {
       // Create a slug using each entity's getDisplayName method
       $addedEntityName = $entity->getDisplayName();
       $slug = Slugger::slugify($addedEntityName);
+      // allow multiple Person with same name by changing the slug
+      if ($entityName == 'Person') {
+          if ($slugAlreadyExists = $em->getRepository($newEntity)->findOneBy(array('slug'=>$slug))) {
+              $slug = $slug . rand();
+          }
+      }
       $entity->setSlug($slug);
       // also generate the API key for new API users here
       if ($entityName == 'User') {
