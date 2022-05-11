@@ -5,6 +5,11 @@
         "php": "^7.1.3",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "composer/package-versions-deprecated": "1.11.99.5",
+        "doctrine/common": "^2",
+        "doctrine/doctrine-bundle": "^2",
+        "doctrine/doctrine-migrations-bundle": "^2",
+        "doctrine/orm": "^2",
         "sensio/framework-extra-bundle": "^5.2",
         "symfony/asset": "4.4.*",
         "symfony/console": "4.4.*",
@@ -13,8 +18,8 @@
         "symfony/form": "4.4.*",
         "symfony/framework-bundle": "4.4.*",
         "symfony/ldap": "4.4.*",
+        "symfony/mailer": "4.4.*",
         "symfony/monolog-bundle": "^3.5",
-        "symfony/orm-pack": "^1.0",
         "symfony/security-bundle": "4.4.*",
         "symfony/security-core": "4.4.*",
         "symfony/twig-bundle": "4.4.*",
@@ -26,7 +31,11 @@
         "preferred-install": {
             "*": "dist"
         },
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "ocramius/package-versions": true,
+            "symfony/flex": true
+        }
     },
     "autoload": {
         "psr-4": {
