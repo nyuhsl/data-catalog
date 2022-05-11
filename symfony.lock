@@ -84,6 +84,9 @@
     "doctrine/sql-formatter": {
         "version": "1.1.1"
     },
+    "egulias/email-validator": {
+        "version": "3.1.2"
+    },
     "friendsofphp/proxy-manager-lts": {
         "version": "v1.0.3"
     },
@@ -98,9 +101,6 @@
     },
     "monolog/monolog": {
         "version": "1.26.0"
-    },
-    "php": {
-        "version": "7.3"
     },
     "psr/cache": {
         "version": "1.0.1"
@@ -153,6 +153,9 @@
     },
     "symfony/dependency-injection": {
         "version": "v4.4.20"
+    },
+    "symfony/deprecation-contracts": {
+        "version": "v2.5.1"
     },
     "symfony/doctrine-bridge": {
         "version": "v4.4.20"
@@ -229,6 +232,18 @@
     "symfony/ldap": {
         "version": "v4.4.20"
     },
+    "symfony/mailer": {
+        "version": "4.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "4.3",
+            "ref": "97a61eabb351d7f6cb7702039bcfe07fe9d7e03c"
+        },
+        "files": [
+            "config/packages/mailer.yaml"
+        ]
+    },
     "symfony/mime": {
         "version": "v4.4.20"
     },
@@ -253,9 +268,6 @@
     "symfony/options-resolver": {
         "version": "v4.4.20"
     },
-    "symfony/orm-pack": {
-        "version": "v1.2.0"
-    },
     "symfony/polyfill-intl-icu": {
         "version": "v1.22.1"
     },
@@ -276,6 +288,9 @@
     },
     "symfony/polyfill-php80": {
         "version": "v1.22.1"
+    },
+    "symfony/polyfill-php81": {
+        "version": "v1.25.0"
     },
     "symfony/process": {
         "version": "v4.4.20"
