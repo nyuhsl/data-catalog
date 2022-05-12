@@ -241,6 +241,13 @@ class UpdateController extends Controller {
     if ($form->isSubmitted() && $form->isValid()) {
       $addedEntityName = $thisEntity->getDisplayName();
       $newSlug = Slugger::slugify($addedEntityName);
+      if ($entityName == 'Person') {
+          $oldSlug = $thisEntity->getSlug();
+          // if the new slug already exists, that means this entity shares the name of another entity, and hasn't been updated in this edit, in which case we should retain the old slug
+          if ($slugAlreadyExists = $em->getRepository($updateEntity)->findOneBy(array('slug'=>$newSlug))) {
+              $newSlug = $oldSlug;
+          }
+      }
       $thisEntity->setSlug($newSlug);
       if (method_exists($thisEntity, 'setDateUpdated')) {
         $thisEntity->setDateUpdated(new \DateTime("now"));
