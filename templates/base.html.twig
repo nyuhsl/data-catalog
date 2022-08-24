@@ -78,7 +78,7 @@
               <li class="menu-link admin-menu-link {% if is_granted('ROLE_USER') and adminPage is defined and adminPage==true %}active{% endif %}"><a href="{{ path('admin_panel') }}">Admin</a></li>
             {% endif %}
             {% if is_granted('ROLE_USER') %}
-              <li class="menu-link admin-menu-link logout-link"><a href="{{ path('app_logout') }}">Logout</a></li>
+              <li class="menu-link admin-menu-link logout-link"><a href="{{ path('saml_logout') }}">Logout</a></li>
             {% endif %}
           </ul>
         </nav>

@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
 use App\Entity\SearchResults;
@@ -42,12 +42,14 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
   *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
   *
   */
-class GeneralController extends Controller
+class GeneralController extends AbstractController
 {
   private $security;
+  private $solr;
 
-  public function __construct(Security $security) {
+  public function __construct(Security $security, SolrSearchr $solrSearchr) {
     $this->security = $security;
+    $this->solr = $solrSearchr;
   }
 
 
@@ -80,9 +82,8 @@ class GeneralController extends Controller
     
     $currentSearch = new SearchState($request);
 
-    $solr = $this->get('SolrSearchr');
-    $solr->setUserSearch($currentSearch);
-    $resultsFromSolr = $solr->fetchFromSolr();
+    $this->solr->setUserSearch($currentSearch);
+    $resultsFromSolr = $this->solr->fetchFromSolr();
 
     $results = new SearchResults($resultsFromSolr);
 
@@ -180,9 +181,9 @@ class GeneralController extends Controller
     $contactFormEmail = new \App\Entity\ContactFormEmail();
 
     // Get email addresses and institution list from parameters.yml
-    $emailTo = $this->container->getParameter('contact_email_to');
-    $emailFrom = $this->container->getParameter('contact_email_from');
-    $affiliations = $this->container->getParameter('institutional_affiliation_options');
+    $emailTo = $this->getParameter('contact_email_to');
+    $emailFrom = $this->getParameter('contact_email_from');
+    $affiliations = $this->getParameter('institutional_affiliation_options');
     $affiliationOptions = [];
     foreach ($affiliations as $key=>$value) {
       $affiliationOptions[$value] = $value;
@@ -231,7 +232,7 @@ class GeneralController extends Controller
    */
   public function viewAction($uid, Request $request) {
     $dataset = $this->getDoctrine()
-      ->getRepository('App:Dataset')
+      ->getRepository('App\Entity\Dataset')
       ->findOneBy(array('dataset_uid'=>$uid));
 
     // dataset not found
@@ -239,6 +240,16 @@ class GeneralController extends Controller
       throw $this->createNotFoundException(
         'No dataset matching ID "' . $uid . '"'
       );
+    }
+
+    // if they're trying to view a restricted dataset, check the access!!!!
+    if ($dataset->getRestricted() == TRUE) {
+        /*if (!$this->security->isGranted('ROLE_INSTITUTIONAL_AUTHENTICATED_USER')) {
+			throw new \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException(
+             'You are not authorized to view this resource. Please <a href="/saml/login">login</a>.'
+         );
+        }*/
+        $this->denyAccessUnlessGranted('ROLE_INSTITUTIONAL_AUTHENTICATED_USER');
     }
 
     // if dataset archived
@@ -258,7 +269,7 @@ class GeneralController extends Controller
 			
 			if ($request->get('tak') && !$dataset->getPublished()) {
 	
-				$tak=$this->getDoctrine()->getRepository('App:TempAccessKey')->findOneBy(array('dataset_association'=>$uid, 'uuid'=>$request->get('tak')) );
+				$tak=$this->getDoctrine()->getRepository('App\Entity\TempAccessKey')->findOneBy(array('dataset_association'=>$uid, 'uuid'=>$request->get('tak')) );
 			
 				if (sizeof($tak)>0) {
 					
@@ -273,8 +284,8 @@ class GeneralController extends Controller
 					} else {
 					
 						$tak_ttl="PT72H";
-						if ($this->container->hasParameter('tak_ttl')) {
-							$tak_ttl=$this->container->getParameter('tak_ttl');
+						if ($this->getParameter('tak_ttl')) {
+							$tak_ttl=$this->getParameter('tak_ttl');
 						}					
 						if (new \DateTime()<$tak->getFirstAccess()->modify($tak_ttl)) {
 							$view_access=true;

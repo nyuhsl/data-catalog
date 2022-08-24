@@ -46,6 +46,11 @@ class Dataset implements JsonSerializable {
   protected $origin;
 
   /**
+   * @ORM\Column(type="boolean", options={"default"=false})
+   */
+  protected $restricted;
+
+  /**
    * @Assert\NotBlank()
    * @ORM\Column(type="string", length=255, unique=true)
    */
@@ -496,9 +501,10 @@ class Dataset implements JsonSerializable {
     $this->temp_access_keys = new \Doctrine\Common\Collections\ArrayCollection();
 
     // set field defaults
-    $this->published = false;
-    $this->archived  = false;
-    $this->origin    = "Internal";
+    $this->published  = false;
+    $this->archived   = false;
+    $this->origin     = "Internal";
+    $this->restricted = false;
   }
 
   /**
@@ -541,6 +547,29 @@ class Dataset implements JsonSerializable {
     public function getOrigin()
     {
         return $this->origin;
+    }
+
+    /**
+     * Set restricted
+     *
+     * @param string $restricted
+     * @return Dataset
+     */
+    public function setRestricted($restricted)
+    {
+        $this->restricted = $restricted;
+
+        return $this;
+    }
+
+    /**
+     * Get restricted
+     *
+     * @return string 
+     */
+    public function getRestricted()
+    {
+        return $this->restricted;
     }
 
     /**
@@ -1816,6 +1845,7 @@ class Dataset implements JsonSerializable {
       return array(
         'title'                     => $this->title,
         'origin'                    => $this->origin,
+        'restricted'                => $this->restricted,
         'description'               => $this->description,
         'access_instructions'       => $this->access_instructions,
         'pubmed_search'             => $this->pubmed_search,
@@ -1906,6 +1936,7 @@ class Dataset implements JsonSerializable {
          'dataset_title'         => $this->title,
          'dataset_alt_title'     => $akas,
          'origin'                => $this->origin,
+         'restricted'            => $this->restricted,
          'description'           => $this->description,
          'dataset_end_date'      => $this->subject_end_date,
          'dataset_start_date'    => $this->subject_start_date,
@@ -1983,6 +2014,7 @@ class Dataset implements JsonSerializable {
       return array(
         'title'                     => $this->title,
         'origin'                    => $this->origin,
+        'restricted'                => $this->restricted,
         'description'               => $this->description,
         'access_instructions'       => $this->access_instructions,
         'pubmed_search'             => $this->pubmed_search,

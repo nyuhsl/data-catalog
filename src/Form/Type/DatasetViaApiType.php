@@ -124,7 +124,7 @@ class DatasetViaApiType extends AbstractType {
       'label'    => 'Description'
     ));
     $builder->add('publishers', 'entity', array(
-      'class'   => 'App:Publisher',
+      'class'   => 'App\Entity\Publisher',
       'property'=> 'publisher_name',
       'required' => false,
       'choice_value' => 'displayName',
@@ -137,7 +137,7 @@ class DatasetViaApiType extends AbstractType {
       'label'     => 'Publishers',
     ));
     $builder->add('access_restrictions', 'entity', array(
-      'class'    => 'App:AccessRestriction',
+      'class'    => 'App\Entity\AccessRestriction',
       'property' => 'restriction',
       'choice_value' => 'displayName',
       'attr'=>array('style'=>'width:100%'),
@@ -181,7 +181,7 @@ class DatasetViaApiType extends AbstractType {
     ));
     //technical details
     $builder->add('related_equipment', 'entity', array(
-      'class'   => 'App:RelatedEquipment',
+      'class'   => 'App\Entity\RelatedEquipment',
       'property'=> 'related_equipment',
       'choice_value' => 'displayName',
       'query_builder'=> function(EntityRepository $er) {
@@ -194,7 +194,7 @@ class DatasetViaApiType extends AbstractType {
       'label'     => 'Equipment used to collect/create the dataset',
     ));
     $builder->add('related_software', 'entity', array(
-      'class'   => 'App:RelatedSoftware',
+      'class'   => 'App\Entity\RelatedSoftware',
       'property'=> 'software_name',  
       'choice_value' => 'displayName',
       'query_builder'=> function(EntityRepository $er) {
@@ -207,7 +207,7 @@ class DatasetViaApiType extends AbstractType {
       'label'     => 'Software used to create, collect or analyze the dataset',
     ));
     $builder->add('dataset_formats', 'entity', array(
-      'class'   => 'App:DatasetFormat',
+      'class'   => 'App\Entity\DatasetFormat',
       'property'=> 'format',
       'choice_value' => 'displayName',
       'query_builder'=> function(EntityRepository $er) {
@@ -223,7 +223,7 @@ class DatasetViaApiType extends AbstractType {
       'required' => false,
       'label'    => 'Dataset Size'));
     $builder->add('data_collection_instruments', 'entity', array(
-      'class'   => 'App:DataCollectionInstrument',
+      'class'   => 'App\Entity\DataCollectionInstrument',
       'property'=> 'data_collection_instrument_name',
       'choice_value' => 'displayName',
       'required' => false,
@@ -233,7 +233,7 @@ class DatasetViaApiType extends AbstractType {
       'label'     => 'Data Collection Instruments',
     ));
     $builder->add('data_types', 'entity', array(
-      'class'   => 'App:DataType',
+      'class'   => 'App\Entity\DataType',
       'property' => 'data_type',
     'choice_value' => 'displayName',
       'required' => false,
@@ -247,7 +247,7 @@ class DatasetViaApiType extends AbstractType {
     ));
   //people and relations
     $builder->add('publications', 'entity', array(
-      'class' => 'App:Publication',
+      'class' => 'App\Entity\Publication',
       'property'=>'citation',
       'choice_value' => 'displayName',
       'required' => false,
@@ -257,7 +257,7 @@ class DatasetViaApiType extends AbstractType {
       'label'     => 'Publications describing the collection or use of the dataset',
     ));
     $builder->add('awards', 'entity', array(
-      'class'   => 'App:Award',
+      'class'   => 'App\Entity\Award',
       'property'=> 'award',
       'choice_value'=>'displayName',
       'required' => false,
@@ -286,7 +286,7 @@ class DatasetViaApiType extends AbstractType {
       'allow_add'=>true
     ));
     $builder->add('local_experts', 'entity', array(
-      'class' => 'App:Person',
+      'class' => 'App\Entity\Person',
       'property'=>'full_name',
       'choice_value' => 'displayName',
       'required'=>false,
@@ -296,7 +296,7 @@ class DatasetViaApiType extends AbstractType {
       'label'=>'Local Experts',
     ));
     $builder->add('subject_domains', 'entity', array(
-      'class' => 'App:SubjectDomain',
+      'class' => 'App\Entity\SubjectDomain',
       'property'=>'subject_domain',
       'required' => false,
       'choice_value' => 'displayName',
@@ -317,7 +317,7 @@ class DatasetViaApiType extends AbstractType {
       'required' => false,
       'label'    => 'Year Data Collection Ended'));
     $builder->add('subject_genders', 'entity', array(
-      'class'      => 'App:SubjectGender',
+      'class'      => 'App\Entity\SubjectGender',
       'property'   => 'subject_gender',
       'choice_value' => 'displayName',
       'multiple'   => true,
@@ -327,7 +327,7 @@ class DatasetViaApiType extends AbstractType {
       'label'     => 'Subject Genders',
     ));
     $builder->add('subject_sexes', 'entity', array(
-      'class'      => 'App:SubjectSex',
+      'class'      => 'App\Entity\SubjectSex',
       'property'   => 'subject_sex',
       'choice_value' => 'displayName',
       'multiple'   => true,
@@ -337,7 +337,7 @@ class DatasetViaApiType extends AbstractType {
       'label'     => 'Subject Sexes',
     ));
     $builder->add('subject_population_ages', 'entity', array(
-      'class'   => 'App:SubjectPopulationAge',
+      'class'   => 'App\Entity\SubjectPopulationAge',
       'property'=> 'age_group',
       'required' => false,
       'choice_value' => 'displayName',
@@ -350,7 +350,7 @@ class DatasetViaApiType extends AbstractType {
       'label'     => 'Subject Population Age',
     ));
     $builder->add('subject_geographic_areas', 'entity', array(
-      'class'   => 'App:SubjectGeographicArea',
+      'class'   => 'App\Entity\SubjectGeographicArea',
       'attr'=>array('style'=>'width:100%'),
       'choice_value' => 'displayName',
       'property'=> 'geographic_area_name',
@@ -363,7 +363,7 @@ class DatasetViaApiType extends AbstractType {
       'label'     => 'Subject Geographic Areas',
     ));
     $builder->add('subject_geographic_area_details', 'entity', array(
-      'class'   => 'App:SubjectGeographicAreaDetail',
+      'class'   => 'App\Entity\SubjectGeographicAreaDetail',
       'attr'=>array('style'=>'width:100%'),
       'choice_value' => 'displayName',
       'query_builder'=> function(EntityRepository $er) {
@@ -376,7 +376,7 @@ class DatasetViaApiType extends AbstractType {
       'label'     => 'Subject Geographic Area Details',
     ));
     $builder->add('study_types', 'entity', array(
-      'class'    => 'App:StudyType',
+      'class'    => 'App\Entity\StudyType',
       'property' => 'study_type',
       'choice_value' => 'displayName',
       'required' => false,
@@ -390,7 +390,7 @@ class DatasetViaApiType extends AbstractType {
       'label'     => 'Study Type',
     ));
     $builder->add('subject_of_study', 'entity', array(
-      'class'    => 'App:SubjectOfStudy',
+      'class'    => 'App\Entity\SubjectOfStudy',
       'property' => 'subject_of_study',
       'choice_value' => 'displayName',
       'required' => false,
@@ -403,7 +403,7 @@ class DatasetViaApiType extends AbstractType {
       'label'     => 'Subject of Study',
     ));
     $builder->add('subject_keywords', 'entity', array(
-      'class'   => 'App:SubjectKeyword',
+      'class'   => 'App\Entity\SubjectKeyword',
       'choice_label'=> 'keyword',
       'choice_value' => 'displayName',
       'required' => false,

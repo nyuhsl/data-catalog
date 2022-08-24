@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\Type\DatasetViaApiType;
 use App\Entity\Dataset;
@@ -34,7 +34,7 @@ use App\Utils\Slugger;
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-class APIController extends Controller
+class APIController extends AbstractController
 {
 
   private $security;
@@ -75,14 +75,16 @@ class APIController extends Controller
 
     if ($uid == "all") {
       $datasets = $qb->select('d')
-                     ->from('App:Dataset', 'd')
+                     ->from('App\Entity\Dataset', 'd')
                      ->where('d.archived = 0 OR d.archived IS NULL')
+                     ->andWhere('d.restricted = 0')
                      ->andWhere('d.published = 1')
                      ->getQuery()->getResult();
     } else {
       $datasets = $qb->select('d')
-                     ->from('App:Dataset', 'd')
+                     ->from('App\Entity\Dataset', 'd')
                      ->where('d.dataset_uid = :uid')
+                     ->andWhere('d.restricted = 0')
                      ->andWhere('d.published = 1')
                      ->andWhere('d.archived = 0 OR d.archived IS NULL')
                      ->setParameter('uid', $uid)
@@ -142,7 +144,7 @@ class APIController extends Controller
     $em = $this->getDoctrine()->getManager();
     $userCanSubmit = $this->security->isGranted('ROLE_API_SUBMITTER');
 
-    $datasetUid = $em->getRepository('App:Dataset')
+    $datasetUid = $em->getRepository('App\Entity\Dataset')
                      ->getNewDatasetId();
     $dataset->setDatasetUid($datasetUid);
 

@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Dataset;
 
@@ -30,7 +30,7 @@ use App\Entity\Dataset;
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-class RelatedDatasetController extends Controller
+class RelatedDatasetController extends AbstractController
 {
   /**
    * Given a list of related datasets, fetch ones that are publicly-visible,
@@ -42,14 +42,15 @@ class RelatedDatasetController extends Controller
    */
   public function relatedDatasetAction($relatedDatasets, $format) {
 
-    $em = $this->getDoctrine()->getManager()->getRepository('App:Dataset');;
+    $em = $this->getDoctrine()->getManager()->getRepository('App\Entity\Dataset');;
 
     $datasetsForDisplay = array();
     foreach ($relatedDatasets as $related) {
-      // find dataset IF it is published AND not archived
+      // find dataset IF it is published AND not archived AND not restricted
       $relatedDataset = $em->findOneBy(array(
                              'dataset_uid' => $related->getRelatedDatasetUid(), 
                              'published'   => 1,
+                             'restricted'  => 0,
                              'archived'    => 0
                         ));
       if ($relatedDataset) {

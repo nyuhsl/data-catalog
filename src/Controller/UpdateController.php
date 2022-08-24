@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
 use App\Entity\Dataset;
@@ -34,7 +34,7 @@ use App\Utils\Slugger;
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-class UpdateController extends Controller {
+class UpdateController extends AbstractController {
 
   private $security;
 
@@ -58,8 +58,8 @@ class UpdateController extends Controller {
   public function UpdateDatasetAction($uid, Request $request) {
   
 		$tak_ttl="PT72H";
-		if ($this->container->hasParameter('tak_ttl')) {
-			$tak_ttl=$this->container->getParameter('tak_ttl');
+		if ($this->getParameter('tak_ttl')) {
+			$tak_ttl=$this->getParameter('tak_ttl');
 		}
   
     $em = $this->getDoctrine()->getManager();
@@ -214,7 +214,7 @@ class UpdateController extends Controller {
 
     if ($slug == null) {
       if ($entityName == 'ArchivedDatasets') {
-          $allEntities = $em->getRepository('App:Dataset')->findAllArchived();
+          $allEntities = $em->getRepository('App\Entity\Dataset')->findAllArchived();
           $entityName = 'Dataset';
           $entityTypeDisplayName = 'Archived Dataset';
       } else {

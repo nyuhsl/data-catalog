@@ -5,7 +5,7 @@ namespace App\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\SearchResults;
@@ -36,7 +36,7 @@ use Symfony\Component\Validator\Constraints as Assert;
   *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
   *
   */
-class TakController extends Controller
+class TakController extends AbstractController
 {
   
   private $security;
@@ -60,13 +60,13 @@ class TakController extends Controller
   
 		if ($this->security->isGranted('ROLE_ADMIN')) {
 
-			$dataset=$this->getDoctrine()->getRepository('App:Dataset')->findOneBy(array('dataset_uid'=>$uid));
+			$dataset=$this->getDoctrine()->getRepository('App\Entity\Dataset')->findOneBy(array('dataset_uid'=>$uid));
 
 			if ($dataset) {
 
 				do {
 					$uuid=uniqid( true );
-				} while($this->getDoctrine()->getRepository('App:TempAccessKey')->findOneBy(array('uuid'=>$uuid)));
+				} while($this->getDoctrine()->getRepository('App\Entity\TempAccessKey')->findOneBy(array('uuid'=>$uuid)));
 
 				$em = $this->getDoctrine()->getManager();
 				$tak = new \App\Entity\TempAccessKey;
@@ -122,11 +122,11 @@ class TakController extends Controller
 
 		if ($this->security->isGranted('ROLE_ADMIN')) {
 
-			$dataset=$this->getDoctrine()->getRepository('App:Dataset')->findOneBy(array('dataset_uid'=>$uid));
+			$dataset=$this->getDoctrine()->getRepository('App\Entity\Dataset')->findOneBy(array('dataset_uid'=>$uid));
 
 			if ($dataset) {
 
-				$taks=$this->getDoctrine()->getRepository('App:TempAccessKey')->findBy(array('dataset_association'=>$dataset->getId() ));
+				$taks=$this->getDoctrine()->getRepository('App\Entity\TempAccessKey')->findBy(array('dataset_association'=>$dataset->getId() ));
 
 				foreach($taks as $t=>$v) {
 
@@ -167,7 +167,7 @@ class TakController extends Controller
 
 		if ($this->security->isGranted('ROLE_ADMIN')) {
 
-			$tak=$this->getDoctrine()->getRepository('App:TempAccessKey')->findOneBy(array('uuid'=>$uuid));
+			$tak=$this->getDoctrine()->getRepository('App\Entity\TempAccessKey')->findOneBy(array('uuid'=>$uuid));
 
 			if ($tak) {
 

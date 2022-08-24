@@ -91,6 +91,16 @@ class DatasetAsAdminType extends AbstractType {
                          'External'=>'External'),
       'expanded'=>true,
     ));
+    $builder->add('restricted',ChoiceType::class,array(
+      'required'=> false,
+      'expanded'=> true,
+      'placeholder'=>false,
+      'label'   => 'Restricted',
+      'choices' => array('Yes'=>true,
+                         'No'=>false),
+      'attr'    => array('style'=>'color:red'),
+      'label_attr'=> array('style'=>'color:red'),
+    ));
     $builder->add('description',  TextareaType::class, array(
       'required' => true,
       'attr'=>array('rows'=>'7','placeholder'=>'Please provide a brief description of the dataset'),
@@ -105,7 +115,7 @@ class DatasetAsAdminType extends AbstractType {
       'choices'=> array('Yes' => true, 'Not yet'=>false),
     ));
     $builder->add('publishers', EntityType::class, array(
-      'class'   => 'App:Publisher',
+      'class'   => 'App\Entity\Publisher',
       'choice_label'=> 'publisher_name',
       'required' => false,
       'query_builder'=> function(EntityRepository $er) {
@@ -117,7 +127,7 @@ class DatasetAsAdminType extends AbstractType {
       'label'     => 'Publishers',
     ));
     $builder->add('access_restrictions', EntityType::class, array(
-      'class'    => 'App:AccessRestriction',
+      'class'    => 'App\Entity\AccessRestriction',
       'choice_label' => 'restriction',
       'attr'=>array('style'=>'width:100%'),
       'query_builder'=> function(EntityRepository $er) {
@@ -161,7 +171,7 @@ class DatasetAsAdminType extends AbstractType {
     ));
     //technical details
     $builder->add('related_equipment', EntityType::class, array(
-      'class'   => 'App:RelatedEquipment',
+      'class'   => 'App\Entity\RelatedEquipment',
       'choice_label'=> 'related_equipment',
       'query_builder'=> function(EntityRepository $er) {
           return $er->createQueryBuilder('u')->orderBy('u.related_equipment','ASC');
@@ -173,7 +183,7 @@ class DatasetAsAdminType extends AbstractType {
       'label'     => 'Equipment used to collect/create the dataset',
     ));
     $builder->add('related_software', EntityType::class, array(
-      'class'   => 'App:RelatedSoftware',
+      'class'   => 'App\Entity\RelatedSoftware',
       'choice_label'=> 'software_name',
       'query_builder'=> function(EntityRepository $er) {
           return $er->createQueryBuilder('u')->orderBy('u.software_name','ASC');
@@ -185,7 +195,7 @@ class DatasetAsAdminType extends AbstractType {
       'label'     => 'Software used to create, collect or analyze the dataset',
     ));
     $builder->add('dataset_formats', EntityType::class, array(
-      'class'   => 'App:DatasetFormat',
+      'class'   => 'App\Entity\DatasetFormat',
       'choice_label'=> 'format',
       'query_builder'=> function(EntityRepository $er) {
           return $er->createQueryBuilder('u')->orderBy('u.format','ASC');
@@ -201,7 +211,7 @@ class DatasetAsAdminType extends AbstractType {
       'label'    => 'Dataset Size'
     ));
     $builder->add('data_collection_instruments', EntityType::class, array(
-      'class'   => 'App:DataCollectionInstrument',
+      'class'   => 'App\Entity\DataCollectionInstrument',
       'choice_label'=> 'data_collection_instrument_name',
       'required' => false,
       'attr'=>array('style'=>'width:100%', 'placeholder'=>''),
@@ -210,7 +220,7 @@ class DatasetAsAdminType extends AbstractType {
       'label'     => 'Data Collection Instruments',
     ));
     $builder->add('data_types', EntityType::class, array(
-      'class'   => 'App:DataType',
+      'class'   => 'App\Entity\DataType',
       'choice_label' => 'data_type',
       'required' => false,
       'query_builder'=> function(EntityRepository $er) {
@@ -223,7 +233,7 @@ class DatasetAsAdminType extends AbstractType {
     ));
     //people and relations
     $builder->add('publications', EntityType::class, array(
-      'class' => 'App:Publication',
+      'class' => 'App\Entity\Publication',
       'choice_label'=>'citation',
       'required' => false,
       'attr'=>array('style'=>'width:100%'),
@@ -232,7 +242,7 @@ class DatasetAsAdminType extends AbstractType {
       'label'     => 'Publications describing the collection or use of the dataset',
     ));
     $builder->add('awards', EntityType::class, array(
-      'class'   => 'App:Award',
+      'class'   => 'App\Entity\Award',
       'choice_label'=> 'award',
       'required' => false,
       'attr'    => array('id'=>'dataset_awards','style'=>'width:100%'),
@@ -241,7 +251,7 @@ class DatasetAsAdminType extends AbstractType {
       'label'     => 'Grants',
     ));
     $builder->add('projects', EntityType::class, array(
-      'class'   => 'App:Project',
+      'class'   => 'App\Entity\Project',
       'choice_label'=> 'project_name',
       'required' => false,
       'query_builder'=> function(EntityRepository $er) {
@@ -272,7 +282,7 @@ class DatasetAsAdminType extends AbstractType {
       'allow_add'=>true
     ));
     $builder->add('local_experts', EntityType::class, array(
-      'class' => 'App:Person',
+      'class' => 'App\Entity\Person',
       'choice_label'=>'full_name',
       'required'=>false,
       'attr'=>array('style'=>'width:100%'),
@@ -281,7 +291,7 @@ class DatasetAsAdminType extends AbstractType {
       'label'=>'Local Experts',
     ));
     $builder->add('subject_domains', EntityType::class, array(
-      'class' => 'App:SubjectDomain',
+      'class' => 'App\Entity\SubjectDomain',
       'choice_label'=>'subject_domain',
       'required' => false,
       'query_builder'=> function(EntityRepository $er) {
@@ -303,7 +313,7 @@ class DatasetAsAdminType extends AbstractType {
       'label'    => 'Year Data Collection Ended'
     ));
     $builder->add('subject_genders', EntityType::class, array(
-      'class'      => 'App:SubjectGender',
+      'class'      => 'App\Entity\SubjectGender',
       'choice_label'   => 'subject_gender',
       'multiple'   => true,
       'expanded'   => true,
@@ -312,7 +322,7 @@ class DatasetAsAdminType extends AbstractType {
       'label'     => 'Subject Genders',
     ));
     $builder->add('subject_sexes', EntityType::class, array(
-      'class'      => 'App:SubjectSex',
+      'class'      => 'App\Entity\SubjectSex',
       'choice_label'   => 'subject_sex',
       'multiple'   => true,
       'expanded'   => true,
@@ -321,7 +331,7 @@ class DatasetAsAdminType extends AbstractType {
       'label'     => 'Subject Sexes',
     ));
     $builder->add('subject_population_ages', EntityType::class, array(
-      'class'   => 'App:SubjectPopulationAge',
+      'class'   => 'App\Entity\SubjectPopulationAge',
       'choice_label'=> 'age_group',
       'required' => false,
       'query_builder'=> function(EntityRepository $er) {
@@ -333,7 +343,7 @@ class DatasetAsAdminType extends AbstractType {
       'label'     => 'Subject Population Age',
     ));
     $builder->add('subject_geographic_areas', EntityType::class, array(
-      'class'   => 'App:SubjectGeographicArea',
+      'class'   => 'App\Entity\SubjectGeographicArea',
       'attr'=>array('style'=>'width:100%'),
       'choice_label'=> 'geographic_area_name',
       'query_builder'=> function(EntityRepository $er) {
@@ -345,7 +355,7 @@ class DatasetAsAdminType extends AbstractType {
       'label'     => 'Subject Geographic Areas',
     ));
     $builder->add('subject_geographic_area_details', EntityType::class, array(
-      'class'   => 'App:SubjectGeographicAreaDetail',
+      'class'   => 'App\Entity\SubjectGeographicAreaDetail',
       'attr'=>array('style'=>'width:100%'),
       'query_builder'=> function(EntityRepository $er) {
           return $er->createQueryBuilder('u')->orderBy('u.geographic_area_detail_name','ASC');
@@ -357,7 +367,7 @@ class DatasetAsAdminType extends AbstractType {
       'label'     => 'Subject Geographic Area Details',
     ));
     $builder->add('study_types', EntityType::class, array(
-      'class'    => 'App:StudyType',
+      'class'    => 'App\Entity\StudyType',
       'choice_label' => 'study_type',
       'required' => false,
       'query_builder'=> function(EntityRepository $er) {
@@ -370,7 +380,7 @@ class DatasetAsAdminType extends AbstractType {
       'label'     => 'Study Type',
     ));
     $builder->add('subject_of_study', EntityType::class, array(
-      'class'    => 'App:SubjectOfStudy',
+      'class'    => 'App\Entity\SubjectOfStudy',
       'choice_label' => 'subject_of_study',
       'required' => false,
       'query_builder'=> function(EntityRepository $er) {
@@ -383,7 +393,7 @@ class DatasetAsAdminType extends AbstractType {
     ));
     
     $builder->add('subject_keywords', EntityType::class, array(
-      'class'   => 'App:SubjectKeyword',
+      'class'   => 'App\Entity\SubjectKeyword',
       'choice_label'=> 'keyword',
       'required' => false,
       'query_builder'=> function(EntityRepository $er) {

@@ -41,6 +41,20 @@
       >
         {{ institution_name_short }} Datasets Only 
     </label>
+    {% if is_granted('ROLE_INSTITUTIONAL_AUTHENTICATED_USER') %}
+    <label>
+      <input 
+        class="" 
+        {% if "restricted_fq:True" in currentSearch.facets %}
+          checked="checked"
+        {% endif %}
+        type="checkbox" 
+        id="restricted-only-filter"
+      >
+        <span style="color:red">{{ institution_name_short }} Restricted Datasets Only </span>
+    </label>
+    {% endif %}
+
   </div>
   {% for category,facets in results.facets if category != 'Origin' %}
     {% set facetSection = [] %}

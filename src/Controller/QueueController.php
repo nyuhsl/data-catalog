@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\SearchResults;
 use App\Entity\SearchState;
@@ -33,7 +33,7 @@ use App\Utils\Slugger;
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-class QueueController extends Controller
+class QueueController extends AbstractController
 {
   /**
    * Get the number of unpublished items
@@ -44,7 +44,7 @@ class QueueController extends Controller
 
     $em = $this->getDoctrine()->getManager();
 
-    $queueLength = $em->getRepository('App:Dataset')
+    $queueLength = $em->getRepository('App\Entity\Dataset')
          ->countAllUnpublished();
     
 
@@ -66,7 +66,7 @@ class QueueController extends Controller
    public function viewApprovalQueueAction() {
      
      $em = $this->getDoctrine()->getManager();
-     $approvalQueue = $em->getRepository('App:Dataset')
+     $approvalQueue = $em->getRepository('App\Entity\Dataset')
           ->findAllUnpublished();
 
      return $this->render('default/approval_queue.html.twig',array(

@@ -56,7 +56,7 @@ class DatasetAsUserType extends AbstractType {
       'label'    => 'Access Instructions'));
     //technical details
     $builder->add('related_equipment', 'entity', array(
-      'class'   => 'App:RelatedEquipment',
+      'class'   => 'App\Entity\RelatedEquipment',
       'property'=> 'related_equipment',
       'query_builder'=> function(EntityRepository $er) {
           return $er->createQueryBuilder('u')->orderBy('u.related_equipment','ASC');
@@ -68,7 +68,7 @@ class DatasetAsUserType extends AbstractType {
       'label'     => 'Equipment used to collect/create the dataset',
     ));
     $builder->add('related_software', 'entity', array(
-      'class'   => 'App:RelatedSoftware',
+      'class'   => 'App\Entity\RelatedSoftware',
       'property'=> 'software_name',
       'query_builder'=> function(EntityRepository $er) {
           return $er->createQueryBuilder('u')->orderBy('u.software_name','ASC');
@@ -80,7 +80,7 @@ class DatasetAsUserType extends AbstractType {
       'label'     => 'Software used to create, collect or analyze the dataset',
     ));
     $builder->add('dataset_formats', 'entity', array(
-      'class'   => 'App:DatasetFormat',
+      'class'   => 'App\Entity\DatasetFormat',
       'property'=> 'format',
       'query_builder'=> function(EntityRepository $er) {
           return $er->createQueryBuilder('u')->orderBy('u.format','ASC');
@@ -92,7 +92,7 @@ class DatasetAsUserType extends AbstractType {
       'label'     => 'Dataset File Format',
     ));
     $builder->add('data_collection_instruments', 'entity', array(
-      'class'   => 'App:DataCollectionInstrument',
+      'class'   => 'App\Entity\DataCollectionInstrument',
       'property'=> 'data_collection_instrument_name',
       'required' => false,
       'attr'=>array('style'=>'width:100%', 'placeholder'=>''),
@@ -119,7 +119,7 @@ class DatasetAsUserType extends AbstractType {
       'required' => false,
       'label'    => 'Year Data Collection Ended'));
     $builder->add('subject_of_study', 'entity', array(
-      'class'    => 'App:SubjectOfStudy',
+      'class'    => 'App\Entity\SubjectOfStudy',
       'property' => 'subject_of_study',
       'required' => false,
       'query_builder'=> function(EntityRepository $er) {
@@ -131,7 +131,7 @@ class DatasetAsUserType extends AbstractType {
       'label'     => 'Subject of Study',
     ));
     $builder->add('subject_keywords', 'entity', array(
-      'class'   => 'App:SubjectKeyword',
+      'class'   => 'App\Entity\SubjectKeyword',
       'property'=> 'keyword',
       'required' => false,
       'query_builder'=> function(EntityRepository $er) {

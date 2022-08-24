@@ -1,6 +1,8 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
-app_logout:
-    path: logout
-    methods: GET
+#app_logout:
+#    path: logout
+#    methods: GET
+hslavich_saml_sp:
+    resource: "@HslavichOneloginSamlBundle/Resources/config/routing.yml"

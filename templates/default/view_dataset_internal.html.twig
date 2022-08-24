@@ -29,6 +29,9 @@
   </div>
   {% endif %}
      <div class="internal-dataset-badge details-page">{{ internal_dataset_text }}</div>
+     {% if dataset.restricted == true %}
+        <div class="restricted-dataset-badge details-page">{{ restricted_dataset_text }}</div>
+     {% endif %}
      <h2 class="dataset-detail-maintitle">{{ dataset.title|raw }} 
        {% if dataset.published == false %}<small>[unpublished]</small>{%endif%}
        {% if dataset.archived == true %}<small>[archived]</small>{%endif%}

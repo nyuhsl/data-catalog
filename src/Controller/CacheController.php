@@ -5,7 +5,7 @@ namespace App\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
@@ -31,7 +31,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-class CacheController extends Controller {
+class CacheController extends AbstractController {
 
   private $security;
 

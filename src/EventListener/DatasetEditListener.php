@@ -100,7 +100,7 @@ class DatasetEditListener
 
         $em->persist($edit);
         $dataset->addDatasetEdits($edit);
-        $md = $em->getClassMetadata('App:DatasetEdit');
+        $md = $em->getClassMetadata('App\Entity\DatasetEdit');
         $uow->computeChangeSet($md, $edit);
 
         return $dataset;
