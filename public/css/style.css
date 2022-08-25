@@ -257,6 +257,16 @@ a.skip:hover {
     vertical-align:text-top;
 }
 
+.restricted-dataset-badge {
+    margin-bottom:.75em;
+    display:inline-block;
+    font-size:.7em;
+    color:white;
+    background:#b20000;
+    padding:.3em .7em;
+    border-radius:3px;
+    vertical-align:top;
+}
 
 button.nextPage {
  float:right;

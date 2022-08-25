@@ -67,7 +67,7 @@ jQuery(function($) {
   /**
    * Handle institution-only filter
    */
-  $('#internal-only-filter-container').on('click', function(e) {
+  $('#internal-only-filter-container label.internal-only-filter').on('click', function(e) {
       var content = "origin_fq:Internal";
       if ($('#internal-only-filter').attr('checked')) {
           alterSearch('remove', 'facet', content);
@@ -76,6 +76,21 @@ jQuery(function($) {
       }
 
   });
+
+
+  /**
+   * Handle restricted-only filter
+   */
+  $('#internal-only-filter-container label.restricted-only-filter').on('click', function(e) {
+      var content = "restricted_fq:true";
+      if ($('#restricted-only-filter').attr('checked')) {
+          alterSearch('remove', 'facet', content);
+      } else {
+          alterSearch('add', 'facet', content);
+      }
+
+  });
+
 
   /**
    * Call alterSearch() when a facet is removed

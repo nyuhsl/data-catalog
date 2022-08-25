@@ -30,7 +30,7 @@
 <h4 class="facet-pane-header">Filter by</h4>
 
   <div class="checkbox facet-section" id="internal-only-filter-container">
-    <label>
+    <label class="internal-only-filter">
       <input 
         class="" 
         {% if "origin_fq:Internal" in currentSearch.facets %}
@@ -42,10 +42,10 @@
         {{ institution_name_short }} Datasets Only 
     </label>
     {% if is_granted('ROLE_INSTITUTIONAL_AUTHENTICATED_USER') %}
-    <label>
+    <label class="restricted-only-filter">
       <input 
         class="" 
-        {% if "restricted_fq:True" in currentSearch.facets %}
+        {% if "restricted_fq:true" in currentSearch.facets %}
           checked="checked"
         {% endif %}
         type="checkbox" 
@@ -102,7 +102,7 @@
   {% endif %} 
  {% for facet in currentSearch.facets %}
    {% set facetSplit = facet|split(':') %}
-   {% if facetSplit[0] != "origin_fq" %} 
+   {% if facetSplit[0] != "origin_fq" and facetSplit[0] != "restricted_fq" and facetSplit[0] != '!restricted_fq' %}
      <button data-machine-name="{{ facet }}" class="facetBreadcrumb btn btn-outline-secondary btn-sm">
        {{ results.facetMappings[facetSplit[0]] }}:{{ facetSplit[1] }} 
      </button>
@@ -168,6 +168,9 @@
     <li class="dataset-summary"> 
       {% if item.origin == "Internal" %}
         <div class="internal-dataset-badge">{{ internal_dataset_text }}</div>
+      {% endif %}
+      {% if item.restricted == true %}
+        <div class="restricted-dataset-badge">{{ restricted_dataset_text }}</div>
       {% endif %}
     <h4 class="dataset-title"><a class="dataset-title-link" href="{{ path("view_dataset", {"uid":item.id}) }}">{{ item.dataset_title }}</a>
     </h4>

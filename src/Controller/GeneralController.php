@@ -79,6 +79,18 @@ class GeneralController extends AbstractController
    * @Route("/search", name="user_search_results")
    */
   public function searchAction(Request $request) {
+    // forcibly exclude restricted datasets if the person isn't logged in
+    if (!$this->security->isGranted('ROLE_INSTITUTIONAL_AUTHENTICATED_USER')) {
+      $facetsQuery = $request->query->get('facet');
+      foreach ($facetsQuery as $key => $facet) {
+        if (strpos(strtolower($facet), 'restricted_fq') !== false) {
+          unset($facetsQuery[$key]);
+        }
+      }
+      $newFacetQuery = array_values($facetsQuery);
+      $newFacetQuery[] = "!restricted_fq:true";
+      $request->query->set('facet', $newFacetQuery);
+    }
     
     $currentSearch = new SearchState($request);
 
@@ -243,12 +255,7 @@ class GeneralController extends AbstractController
     }
 
     // if they're trying to view a restricted dataset, check the access!!!!
-    if ($dataset->getRestricted() == TRUE) {
-        /*if (!$this->security->isGranted('ROLE_INSTITUTIONAL_AUTHENTICATED_USER')) {
-			throw new \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException(
-             'You are not authorized to view this resource. Please <a href="/saml/login">login</a>.'
-         );
-        }*/
+    if ($dataset->getRestricted() == true) {
         $this->denyAccessUnlessGranted('ROLE_INSTITUTIONAL_AUTHENTICATED_USER');
     }
 
