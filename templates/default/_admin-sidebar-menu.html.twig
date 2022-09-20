@@ -1,5 +1,5 @@
       {# ADMIN NAV SIDEBAR #}
-      {% if is_granted('ROLE_USER') and adminPage is defined and adminPage==true %}
+      {% if is_granted('ROLE_ADMIN') and adminPage is defined and adminPage==true %}
         <div class="admin-nav-sidebar col-3">
         <ul class="nav flex-column nav-pills">
         {% if is_granted('ROLE_ADMIN') %}

@@ -39,20 +39,24 @@
         type="checkbox" 
         id="internal-only-filter"
       >
-        {{ institution_name_short }} Datasets Only 
+        {{ institution_name_short }}-Generated Datasets
     </label>
     {% if is_granted('ROLE_INSTITUTIONAL_AUTHENTICATED_USER') %}
-    <label class="restricted-only-filter">
-      <input 
-        class="" 
-        {% if "restricted_fq:true" in currentSearch.facets %}
-          checked="checked"
-        {% endif %}
-        type="checkbox" 
-        id="restricted-only-filter"
-      >
-        <span style="color:red">{{ institution_name_short }} Restricted Datasets Only </span>
-    </label>
+        <label class="restricted-only-filter">
+          <input 
+            class="" 
+            {% if "restricted_fq:true" in currentSearch.facets %}
+              checked="checked"
+            {% endif %}
+            type="checkbox" 
+            id="restricted-only-filter"
+          >
+            <span style="">{{ institution_name_short }} Restricted Datasets</span>
+        </label>
+    {% else %}
+        <label class="restricted-only-filter">
+        <a class="login-restricted-filter-link" href="{{ path('saml_login') }}">Log in to view restricted datasets<i style="padding-left:0.25em;font-size:.9em;" class="icon-external-link"></i></a>
+        </label>
     {% endif %}
 
   </div>

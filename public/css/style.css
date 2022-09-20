@@ -243,6 +243,10 @@ a.skip:hover {
     padding-left:1em;
     font-size:.9em;
 }
+.login-restricted-filter-link {
+    margin-top:.5em;
+    display:block;
+}
 .internal-dataset-badge {
     margin-bottom:.75em;
     display:inline-block;

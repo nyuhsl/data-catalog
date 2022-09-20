@@ -82,14 +82,19 @@ class GeneralController extends AbstractController
     // forcibly exclude restricted datasets if the person isn't logged in
     if (!$this->security->isGranted('ROLE_INSTITUTIONAL_AUTHENTICATED_USER')) {
       $facetsQuery = $request->query->get('facet');
-      foreach ($facetsQuery as $key => $facet) {
-        if (strpos(strtolower($facet), 'restricted_fq') !== false) {
-          unset($facetsQuery[$key]);
-        }
+      if ($facetsQuery) {
+          foreach ($facetsQuery as $key => $facet) {
+            if (strpos(strtolower($facet), 'restricted_fq') !== false) {
+              unset($facetsQuery[$key]);
+            }
+          }
+          $newFacetQuery = array_values($facetsQuery);
+          $newFacetQuery[] = "!restricted_fq:true";
+          $request->query->set('facet', $newFacetQuery);
+      } else {
+          $newFacetQuery[] = "!restricted_fq:true";
+          $request->query->set('facet', $newFacetQuery);
       }
-      $newFacetQuery = array_values($facetsQuery);
-      $newFacetQuery[] = "!restricted_fq:true";
-      $request->query->set('facet', $newFacetQuery);
     }
     
     $currentSearch = new SearchState($request);
@@ -98,6 +103,12 @@ class GeneralController extends AbstractController
     $resultsFromSolr = $this->solr->fetchFromSolr();
 
     $results = new SearchResults($resultsFromSolr);
+    // just in case we got any restricted datasets from Solr, do another check to forcibly remove them from results list
+    foreach ($results->resultItems as $key=>$item) {
+        if ($item->restricted == 'true' && !$this->security->isGranted('ROLE_INSTITUTIONAL_AUTHENTICATED_USER')) {
+            unset($results->resultItems[$key]);
+        }
+    }
 
     if ($results->numResults == 0) {
       return $this->render('default/no_results.html.twig', array(
