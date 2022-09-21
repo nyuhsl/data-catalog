@@ -6,6 +6,7 @@
 
 /config/services.yaml
 /config/packages/security.yaml
+/config/packages/hslavich_onelogin_saml.yaml
 /public/bundles/
 /var/
 /vendor/
