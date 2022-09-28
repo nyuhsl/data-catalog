@@ -7,6 +7,8 @@ parameters:
 
     # This is the URL to your Solr core. Please use a trailing slash
     solrsearchr_server: http://example.com:8983/datacatalog/
+    solrsearchr_username: leaveBlankIfYouDontUseSolrAuthentication
+    solrsearchr_password: leaveBlankIfYouDontUseSolrAuthentication
     solrsearchr_format: json
     #
     # Comment out any 'solrsearchr_facets' below that
@@ -106,7 +108,10 @@ services:
         class:  App\Service\SolrSearchr
         public: true
         arguments:  
+          - "%kernel.environment%"
           - "%solrsearchr_server%"
+          - "%solrsearchr_username%"
+          - "%solrsearchr_password%"
           - "%solrsearchr_format%"
           - "%solrsearchr_facets%"
           - "%solrsearchr_fields_to_display%"

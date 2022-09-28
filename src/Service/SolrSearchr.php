@@ -28,7 +28,10 @@ use App\Entity\SearchState;
 class SolrSearchr {
 
   // App-level defaults are set in parameters.yml
+  protected $env;
   protected $solrBaseURL;
+  protected $solrUsername;
+  protected $solrPassword;
   protected $solrFormat;
   protected $solrFacets;
   protected $solrDisplayFields;
@@ -56,16 +59,22 @@ class SolrSearchr {
    * These config parameters are set in parameters.yml and supplied by Symfony automatically
    * when this service is instantiated in GeneralController.php
    */
-  public function __construct($solrServer,
+  public function __construct($kernelEnvironment,
+                              $solrServer,
+                              $solrUsername,
+                              $solrPassword,
                               $solrFormat,
                               $solrFacets,
                               $solrDisplayFields,
                               $solrSearchFields) {
 
-    $this->solrBaseURL  = $solrServer;
-    $this->solrFormat   = $solrFormat;
-    $this->solrFacets   = $solrFacets;
-    $this->solrDisplayFields   = $solrDisplayFields;
+    $this->env           = $kernelEnvironment;
+    $this->solrBaseURL   = $solrServer;
+    $this->solrUsername  = $solrUsername;
+    $this->solrPassword  = $solrPassword;
+    $this->solrFormat    = $solrFormat;
+    $this->solrFacets    = $solrFacets;
+    $this->solrDisplayFields  = $solrDisplayFields;
     $this->solrSearchFields   = $solrSearchFields;
   }
 
@@ -97,6 +106,15 @@ class SolrSearchr {
     curl_setopt($ch, CURLOPT_URL, $requestURL);
     curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-type: application/json"));
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    if ($this->env !== 'prod') {
+      // allow self-signed certs in dev environment
+      curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    }
+    if ($this->solrUsername && $this->solrPassword) {
+      // if Solr uses authentication
+      curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
+      curl_setopt($ch, CURLOPT_USERPWD, "$this->solrUsername:$this->solrPassword");
+    }
 
     if (!$resp = curl_exec($ch)) {
       trigger_error(curl_error($ch));
