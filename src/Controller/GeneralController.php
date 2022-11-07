@@ -268,7 +268,7 @@ class GeneralController extends AbstractController
     // if they're trying to view a restricted dataset, check the access!!!!
     if ($dataset->getRestricted() == true) {
         if (!$this->security->isGranted('ROLE_INSTITUTIONAL_AUTHENTICATED_USER') OR $this->security->isGranted('ROLE_SPONSORED_INDIVIDUAL')) {
-            throw new AccessDeniedHttpException('Sorry, your role does not grant you access to this application');
+            throw new AccessDeniedHttpException('Sorry, your role does not grant you access to this resource.');
 	}
     }
 
