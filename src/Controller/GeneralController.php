@@ -79,8 +79,8 @@ class GeneralController extends AbstractController
    * @Route("/search", name="user_search_results")
    */
   public function searchAction(Request $request) {
-    // forcibly exclude restricted datasets if the person isn't logged in
-    if (!$this->security->isGranted('ROLE_INSTITUTIONAL_AUTHENTICATED_USER')) {
+    // forcibly exclude restricted datasets if the person isn't logged in or is sponsored individual
+    if (!$this->security->isGranted('ROLE_INSTITUTIONAL_AUTHENTICATED_USER') OR $this->security->isGranted('ROLE_SPONSORED_INDIVIDUAL')) {
       $facetsQuery = $request->query->get('facet');
       if ($facetsQuery) {
           foreach ($facetsQuery as $key => $facet) {
@@ -105,7 +105,7 @@ class GeneralController extends AbstractController
     $results = new SearchResults($resultsFromSolr);
     // just in case we got any restricted datasets from Solr, do another check to forcibly remove them from results list
     foreach ($results->resultItems as $key=>$item) {
-        if ($item->restricted == 'true' && !$this->security->isGranted('ROLE_INSTITUTIONAL_AUTHENTICATED_USER')) {
+        if ($item->restricted == 'true' && (!$this->security->isGranted('ROLE_INSTITUTIONAL_AUTHENTICATED_USER') OR $this->security->isGranted('ROLE_SPONSORED_INDIVIDUAL'))) {
             unset($results->resultItems[$key]);
         }
     }
@@ -267,7 +267,9 @@ class GeneralController extends AbstractController
 
     // if they're trying to view a restricted dataset, check the access!!!!
     if ($dataset->getRestricted() == true) {
-        $this->denyAccessUnlessGranted('ROLE_INSTITUTIONAL_AUTHENTICATED_USER');
+        if (!$this->security->isGranted('ROLE_INSTITUTIONAL_AUTHENTICATED_USER') OR $this->security->isGranted('ROLE_SPONSORED_INDIVIDUAL')) {
+            throw new AccessDeniedHttpException('Sorry, your role does not grant you access to this application');
+	}
     }
 
     // if dataset archived

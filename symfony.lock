@@ -343,6 +343,9 @@
             "config/packages/twig_extensions.yaml"
         ]
     },
+    "twig/extra-bundle": {
+        "version": "v3.4.0"
+    },
     "twig/twig": {
         "version": "v2.14.4"
     }

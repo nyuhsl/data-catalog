@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="spacer50"></div>
+    <div class="spacer50"></div>
+    <h1>Unauthorized</h1>
+
+    <p>
+        Sorry, your status does not grant you access to the requested resource. If you think this is an error, please <a href="{{ path('contact') }}">contact the Data Catalog team</a>.
+    </p>
+
+  </div>
+</div>
+{% endblock %}
