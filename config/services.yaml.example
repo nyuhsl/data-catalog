@@ -72,6 +72,13 @@ parameters:
     ldap.host:
     ldap.port: 
 
+    # If you're using SAML authentication
+    ## These refer to the attributes that come in from your IdP
+    ## At the minimum, we need to be able to find the username
+    username_attribute: 
+    user_role_attribute:
+    roles_to_block: # this should be an array of values that, if present in the user_roles_attribute, will be blocked from logging in
+
 
     fs_solr:
         endpoints:
@@ -120,6 +127,20 @@ services:
     app.ldap:
         class: Symfony\Component\Ldap\LdapClient
         arguments: ["%ldap.host%", "%ldap.port%"]
+    ## IF YOU NEED CUSTOM login handling/authorization checking,
+    ## you can use your own AuthenticationSuccessListener here
+    ## The arguments list assumes you're using SAML authentication
+    #app.login_success_handler:
+    #    class: App\EventListener\AuthenticationSuccessListener
+    #    arguments: 
+    #      - "@doctrine.orm.entity_manager"
+    #      - "%username_attribute%"
+    #      - "%user_role_attribute%"
+    #      - "%roles_to_block%"
+    #    tags: 
+    #      - name: kernel.event_listener
+    #        event: security.authentication.success
+    #        method: blockSponsoredIndividuals
     app.user_checker:
         class: App\Security\UserChecker
         arguments: ["@doctrine.orm.entity_manager", "@monolog.logger"]

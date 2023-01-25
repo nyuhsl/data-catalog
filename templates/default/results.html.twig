@@ -41,7 +41,7 @@
       >
         {{ institution_name_short }}-Generated Datasets
     </label>
-    {% if is_granted('ROLE_INSTITUTIONAL_AUTHENTICATED_USER') and not is_granted('ROLE_SPONSORED_INDIVIDUAL') %}
+    {% if is_granted('ROLE_INSTITUTIONAL_AUTHENTICATED_USER') and not is_granted('ROLE_DENIED_ACCESS') %}
         <label class="restricted-only-filter">
           <input 
             class="" 
