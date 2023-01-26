@@ -11,9 +11,9 @@ use App\Entity\Security\User as AppUser;
 class AuthenticationSuccessListener
 {
 
-    protected usernameAttribute;
-    protected userRoleAttribute;
-    protected rolesToBlock;
+    protected $usernameAttribute;
+    protected $userRoleAttribute;
+    protected $rolesToBlock;
 
     public function __construct(EntityManagerInterface $em, 
                                 $usernameAttribute = null,
@@ -36,9 +36,10 @@ class AuthenticationSuccessListener
             $userID = $attributes[$this->usernameAttribute][0];
             $user->setUsername($userID);
             if (isset($this->userRoleAttribute) && isset($this->rolesToBlock)) {
-                $institutionalRoles = $attributes[$userRoleAttribute];
-            if (count(array_intersect($institutionalRoles, $this->rolesToBlock)) > 0) {
-                $user->addRole('ROLE_DENIED_ACCESS');
+                $institutionalRoles = $attributes[$this->userRoleAttribute];
+                if (count(array_intersect($institutionalRoles, $this->rolesToBlock)) > 0) {
+                    $user->addRole('ROLE_DENIED_ACCESS');
+                }
             }
             // Persist the user to database.
             $this->em->persist($user);
