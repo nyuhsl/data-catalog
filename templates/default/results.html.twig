@@ -97,10 +97,12 @@
     {# {% set keyword = currentSearch.keyword|split(':')[1] %} #}
    <button class="keyword-breadcrumb btn btn-outline-secondary btn-sm">
      {{ currentSearch.keyword }}
+     <i class="icon-remove-sign"></i>
    </button>
    {% else %}
    <button class="keyword-breadcrumb btn btn-outline-secondary btn-sm">
      Keyword: {{ currentSearch.keyword }}
+     <i class="icon-remove-sign"></i>
    </button>
    {% endif %}  
   {% endif %} 
@@ -109,6 +111,7 @@
    {% if facetSplit[0] != "origin_fq" and facetSplit[0] != "restricted_fq" and facetSplit[0] != '!restricted_fq' %}
      <button data-machine-name="{{ facet }}" class="facetBreadcrumb btn btn-outline-secondary btn-sm">
        {{ results.facetMappings[facetSplit[0]] }}:{{ facetSplit[1] }} 
+       <i class="icon-remove-sign"></i>
      </button>
    {% endif %}
  {% endfor %}
