@@ -4,6 +4,10 @@
 html, body {
   height: 100%;
 }
+
+a {
+    color:#0072ec;
+}
 .page-wrapper {
   min-height: 100%;
   margin: 0 auto -175px; /* the bottom margin is the negative value of the footer's height */
@@ -127,7 +131,7 @@ http://ryanfait.com/
 }
 
 .admin-menu-link a {
-  color:#e1480c !important;
+  color:#d54209 !important;
 }
 .admin-nav-sidebar {
   max-width:250px;
@@ -274,9 +278,13 @@ a.skip:hover {
 
 button.nextPage {
  float:right;
+ background-color:#118295;
+ border-color:#118295;
 }
 button.prevPage {
  float:left;
+ background-color:#118295;
+ border-color:#118295;
 }
 
 #pagerContainer {
@@ -328,9 +336,13 @@ li span.facet-name {
   float:left;
 }
 
+li span.facet-name a {
+  color:#0072ed;
+}
+
 li span.facet-numresults {
   float:right;
-  color:rgb(121,121,121);
+  color:rgb(115,114,114);
 }
 
 .search-box-description {
@@ -385,6 +397,7 @@ color:gray;
 .search-hint {
   text-decoration:underline;
   padding:0em .3em;
+  color:#0372e9;
 }
 #frontpage-submit-dataset {
   background:#279989;
@@ -576,7 +589,7 @@ font-size:.9em;
 float:right;
 clear:both;
 text-align:right;
-color:gray;
+color:#777676;
 font-size:.95em;
 margin-top:-5px;
 }
@@ -675,7 +688,7 @@ form.remove-form button {
 .dataset-detail-authors,
 .dataset-detail-projects,
 .dataset-detail-issued {
-  color:gray;
+  color:#777676;
   font-size:.8em;
 }
 .dataset-detail-alttitle p {
