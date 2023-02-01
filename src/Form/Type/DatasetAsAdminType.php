@@ -155,11 +155,6 @@ class DatasetAsAdminType extends AbstractType {
       'required' => false,
       'label'    => 'PubMed Search URL'
     ));
-    $builder->add('date_archived', DateType::class, array(
-      'years'  => $this->years,
-      'required' => false,
-      'label'    => 'Date Archived'
-    ));
     $builder->add('other_resources', CollectionType::class, array(
       'entry_type' => OtherResourceType::class,
       'required' => true,
