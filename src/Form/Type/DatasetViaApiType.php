@@ -166,10 +166,6 @@ class DatasetViaApiType extends AbstractType {
       'required' => false,
       'label'    => 'PubMed Search URL'
     ));
-    $builder->add('date_archived', 'date', array(
-      'years'  => $this->years,
-      'required' => false,
-      'label'    => 'Date Archived'));
     $builder->add('other_resources', 'collection', array(
       'type'      => new OtherResourceType(),
       'required' => false,

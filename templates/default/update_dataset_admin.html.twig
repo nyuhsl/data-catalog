@@ -116,9 +116,6 @@ col-sm-4
             {% endfor %}
           </div>
         </div>
-     {% if userIsAdmin %}
-      {{ form_row(form.date_archived) }}
-     {% endif %}
       {# OTHER RESOURCES #}
       <div class="form-group row multiple">
         <label class="col-sm-4 control-label" for="{{ form.other_resources.vars.name }}">
