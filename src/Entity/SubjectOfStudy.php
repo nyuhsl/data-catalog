@@ -28,7 +28,6 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *
  * @ORM\Entity
  * @ORM\Table(name="subject_of_study")
- * @UniqueEntity("subject_of_study")
  */
 class SubjectOfStudy {
   /**
@@ -39,14 +38,29 @@ class SubjectOfStudy {
   protected $id;
 
   /**
-   * @ORM\Column(type="string",length=255, unique=true)
+   * @ORM\Column(type="string",length=512, unique=false, nullable=false)
    */
-  protected $subject_of_study;
+  protected $common_name;
 
   /**
-   * @ORM\Column(type="string",length=255, nullable=true)
+   * @ORM\Column(type="string",length=512, nullable=true)
    */
   protected $species;
+
+  /**
+   * @ORM\Column(type="string",length=512, nullable=true)
+   */
+  protected $strain;
+
+  /**
+   * @ORM\Column(type="string",length=512, nullable=true)
+   */
+  protected $tissue;
+
+  /**
+   * @ORM\Column(type="string",length=512, nullable=true)
+   */
+  protected $cell_line;
 
   /**
    * @ORM\Column(type="string",length=256)
@@ -65,7 +79,21 @@ class SubjectOfStudy {
    * @return string
    */
   public function getDisplayName() {
-    return $this->subject_of_study;
+      $displayName = $this->common_name;
+      if (isset($this->species)) {
+         $displayName .= " / " . $this->species;
+      }
+      if (isset($this->strain)) {
+         $displayName .= " / " . $this->strain;
+      }
+      if (isset($this->tissue)) {
+         $displayName .= " / " . $this->tissue;
+      }
+      if (isset($this->cell_line)) {
+         $displayName .= " / " . $this->cell_line;
+      }
+
+      return $displayName;
   }
 
 
@@ -80,26 +108,49 @@ class SubjectOfStudy {
     }
 
     /**
-     * Set subject_of_study
+     * Set common_name
      *
-     * @param string $subject_of_study
+     * @param string $common_name
      * @return SubjectOfStudy
      */
-    public function setSubjectOfStudy($subject_of_study)
+    public function setCommonName($common_name)
     {
-        $this->subject_of_study = $subject_of_study;
+        $this->common_name = $common_name;
 
         return $this;
     }
 
     /**
-     * Get subject_of_study
+     * Get common_name
      *
      * @return string 
      */
-    public function getSubjectOfStudy()
+    public function getCommonName()
     {
-        return $this->subject_of_study;
+        return $this->common_name;
+    }
+
+    /**
+     * Set strain
+     *
+     * @param string $strain
+     * @return SubjectOfStudy
+     */
+    public function setStrain($strain)
+    {
+        $this->strain = $strain;
+
+        return $this;
+    }
+
+    /**
+     * Get strain
+     *
+     * @return string 
+     */
+    public function getStrain()
+    {
+        return $this->strain;
     }
 
     /**
@@ -123,6 +174,52 @@ class SubjectOfStudy {
     public function getSpecies()
     {
         return $this->species;
+    }
+
+    /**
+     * Set tissue
+     *
+     * @param string $tissue
+     * @return SubjectOfStudy
+     */
+    public function setTissue($tissue)
+    {
+        $this->tissue = $tissue;
+
+        return $this;
+    }
+
+    /**
+     * Get tissue
+     *
+     * @return string 
+     */
+    public function getTissue()
+    {
+        return $this->tissue;
+    }
+
+    /**
+     * Set cell_line
+     *
+     * @param string $cell_line
+     * @return SubjectOfStudy
+     */
+    public function setCellLine($cell_line)
+    {
+        $this->cell_line = $cell_line;
+
+        return $this;
+    }
+
+    /**
+     * Get cell_line
+     *
+     * @return string 
+     */
+    public function getCellLine()
+    {
+        return $this->cell_line;
     }
 
     /**
@@ -192,8 +289,11 @@ class SubjectOfStudy {
      */
     public function getAllProperties() {
         return array(
-            'subject_of_study'=>$this->subject_of_study,
-            'species'=>$this->species
+            'common_name'=>$this->common_name,
+            'species'=>$this->species,
+            'strain'=>$this->strain,
+            'tissue'=>$this->tissue,
+            'cell_line'=>$this->cell_line
         );
     }
 }
