@@ -773,6 +773,17 @@ form.remove-form button {
   font-size:0.9em;
 }
 
+.subject-of-study-popover {
+    font-size:.9em;
+}
+.subject-of-study-popover-field-heading {
+    font-weight:bold;
+    margin-right:.25em;
+}
+p.subject-of-study-popover-line {
+    margin:0em;
+}
+
 #equipment-used .multiple-item-list,
 #software-used .multiple-item-list {
   margin-bottom:10px;

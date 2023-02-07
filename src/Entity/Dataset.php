@@ -411,7 +411,7 @@ class Dataset implements JsonSerializable {
    *                joinColumns={@ORM\JoinColumn(name="dataset_uid",referencedColumnName="dataset_uid")},
    *                inverseJoinColumns={@ORM\JoinColumn(name="subject_of_study_id",referencedColumnName="subject_of_study_id")}
    *                )
-   * @ORM\OrderBy({"subject_of_study"="ASC"})
+   * @ORM\OrderBy({"common_name"="ASC"})
    */
   protected $subject_of_study;
 

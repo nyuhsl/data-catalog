@@ -96,6 +96,31 @@ class SubjectOfStudy {
       return $displayName;
   }
 
+  /**
+   * get name for display in dataset record
+   * displays the most specific field we have on the entity
+   *
+   * @return string
+   */
+  public function getDisplayForDatasetRecord() {
+      if (isset($this->cell_line)) {
+         return $this->cell_line;
+      }
+      if (isset($this->tissue)) {
+         return $this->tissue;
+      }
+      if (isset($this->strain)) {
+         return $this->strain;
+      }
+      if (isset($this->species)) {
+         return $this->species;
+      }
+      if (isset($this->common_name)) {
+         return $this->common_name;
+      }
+  }
+
+
 
     /**
      * Get id

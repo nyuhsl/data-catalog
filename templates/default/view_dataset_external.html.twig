@@ -1,5 +1,6 @@
 {% extends 'base.html.twig' %}
 {% from 'default/_JSONLD_output.html.twig' import JSONLD_output %}
+{% import 'default/subject_of_study_popovers.html.twig' as SoSPopover %}
 
 
 
@@ -201,10 +202,9 @@
     {% if dataset.subjectOfStudy is not empty %}
      <dt>Subject of Study</dt>
       <dd id="subject-of-study">{% for subject in dataset.subjectOfStudy %}
-         <div class="multiple-item-list"><a href="/search?keyword=subject_of_study:{{ subject.getDisplayName }}">{{ subject.getDisplayName }}</a></div>
-         {% if subject.species is not empty %}
-           <p class="related-dataset-note">{{ subject.species }}</p>
-         {% endif %}
+          {% set popoverContent = SoSPopover.createSubjectOfStudyPopover(subject) %}
+         <div class="multiple-item-list">
+             <a class="subject-of-study-popover-link" href="#" data-toggle="popover" data-content='{{ popoverContent }}'>{{ subject.getDisplayForDatasetRecord }}</a>
        {% endfor %}
       </dd>
      {% endif %}
