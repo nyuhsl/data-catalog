@@ -2,30 +2,30 @@
 <div class="subject-of-study-popover">
   <p class="subject-of-study-popover-line">
     <span class="subject-of-study-popover-field-heading">Common Name</span> 
-    <span class="subject-of-study-popover-field-content"><a href="/search?keyword=subject_of_study:{{ subject.getCommonName }}">{{ subject.getCommonName }}</a></span>
+    <span class="subject-of-study-popover-field-content"><a href="/search?keyword=subjects_common_names:{{ subject.getCommonName }}">{{ subject.getCommonName }}</a></span>
   </p>
     {% if subject.getSpecies %}
       <p class="subject-of-study-popover-line">
         <span class="subject-of-study-popover-field-heading">Species</span> 
-        <span class="subject-of-study-popover-field-content"><a href="/search?keyword=subject_of_study:{{ subject.getSpecies }}">{{ subject.getSpecies }}</a></span>
+        <span class="subject-of-study-popover-field-content"><a href="/search?keyword=subjects_species:{{ subject.getSpecies }}">{{ subject.getSpecies }}</a></span>
       </p>
     {% endif %}
     {% if subject.getStrain %}
       <p class="subject-of-study-popover-line">
         <span class="subject-of-study-popover-field-heading">Strain</span>
-        <span class="subject-of-study-popover-field-content"><a href="/search?keyword=subject_of_study:{{ subject.getStrain }}">{{ subject.getStrain }}</a></span>
+        <span class="subject-of-study-popover-field-content"><a href="/search?keyword=subjects_strains:{{ subject.getStrain }}">{{ subject.getStrain }}</a></span>
       </p>
     {% endif %}
     {% if subject.getTissue %}
       <p class="subject-of-study-popover-line">
         <span class="subject-of-study-popover-field-heading">Tissue</span>
-        <span class="subject-of-study-popover-field-content"><a href="/search?keyword=subject_of_study:{{ subject.getTissue }}">{{ subject.getTissue }}</a></span>
+        <span class="subject-of-study-popover-field-content"><a href="/search?keyword=subjects_tissues:{{ subject.getTissue }}">{{ subject.getTissue }}</a></span>
       </p>
     {% endif %}
     {% if subject.getCellLine %}
       <p class="subject-of-study-popover-line">
         <span class="subject-of-study-popover-field-heading">Cell Line</span>
-        <span class="subject-of-study-popover-field-content"><a href="/search?keyword=subject_of_study:{{ subject.getCellLine }}">{{ subject.getCellLine }}</a></span>
+        <span class="subject-of-study-popover-field-content"><a href="/search?keyword=subjects_cell_lines:{{ subject.getCellLine }}">{{ subject.getCellLine }}</a></span>
       </p>
     {% endif %}
 </div>

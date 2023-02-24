@@ -437,6 +437,8 @@
   <field name="local_experts" type="strings"/>
   <field name="origin" type="string"/>
   <field name="origin_fq" type="string"/>
+  <field name="restricted" type="string"/>
+  <field name="restricted_fq" type="string"/>
   <field name="other_resource_descriptions" type="strings"/>
   <field name="other_resource_names" type="strings"/>
   <field name="publications" type="strings"/>
@@ -450,7 +452,12 @@
   <field name="subject_geographic_area_details" type="strings"/>
   <field name="subject_geographic_area_fq" type="string" multiValued="true"/>
   <field name="subject_keywords" type="strings"/>
-  <field name="subject_of_study" type="strings"/>
+  <field name="subjects_common_names" type="strings"/>
+  <field name="subjects_common_names_fq" type="strings"/>
+  <field name="subjects_species" type="strings"/>
+  <field name="subjects_strains" type="strings"/>
+  <field name="subjects_tissues" type="strings"/>
+  <field name="subjects_cell_lines" type="strings"/>
   <field name="subject_population_ages" type="strings"/>
   <dynamicField name="*_txt_en_split_tight" type="text_en_splitting_tight" indexed="true" stored="true"/>
   <dynamicField name="*_descendent_path" type="descendent_path" indexed="true" stored="true"/>
@@ -537,7 +544,9 @@
   <copyField source="access_restrictions" dest="access_restrictions_fq"/>
   <copyField source="dataset_title" dest="dataset_title_str"/>
   <copyField source="origin" dest="origin_fq"/>
+  <copyField source="restricted" dest="restricted_fq"/>
   <copyField source="subject_domain" dest="subject_domain_fq"/>
   <copyField source="subject_geographic_area" dest="subject_geographic_area_fq"/>
+  <copyField source="subjects_common_names" dest="subjects_common_names_fq"/>
   <copyField source="*" dest="_text_"/>
 </schema>
