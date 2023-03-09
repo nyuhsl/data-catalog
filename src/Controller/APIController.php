@@ -73,24 +73,24 @@ class APIController extends AbstractController
     $em = $this->getDoctrine()->getManager();
     $qb = $em->createQueryBuilder();
 
+    $userCanSeeRestricted = $this->security->isGranted('ROLE_API_SUBMITTER');
     if ($uid == "all") {
-      $datasets = $qb->select('d')
-                     ->from('App\Entity\Dataset', 'd')
-                     ->where('d.archived = 0 OR d.archived IS NULL')
-                     ->andWhere('d.restricted = 0')
-                     ->andWhere('d.published = 1')
-                     ->getQuery()->getResult();
+      $qb->select('d')
+         ->from('App\Entity\Dataset', 'd')
+         ->where('d.archived = 0 OR d.archived IS NULL')
+         ->andWhere('d.published = 1');
     } else {
-      $datasets = $qb->select('d')
-                     ->from('App\Entity\Dataset', 'd')
-                     ->where('d.dataset_uid = :uid')
-                     ->andWhere('d.restricted = 0')
-                     ->andWhere('d.published = 1')
-                     ->andWhere('d.archived = 0 OR d.archived IS NULL')
-                     ->setParameter('uid', $uid)
-                     ->getQuery()->getResult();
+      $qb->select('d')
+         ->from('App\Entity\Dataset', 'd')
+         ->where('d.dataset_uid = :uid')
+         ->andWhere('d.published = 1')
+         ->andWhere('d.archived = 0 OR d.archived IS NULL')
+         ->setParameter('uid', $uid);
     }
-
+    if (!$userCanSeeRestricted) {
+        $qb->andWhere('d.restricted = 0');
+    }
+    $datasets = $qb->getQuery()->getResult(); 
     $output_format = $request->get('output_format', 'default');
 
     switch ($output_format) {

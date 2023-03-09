@@ -31,6 +31,9 @@ class AuthenticationSuccessListener
         $user = $event->getAuthenticationToken()->getUser();
         if (!$user instanceof AppUser) {
             return;
+        } elseif ($event->getAuthenticationToken()->getFirewallName() == 'api') {
+            // if user has authenticated to the API they won't have any SAML attributes
+            return;
         } else {
             $attributes = $event->getAuthenticationToken()->getAttributes();
             $userID = $attributes[$this->usernameAttribute][0];
