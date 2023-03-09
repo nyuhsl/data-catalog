@@ -39,6 +39,7 @@ class SearchResults {
    */
   public $facetMappings = array(
     'Subject Domain' => 'subject_domain_fq',
+    'Subject of Study' => 'subjects_common_names_fq',
     'Origin' => 'origin_fq',
     'Restricted' => 'restricted_fq',
     'Restricted' => '!restricted_fq',
@@ -46,6 +47,7 @@ class SearchResults {
     'Geographic Coverage' => 'subject_geographic_area_fq',
     'Access Restrictions' => 'access_restrictions_fq',
     'subject_domain_fq' => 'Subject Domain',
+    'subjects_common_names_fq' => 'Subject of Study',
     'origin_fq' => 'Origin',
     'restricted_fq' => 'Restricted',
     '!restricted_fq' => 'Restricted',
