@@ -6,6 +6,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 /**
  * Form builder for Person entry
@@ -44,6 +45,10 @@ class PersonType extends AbstractType {
     ));
     $builder->add('bio_url');
     $builder->add('email');
+    $builder->add('notes', TextareaType::class, array(
+      'required'=>false,
+      'label'   =>'Notes'
+    ));
     $builder->add('save', SubmitType::class,array('label'=>'Submit'));
   }
 
