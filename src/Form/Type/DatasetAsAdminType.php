@@ -376,10 +376,12 @@ class DatasetAsAdminType extends AbstractType {
     ));
     $builder->add('subject_of_study', EntityType::class, array(
       'class'    => 'App\Entity\SubjectOfStudy',
-      'choice_label' => 'subject_of_study',
+      'choice_label' => function($subject) {
+          return $subject->getDisplayName();
+      },
       'required' => false,
       'query_builder'=> function(EntityRepository $er) {
-          return $er->createQueryBuilder('u')->orderBy('u.subject_of_study','ASC');
+          return $er->createQueryBuilder('u')->orderBy('u.common_name','ASC');
       },
       'multiple' => true,
       'attr'=>array('style'=>'width:100%'),

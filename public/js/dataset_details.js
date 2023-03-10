@@ -10,12 +10,18 @@ var trackOutboundLink = function(url, label) {
   });
 }
 
+// addign <dl> <dd> <dt> elements to whitelist so we can use them in our popovers
+var bootstrapSanitizerWhiteList = bootstrap.Tooltip.Default.allowList
+
+bootstrapSanitizerWhiteList.dl = []
+bootstrapSanitizerWhiteList.dt = []
+bootstrapSanitizerWhiteList.dd = []
 
 /**
 * Initialize Author popovers
 */
 $(function () {
-  $('.dataset-authors-section [data-toggle="popover"]').popover({
+  $('.dataset-authors-section [data-bs-toggle="popover"]').popover({
      'html':true,
      'animation':false,
      'trigger':'manual',
@@ -37,11 +43,34 @@ $(function () {
 
 
   // initialize Publisher popovers
-  $('.publishers-list [data-toggle="popover"]').popover({
+  $('.publishers-list [data-bs-toggle="popover"]').popover({
      'html':true,
      'animation':false,
      'trigger':'manual',
      'placement':'top',
+  }).on("mouseenter", function () {
+    var _this = this;
+    $(this).popover("show");
+    $(".popover").on("mouseleave", function () {
+      $(_this).popover('hide');
+    });
+  }).on("mouseleave", function () {
+    var _this = this;
+    setTimeout(function () {
+        if (!$(".popover:hover").length) {
+            $(_this).popover("hide");
+        }
+    }, 200);
+  });
+
+
+  // initialize subject of study popovers
+  $('#subject-of-study [data-bs-toggle="popover"]').popover({
+     'html':true,
+     'animation':false,
+     'container':'body',
+     'trigger':'manual',
+     'placement':'right',
   }).on("mouseenter", function () {
     var _this = this;
     $(this).popover("show");
@@ -91,7 +120,7 @@ $(function () {
 * Initialize Project popovers
 */
 $(function () {
-  $('.dataset-detail-projects [data-toggle="popover"]').popover({
+  $('.dataset-detail-projects [data-bs-toggle="popover"]').popover({
      'html':true,
      'animation':false,
      'trigger':'manual',

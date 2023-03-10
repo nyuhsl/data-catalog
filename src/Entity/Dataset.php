@@ -411,7 +411,7 @@ class Dataset implements JsonSerializable {
    *                joinColumns={@ORM\JoinColumn(name="dataset_uid",referencedColumnName="dataset_uid")},
    *                inverseJoinColumns={@ORM\JoinColumn(name="subject_of_study_id",referencedColumnName="subject_of_study_id")}
    *                )
-   * @ORM\OrderBy({"subject_of_study"="ASC"})
+   * @ORM\OrderBy({"common_name"="ASC"})
    */
   protected $subject_of_study;
 
@@ -1808,7 +1808,7 @@ class Dataset implements JsonSerializable {
      */
     public function jsonSerialize() {
       $formats = $awards = $projects = $restrictions = $stds = $genders = $sexes = $ages = [];
-      $equipment = $software = $subject_of_study = $others = [];
+      $equipment = $software = $subjects_of_study = $others = [];
       $locs = $rel = $areas = $area_details = $domains = $publications = $keywords = $publishers = [];
       $authors = $data_type_array = $types_of_study = $corresponding_authors = $experts = [];
       $data_locations = $akas = $related_datasets = [];
@@ -1819,6 +1819,7 @@ class Dataset implements JsonSerializable {
       foreach ($this->other_resources as $other) { $others[]=$other->getAllProperties(); }
       foreach ($this->related_datasets as $rel) { $rels[]=$rel->getAllProperties(); }
       foreach ($this->authorships as $authorship) { $authors[]=$authorship->getAllProperties(); }
+      foreach ($this->subject_of_study as $subj) { $subjects_of_study[]=$subj->getAllProperties(); }
 
       // these related entities will already exist in the catalog so we reference them w/ their displayName
       foreach ($this->subject_keywords as $kwd) { $keywords[]=$kwd->getDisplayName(); }
@@ -1840,7 +1841,6 @@ class Dataset implements JsonSerializable {
       foreach ($this->subject_geographic_areas as $area) { $areas[]=$area->getDisplayName(); }
       foreach ($this->subject_geographic_area_details as $detail) { $area_details[]=$detail->getDisplayName(); }
       foreach ($this->study_types as $study_type) { $types_of_study[]=$study_type->getDisplayName(); }
-      foreach ($this->subject_of_study as $subject) { $subject_of_study[]=$subject->getDisplayName(); }
 
       return array(
         'title'                     => $this->title,
@@ -1859,6 +1859,7 @@ class Dataset implements JsonSerializable {
         'data_locations'            => $locs,
         'dataset_alternate_titles'  => $akas,
         'other_resources'           => $others,
+        'subject_of_study'          => $subjects_of_study,
         'related_datasets'          => $related_datasets,
         'authorships'               => $authors,
         'subject_keywords'          => $keywords,
@@ -1880,7 +1881,6 @@ class Dataset implements JsonSerializable {
         'subject_geographic_areas'   => $areas,
         'subject_geographic_area_details'=>$area_details,
         'study_types'               => $types_of_study,
-        'subject_of_study'          => $subject_of_study,
       );
     }
 
@@ -1892,11 +1892,12 @@ class Dataset implements JsonSerializable {
      */
      public function serializeForSolr() {
         
-       $formats = $awards = $restrictions = $stds = $genders = $sexes = $ages = $equipment = $software = $subject_of_study = [];
+       $formats = $awards = $restrictions = $stds = $genders = $sexes = $ages = $equipment = $software = [];
        $areas = $projects = $area_details = $domains = $publications = $keywords = $publishers = [];
        $authors = $data_type_array = $types_of_study = $corresponding_authors = $experts = $data_locations = $akas = $related_datasets = [];
        $other_resource_names = $other_resource_descriptions = $related_pubs = $data_location_contents = [];
        $accession_numbers = $access_instructions = [];
+       $subjects_common_names = $subjects_strains = $subjects_species = $subjects_tissues = $subjects_cell_lines = [];
        foreach ($this->dataset_formats as $format) { $formats[]=$format->getDisplayName(); }
        foreach ($this->awards as $award) { $awards[]=$award->getDisplayName(); }
        foreach ($this->projects as $project) { $projects[]=$project->getDisplayName(); }
@@ -1917,7 +1918,6 @@ class Dataset implements JsonSerializable {
        foreach ($this->authorships as $authorship) { $authors[]=$authorship->getPerson()->getDisplayName(); }
        foreach ($this->corresponding_authors as $corresponding_author) { $corresponding_authors[]=$corresponding_author->getDisplayName(); }
        foreach ($this->local_experts as $expert) { $experts[]=$expert->getDisplayName(); }
-       foreach ($this->subject_of_study as $subject) { $subject_of_study[]=$subject->getDisplayName(); }
        foreach ($this->related_software as $sw) { $software[]=$sw->getDisplayName(); }
        foreach ($this->related_equipment as $equip) { $equipment[]=$equip->getDisplayName(); }
 
@@ -1929,6 +1929,13 @@ class Dataset implements JsonSerializable {
          $data_locations[]=$loc->getDataAccessUrl(); 
          $data_location_contents[]=$loc->getLocationContent(); 
          $accession_numbers[]=$loc->getAccessionNumber(); 
+       }
+       foreach ($this->subject_of_study as $subj) { 
+         $subjects_common_names[]=$subj->getCommonName(); 
+         $subjects_strains[]=$subj->getStrain(); 
+         $subjects_species[]=$subj->getSpecies(); 
+         $subjects_tissues[]=$subj->getTissue(); 
+         $subjects_cell_lines[]=$subj->getCellLine(); 
        }
        foreach ($this->publications as $pub) { $publications[]=$pub->getDisplayName(); }
        return array(
@@ -1957,7 +1964,11 @@ class Dataset implements JsonSerializable {
          'subject_domain'        => $domains,
          'subject_keywords'      => $keywords,
          'publishers'            => $publishers,
-         'subject_of_study'      => $subject_of_study,
+         'subjects_common_names' => $subjects_common_names,
+         'subjects_strains'      => $subjects_strains,
+         'subjects_species'      => $subjects_species,
+         'subjects_tissues'      => $subjects_tissues,
+         'subjects_cell_lines'   => $subjects_cell_lines,
          'related_software'      => $software,
          'related_equipment'     => $equipment,
          'other_resource_names'       => $other_resource_names,
@@ -1980,7 +1991,7 @@ class Dataset implements JsonSerializable {
      */
     public function serializeComplete() {
       $formats = $projects = $awards = $restrictions = $stds = $genders = $sexes = $ages = [];
-      $equipment = $software = $subject_of_study = $others = [];
+      $equipment = $software = $subjects_of_study = $others = [];
       $locs = $rel = $areas = $area_details = $domains = $publications = $keywords = $publishers = [];
       $authors = $data_type_array = $types_of_study = $corresponding_authors = $experts = [];
       $data_locations = $akas = $related_datasets = [];
@@ -2009,7 +2020,7 @@ class Dataset implements JsonSerializable {
       foreach ($this->subject_geographic_areas as $area) { $areas[]=$area->getAllProperties(); }
       foreach ($this->subject_geographic_area_details as $detail) { $area_details[]=$detail->getAllProperties(); }
       foreach ($this->study_types as $study_type) { $types_of_study[]=$study_type->getDisplayName(); }
-      foreach ($this->subject_of_study as $subject) { $subject_of_study[]=$subject->getAllProperties(); }
+      foreach ($this->subject_of_study as $subject) { $subjects_of_study[]=$subject->getAllProperties(); }
 
       return array(
         'title'                     => $this->title,
@@ -2049,7 +2060,7 @@ class Dataset implements JsonSerializable {
         'subject_geographic_areas'   => $areas,
         'subject_geographic_area_details'=>$area_details,
         'study_types'               => $types_of_study,
-        'subject_of_study'          => $subject_of_study,
+        'subject_of_study'          => $subjects_of_study,
       );
     }
 

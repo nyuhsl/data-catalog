@@ -1,0 +1,40 @@
+{% macro createFacetsPanel(currentSearch, results) %}
+  {% for category,facets in results.facets if category != 'Origin' %}
+      {% set facetSection = [] %}
+      {% for facet in facets %} 
+          {% set fullFacet = results.facetMappings[category] ~ ':"' ~ facet.facetItem ~ '"' %}
+          {% if fullFacet not in currentSearch.facets %}
+              {% set facetSection = facetSection|merge([facet]) %}
+          {% endif %}
+      {% endfor %}
+      {% if facetSection|length > 0 %}
+          <div class="accordion accordion-flush facet-section" id="facets-accordion">
+              <div class="accordion-item">
+                  <h5 class="facet-header accordion-header" id="flush-heading{{loop.index}}">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse{{loop.index}}" aria-expanded="false" aria-controls="flush-collapse{{loop.index}}">
+                          {{ category }}
+                      </button>
+                  </h5>
+                  <div id="flush-collapse{{loop.index}}" class="accordion-collapse collapse {% if loop.index==1 %}show{% endif %}" aria-labelledby="flush-heading{{loop.index}}" data-bs-parent="#facets-accordion">
+                      <div class="accordion-body">
+                          <ul class="facets-list list-unstyled">
+                              {% for facet in facetSection %}
+                                  {% if facet.facetItem != '' and facet.facetCount is defined and facet.facetCount > 0 %}
+                                      <li class="facet-item">
+                                          <span class="facet-name">
+                                              <a href="#" data-solrfacetcategory="{{ results.facetMappings[category] }}" data-solrfacetvalue="{{ facet.facetItem }}">{{ facet.facetItem }}</a>
+                                          </span>
+                                          <span class="facet-numresults">
+                                              {{ facet.facetCount }}
+                                          </span>
+                                      </li>
+                                  {% endif %}
+                              {% endfor %}
+                          </ul>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      {% endif %}
+  {% endfor %}
+{% endmacro %}
