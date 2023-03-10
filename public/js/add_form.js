@@ -66,7 +66,7 @@ jQuery(function($) {
     var url = $(this).attr('href');
     $.get(url, function(data) {
       $("#addEntityFormModalContent").html(data);
-      $("#addEntityFormModal").modal({show:true,backdrop:'static'});
+      new bootstrap.Modal($("#addEntityFormModal"),{backdrop:'static'}).show();
     });
   });
 

@@ -137,8 +137,11 @@ http://ryanfait.com/
 .admin-menu-link a {
   color:#d54209 !important;
 }
+.admin-nav-sidebar a:hover {
+    text-decoration:none;
+}
 .admin-nav-sidebar {
-  max-width:250px;
+  max-width:280px;
   font-size:.85em;
   margin-top:1em;
   min-width:245px;
@@ -643,7 +646,7 @@ div[data-prototype] div[data-content] .form-group {
   justify-content:flex-end;
 }
 div[data-prototype] div[data-content] .form-group .col-sm-8 {
-  width:100% !important;
+ /* width:100% !important; */
 }
 div[data-prototype] div[data-content] .btn-remove {
   position:absolute;

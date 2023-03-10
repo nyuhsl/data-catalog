@@ -50,7 +50,7 @@ col-sm-4
           {{ form.dataset_alternate_titles.vars.label }}
         </label>
         <div class="col-sm-8">
-          <a class="btn-success label label-success" data-target="add-{{ form.dataset_alternate_titles.vars.name}}" role="button">Add item</a>
+          <a class="btn btn-success label label-success" data-target="add-{{ form.dataset_alternate_titles.vars.name}}" role="button">Add item</a>
         </div>
         <div class="add-{{ form.dataset_alternate_titles.vars.name}}" data-prototype="{{ widget_prototype(form.dataset_alternate_titles, 'Remove item')|escape }}">
         {% for widget in form.dataset_alternate_titles %}
@@ -77,7 +77,7 @@ col-sm-4
           {{ form.authorships.vars.label }}
         </label>
         <div class="col-sm-8">
-          <a class="btn-success label label-success" data-target="add-{{ form.authorships.vars.name}}">Add item</a>
+          <a class="btn btn-success label label-success" data-target="add-{{ form.authorships.vars.name}}">Add item</a>
         </div>
         <div class="add-{{ form.authorships.vars.name}}" data-prototype="{{ widget_prototype(form.authorships, 'Remove item')|escape }}">
         {% for widget in form.authorships %}
@@ -97,7 +97,7 @@ col-sm-4
           {{ form.data_locations.vars.label }}
         </label>
         <div class="col-sm-8">
-          <a class="btn-success label label-success" data-target="add-{{ form.data_locations.vars.name}}">Add item</a>
+          <a class="btn btn-success label label-success" data-target="add-{{ form.data_locations.vars.name}}">Add item</a>
         </div>
         <div class="add-{{ form.data_locations.vars.name}}" data-prototype="{{ widget_prototype(form.data_locations, 'Remove item')|escape }}">
         {% for widget in form.data_locations %}
@@ -111,7 +111,7 @@ col-sm-4
           {{ form.other_resources.vars.label }}
         </label>
         <div class="col-sm-8">
-          <a class="btn-success label label-success" data-target="add-{{ form.other_resources.vars.name}}">Add item</a>
+          <a class="btn btn-success label label-success" data-target="add-{{ form.other_resources.vars.name}}">Add item</a>
         </div>
         <div class="add-{{ form.other_resources.vars.name}}" data-prototype="{{ widget_prototype(form.other_resources, 'Remove item')|escape }}">
         {% for widget in form.other_resources %}
@@ -157,7 +157,7 @@ col-sm-4
           {{ form.related_datasets.vars.label }}
         </label>
         <div class="col-sm-8">
-          <a class="btn-success label label-success" data-target="add-{{ form.related_datasets.vars.name}}">Add item</a>
+          <a class="btn btn-success label label-success" data-target="add-{{ form.related_datasets.vars.name}}">Add item</a>
         </div>
         <div class="add-{{ form.related_datasets.vars.name}}" data-prototype="{{ widget_prototype(form.related_datasets, 'Remove item')|escape }}">
         {% for widget in form.related_datasets %}
