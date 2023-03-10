@@ -85,6 +85,12 @@ class Person {
    */
   protected $email;
 
+
+  /**
+   * @ORM\Column(type="string",length=1024, nullable=true)
+   */
+  protected $notes;
+
   
   /**
    * @ORM\OneToMany(targetEntity="PersonAssociation", mappedBy="person")
@@ -260,6 +266,30 @@ class Person {
 
 
     /**
+     * Set notes
+     *
+     * @param string $note
+     * @return Person
+     */
+    public function setNotes($note)
+    {
+        $this->notes = $note;
+
+        return $this;
+    }
+
+    /**
+     * Get notes
+     *
+     * @return string 
+     */
+    public function getNotes()
+    {
+        return $this->notes;
+    }
+
+
+    /**
      * Set slug
      *
      * @param string $slug
@@ -349,7 +379,8 @@ class Person {
         'first_name'=>$this->first_name,
         'orcid_id'=>$this->orcid_id,
         'bio_url'=>$this->bio_url,
-        'email'=>$this->email
+        'email'=>$this->email,
+        'notes'=>$this->notes
       );
     }
 }
