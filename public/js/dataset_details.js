@@ -11,7 +11,7 @@ var trackOutboundLink = function(url, label) {
 }
 
 // addign <dl> <dd> <dt> elements to whitelist so we can use them in our popovers
-var bootstrapSanitizerWhiteList = $.fn.tooltip.Constructor.Default.whiteList
+var bootstrapSanitizerWhiteList = bootstrap.Tooltip.Default.allowList
 
 bootstrapSanitizerWhiteList.dl = []
 bootstrapSanitizerWhiteList.dt = []
@@ -21,7 +21,7 @@ bootstrapSanitizerWhiteList.dd = []
 * Initialize Author popovers
 */
 $(function () {
-  $('.dataset-authors-section [data-toggle="popover"]').popover({
+  $('.dataset-authors-section [data-bs-toggle="popover"]').popover({
      'html':true,
      'animation':false,
      'trigger':'manual',
@@ -43,7 +43,7 @@ $(function () {
 
 
   // initialize Publisher popovers
-  $('.publishers-list [data-toggle="popover"]').popover({
+  $('.publishers-list [data-bs-toggle="popover"]').popover({
      'html':true,
      'animation':false,
      'trigger':'manual',
@@ -65,7 +65,7 @@ $(function () {
 
 
   // initialize subject of study popovers
-  $('#subject-of-study [data-toggle="popover"]').popover({
+  $('#subject-of-study [data-bs-toggle="popover"]').popover({
      'html':true,
      'animation':false,
      'container':'body',
@@ -120,7 +120,7 @@ $(function () {
 * Initialize Project popovers
 */
 $(function () {
-  $('.dataset-detail-projects [data-toggle="popover"]').popover({
+  $('.dataset-detail-projects [data-bs-toggle="popover"]').popover({
      'html':true,
      'animation':false,
      'trigger':'manual',

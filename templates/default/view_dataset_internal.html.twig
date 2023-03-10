@@ -49,7 +49,7 @@
     {% if dataset.getProjects is not empty %}
       {% for project in dataset.getProjects %}
          {% set popoverContent = '<p><a href="' ~ project.getProjectUrl ~ '" target="_blank">View project website</a></p><p><a href="/search?keyword=projects:%22' ~ project.getProjectName ~ '%22" target="_blank">View other datasets from this project</a></p>' %}
-         <div class="dataset-detail-projects">Part of: <a href="#" tabindex="0" role="button" data-toggle="popover" title="{{ project.getProjectName }}" data-content="{{ popoverContent }}">{{ project.getProjectName }}</a> | {{ project.getProjectDescription }}</div>
+         <div class="dataset-detail-projects">Part of: <a href="#" tabindex="0" role="button" data-bs-toggle="popover" data-bs-title="{{ project.getProjectName }}" data-bs-content="{{ popoverContent }}">{{ project.getProjectName }}</a> | {{ project.getProjectDescription }}</div>
        {% endfor %}
     {% endif %}
       <div class="dataset-detail-id">UID: {{ dataset.id }}</div>
@@ -67,13 +67,13 @@
 
                    {% endif %}
                    {% if author.isCorrespondingAuthor %}
-                      <a href="#" tabindex="0" class="corresponding-author author-name" role="button" data-toggle="popover" title="{{ author.getPerson.getFullName }}" data-content="{{ popoverContent }}">{{ author.getPerson.getFullName }}*</a>{% if not loop.last %},{% endif %}{% if loop.last %}...{% endif %}
+                      <a href="#" tabindex="0" class="corresponding-author author-name" role="button" data-bs-toggle="popover" data-bs-title="{{ author.getPerson.getFullName }}" data-bs-content="{{ popoverContent }}">{{ author.getPerson.getFullName }}*</a>{% if not loop.last %},{% endif %}{% if loop.last %}...{% endif %}
                       {% set correspondingAuthorExists = true %}
                    {% else %}
-                      <a href="#" tabindex="0" class="author-name" role="button" data-toggle="popover" title="{{ author.getPerson.getFullName }}" data-content="{{ popoverContent }}">{{ author.getPerson.getFullName }}</a>{% if not loop.last %}, {% endif %}{% if loop.last %}...{%endif %}
+                      <a href="#" tabindex="0" class="author-name" role="button" data-bs-toggle="popover" data-bs-title="{{ author.getPerson.getFullName }}" data-bs-content="{{ popoverContent }}">{{ author.getPerson.getFullName }}</a>{% if not loop.last %}, {% endif %}{% if loop.last %}...{%endif %}
                    {% endif %}
                {% endfor %}
-                <a class="collapsed-toggle authors-collapse" data-toggle="collapse" href="#collapsed-authors" aria-expanded="false" aria-controls="collapsed-authors">
+                <a class="collapsed-toggle authors-collapse" data-bs-toggle="collapse" href="#collapsed-authors" aria-expanded="false" aria-controls="collapsed-authors">
                    See more...
                 </a>
                <div class="collapse" id="collapsed-authors">
@@ -86,10 +86,10 @@
 
                    {% endif %}
                    {% if author.isCorrespondingAuthor %}
-                      <a href="#" tabindex="0" class="corresponding-author author-name" role="button" data-toggle="popover" title="{{ author.getPerson.getFullName }}" data-content="{{ popoverContent }}">{{ author.getPerson.getFullName }}*</a>{% if not loop.last %}, {% endif %}
+                      <a href="#" tabindex="0" class="corresponding-author author-name" role="button" data-bs-toggle="popover" data-bs-title="{{ author.getPerson.getFullName }}" data-bs-content="{{ popoverContent }}">{{ author.getPerson.getFullName }}*</a>{% if not loop.last %}, {% endif %}
                       {% set correspondingAuthorExists = true %}
                    {% else %}
-                      <a href="#" tabindex="0" class="author-name" role="button" data-toggle="popover" title="{{ author.getPerson.getFullName }}" data-content="{{ popoverContent }}">{{ author.getPerson.getFullName }}</a>{% if not loop.last %}, {% endif %}
+                      <a href="#" tabindex="0" class="author-name" role="button" data-bs-toggle="popover" data-bs-title="{{ author.getPerson.getFullName }}" data-bs-content="{{ popoverContent }}">{{ author.getPerson.getFullName }}</a>{% if not loop.last %}, {% endif %}
                    {% endif %}
                 {% endfor %}
                 </div>
@@ -106,10 +106,10 @@
 
                  {% endif %}
                  {% if author.isCorrespondingAuthor %}
-                    <a href="#" tabindex="0" class="corresponding-author author-name" role="button" data-toggle="popover" title="{{ author.getPerson.getFullName }}" data-content="{{ popoverContent }}">{{ author.getPerson.getFullName }}*</a>{% if not loop.last %}, {% endif %}
+                    <a href="#" tabindex="0" class="corresponding-author author-name" role="button" data-bs-toggle="popover" data-bs-title="{{ author.getPerson.getFullName }}" data-bs-content="{{ popoverContent }}">{{ author.getPerson.getFullName }}*</a>{% if not loop.last %}, {% endif %}
                     {% set correspondingAuthorExists = true %}
                  {% else %}
-                    <a href="#" tabindex="0" class="author-name" role="button" data-toggle="popover" title="{{ author.getPerson.getFullName }}" data-content="{{ popoverContent }}">{{ author.getPerson.getFullName }}</a>{% if not loop.last %}, {% endif %}
+                    <a href="#" tabindex="0" class="author-name" role="button" data-bs-toggle="popover" data-bs-title="{{ author.getPerson.getFullName }}" data-bs-content="{{ popoverContent }}">{{ author.getPerson.getFullName }}</a>{% if not loop.last %}, {% endif %}
                  {% endif %}
                {% endfor %}
 	       </div>
@@ -152,7 +152,7 @@
              </div>
            {% endfor %}
          </div>
-         <a class="btn btn-sm btn-link collapsed-toggle" data-toggle="collapse" href="#collapsed-areas" aria-expanded="false" aria-controls="collapsed-areas">
+         <a class="btn btn-sm btn-link collapsed-toggle" data-bs-toggle="collapse" href="#collapsed-areas" aria-expanded="false" aria-controls="collapsed-areas">
             See all...
          </a>
         {% else %}
@@ -176,7 +176,7 @@
              {% set popoverContent = '<p><div id="Local expert ' ~ expert.fullName ~ ' contacted for dataset: ' ~ dataset.title ~ '"></div><a class="local-expert-contact-link" href="' ~ local_expert_contact_form ~ '" target="_blank">Contact this Local Expert</a></p>' %}
            {% endif %}
             <div class="multiple-item-list">
-              <a class="local-expert-popover-link" href="#" data-toggle="popover" data-content="{{ popoverContent }}" data-original-title="{{ expert.fullName }}">{{ expert.fullName }}</a>
+              <a class="local-expert-popover-link" href="#" data-bs-toggle="popover" data-bs-content="{{ popoverContent }}" data-bs-title="{{ expert.fullName }}">{{ expert.fullName }}</a>
             </div>
          {% endfor %}
          {% endif %}
@@ -189,7 +189,7 @@
       <dd id="subject-of-study">{% for subject in dataset.subjectOfStudy %}
           {% set popoverContent = SoSPopover.createSubjectOfStudyPopover(subject) %}
          <div class="multiple-item-list">
-             <a class="subject-of-study-popover-link" href="#" data-toggle="popover" data-content='{{ popoverContent }}'>{{ subject.getDisplayForDatasetRecord }}</a>
+             <a class="subject-of-study-popover-link" href="#" data-bs-toggle="popover" data-bs-content='{{ popoverContent }}'>{{ subject.getDisplayForDatasetRecord }}</a>
        {% endfor %}
       </dd>
      {% endif %}
