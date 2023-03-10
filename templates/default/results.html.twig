@@ -153,7 +153,7 @@
       {% if item.restricted == true %}
         <div class="restricted-dataset-badge">{{ restricted_dataset_text }}</div>
       {% endif %}
-    <h4 class="dataset-title"><a class="dataset-title-link" href="{{ path("view_dataset", {"uid":item.id}) }}">{{ item.dataset_title }}</a>
+    <h4 class="dataset-title"><a class="dataset-title-link" href="{{ path("view_dataset", {"uid":item.id}) }}">{{ item.dataset_title|raw }}</a>
     </h4>
             <dl class="row">
 
