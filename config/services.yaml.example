@@ -66,6 +66,11 @@ parameters:
     local_expert_display: "Local Expert"
     local_expert_contact_form: "https://www.example.com"
 
+    # Text to display when a search returns no results
+    no_results_text: "Sorry, this search returned no results. Please try removing some search criteria or <a href='{{ path('user_search_results') }}'>starting over</a>."
+    # Text to display in 403 Unauthorized error message
+    unauthorized_error_message: "Sorry, you are not authorized to view this resource."
+
     # Time To Live for temporary access key links (in hours), in PHP DateInterval format  
     tak_ttl: "+3days"
 
