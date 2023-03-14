@@ -7,9 +7,7 @@
     <div class="spacer50"></div>
     <h1>Unauthorized</h1>
 
-    <p>
-        Sorry, your status does not grant you access to the requested resource. If you think this is an error, please <a href="{{ path('contact') }}">contact the Data Catalog team</a>.
-    </p>
+    <p>{{ include(template_from_string(unauthorized_error_message|raw)) }}</p>
 
   </div>
 </div>

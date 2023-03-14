@@ -6,7 +6,6 @@
 
 
 {% block content %}
-{# {{ dump() }} #}
 <div class="container">
 <div class="row">
 <div id="search-stats-header" class="offset-2 clearfix">
@@ -34,19 +33,12 @@
 <div class="row">
 <div class="col-8 offset-2" id="results-container">
  <div class="spacer25"></div>
-  <h2 class="no-results">Sorry, this search returned no results.</h2> 
-  <p>Please try removing some search criteria or <a href="/">starting over</a>.</p>
+    <h2 class="no-results">Sorry, this search returned no results.</h2> 
+    <p>{{ include(template_from_string(no_results_text|raw)) }}</p>
   <div class="spacer50"></div>
   <div class="spacer25"></div>
   <h4>Still not finding what you're looking for?</h4>
    <strong><a style="font-size:1.1em;" href="{{ path('contact') }}">Contact us</a></strong> to suggest new datasets or new topic areas to cover.
- 
-
-
-
-
-
-
 
 
 

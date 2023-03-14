@@ -16,3 +16,5 @@ twig:
         restricted_dataset_text: '%restricted_dataset_text%'
         local_expert_display: '%local_expert_display%'
         local_expert_contact_form: '%local_expert_contact_form%'
+        no_results_text: '%no_results_text%'
+        unauthorized_error_message: '%unauthorized_error_message%'
