@@ -15,7 +15,7 @@
                           {{ category }}
                       </button>
                   </h5>
-                  <div id="flush-collapse{{loop.index}}" class="accordion-collapse collapse {% if loop.index==1 %}show{% endif %}" aria-labelledby="flush-heading{{loop.index}}" data-bs-parent="#facets-accordion">
+                  <div id="flush-collapse{{loop.index}}" class="accordion-collapse collapse" aria-labelledby="flush-heading{{loop.index}}" data-bs-parent="#facets-accordion">
                       <div class="accordion-body">
                           <ul class="facets-list list-unstyled">
                               {% for facet in facetSection %}
