@@ -115,6 +115,11 @@ class GeneralController extends AbstractController
         'results' => $results,
         'currentSearch'=>$currentSearch,
       ));
+    } elseif ($this->get('twig')->getLoader()->exists('institution/results.html.twig')) {
+      return $this->render('institution/results.html.twig',array(
+        'results' => $results,
+        'currentSearch' => $currentSearch,
+      ));
     } else {
       return $this->render('default/results.html.twig',array(
                   'results' => $results,
@@ -331,15 +336,22 @@ class GeneralController extends AbstractController
 		}
 
 		if ($dataset->getOrigin() == 'Internal') {
-			return $this->render('default/view_dataset_internal.html.twig', array(
-				'dataset' => $dataset,
-			));
+            if ($this->get('twig')->getLoader()->exists('institution/view_dataset_internal.html.twig')) {
+                return $this->render('institution/view_dataset_internal.html.twig',array()); 
+            } else {
+                return $this->render('default/view_dataset_internal.html.twig', array(
+				    'dataset' => $dataset,
+			    ));
+            }
 		} else {
-			return $this->render('default/view_dataset_external.html.twig', array(
-				'dataset' => $dataset,
-			));
+            if ($this->get('twig')->getLoader()->exists('institution/view_dataset_external.html.twig')) {
+                return $this->render('institution/view_dataset_external.html.twig',array()); 
+            } else {
+                return $this->render('default/view_dataset_external.html.twig', array(
+                    'dataset' => $dataset,
+                ));
+            }
 		}
-  
   }
   
 	
