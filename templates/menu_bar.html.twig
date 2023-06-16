@@ -1,0 +1,15 @@
+<nav class="menu-bar">
+    <ul class="menu-links">
+        <li class="menu-link {% if app.request.get('_route') == 'about' %}active{% endif %}"><a href="{{ path('about') }}">About</a></li>
+        <li class="menu-link {% if app.request.get('_route') == 'how_to_use_catalog' %}active{% endif %}"><a href="{{ path('how_to_use_catalog') }}">How To Use the Catalog</a></li>
+        <li class="menu-link {% if app.request.get('_route') == 'faq' %}active{% endif %}"><a href="{{ path('faq') }}">Frequently Asked Questions</a></li>
+            {% if is_granted('ROLE_ADMIN') %}
+              <li class="menu-link admin-menu-link {% if is_granted('ROLE_ADMIN') and adminPage is defined and adminPage==true %}active{% endif %}"><a href="{{ path('admin_panel') }}">Admin</a></li>
+            {% endif %}
+            {% if is_granted('ROLE_USER') %}
+              <li class="menu-link admin-menu-link logout-link"><a href="{{ path('saml_logout') }}">Logout</a></li>
+            {% else %}
+              <li class="menu-link admin-menu-link"><a href="{{ path('saml_login') }}">Login</a></li>
+            {% endif %}
+    </ul>
+</nav>
