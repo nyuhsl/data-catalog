@@ -16,6 +16,7 @@ var bootstrapSanitizerWhiteList = bootstrap.Tooltip.Default.allowList
 bootstrapSanitizerWhiteList.dl = []
 bootstrapSanitizerWhiteList.dt = []
 bootstrapSanitizerWhiteList.dd = []
+bootstrapSanitizerWhiteList.a.push('data-linkname')
 
 /**
 * Initialize Author popovers
